@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Registration</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Увійти</string>
+    <string name="goToRegistration"><u>Не маєте облікового запису? Зареєструватись</u></string>
+    <string name="authorization_text">Авторизація</string>
+    <string name="registration_text">Реєстрація</string>
+    <string name="register_button_text">Зареєструватись</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="choosespinner">chooseSpinner</string>
+    <string name="basket">Кошик</string>
+    <string name="order_placed">Оформлені \nзамовлення</string>
+    <string name="product_name">Product name</string>
+    <string name="product_count">Product count</string>
+    <string name="toBasket">В кошик</string>
+    <string name="itemInMagazine">штук на складі:</string>
+</resources>

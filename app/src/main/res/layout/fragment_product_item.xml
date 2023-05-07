@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.example.registration.model.product.Product" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutProductItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragment.customerFragments.ProductItemFragment">
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Назва товару" />
+
+
+        <TextView
+            android:id="@+id/thing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/itemInMagazine"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/product_name"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="120dp"
+            />
+
+        <TextView
+            android:id="@+id/product_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/thing"
+            app:layout_constraintTop_toBottomOf="@id/product_name"
+            tools:text="1"/>
+
+
+
+
+        <EditText
+            android:id="@+id/countAddToBasket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="32dp"
+            android:ems="3"
+            android:inputType="number"
+            android:text="1"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/buttonAddToBasket"
+            app:layout_constraintTop_toBottomOf="@id/product_count"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/buttonAddToBasket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/toBasket"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/product_count" />
+
+        <ScrollView
+            android:id="@+id/product_description_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAddToBasket"
+            android:layout_marginTop="32dp">
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout_description_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/product_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{product.description}"
+                    android:textSize="20sp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    tools:text="Опис товару" />
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.registration.fragment.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_customerMainPageFragment"
+            app:destination="@id/customerMainPageFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_employeeMainPageFragment"
+            app:destination="@id/employeeMainPageFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_managerMainPageFragment"
+            app:destination="@id/managerMainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.registration.fragment.customerFragments.RegistrationFragment"
+        android:label="RegistrationFragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerMainPageFragment"
+        android:name="com.example.registration.fragment.customerFragments.CustomerMainPageFragment"
+        android:label="CustomerMainPageFragment" >
+        <action
+            android:id="@+id/action_customerMainPageFragment_to_productItemFragment"
+            app:destination="@id/productItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeMainPageFragment"
+        android:name="com.example.registration.fragment.employeeFragments.EmployeeMainPageFragment"
+        android:label="EmployeeMainPageFragment" />
+    <fragment
+        android:id="@+id/managerMainPageFragment"
+        android:name="com.example.registration.fragment.managerFragments.ManagerMainPageFragment"
+        android:label="ManagerMainPageFragment" />
+    <fragment
+        android:id="@+id/productItemFragment"
+        android:name="com.example.registration.fragment.customerFragments.ProductItemFragment"
+        android:label="ProductItemFragment" >
+        <argument
+            android:name="name_product"
+            app:argType="string"
+            android:defaultValue="Name" />
+        <argument
+            android:name="id_product"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="count_product"
+            app:argType="string"
+            android:defaultValue="1" />
+        <argument
+            android:name="description_product"
+            app:argType="string"
+            android:defaultValue="description" />
+    </fragment>
+</navigation>

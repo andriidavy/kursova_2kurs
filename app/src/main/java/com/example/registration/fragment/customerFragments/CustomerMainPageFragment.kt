@@ -70,13 +70,17 @@ class CustomerMainPageFragment : Fragment() {
                 //Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
                 viewModel.productsArray.value?.get(position)?.id?.let {
-                    bundle.putInt("productID",
+                    bundle.putInt("id_product",
+                        it
+                    )
+                }
+                viewModel.productsArray.value?.get(position)?.count?.let {
+                    bundle.putInt("count_product",
                         it
                     )
                 }
                 bundle.putString("name_product", viewModel.productsArray.value?.get(position)?.name)
-                bundle.putString("productCount", viewModel.productsArray.value?.get(position)?.count)
-                bundle.putString("productDescription", viewModel.productsArray.value?.get(position)?.description)
+                bundle.putString("description_product", viewModel.productsArray.value?.get(position)?.description)
                 navController.navigate(R.id.action_customerMainPageFragment_to_productItemFragment, bundle)
             }
         })

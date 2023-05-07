@@ -5,10 +5,10 @@ package com.example.registration.model.product;
         private int id;
         private String name;
         private String description;
-        private String count;
+        private int count;
 
         public Product(){}
-        public Product(String name, String description, String count) {
+        public Product(String name, String description, int count) {
             this.name = name;
             this.description = description;
             this.count = count;
@@ -38,11 +38,11 @@ package com.example.registration.model.product;
             this.description = description;
         }
 
-        public String getCount() {
+        public int getCount() {
             return count;
         }
 
-        public void setCount(String count) {
+        public void setCount(int count) {
             this.count = count;
         }
 

@@ -18,4 +18,5 @@
     <string name="product_count">Product count</string>
     <string name="toBasket">В кошик</string>
     <string name="itemInMagazine">штук на складі:</string>
+    <string name="product_id_text">ID товару:</string>
 </resources>

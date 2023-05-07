@@ -74,11 +74,6 @@ class CustomerMainPageFragment : Fragment() {
                         it
                     )
                 }
-                viewModel.productsArray.value?.get(position)?.count?.let {
-                    bundle.putInt("count_product",
-                        it
-                    )
-                }
                 bundle.putString("name_product", viewModel.productsArray.value?.get(position)?.name)
                 bundle.putString("description_product", viewModel.productsArray.value?.get(position)?.description)
                 navController.navigate(R.id.action_customerMainPageFragment_to_productItemFragment, bundle)

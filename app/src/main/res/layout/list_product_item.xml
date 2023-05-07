@@ -29,16 +29,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/product_name"/>
 
-        <TextView
-            android:id="@+id/productListItem_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/product_count"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

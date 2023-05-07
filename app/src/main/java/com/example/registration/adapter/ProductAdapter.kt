@@ -39,7 +39,6 @@ open class ProductAdapter(private var dataSet: List<Product>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.view.product = dataSet[position]
         viewHolder.view.productListItemName.text = dataSet[position].name
-        viewHolder.view.productListItemCount.text = dataSet[position].count.toString()
     }
 
     // Return the size of your dataset (invoked by the layout manager)

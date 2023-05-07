@@ -25,7 +25,6 @@ class ProductItemFragment : Fragment() {
         // Inflate the layout for this fragment
         binding= FragmentProductItemBinding.inflate(inflater)
         binding.productName.text = arguments?.getString("name_product")
-        binding.productCount.text = arguments?.getInt("count_product").toString()
         binding.productDescription.text = arguments?.getString("description_product")
         binding.productId.text = arguments?.getInt("id_product").toString()
 

@@ -5,25 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
-import com.example.registration.model.product.Product
 import com.example.registration.repository.CustomerRepository
-import com.example.registration.repository.ProductRepository
 import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.customerApi.CustomerApi
-import com.example.registration.retrofit.productApi.ProductApi
 import com.example.registration.viewmodel.customer.CustomerMainPageViewModel
 import com.example.registration.viewmodel.customer.CustomerMainPageViewModelFactory
-import retrofit2.create
 
 
 class CustomerMainPageFragment : Fragment() {
@@ -45,13 +37,11 @@ class CustomerMainPageFragment : Fragment() {
         val retrofitService = RetrofitService()
 
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val productApi = retrofitService.retrofit.create(ProductApi::class.java)
 
         val customerRepository = CustomerRepository(customerApi)
-        val productRepository = ProductRepository(productApi)
 
         val viewModelFactory =
-            CustomerMainPageViewModelFactory(customerRepository, productRepository)
+            CustomerMainPageViewModelFactory(customerRepository)
 
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerMainPageViewModel::class.java]
         binding.customerMainPageViewModel = viewModel
@@ -70,13 +60,23 @@ class CustomerMainPageFragment : Fragment() {
                 //Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
                 viewModel.productsArray.value?.get(position)?.id?.let {
-                    bundle.putInt("id_product",
+                    bundle.putInt(
+                        "id_product",
                         it
                     )
                 }
+                viewModel.productsArray.value?.get(position)?.count?.let {
+                    bundle.putInt("count_product", it)
+                }
                 bundle.putString("name_product", viewModel.productsArray.value?.get(position)?.name)
-                bundle.putString("description_product", viewModel.productsArray.value?.get(position)?.description)
-                navController.navigate(R.id.action_customerMainPageFragment_to_productItemFragment, bundle)
+                bundle.putString(
+                    "description_product",
+                    viewModel.productsArray.value?.get(position)?.description
+                )
+                navController.navigate(
+                    R.id.action_customerMainPageFragment_to_productItemFragment,
+                    bundle
+                )
             }
         })
 

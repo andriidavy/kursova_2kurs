@@ -1,5 +1,6 @@
 package com.example.registration.repository
 
+import com.example.registration.model.product.Product
 import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.model.users.Customer
 import retrofit2.Call
@@ -16,7 +17,22 @@ class CustomerRepository(
     fun getCustomers(): Call<MutableList<Customer>> {
         return customerApi.customersAll
     }
+
+    fun getProducts(): Call<MutableList<Product>>{
+        return customerApi.productsAll
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 //ROOM DATABASE REALIZATION

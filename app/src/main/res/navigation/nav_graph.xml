@@ -61,5 +61,9 @@
             android:name="description_product"
             app:argType="string"
             android:defaultValue="description" />
+        <argument
+            android:name="count_product"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

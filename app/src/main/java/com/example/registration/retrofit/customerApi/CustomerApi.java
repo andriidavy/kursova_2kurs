@@ -1,5 +1,6 @@
 package com.example.registration.retrofit.customerApi;
 
+import com.example.registration.model.product.Product;
 import com.example.registration.model.users.Customer;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface CustomerApi {
 
     @POST("/customer/save")
     Call<Customer> save(@Body Customer customer);
+
+    @GET("/customer/product/get-all")
+    Call<List<Product>> getProductsAll();
 }

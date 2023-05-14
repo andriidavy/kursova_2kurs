@@ -15,7 +15,7 @@
     <string name="basket">Кошик</string>
     <string name="order_placed">Оформлені \nзамовлення</string>
     <string name="product_name">Product name</string>
-    <string name="product_count">Product count</string>
+    <string name="product_count">кількість:</string>
     <string name="toBasket">В кошик</string>
     <string name="itemInMagazine">штук на складі:</string>
     <string name="product_id_text">ID товару:</string>

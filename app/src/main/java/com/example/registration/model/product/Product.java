@@ -5,6 +5,7 @@ package com.example.registration.model.product;
         private int id;
         private String name;
         private String description;
+        private int count;
 
         public Product(){}
         public Product(String name, String description) {
@@ -36,12 +37,21 @@ package com.example.registration.model.product;
             this.description = description;
         }
 
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
         @Override
         public String toString() {
             return "Product{" +
                     "id=" + id +
                     ", name='" + name + '\'' +
                     ", description='" + description + '\'' +
+                    ", count=" + count +
                     '}';
         }
     }

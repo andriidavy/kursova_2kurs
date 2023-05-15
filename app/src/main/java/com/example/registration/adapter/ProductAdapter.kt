@@ -40,7 +40,7 @@ open class ProductAdapter(private var dataSet: List<Product>) :
         viewHolder.view.product = dataSet[position]
         viewHolder.view.productListItemName.text = dataSet[position].name
         viewHolder.view.idForProduct.text=dataSet[position].id.toString()
-        viewHolder.view.countForProduct.text =dataSet[position].count.toString()
+        viewHolder.view.countForProduct.text =dataSet[position].quantity.toString()
     }
 
     // Return the size of your dataset (invoked by the layout manager)

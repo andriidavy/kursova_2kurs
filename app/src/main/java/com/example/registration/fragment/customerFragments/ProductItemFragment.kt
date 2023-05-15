@@ -27,6 +27,7 @@ class ProductItemFragment : Fragment() {
         binding.productName.text = arguments?.getString("name_product")
         binding.productDescription.text = arguments?.getString("description_product")
         binding.productId.text = arguments?.getInt("id_product").toString()
+        binding.productQuantity.text = arguments?.getInt("quantity_product").toString()
 
         return binding.root
     }

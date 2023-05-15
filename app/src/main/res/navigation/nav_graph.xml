@@ -62,7 +62,7 @@
             app:argType="string"
             android:defaultValue="description" />
         <argument
-            android:name="count_product"
+            android:name="quantity_product"
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>

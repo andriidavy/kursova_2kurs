@@ -5,12 +5,13 @@ package com.example.registration.model.product;
         private int id;
         private String name;
         private String description;
-        private int count;
+        private int quantity;
 
         public Product(){}
-        public Product(String name, String description) {
+        public Product(String name, String description, int quantity) {
             this.name = name;
             this.description = description;
+            this.quantity = quantity;
         }
 
         public int getId() {
@@ -37,12 +38,12 @@ package com.example.registration.model.product;
             this.description = description;
         }
 
-        public int getCount() {
-            return count;
+        public int getQuantity() {
+            return quantity;
         }
 
-        public void setCount(int count) {
-            this.count = count;
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
         }
 
         @Override
@@ -51,7 +52,7 @@ package com.example.registration.model.product;
                     "id=" + id +
                     ", name='" + name + '\'' +
                     ", description='" + description + '\'' +
-                    ", count=" + count +
+                    ", quantity=" + quantity +
                     '}';
         }
     }

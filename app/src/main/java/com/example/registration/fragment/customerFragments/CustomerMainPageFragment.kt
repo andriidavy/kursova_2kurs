@@ -65,8 +65,8 @@ class CustomerMainPageFragment : Fragment() {
                         it
                     )
                 }
-                viewModel.productsArray.value?.get(position)?.count?.let {
-                    bundle.putInt("count_product", it)
+                viewModel.productsArray.value?.get(position)?.quantity?.let {
+                    bundle.putInt("quantity_product", it)
                 }
                 bundle.putString("name_product", viewModel.productsArray.value?.get(position)?.name)
                 bundle.putString(

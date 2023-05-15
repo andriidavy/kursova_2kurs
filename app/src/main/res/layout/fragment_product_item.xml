@@ -52,7 +52,7 @@
             />
 
         <TextView
-            android:id="@+id/product_count_text"
+            android:id="@+id/product_quantity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/product_id_text"
@@ -62,10 +62,10 @@
             android:text="@string/product_count" />
 
         <TextView
-            android:id="@+id/product_count"
+            android:id="@+id/product_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/product_count_text"
+            app:layout_constraintStart_toEndOf="@id/product_quantity_text"
             app:layout_constraintTop_toBottomOf="@id/product_id"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
             android:text="1"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/buttonAddToCart"
-            app:layout_constraintTop_toBottomOf="@id/product_count_text"
+            app:layout_constraintTop_toBottomOf="@id/product_quantity_text"
             tools:ignore="HardcodedText" />
 
         <Button
@@ -94,7 +94,7 @@
             android:text="@string/toBasket"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/product_count_text" />
+            app:layout_constraintTop_toBottomOf="@id/product_quantity_text" />
 
         <ScrollView
             android:id="@+id/product_description_scroll_view"

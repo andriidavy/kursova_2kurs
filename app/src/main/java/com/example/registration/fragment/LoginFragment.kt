@@ -1,5 +1,7 @@
 package com.example.registration.fragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.registration.repository.CustomerRepository
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -54,6 +56,9 @@ class LoginFragment : Fragment() {
         val navController = findNavController()
         // Устанавливаем NavController в ViewModel
         viewModel.setNavController(navController)
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        viewModel.setSharedPreferences(sharedPreferences)
+
 
         //set Spinner
         val users = arrayOf("Customer", "Employee", "Manager")

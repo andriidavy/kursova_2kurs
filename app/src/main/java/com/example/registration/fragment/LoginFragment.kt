@@ -35,7 +35,6 @@ class LoginFragment : Fragment() {
         val binding = FragmentLoginBinding.inflate(inflater)
 
         // Создаем экземпляр ViewModel
-//        val DAO = Database_s.getInstance(requireContext()).customerDAO
         val retrofitService = RetrofitService()
 
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)

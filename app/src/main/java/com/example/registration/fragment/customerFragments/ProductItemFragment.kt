@@ -10,13 +10,6 @@ import com.example.registration.databinding.FragmentProductItemBinding
 
 class ProductItemFragment : Fragment() {
     private lateinit var binding: FragmentProductItemBinding
-//    companion object{
-//        fun getNewInstance(args:Bundle?): ProductItemFragment{
-//            val productItemFragment = ProductItemFragment()
-//            productItemFragment.arguments = args
-//            return productItemFragment
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

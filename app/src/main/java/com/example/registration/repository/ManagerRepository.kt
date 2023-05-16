@@ -6,7 +6,7 @@ import retrofit2.Call
 
 class ManagerRepository(private val managerApi: ManagerApi) {
 
-    fun getManagers(): Call<MutableList<Manager>> {
-        return managerApi.managersAll
+    suspend fun getManagers(): List<Manager> {
+        return managerApi.getManagersAll()
     }
 }

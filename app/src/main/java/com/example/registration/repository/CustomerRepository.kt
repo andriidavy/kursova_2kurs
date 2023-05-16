@@ -10,16 +10,16 @@ class CustomerRepository(
     private val customerApi: CustomerApi
 ) {
 
-    fun save(customer: Customer): Call<Customer>? {
+    suspend fun save(customer: Customer): Customer {
         return customerApi.save(customer)
     }
 
-    fun getCustomers(): Call<MutableList<Customer>> {
-        return customerApi.customersAll
+    suspend fun getCustomers(): List<Customer> {
+        return customerApi.getCustomersAll()
     }
 
-    fun getProducts(): Call<MutableList<Product>>{
-        return customerApi.productsAll
+    suspend fun getProducts(): List<Product>{
+        return customerApi.getProductsAll()
     }
 }
 

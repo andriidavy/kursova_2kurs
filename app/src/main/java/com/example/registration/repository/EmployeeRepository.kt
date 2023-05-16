@@ -7,7 +7,7 @@ import retrofit2.Call
 
 class EmployeeRepository(private val employeeApi: EmployeeApi) {
 
-    fun getEmployees(): Call<MutableList<Employee>> {
-        return employeeApi.employeeAll
+    suspend fun getEmployees(): List<Employee> {
+        return employeeApi.getEmployeeAll()
     }
 }

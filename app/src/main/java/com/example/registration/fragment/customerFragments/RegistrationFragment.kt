@@ -23,7 +23,6 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentRegistrationBinding.inflate(inflater)
-//        val dao = Database_s.getInstance(requireContext()).customerDAO
         val retrofitService = RetrofitService()
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
         val repository = CustomerRepository(customerApi)

@@ -12,12 +12,7 @@ import com.example.registration.model.users.Manager
 import com.example.registration.repository.EmployeeRepository
 import com.example.registration.repository.ManagerRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.Arrays.setAll
+import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val customerRepository: CustomerRepository,
@@ -44,9 +39,9 @@ class LoginViewModel(
     val message: LiveData<String>
         get() = _message
 
-    private var customers: MutableList<Customer>? = null
-    private var employees: MutableList<Employee>? = null
-    private var managers: MutableList<Manager>? = null
+    private var customers: List<Customer>? = null
+    private var employees: List<Employee>? = null
+    private var managers: List<Manager>? = null
 
     //метод встановлення NavController, який викликається у фрагменті
     fun setNavController(navController: NavController) {
@@ -59,23 +54,12 @@ class LoginViewModel(
     }
 
 
-    //CUSTOMER LOGIN METHODS
-    private fun callGetAllCustomers() = customerRepository.getCustomers().enqueue(object :
-        Callback<MutableList<Customer>> {
-        override fun onResponse(
-            call: Call<MutableList<Customer>>,
-            response: Response<MutableList<Customer>>
-        ) {
-            setAllCustomers(response.body())
-        }
+//    //CUSTOMER LOGIN METHODS
 
-        override fun onFailure(call: Call<MutableList<Customer>>, t: Throwable) {
-            _message.value = "Failure call getCustomers"
+    private fun callGetAllCustomers() {
+        viewModelScope.launch(Dispatchers.IO) {
+        customers = customerRepository.getCustomers()
         }
-    })
-
-    private fun setAllCustomers(body: MutableList<Customer>?) {
-        customers = body
     }
 
     fun loginCustomer() {
@@ -87,8 +71,7 @@ class LoginViewModel(
             for (i in customersList.indices) {
                 if (email == customersList[i].email && password == customersList[i].password) {
                     val customerId = customersList[i].id
-                    sharedPreferences.edit().putInt("customerId", customerId)
-                    sharedPreferences.edit().apply()
+                    sharedPreferences.edit().putInt("customerId", customerId).apply()
                     navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
                     _message.value = "Вітаємо ${customersList[i].name} ${customersList[i].surname}"
                     return
@@ -105,22 +88,10 @@ class LoginViewModel(
 
 //EMPLOYEE LOGIN METHODS
 
-    private fun callGetAllEmployees() = employeeRepository.getEmployees().enqueue(object :
-        Callback<MutableList<Employee>> {
-        override fun onResponse(
-            call: Call<MutableList<Employee>>,
-            response: Response<MutableList<Employee>>
-        ) {
-            setAllEmployees(response.body())
+    private fun callGetAllEmployees() {
+        viewModelScope.launch(Dispatchers.IO) {
+            employees = employeeRepository.getEmployees()
         }
-
-        override fun onFailure(call: Call<MutableList<Employee>>, t: Throwable) {
-            _message.value = "Failure call getEmployees"
-        }
-    })
-
-    private fun setAllEmployees(body: MutableList<Employee>?) {
-        employees = body
     }
 
     fun loginEmployee() {
@@ -132,8 +103,7 @@ class LoginViewModel(
             for (i in employeesList.indices) {
                 if (email == employeesList[i].email && password == employeesList[i].password) {
                     val employeeId = employeesList[i].id
-                    sharedPreferences.edit().putInt("employeeId", employeeId)
-                    sharedPreferences.edit().apply()
+                    sharedPreferences.edit().putInt("employeeId", employeeId).apply()
                     navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
                     _message.value = "Вітаємо ${employeesList[i].name} ${employeesList[i].surname}"
                     return
@@ -150,22 +120,10 @@ class LoginViewModel(
 
 //MANAGER LOGIN METHODS
 
-    private fun callGetAllManagers() = managerRepository.getManagers().enqueue(object :
-        Callback<MutableList<Manager>> {
-        override fun onResponse(
-            call: Call<MutableList<Manager>>,
-            response: Response<MutableList<Manager>>
-        ) {
-            setAllManagers(response.body())
+    private fun callGetAllManagers() {
+        viewModelScope.launch(Dispatchers.IO) {
+            managers = managerRepository.getManagers()
         }
-
-        override fun onFailure(call: Call<MutableList<Manager>>, t: Throwable) {
-            _message.value = "Failure call getManagers"
-        }
-    })
-
-    private fun setAllManagers(body: MutableList<Manager>?) {
-        managers = body
     }
 
     fun loginManager() {
@@ -177,8 +135,7 @@ class LoginViewModel(
             for (i in managersList.indices) {
                 if (email == managersList[i].email && password == managersList[i].password) {
                     val managerId = managersList[i].id
-                    sharedPreferences.edit().putInt("managerId", managerId)
-                    sharedPreferences.edit().apply()
+                    sharedPreferences.edit().putInt("managerId", managerId).apply()
                     navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
                     _message.value = "Вітаємо ${managersList[i].name} ${managersList[i].surname}"
                     return
@@ -193,47 +150,3 @@ class LoginViewModel(
         }
     }
 }
-
-
-//REALIZATION FOR ROOM DATABASE
-//    private val _customers = MutableStateFlow<List<Customer>>(emptyList())
-//    val customers: StateFlow<List<Customer>> = _customers
-//
-//    fun doGetAllCustomers() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.customers.collect {
-//                _customers.value = it
-//            }
-//        }
-//    }
-//
-//    fun check() {
-//        doGetAllCustomers()
-//        customers.value?.let { customersList ->
-//            if (customersList.isNotEmpty()) {
-//                _message.value = "База даних НЕ порожня"
-//            } else {
-//                _message.value = "База даних порожня1"
-//            }
-//        } ?: run {
-//            _message.value = "База даних порожня2"
-//        }
-//    }
-//    fun login() {
-//    doGetAllCustomers()
-//        val email = inputEmail.value
-//        val password = inputPassword.value
-//        customers.value?.let { customersList ->
-//            for (i in customersList.indices) {
-//                    if (email == customersList[i].email && password == customersList[i].password) {
-//                        navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-//                        _message.value = "Вітаємо ${customersList[i].name} ${customersList[i].surname}"
-//                        return
-//                    }
-//                else{
-//                        _message.value = "Помилка входу, перевірте вхідні дані"
-//                        inputEmail.value = ""
-//                        inputPassword.value = ""
-//                }
-//            }
-//        }

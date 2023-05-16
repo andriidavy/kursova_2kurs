@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import androidx.navigation.NavController
 import com.example.registration.R
 import com.example.registration.model.users.Customer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 
@@ -42,24 +44,10 @@ class CustomerRegistrationViewModel(val repository: CustomerRepository) : ViewMo
         this.navController = navController
     }
 
-    private fun insertCustomer(customer: Customer) =
-        repository.save(customer)?.enqueue(object : retrofit2.Callback<Customer> {
-
-            override fun onResponse(call: Call<Customer>, response: Response<Customer>) {
-                if (response.isSuccessful) {
-                    message.value = "completed"
-                }
-                else {
-                    message.value ="error"
-                }
-            }
-
-            override fun onFailure(call: Call<Customer>, t: Throwable) {
-                message.value= "ERROR"
-            }
-        })
+    private fun insertCustomer(customer: Customer) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.save(customer)
+        }
+    }
 }
 
-
-
-//        viewModelScope.launch { repository.insert(customer) }

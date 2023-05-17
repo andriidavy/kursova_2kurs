@@ -1,4 +1,4 @@
-package com.example.registration.fragment.customerFragments
+package com.example.registration.fragment.customerFragments.mainPage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -44,6 +44,7 @@ class CustomerMainPageFragment : Fragment() {
             CustomerMainPageViewModelFactory(customerRepository)
 
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerMainPageViewModel::class.java]
+
         binding.customerMainPageViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -55,7 +56,7 @@ class CustomerMainPageFragment : Fragment() {
 
         viewModel.getAllProducts()
 
-        adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener {
+        adapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 //Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
@@ -79,6 +80,10 @@ class CustomerMainPageFragment : Fragment() {
                 )
             }
         })
+
+        binding.buttonToCart.setOnClickListener {
+            navController.navigate(R.id.action_customerMainPageFragment_to_customerCartPageFragment)
+        }
 
         return binding.root
     }

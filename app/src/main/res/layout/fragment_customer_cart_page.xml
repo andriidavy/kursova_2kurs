@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="customerMainPageViewModel"
-            type="com.example.registration.viewmodel.customer.CustomerMainPageViewModel" />
+            name="customerCartPageViewModel"
+            type="com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCustomerMainPage"
+        android:id="@+id/constraintLayoutCustomerCartPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.customerFragments.mainPage.CustomerMainPageFragment">
+        tools:context=".fragment.customerFragments.cart.CustomerCartPageFragment">
 
 
         <Button
-            android:id="@+id/button_to_cart"
+            android:id="@+id/button_clear_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cart"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            />
+            android:text="@string/clear_cart" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/productList_recyclerView"
+            android:id="@+id/cartList_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/button_to_cart"
+            app:layout_constraintTop_toBottomOf="@id/button_clear_cart"
             android:layout_marginTop="32dp"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

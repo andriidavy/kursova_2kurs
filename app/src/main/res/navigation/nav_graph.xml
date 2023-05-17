@@ -31,11 +31,14 @@
     </fragment>
     <fragment
         android:id="@+id/customerMainPageFragment"
-        android:name="com.example.registration.fragment.customerFragments.CustomerMainPageFragment"
+        android:name="com.example.registration.fragment.customerFragments.mainPage.CustomerMainPageFragment"
         android:label="CustomerMainPageFragment" >
         <action
             android:id="@+id/action_customerMainPageFragment_to_productItemFragment"
             app:destination="@id/productItemFragment" />
+        <action
+            android:id="@+id/action_customerMainPageFragment_to_customerCartPageFragment"
+            app:destination="@id/customerCartPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/employeeMainPageFragment"
@@ -47,7 +50,7 @@
         android:label="ManagerMainPageFragment" />
     <fragment
         android:id="@+id/productItemFragment"
-        android:name="com.example.registration.fragment.customerFragments.ProductItemFragment"
+        android:name="com.example.registration.fragment.customerFragments.mainPage.ProductItemFragment"
         android:label="ProductItemFragment" >
         <argument
             android:name="name_product"
@@ -66,4 +69,8 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/customerCartPageFragment"
+        android:name="com.example.registration.fragment.customerFragments.cart.CustomerCartPageFragment"
+        android:label="CustomerCartPageFragment" />
 </navigation>

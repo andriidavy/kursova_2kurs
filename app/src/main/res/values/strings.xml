@@ -20,4 +20,6 @@
     <string name="itemInMagazine">штук на складі:</string>
     <string name="product_id_text">ID товару:</string>
     <string name="id">ID:</string>
+    <string name="cart">Кошик</string>
+    <string name="clear_cart">Очистити корзину</string>
 </resources>

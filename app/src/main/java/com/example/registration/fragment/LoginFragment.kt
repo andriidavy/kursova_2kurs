@@ -55,8 +55,9 @@ class LoginFragment : Fragment() {
         val navController = findNavController()
         // Устанавливаем NavController в ViewModel
         viewModel.setNavController(navController)
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        viewModel.setSharedPreferences(sharedPreferences)
+        // Устанавливаем SharedPreferences для получение id пользователя с целью его использования в программе далее
+        val sharedLoginPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
+        viewModel.setSharedPreferences(sharedLoginPreferences)
 
 
         //set Spinner

@@ -70,8 +70,7 @@ class LoginViewModel(
         customers?.let { customersList ->
             for (i in customersList.indices) {
                 if (email == customersList[i].email && password == customersList[i].password) {
-                    val customerId = customersList[i].id
-                    sharedPreferences.edit().putInt("customerId", customerId).apply()
+                    sharedPreferences.edit().putInt("customerId", customersList[i].id).apply()
                     navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
                     _message.value = "Вітаємо ${customersList[i].name} ${customersList[i].surname}"
                     return
@@ -102,8 +101,7 @@ class LoginViewModel(
         employees?.let { employeesList ->
             for (i in employeesList.indices) {
                 if (email == employeesList[i].email && password == employeesList[i].password) {
-                    val employeeId = employeesList[i].id
-                    sharedPreferences.edit().putInt("employeeId", employeeId).apply()
+                    sharedPreferences.edit().putInt("employeeId", employeesList[i].id).apply()
                     navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
                     _message.value = "Вітаємо ${employeesList[i].name} ${employeesList[i].surname}"
                     return
@@ -134,8 +132,7 @@ class LoginViewModel(
         managers?.let { managersList ->
             for (i in managersList.indices) {
                 if (email == managersList[i].email && password == managersList[i].password) {
-                    val managerId = managersList[i].id
-                    sharedPreferences.edit().putInt("managerId", managerId).apply()
+                    sharedPreferences.edit().putInt("managerId", managersList[i].id).apply()
                     navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
                     _message.value = "Вітаємо ${managersList[i].name} ${managersList[i].surname}"
                     return

@@ -7,20 +7,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListProductItemBinding
 import com.example.registration.model.product.Product
 
-open class ProductAdapter(private var dataSet: List<Product>) :
+open class ProductAdapter(private var productList: List<Product>) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    private lateinit var mListener: onItemClickListener
+    private lateinit var mListener: OnItemClickListener
 
-    interface onItemClickListener {
+    interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: onItemClickListener){
+    fun setOnItemClickListener(listener: OnItemClickListener){
         mListener = listener
     }
 
-    class ViewHolder(var view: ListProductItemBinding, listener: onItemClickListener) : RecyclerView.ViewHolder(view.root) {
+    class ViewHolder(var view: ListProductItemBinding, listener: OnItemClickListener) : RecyclerView.ViewHolder(view.root) {
         init{
             view.root.setOnClickListener {
                 listener.onItemClick(adapterPosition)
@@ -37,18 +37,18 @@ open class ProductAdapter(private var dataSet: List<Product>) :
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.product = dataSet[position]
-        viewHolder.view.productListItemName.text = dataSet[position].name
-        viewHolder.view.idForProduct.text=dataSet[position].id.toString()
-        viewHolder.view.countForProduct.text =dataSet[position].quantity.toString()
+        viewHolder.view.product = productList[position]
+        viewHolder.view.productListItemName.text = productList[position].name
+        viewHolder.view.idForProduct.text=productList[position].id.toString()
+        viewHolder.view.countForProduct.text =productList[position].quantity.toString()
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = productList.size
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateProducts(newProducts: List<Product>) {
-        dataSet = newProducts
+        productList = newProducts
         notifyDataSetChanged()
     }
 

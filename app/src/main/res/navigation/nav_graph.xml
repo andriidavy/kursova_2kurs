@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_customerMainPageFragment_to_customerCartPageFragment"
             app:destination="@id/customerCartPageFragment" />
+        <action
+            android:id="@+id/action_customerMainPageFragment_to_customerCustomPageFragment"
+            app:destination="@id/customerCustomPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/employeeMainPageFragment"
@@ -73,4 +76,21 @@
         android:id="@+id/customerCartPageFragment"
         android:name="com.example.registration.fragment.customerFragments.cart.CustomerCartPageFragment"
         android:label="CustomerCartPageFragment" />
+    <fragment
+        android:id="@+id/customerCustomPageFragment"
+        android:name="com.example.registration.fragment.customerFragments.custom.CustomerCustomPageFragment"
+        android:label="CustomerCustomPageFragment" >
+        <action
+            android:id="@+id/action_customerCustomPageFragment_to_customProductDetailFragment"
+            app:destination="@id/customProductDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customProductDetailFragment"
+        android:name="com.example.registration.fragment.customerFragments.custom.CustomProductDetailFragment"
+        android:label="CustomProductDetailFragment" >
+        <argument
+            android:name="customProductDTOList"
+            app:argType="android.os.Parcelable[]"
+            app:nullable="true" />
+    </fragment>
 </navigation>

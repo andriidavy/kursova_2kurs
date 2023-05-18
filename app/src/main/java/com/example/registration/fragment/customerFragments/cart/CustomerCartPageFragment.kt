@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
@@ -34,28 +35,35 @@ class CustomerCartPageFragment : Fragment() {
         binding.cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         val retrofitService = RetrofitService()
-
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-
         val customerRepository = CustomerRepository(customerApi)
-
         val viewModelFactory =
             CustomerCartPageViewModelFactory(customerRepository)
-
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerCartPageViewModel::class.java]
 
-        viewModel.cartProductsArray.observe(viewLifecycleOwner) { products ->
-            adapter.updateProducts(products)
-        }
+        binding.lifecycleOwner = this
 
-        viewModel.getAllCartProducts()
+        viewModel.cartProductsArray.observe(viewLifecycleOwner) { cart ->
+            adapter.updateCart(cart)
+        }
 
         val sharedCustomerIdPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
         viewModel.setSharedPreferences(sharedCustomerIdPreferences)
 
+        viewModel.getAllCartProducts()
+
         binding.buttonClearCart.setOnClickListener {
             viewModel.clearCart()
         }
+
+        binding.buttonCreateCustom.setOnClickListener {
+            viewModel.createCustom()
+        }
+
+        viewModel.message.observe(
+            viewLifecycleOwner
+        )
+        { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
 
         return binding.root
     }

@@ -35,14 +35,10 @@ class CustomerMainPageFragment : Fragment() {
         binding.productListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         val retrofitService = RetrofitService()
-
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-
         val customerRepository = CustomerRepository(customerApi)
-
         val viewModelFactory =
             CustomerMainPageViewModelFactory(customerRepository)
-
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerMainPageViewModel::class.java]
 
         binding.customerMainPageViewModel = viewModel
@@ -83,6 +79,10 @@ class CustomerMainPageFragment : Fragment() {
 
         binding.buttonToCart.setOnClickListener {
             navController.navigate(R.id.action_customerMainPageFragment_to_customerCartPageFragment)
+        }
+
+        binding.buttonToCustoms.setOnClickListener {
+            navController.navigate(R.id.action_customerMainPageFragment_to_customerCustomPageFragment)
         }
 
         return binding.root

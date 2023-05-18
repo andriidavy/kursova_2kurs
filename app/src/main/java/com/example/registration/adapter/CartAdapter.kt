@@ -31,8 +31,8 @@ open class CartAdapter (private var cartProductList: List<CartProduct>):
     override fun getItemCount() = cartProductList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateProducts(newProducts: List<CartProduct>) {
-        cartProductList = newProducts
+    fun updateCart(newCart: List<CartProduct>) {
+        cartProductList = newCart
         notifyDataSetChanged()
     }
 

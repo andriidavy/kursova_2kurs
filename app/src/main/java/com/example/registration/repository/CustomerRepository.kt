@@ -1,11 +1,10 @@
 package com.example.registration.repository
 
 import com.example.registration.model.cart.CartProduct
+import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.model.users.Customer
-import retrofit2.Call
-import retrofit2.http.Query
 
 class CustomerRepository(
 //    private val dao: CustomerDAO
@@ -28,8 +27,16 @@ class CustomerRepository(
         return customerApi.getCartProducts(customerId)
     }
 
+    suspend fun getCustomsForCustomer(customerId: Int): List<CustomDTO>{
+        return customerApi.getCustomsForCustomer(customerId)
+    }
+
     suspend fun addProductToCart(customerId: Int, productId: Int, quantity: Int){
         return customerApi.addProductToCart(customerId, productId, quantity)
+    }
+
+    suspend fun createCustom(customerId: Int){
+        return customerApi.createCustom(customerId)
     }
 
     suspend fun removeProductFromCart(customerId: Int, productId: Int){

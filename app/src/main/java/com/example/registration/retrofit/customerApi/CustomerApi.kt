@@ -1,6 +1,7 @@
 package com.example.registration.retrofit.customerApi
 
 import com.example.registration.model.cart.CartProduct
+import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.users.Customer
 import retrofit2.http.Body
@@ -22,12 +23,18 @@ interface CustomerApi {
     @GET("/customer/get-cart")
     suspend fun getCartProducts(@Query("customerId") customerId: Int): List<CartProduct>
 
+    @GET("/customer/get-customs")
+    suspend fun getCustomsForCustomer(@Query("customerId") customerId: Int): List<CustomDTO>
+
     @POST("/customer/cart/add-product-to-cart")
     suspend fun addProductToCart(
         @Query("customerId") customerId: Int,
         @Query("productId") productId: Int,
         @Query("quantity") quantity: Int
     )
+
+    @POST("/customer/create-custom")
+    suspend fun createCustom(@Query("customerId") customerId: Int)
 
     @DELETE("/customer/cart/remove-product-by-id")
     suspend fun removeProductFromCart(

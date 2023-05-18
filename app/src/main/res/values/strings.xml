@@ -21,5 +21,9 @@
     <string name="product_id_text">ID товару:</string>
     <string name="id">ID:</string>
     <string name="cart">Кошик</string>
-    <string name="clear_cart">Очистити корзину</string>
+    <string name="clear_cart">Очистити\nкорзину</string>
+    <string name="custom_text">Замовлення №</string>
+    <string name="status_text">Статус:</string>
+    <string name="create_custom_text">Оформити\nзамовлення</string>
+    <string name="my_customs_text">Мої замовлення</string>
 </resources>

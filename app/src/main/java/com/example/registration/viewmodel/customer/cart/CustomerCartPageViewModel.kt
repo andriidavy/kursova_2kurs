@@ -19,6 +19,10 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
     val cartProductsArray: LiveData<List<CartProduct>>
         get() = _cartProductsArray
 
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String>
+        get() = _message
+
 
     fun setSharedPreferences(sharedPreferences: SharedPreferences) {
         this.sharedPreferences = sharedPreferences
@@ -37,9 +41,17 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
         return cartProductsArray
     }
 
+    fun createCustom(){
+        viewModelScope.launch(Dispatchers.IO){
+            customerRepository.createCustom(customerId)
+        }
+        _message.value = "Замовлення створено"
+    }
+
     fun clearCart() {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.clearCart(customerId)
         }
+        _message.value = "Корзину очищено"
     }
 }

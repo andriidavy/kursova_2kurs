@@ -2,13 +2,13 @@ package com.example.registration.model.custom;
 
 import java.util.List;
 
-public class Custom {
+public class CustomDTO {
     private int customId;
     private int customerId;
     private String customerName;
     private String customerSurname;
     private String status;
-    private List<CustomProduct> customProductList;
+    private List<CustomProductDTO> customProductDTOList;
 
     public int getCustomId() {
         return customId;
@@ -42,12 +42,12 @@ public class Custom {
         this.customerSurname = customerSurname;
     }
 
-    public List<CustomProduct> getCustomProductList() {
-        return customProductList;
+    public List<CustomProductDTO> getCustomProductList() {
+        return customProductDTOList;
     }
 
-    public void setCustomProductList(List<CustomProduct> customProductList) {
-        this.customProductList = customProductList;
+    public void setCustomProductList(List<CustomProductDTO> customProductDTOList) {
+        this.customProductDTOList = customProductDTOList;
     }
 
     public String getStatus() {

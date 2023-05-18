@@ -19,6 +19,13 @@ import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewMode
 import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModelFactory
 
 class CartProductFragment : Fragment() {
+
+
+
+    //NOT USABLE NOW
+
+
+
     private lateinit var binding: ListCartProductItemBinding
     private lateinit var viewModel: CustomerCartItemViewModel
     override fun onCreateView(
@@ -45,7 +52,7 @@ class CartProductFragment : Fragment() {
         binding.buttonDeleteItem.setOnClickListener {
             val productId: Int = Integer.parseInt(binding.idForProduct.text.toString())
             viewModel.removeProductFromCart(productId)
-            Toast.makeText(requireContext(), "Item delete", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Item delete", Toast.LENGTH_SHORT).show()
         }
         return binding.root
     }

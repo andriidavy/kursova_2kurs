@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.registration.databinding.FragmentProductItemBinding
 import com.example.registration.repository.CustomerRepository
@@ -53,6 +54,11 @@ class ProductItemFragment : Fragment() {
         binding.productDescription.text = arguments?.getString("description_product")
         binding.productId.text = arguments?.getInt("id_product").toString()
         binding.productQuantity.text = arguments?.getInt("quantity_product").toString()
+
+        viewModel.message.observe(
+            viewLifecycleOwner
+        )
+        { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
 
         return binding.root
     }

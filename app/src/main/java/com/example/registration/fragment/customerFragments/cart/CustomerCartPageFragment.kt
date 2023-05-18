@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.registration.R
 import com.example.registration.adapter.CartAdapter
-import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerCartPageBinding
 import com.example.registration.repository.CustomerRepository
 import com.example.registration.retrofit.RetrofitService
@@ -43,7 +41,7 @@ class CustomerCartPageFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        viewModel.cartProductsArray.observe(viewLifecycleOwner) { cart ->
+        viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
             adapter.updateCart(cart)
         }
 

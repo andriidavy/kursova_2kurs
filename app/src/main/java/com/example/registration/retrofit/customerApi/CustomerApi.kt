@@ -1,6 +1,6 @@
 package com.example.registration.retrofit.customerApi
 
-import com.example.registration.model.cart.CartProduct
+import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.users.Customer
@@ -21,7 +21,7 @@ interface CustomerApi {
     suspend fun getProductsAll(): List<Product>
 
     @GET("/customer/get-cart")
-    suspend fun getCartProducts(@Query("customerId") customerId: Int): List<CartProduct>
+    suspend fun getCartProducts(@Query("customerId") customerId: Int): List<CartProductDTO>
 
     @GET("/customer/get-customs")
     suspend fun getCustomsForCustomer(@Query("customerId") customerId: Int): List<CustomDTO>

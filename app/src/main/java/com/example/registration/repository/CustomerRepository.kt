@@ -1,6 +1,6 @@
 package com.example.registration.repository
 
-import com.example.registration.model.cart.CartProduct
+import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.retrofit.customerApi.CustomerApi
@@ -23,7 +23,7 @@ class CustomerRepository(
         return customerApi.getProductsAll()
     }
 
-    suspend fun getCartProducts(customerId: Int): List<CartProduct>{
+    suspend fun getCartProducts(customerId: Int): List<CartProductDTO>{
         return customerApi.getCartProducts(customerId)
     }
 

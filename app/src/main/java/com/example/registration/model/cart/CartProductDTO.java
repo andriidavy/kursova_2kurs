@@ -1,6 +1,6 @@
 package com.example.registration.model.cart;
 
-public class CartProduct {
+public class CartProductDTO {
     private int productId;
     private String productName;
     private int quantity;

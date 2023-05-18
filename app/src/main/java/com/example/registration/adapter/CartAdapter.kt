@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListCartProductItemBinding
-import com.example.registration.model.cart.CartProduct
+import com.example.registration.model.cart.CartProductDTO
 
-open class CartAdapter (private var cartProductList: List<CartProduct>):
+open class CartAdapter (private var cartProductDTOList: List<CartProductDTO>):
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
     class ViewHolder(var view: ListCartProductItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -21,18 +21,18 @@ open class CartAdapter (private var cartProductList: List<CartProduct>):
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.cartProduct = cartProductList[position]
-        viewHolder.view.productListItemName.text = cartProductList[position].productName
-        viewHolder.view.idForProduct.text=cartProductList[position].productId.toString()
-        viewHolder.view.countForProduct.text =cartProductList[position].quantity.toString()
+        viewHolder.view.cartProduct = cartProductDTOList[position]
+        viewHolder.view.productListItemName.text = cartProductDTOList[position].productName
+        viewHolder.view.idForProduct.text=cartProductDTOList[position].productId.toString()
+        viewHolder.view.countForProduct.text =cartProductDTOList[position].quantity.toString()
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = cartProductList.size
+    override fun getItemCount() = cartProductDTOList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateCart(newCart: List<CartProduct>) {
-        cartProductList = newCart
+    fun updateCart(newCart: List<CartProductDTO>) {
+        cartProductDTOList = newCart
         notifyDataSetChanged()
     }
 

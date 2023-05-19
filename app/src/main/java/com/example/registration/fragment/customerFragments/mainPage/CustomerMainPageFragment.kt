@@ -85,6 +85,10 @@ class CustomerMainPageFragment : Fragment() {
             navController.navigate(R.id.action_customerMainPageFragment_to_customerCustomPageFragment)
         }
 
+        binding.buttonToProfile.setOnClickListener {
+            navController.navigate(R.id.action_customerMainPageFragment_to_customerProfilePageFragment)
+        }
+
         return binding.root
     }
 

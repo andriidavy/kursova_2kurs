@@ -34,22 +34,32 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getCartProducts(customerId)
             withContext(Dispatchers.Main) {
-                _cartProductsArrayDTO.value = result
+                _cartProductsArrayDTO.postValue(result)
             }
         }
         return cartProductsArrayDTO
     }
 
-    fun createCustom(){
-        viewModelScope.launch(Dispatchers.IO){
+    fun createCustom() {
+        viewModelScope.launch(Dispatchers.IO) {
             customerRepository.createCustom(customerId)
+            getAllCartProducts()
         }
         _message.value = "Замовлення створено"
+    }
+
+    fun removeProductFromCart(productId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            customerRepository.removeProductFromCart(customerId, productId)
+            getAllCartProducts()
+        }
+        _message.value = "Товар видалено з корзини"
     }
 
     fun clearCart() {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.clearCart(customerId)
+            getAllCartProducts()
         }
         _message.value = "Корзину очищено"
     }

@@ -28,9 +28,6 @@ class CustomerCartPageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCustomerCartPageBinding.inflate(inflater)
-        adapter = CartAdapter(emptyList())
-        binding.cartListRecyclerView.adapter = adapter
-        binding.cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         val retrofitService = RetrofitService()
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
@@ -39,14 +36,18 @@ class CustomerCartPageFragment : Fragment() {
             CustomerCartPageViewModelFactory(customerRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerCartPageViewModel::class.java]
 
+        val sharedCustomerIdPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
+        viewModel.setSharedPreferences(sharedCustomerIdPreferences)
+
+        adapter = CartAdapter(emptyList(), viewModel)
+        binding.cartListRecyclerView.adapter = adapter
+        binding.cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
+
         binding.lifecycleOwner = this
 
         viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
             adapter.updateCart(cart)
         }
-
-        val sharedCustomerIdPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
-        viewModel.setSharedPreferences(sharedCustomerIdPreferences)
 
         viewModel.getAllCartProducts()
 

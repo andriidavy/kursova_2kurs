@@ -18,12 +18,22 @@
 
 
         <Button
+            android:id="@+id/button_to_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_profile_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="16dp"
+            />
+
+        <Button
             android:id="@+id/button_to_customs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_customs_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_to_cart"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
             />
 
@@ -41,7 +51,7 @@
             android:id="@+id/productList_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/button_to_cart"
+            app:layout_constraintTop_toBottomOf="@+id/button_to_customs"
             android:layout_marginTop="32dp"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

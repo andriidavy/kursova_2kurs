@@ -5,6 +5,8 @@ import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.model.users.Customer
+import com.example.registration.model.users.CustomerProfileDTO
+import retrofit2.http.Body
 
 class CustomerRepository(
 //    private val dao: CustomerDAO
@@ -17,6 +19,10 @@ class CustomerRepository(
 
     suspend fun getCustomers(): List<Customer> {
         return customerApi.getCustomersAll()
+    }
+
+    suspend fun getCustomerProfileById(customerId: Int): CustomerProfileDTO{
+        return customerApi.getCustomerProfileById(customerId)
     }
 
     suspend fun getProducts(): List<Product>{

@@ -7,6 +7,11 @@
         <variable
             name="cartProduct"
             type="com.example.registration.model.cart.CartProductDTO" />
+
+        <variable
+            name="customerCartPageViewModel"
+            type ="com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel"
+            />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

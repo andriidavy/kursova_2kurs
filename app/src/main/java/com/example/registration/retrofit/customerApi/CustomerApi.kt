@@ -4,6 +4,7 @@ import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.users.Customer
+import com.example.registration.model.users.CustomerProfileDTO
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -13,6 +14,9 @@ import retrofit2.http.Query
 interface CustomerApi {
     @GET("/customer/get-all")
     suspend fun getCustomersAll(): List<Customer>
+
+    @GET("/customer/get-customer-by-id")
+    suspend fun getCustomerProfileById(@Query("customerId") customerId: Int): CustomerProfileDTO
 
     @POST("/customer/save")
     suspend fun save(@Body customer: Customer): Customer

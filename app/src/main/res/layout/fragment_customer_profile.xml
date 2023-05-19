@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayoutCustomerProfilePageFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.customerFragments.profile.CustomerProfilePageFragment">
+
+
+    <TextView
+        android:id="@+id/customer_profile_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_profile_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="40dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/customer_id_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/customer_profile_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/id" />
+
+    <TextView
+        android:id="@+id/customer_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/customer_id_text"
+        app:layout_constraintTop_toBottomOf="@id/customer_profile_text"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/customer_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/customer_id_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/customer_name" />
+
+    <TextView
+        android:id="@+id/customer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/customer_name_text"
+        app:layout_constraintTop_toBottomOf="@id/customer_id_text"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        tools:text="NAME" />
+
+    <TextView
+        android:id="@+id/customer_surname_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/customer_name_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/customer_surname" />
+
+    <TextView
+        android:id="@+id/customer_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/customer_surname_text"
+        app:layout_constraintTop_toBottomOf="@id/customer_name_text"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        tools:text="SURNAME" />
+
+    <TextView
+        android:id="@+id/customer_email_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/customer_surname_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/customer_email" />
+
+    <TextView
+        android:id="@+id/customer_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/customer_email_text"
+        app:layout_constraintTop_toBottomOf="@id/customer_surname_text"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        tools:text="EMAIL" />
+
+    <Button
+        android:id="@+id/button_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="40dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

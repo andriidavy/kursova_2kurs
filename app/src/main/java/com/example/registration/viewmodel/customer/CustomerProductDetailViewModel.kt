@@ -14,7 +14,7 @@ class CustomerProductDetailViewModel(private val customerRepository: CustomerRep
     private val _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
-    
+
     fun addProductToCart(customerId: Int, productId: Int, quantity: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.addProductToCart(customerId, productId, quantity)

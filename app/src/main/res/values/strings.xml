@@ -25,5 +25,11 @@
     <string name="custom_text">Замовлення №</string>
     <string name="status_text">Статус:</string>
     <string name="create_custom_text">Оформити\nзамовлення</string>
-    <string name="my_customs_text">Мої замовлення</string>
+    <string name="my_customs_text">Мої\nзамовлення</string>
+    <string name="user_profile_text">Профіль користувача</string>
+    <string name="customer_name">Ім\'я:</string>
+    <string name="customer_surname">Прізвище:</string>
+    <string name="customer_email">Email:</string>
+    <string name="logout">Вийти з аккаунту</string>
+    <string name="my_profile_text">Мій профіль</string>
 </resources>

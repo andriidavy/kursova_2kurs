@@ -6,19 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentEmployeeMainPageBinding
 import com.example.registration.databinding.FragmentManagerMainPageBinding
 
 class ManagerMainPageFragment : Fragment() {
-
-
+private lateinit var binding: FragmentManagerMainPageBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentManagerMainPageBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_manager_main_page, container, false)
+        binding = FragmentManagerMainPageBinding.inflate(inflater)
+
+        val navController = findNavController()
+
+        binding.buttonToCreatedCustoms.setOnClickListener {
+            navController.navigate(R.id.action_managerMainPageFragment_to_managerCreatedCustomsPageFragment)
+        }
+
         return binding.root
     }
 

@@ -14,18 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragment.managerFragments.ManagerMainPageFragment">
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="116dp"
-            android:layout_height="117dp"
-            android:text="МЕНЕДЖЕР"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+
+        <Button
+            android:id="@+id/button_to_created_customs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/created_customs_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="30dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

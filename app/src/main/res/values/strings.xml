@@ -32,4 +32,8 @@
     <string name="customer_email">Email:</string>
     <string name="logout">Вийти з аккаунту</string>
     <string name="my_profile_text">Мій профіль</string>
+    <string name="created_customs_text">Створені замовлення</string>
+    <string name="assign_employee_text">передати\nробітнику</string>
+    <string name="employee_id_text">Робітник №</string>
+    <string name="choose_text">Призначити</string>
 </resources>

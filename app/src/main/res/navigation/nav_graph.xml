@@ -53,7 +53,11 @@
     <fragment
         android:id="@+id/managerMainPageFragment"
         android:name="com.example.registration.fragment.managerFragments.ManagerMainPageFragment"
-        android:label="ManagerMainPageFragment" />
+        android:label="ManagerMainPageFragment" >
+        <action
+            android:id="@+id/action_managerMainPageFragment_to_managerCreatedCustomsPageFragment"
+            app:destination="@id/managerCreatedCustomsPageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productItemFragment"
         android:name="com.example.registration.fragment.customerFragments.mainPage.ProductItemFragment"
@@ -103,5 +107,32 @@
         <action
             android:id="@+id/action_customerProfilePageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/managerCreatedCustomsPageFragment"
+        android:name="com.example.registration.fragment.managerFragments.createdCustoms.ManagerCreatedCustomsPageFragment"
+        android:label="ManagerCreatedCustomsPageFragment" >
+        <action
+            android:id="@+id/action_managerCreatedCustomsPageFragment_to_createdCustomsProductDetailFragment"
+            app:destination="@id/createdCustomsProductDetailFragment" />
+        <action
+            android:id="@+id/action_managerCreatedCustomsPageFragment_to_employeesListForAssigneeToCustomFragment"
+            app:destination="@id/employeesListForAssigneeToCustomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createdCustomsProductDetailFragment"
+        android:name="com.example.registration.fragment.managerFragments.createdCustoms.CreatedCustomsProductDetailFragment"
+        android:label="CreatedCustomsProductDetailFragment" />
+    <fragment
+        android:id="@+id/employeesListForAssigneeToCustomFragment"
+        android:name="com.example.registration.fragment.managerFragments.createdCustoms.EmployeesListForAssigneeToCustomFragment"
+        android:label="EmployeesListForAssigneeToCustomFragment" >
+        <argument
+            android:name="customId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_employeesListForAssigneeToCustomFragment_to_managerCreatedCustomsPageFragment"
+            app:destination="@id/managerCreatedCustomsPageFragment" />
     </fragment>
 </navigation>

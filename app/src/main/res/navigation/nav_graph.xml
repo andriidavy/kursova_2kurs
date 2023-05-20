@@ -49,7 +49,11 @@
     <fragment
         android:id="@+id/employeeMainPageFragment"
         android:name="com.example.registration.fragment.employeeFragments.EmployeeMainPageFragment"
-        android:label="EmployeeMainPageFragment" />
+        android:label="EmployeeMainPageFragment" >
+        <action
+            android:id="@+id/action_employeeMainPageFragment_to_employeeCustomsInProgressFragment"
+            app:destination="@id/employeeCustomsInProgressFragment" />
+    </fragment>
     <fragment
         android:id="@+id/managerMainPageFragment"
         android:name="com.example.registration.fragment.managerFragments.ManagerMainPageFragment"
@@ -134,5 +138,29 @@
         <action
             android:id="@+id/action_employeesListForAssigneeToCustomFragment_to_managerCreatedCustomsPageFragment"
             app:destination="@id/managerCreatedCustomsPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeCustomsInProgressFragment"
+        android:name="com.example.registration.fragment.employeeFragments.customsInProgress.EmployeeCustomsInProgressFragment"
+        android:label="EmployeeCustomsInProgressFragment" >
+        <action
+            android:id="@+id/action_employeeCustomsInProgressFragment_to_customInProgressProductDetailFragment"
+            app:destination="@id/customInProgressProductDetailFragment" />
+        <action
+            android:id="@+id/action_employeeCustomsInProgressFragment_to_creatingReportForCustomFragment"
+            app:destination="@id/creatingReportForCustomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customInProgressProductDetailFragment"
+        android:name="com.example.registration.fragment.employeeFragments.customsInProgress.CustomInProgressProductDetailFragment"
+        android:label="CustomInProgressProductDetailFragment" />
+    <fragment
+        android:id="@+id/creatingReportForCustomFragment"
+        android:name="com.example.registration.fragment.employeeFragments.customsInProgress.report.CreatingReportForCustomFragment"
+        android:label="CreatingReportForCustomFragment" >
+        <argument
+            android:name="customInProgressId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

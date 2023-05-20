@@ -42,4 +42,10 @@
     <string name="report_id_text">для замовлення №</string>
     <string name="report_text_hint">report text</string>
     <string name="send_report">Відправити звіт</string>
+    <string name="my_customs">Мої замовлення:</string>
+    <string name="processed_customs">Виконані замовлення</string>
+    <string name="my_reports">Мої звіти:</string>
+    <string name="rejected_reports">Відхилені звіти</string>
+    <string name="accepted_reports">Прийняті звіти</string>
+    <string name="waiting_reports">Звіти в очікуванні</string>
 </resources>

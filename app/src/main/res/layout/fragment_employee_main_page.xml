@@ -15,16 +15,82 @@
         android:layout_height="match_parent"
         tools:context=".fragment.employeeFragments.EmployeeMainPageFragment">
 
+        <TextView
+            android:id="@+id/my_customs_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_customs"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            />
+
         <Button
             android:id="@+id/button_to_custom_in_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:text="@string/custom_in_progress_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/my_customs_text" />
+
+        <Button
+            android:id="@+id/button_to_custom_processed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/processed_customs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_to_custom_in_progress"
+            android:layout_margin="20dp"
             />
+
+        <TextView
+            android:id="@+id/my_reports_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_reports"
+            app:layout_constraintTop_toBottomOf="@id/button_to_custom_processed"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:id="@+id/button_to_rejected_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rejected_reports"
+            app:layout_constraintTop_toBottomOf="@id/my_reports_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"
+            />
+
+        <Button
+            android:id="@+id/button_to_accepted_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accepted_reports"
+            app:layout_constraintTop_toBottomOf="@id/button_to_rejected_report"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp" />
+
+        <Button
+            android:id="@+id/button_to_waiting_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/waiting_reports"
+            app:layout_constraintTop_toBottomOf="@id/button_to_accepted_report"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

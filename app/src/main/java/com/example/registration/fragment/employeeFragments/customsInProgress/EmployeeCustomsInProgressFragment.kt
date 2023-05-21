@@ -62,6 +62,7 @@ class EmployeeCustomsInProgressFragment : Fragment() {
 
         viewModel.getInProgressCustomsForEmployee()
 
+
         fun createReportToCustom(customId: Int) {
             val bundle = Bundle()
             bundle.putInt("customInProgressId", customId)

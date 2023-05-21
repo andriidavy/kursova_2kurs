@@ -2,6 +2,7 @@ package com.example.registration.adapter.custom
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListInProgressCustomItemBinding
@@ -64,7 +65,9 @@ class EmployeeCustomInProgressAdapter (
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.view.idForCustom.text = customDTOList[position].customId.toString()
         viewHolder.view.statusForCustom.text = customDTOList[position].status
-
+        if(viewHolder.view.statusForCustom.text == "WAITING_RESPONSE"){
+            viewHolder.view.buttonCreateReport.visibility = View.GONE
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

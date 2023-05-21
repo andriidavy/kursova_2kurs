@@ -23,6 +23,9 @@ interface EmployeeApi {
     @GET("/employee/custom/get-waiting")
     suspend fun getAllWaitingReportsForEmployee(@Query("employeeId") employeeId: Int): List<ReportDTO>
 
+    @GET("/employee/custom/get-rejected")
+    suspend fun getAllRejectedReportsForEmployee(@Query("employeeId") employeeId: Int) : List<ReportDTO>
+
     @POST("/employee/custom/create-report")
     suspend fun createReport(
         @Query("employeeId") employeeId: Int,

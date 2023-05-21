@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_employeeMainPageFragment_to_employeeReportsInWaitingFragment"
             app:destination="@id/employeeReportsInWaitingFragment" />
+        <action
+            android:id="@+id/action_employeeMainPageFragment_to_employeeReportsRejectedFragment"
+            app:destination="@id/employeeReportsRejectedFragment" />
     </fragment>
     <fragment
         android:id="@+id/managerMainPageFragment"
@@ -202,6 +205,14 @@
         android:label="EmployeeReportsInWaitingFragment" >
         <action
             android:id="@+id/action_employeeReportsInWaitingFragment_to_reportDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeReportsRejectedFragment"
+        android:name="com.example.registration.fragment.employeeFragments.reportsRejected.EmployeeReportsRejectedFragment"
+        android:label="EmployeeReportsRejectedFragment" >
+        <action
+            android:id="@+id/action_employeeReportsRejectedFragment_to_reportDetailFragment"
             app:destination="@id/reportDetailFragment" />
     </fragment>
 </navigation>

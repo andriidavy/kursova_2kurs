@@ -30,6 +30,10 @@ class EmployeeRepository(private val employeeApi: EmployeeApi) {
         return employeeApi.getAllWaitingReportsForEmployee(employeeId)
     }
 
+    suspend fun getAllRejectedReportsForEmployee(employeeId: Int) : List<ReportDTO>{
+        return employeeApi.getAllRejectedReportsForEmployee(employeeId)
+    }
+
     suspend fun createReport(
         employeeId: Int,
         customId: Int,

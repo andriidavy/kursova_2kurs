@@ -25,6 +25,10 @@ class EmployeeMainPageFragment : Fragment() {
             navController.navigate(R.id.action_employeeMainPageFragment_to_employeeCustomsInProgressFragment)
         }
 
+        binding.buttonToCustomProcessed.setOnClickListener {
+            navController.navigate(R.id.action_employeeMainPageFragment_to_employeeCustomsProcessedFragment)
+        }
+
         return binding.root
     }
 

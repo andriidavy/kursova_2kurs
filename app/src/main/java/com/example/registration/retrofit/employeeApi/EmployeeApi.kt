@@ -13,10 +13,16 @@ interface EmployeeApi {
     @GET("/employee/custom/get-in-processing")
     suspend fun getProcessingCustomsForEmployee(@Query("employeeId") employeeId: Int): List<CustomDTO>
 
+    @GET("/employee/custom/get-processed")
+    suspend fun getProcessedCustomsForEmployee(@Query("employeeId") employeeId: Int): List<CustomDTO>
+
     @POST("/employee/custom/create-report")
     suspend fun createReport(
         @Query("employeeId") employeeId: Int,
         @Query("customId") customId: Int,
         @Query("reportText") reportText: String
     )
+
+    @POST("/employee/custom/set-sent-status")
+    suspend fun setCustomSent(@Query("customId") customId: Int)
 }

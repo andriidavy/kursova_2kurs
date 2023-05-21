@@ -17,6 +17,10 @@ class EmployeeRepository(private val employeeApi: EmployeeApi) {
         return employeeApi.getProcessingCustomsForEmployee(employeeId)
     }
 
+    suspend fun getProcessedCustomsForEmployee(employeeId: Int): List<CustomDTO> {
+        return employeeApi.getProcessedCustomsForEmployee(employeeId)
+    }
+
     suspend fun createReport(
         employeeId: Int,
         customId: Int,
@@ -25,4 +29,7 @@ class EmployeeRepository(private val employeeApi: EmployeeApi) {
         return employeeApi.createReport(employeeId,customId, reportText)
     }
 
+    suspend fun setCustomSent(customId: Int){
+        return employeeApi.setCustomSent(customId)
+    }
 }

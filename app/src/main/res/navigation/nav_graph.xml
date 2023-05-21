@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_employeeMainPageFragment_to_employeeCustomsInProgressFragment"
             app:destination="@id/employeeCustomsInProgressFragment" />
+        <action
+            android:id="@+id/action_employeeMainPageFragment_to_employeeCustomsProcessedFragment"
+            app:destination="@id/employeeCustomsProcessedFragment" />
     </fragment>
     <fragment
         android:id="@+id/managerMainPageFragment"
@@ -163,4 +166,16 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/employeeCustomsProcessedFragment"
+        android:name="com.example.registration.fragment.employeeFragments.customsProcessed.EmployeeCustomsProcessedFragment"
+        android:label="EmployeeCustomsProcessedFragment" >
+        <action
+            android:id="@+id/action_employeeCustomsProcessedFragment_to_customProcessedProductDetailFragment"
+            app:destination="@id/customProcessedProductDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customProcessedProductDetailFragment"
+        android:name="com.example.registration.fragment.employeeFragments.customsProcessed.CustomProcessedProductDetailFragment"
+        android:label="CustomProcessedProductDetailFragment" />
 </navigation>

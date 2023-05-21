@@ -40,7 +40,7 @@ class EmployeeCustomInProgressAdapter (
             view.root.setOnClickListener {
                 listener.onItemClick(adapterPosition)
             }
-            view.buttonAssignEmployee.setOnClickListener {
+            view.buttonCreateReport.setOnClickListener {
                 reportListener.onCreateReportClick(Integer.parseInt(view.idForCustom.text.toString()),adapterPosition)
             }
         }

@@ -62,7 +62,7 @@ class EmployeeReportsInWaitingFragment : Fragment() {
                 //test
                 Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
-                val reportText: String = viewModel.reportInWaitingArray.value?.get(position)?.reportText.toString()
+                val reportText: String? = viewModel.reportInWaitingArray.value?.get(position)?.reportText
                 bundle.putString("reportText", reportText)
                 navController.navigate(R.id.action_employeeReportsInWaitingFragment_to_reportDetailFragment ,bundle)
             }

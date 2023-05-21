@@ -52,4 +52,6 @@
     <string name="text_report_id">Звіт №</string>
     <string name="for_custom_text">для замовлення №</string>
     <string name="text_report_head">Зміст звіту</string>
+    <string name="accept_report_text">Прийняти звіт</string>
+    <string name="reject_report_text">Відхилити звіт</string>
 </resources>

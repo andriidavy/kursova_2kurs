@@ -50,6 +50,7 @@ class CreatingReportForCustomFragment : Fragment() {
             if (customId != null) {
                 val reportText: String = binding.reportText.text.toString()
                 viewModel.createReport(customId, reportText)
+                binding.buttonSendReport.visibility = View.GONE
                 Toast.makeText(
                     context,
                     "створено звіт для замовлення № $customId",

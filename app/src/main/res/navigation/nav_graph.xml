@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_managerMainPageFragment_to_managerCreatedCustomsPageFragment"
             app:destination="@id/managerCreatedCustomsPageFragment" />
+        <action
+            android:id="@+id/action_managerMainPageFragment_to_managerReportsInWaitingFragment"
+            app:destination="@id/managerReportsInWaitingFragment" />
     </fragment>
     <fragment
         android:id="@+id/productItemFragment"
@@ -215,4 +218,16 @@
             android:id="@+id/action_employeeReportsRejectedFragment_to_reportDetailFragment"
             app:destination="@id/reportDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/managerReportsInWaitingFragment"
+        android:name="com.example.registration.fragment.managerFragments.reportsInWaiting.ManagerReportsInWaitingFragment"
+        android:label="ManagerReportsInWaitingFragment" >
+        <action
+            android:id="@+id/action_managerReportsInWaitingFragment_to_managerReportsInWaitingDetailFragment"
+            app:destination="@id/managerReportsInWaitingDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/managerReportsInWaitingDetailFragment"
+        android:name="com.example.registration.fragment.managerFragments.reportsInWaiting.ManagerReportsInWaitingDetailFragment"
+        android:label="ManagerReportsInWaitingDetailFragment" />
 </navigation>

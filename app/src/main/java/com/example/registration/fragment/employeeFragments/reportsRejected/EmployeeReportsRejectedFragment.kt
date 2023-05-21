@@ -62,7 +62,7 @@ class EmployeeReportsRejectedFragment : Fragment() {
                 //test
                 Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
-                val reportText: String = viewModel.reportRejectedArray.value?.get(position)?.reportText.toString()
+                val reportText: String? = viewModel.reportRejectedArray.value?.get(position)?.reportText
                 bundle.putString("reportText", reportText)
                 navController.navigate(R.id.action_employeeReportsRejectedFragment_to_reportDetailFragment ,bundle)
             }

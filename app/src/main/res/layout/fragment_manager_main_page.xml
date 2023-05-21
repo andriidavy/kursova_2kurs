@@ -26,6 +26,17 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="30dp"
             />
+
+        <Button
+            android:id="@+id/button_to_waiting_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/waiting_reports"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_to_created_customs"
+            android:layout_margin="20dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -56,6 +56,12 @@
         <action
             android:id="@+id/action_employeeMainPageFragment_to_employeeCustomsProcessedFragment"
             app:destination="@id/employeeCustomsProcessedFragment" />
+        <action
+            android:id="@+id/action_employeeMainPageFragment_to_employeeReportsAcceptedFragment"
+            app:destination="@id/employeeReportsAcceptedFragment" />
+        <action
+            android:id="@+id/action_employeeMainPageFragment_to_employeeReportsInWaitingFragment"
+            app:destination="@id/employeeReportsInWaitingFragment" />
     </fragment>
     <fragment
         android:id="@+id/managerMainPageFragment"
@@ -178,4 +184,24 @@
         android:id="@+id/customProcessedProductDetailFragment"
         android:name="com.example.registration.fragment.employeeFragments.customsProcessed.CustomProcessedProductDetailFragment"
         android:label="CustomProcessedProductDetailFragment" />
+    <fragment
+        android:id="@+id/employeeReportsAcceptedFragment"
+        android:name="com.example.registration.fragment.employeeFragments.reportsAccepted.EmployeeReportsAcceptedFragment"
+        android:label="EmployeeReportsAcceptedFragment" >
+        <action
+            android:id="@+id/action_employeeReportsAcceptedFragment_to_reportDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="com.example.registration.fragment.employeeFragments.reportDetail.ReportDetailFragment"
+        android:label="ReportDetailFragment" />
+    <fragment
+        android:id="@+id/employeeReportsInWaitingFragment"
+        android:name="com.example.registration.fragment.employeeFragments.reportsInWaiting.EmployeeReportsInWaitingFragment"
+        android:label="EmployeeReportsInWaitingFragment" >
+        <action
+            android:id="@+id/action_employeeReportsInWaitingFragment_to_reportDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+    </fragment>
 </navigation>

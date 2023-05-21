@@ -29,6 +29,14 @@ class EmployeeMainPageFragment : Fragment() {
             navController.navigate(R.id.action_employeeMainPageFragment_to_employeeCustomsProcessedFragment)
         }
 
+        binding.buttonToAcceptedReport.setOnClickListener {
+            navController.navigate(R.id.action_employeeMainPageFragment_to_employeeReportsAcceptedFragment)
+        }
+
+        binding.buttonToWaitingReport.setOnClickListener {
+            navController.navigate(R.id.action_employeeMainPageFragment_to_employeeReportsInWaitingFragment)
+        }
+
         return binding.root
     }
 

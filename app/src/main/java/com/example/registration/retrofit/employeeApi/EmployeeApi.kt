@@ -1,6 +1,7 @@
 package com.example.registration.retrofit.employeeApi
 
 import com.example.registration.model.custom.CustomDTO
+import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.Employee
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -15,6 +16,12 @@ interface EmployeeApi {
 
     @GET("/employee/custom/get-processed")
     suspend fun getProcessedCustomsForEmployee(@Query("employeeId") employeeId: Int): List<CustomDTO>
+
+    @GET("/employee/custom/get-accepted")
+    suspend fun getAllAcceptedReportsForEmployee(@Query("employeeId") employeeId: Int): List<ReportDTO>
+
+    @GET("/employee/custom/get-waiting")
+    suspend fun getAllWaitingReportsForEmployee(@Query("employeeId") employeeId: Int): List<ReportDTO>
 
     @POST("/employee/custom/create-report")
     suspend fun createReport(

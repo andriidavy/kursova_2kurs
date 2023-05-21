@@ -49,4 +49,7 @@
     <string name="accepted_reports">Прийняті звіти</string>
     <string name="waiting_reports">Звіти в очікуванні</string>
     <string name="send_text">Відправити</string>
+    <string name="text_report_id">Звіт №</string>
+    <string name="for_custom_text">для замовлення №</string>
+    <string name="text_report_head">Зміст звіту</string>
 </resources>

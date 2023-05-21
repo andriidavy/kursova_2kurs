@@ -1,6 +1,7 @@
 package com.example.registration.repository
 
 import com.example.registration.model.custom.CustomDTO
+import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.Employee
 import com.example.registration.retrofit.employeeApi.EmployeeApi
@@ -19,6 +20,14 @@ class EmployeeRepository(private val employeeApi: EmployeeApi) {
 
     suspend fun getProcessedCustomsForEmployee(employeeId: Int): List<CustomDTO> {
         return employeeApi.getProcessedCustomsForEmployee(employeeId)
+    }
+
+    suspend fun getAllAcceptedReportsForEmployee(employeeId: Int): List<ReportDTO>{
+        return employeeApi.getAllAcceptedReportsForEmployee(employeeId)
+    }
+
+    suspend fun getAllWaitingReportsForEmployee(employeeId: Int): List<ReportDTO>{
+        return employeeApi.getAllWaitingReportsForEmployee(employeeId)
     }
 
     suspend fun createReport(

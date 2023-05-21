@@ -54,4 +54,6 @@
     <string name="text_report_head">Зміст звіту</string>
     <string name="accept_report_text">Прийняти звіт</string>
     <string name="reject_report_text">Відхилити звіт</string>
+    <string name="customs_history_text">Історія замовлень</string>
+    <string name="customer">Замовник №</string>
 </resources>

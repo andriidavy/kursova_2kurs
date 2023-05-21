@@ -4,9 +4,15 @@ import java.util.List;
 
 public class CustomDTO {
     private int customId;
+
     private int customerId;
     private String customerName;
     private String customerSurname;
+
+    private int employeeId;
+    private String employeeName;
+    private String employeeSurname;
+
     private String status;
     private List<CustomProductDTO> customProductDTOList;
 
@@ -40,6 +46,30 @@ public class CustomDTO {
 
     public void setCustomerSurname(String customerSurname) {
         this.customerSurname = customerSurname;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public String getEmployeeSurname() {
+        return employeeSurname;
+    }
+
+    public void setEmployeeSurname(String employeeSurname) {
+        this.employeeSurname = employeeSurname;
     }
 
     public List<CustomProductDTO> getCustomProductList() {

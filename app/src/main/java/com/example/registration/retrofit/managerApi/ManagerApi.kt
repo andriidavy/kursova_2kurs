@@ -18,6 +18,9 @@ interface ManagerApi {
     @GET("/manager/custom/get-waiting")
     suspend fun  getAllWaiting(): List<ReportDTO>
 
+    @GET("/manager/custom/get-all")
+    suspend fun getAllCustoms(): List<CustomDTO>
+
     @GET("/manager/employee/profile/get-all")
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
 

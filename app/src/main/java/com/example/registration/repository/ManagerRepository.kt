@@ -15,6 +15,10 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getManagersAll()
     }
 
+    suspend fun getAllCustoms(): List<CustomDTO>{
+        return managerApi.getAllCustoms()
+    }
+
     suspend fun getAllCreatedCustoms(): List<CustomDTO> {
         return managerApi.getAllCreatedCustoms()
     }

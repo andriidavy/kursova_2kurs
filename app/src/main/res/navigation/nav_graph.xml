@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_managerMainPageFragment_to_managerReportsInWaitingFragment"
             app:destination="@id/managerReportsInWaitingFragment" />
+        <action
+            android:id="@+id/action_managerMainPageFragment_to_managerAllCustomsFragment"
+            app:destination="@id/managerAllCustomsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productItemFragment"
@@ -230,4 +233,16 @@
         android:id="@+id/managerReportsInWaitingDetailFragment"
         android:name="com.example.registration.fragment.managerFragments.reportsInWaiting.ManagerReportsInWaitingDetailFragment"
         android:label="ManagerReportsInWaitingDetailFragment" />
+    <fragment
+        android:id="@+id/managerAllCustomsFragment"
+        android:name="com.example.registration.fragment.managerFragments.allCustoms.ManagerAllCustomsFragment"
+        android:label="ManagerAllCustomsFragment" >
+        <action
+            android:id="@+id/action_managerAllCustomsFragment_to_allCustomsDetailFragment"
+            app:destination="@id/allCustomsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allCustomsDetailFragment"
+        android:name="com.example.registration.fragment.managerFragments.allCustoms.AllCustomsDetailFragment"
+        android:label="AllCustomsDetailFragment" />
 </navigation>

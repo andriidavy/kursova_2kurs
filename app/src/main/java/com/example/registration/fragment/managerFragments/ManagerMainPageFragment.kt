@@ -29,6 +29,10 @@ private lateinit var binding: FragmentManagerMainPageBinding
             navController.navigate(R.id.action_managerMainPageFragment_to_managerReportsInWaitingFragment)
         }
 
+        binding.buttonToAllCustoms.setOnClickListener {
+            navController.navigate(R.id.action_managerMainPageFragment_to_managerAllCustomsFragment)
+        }
+
         return binding.root
     }
 

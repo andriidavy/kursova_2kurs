@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_managerMainPageFragment_to_managerAllCustomsFragment"
             app:destination="@id/managerAllCustomsFragment" />
+        <action
+            android:id="@+id/action_managerMainPageFragment_to_allProductListFragment"
+            app:destination="@id/allProductListFragment" />
     </fragment>
     <fragment
         android:id="@+id/productItemFragment"
@@ -245,4 +248,16 @@
         android:id="@+id/allCustomsDetailFragment"
         android:name="com.example.registration.fragment.managerFragments.allCustoms.AllCustomsDetailFragment"
         android:label="AllCustomsDetailFragment" />
+    <fragment
+        android:id="@+id/allProductListFragment"
+        android:name="com.example.registration.fragment.managerFragments.products.allProductListFragment"
+        android:label="allProductListFragment" >
+        <action
+            android:id="@+id/action_allProductListFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="com.example.registration.fragment.managerFragments.products.addProductFragment"
+        android:label="addProductFragment" />
 </navigation>

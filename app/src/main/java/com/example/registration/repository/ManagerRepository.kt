@@ -1,11 +1,13 @@
 package com.example.registration.repository
 
 import com.example.registration.model.custom.CustomDTO
+import com.example.registration.model.product.Product
 import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.model.users.Manager
 import com.example.registration.retrofit.managerApi.ManagerApi
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -17,6 +19,10 @@ class ManagerRepository(private val managerApi: ManagerApi) {
 
     suspend fun getAllCustoms(): List<CustomDTO>{
         return managerApi.getAllCustoms()
+    }
+
+    suspend fun getAllProducts(): List<Product>{
+        return managerApi.getAllProducts()
     }
 
     suspend fun getAllCreatedCustoms(): List<CustomDTO> {
@@ -41,5 +47,9 @@ class ManagerRepository(private val managerApi: ManagerApi) {
 
     suspend fun setReportRejected(reportId: Int){
         return managerApi.setReportRejected(reportId)
+    }
+
+    suspend fun saveProduct(product: Product) : Product {
+        return managerApi.saveProduct(product)
     }
 }

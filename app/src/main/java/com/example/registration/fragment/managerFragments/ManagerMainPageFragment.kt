@@ -33,6 +33,10 @@ private lateinit var binding: FragmentManagerMainPageBinding
             navController.navigate(R.id.action_managerMainPageFragment_to_managerAllCustomsFragment)
         }
 
+        binding.buttonToProductList.setOnClickListener {
+            navController.navigate(R.id.action_managerMainPageFragment_to_allProductListFragment)
+        }
+
         return binding.root
     }
 

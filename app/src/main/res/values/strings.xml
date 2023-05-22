@@ -56,4 +56,14 @@
     <string name="reject_report_text">Відхилити звіт</string>
     <string name="customs_history_text">Історія замовлень</string>
     <string name="customer">Замовник №</string>
+    <string name="product_list_text">Перелік товарів</string>
+    <string name="add_product_text">Додати продукт</string>
+    <string name="add_product_to_dt_text">Додати товар до бази</string>
+    <string name="name_product">Назва товару:</string>
+    <string name="named_text">найменування</string>
+    <string name="quantity">Кількість товару:</string>
+    <string name="quantity_hint">к-сть шт.</string>
+    <string name="product_desc_text">Опис товару:</string>
+    <string name="desc_hint">опис товару (якщо товар з таким найменуванням вже є в базі, залишіть це поле пустим)</string>
+    <string name="add_text">Додати</string>
 </resources>

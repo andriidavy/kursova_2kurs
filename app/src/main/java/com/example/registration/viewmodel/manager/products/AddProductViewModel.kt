@@ -8,7 +8,7 @@ import com.example.registration.repository.ManagerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class addProductViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
+class AddProductViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
 
     val message = MutableLiveData<String>()
 

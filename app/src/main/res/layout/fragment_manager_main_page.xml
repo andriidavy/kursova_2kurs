@@ -67,6 +67,17 @@
             app:layout_constraintTop_toBottomOf="@+id/button_to_product_list"
             android:layout_margin="20dp"
             />
+
+        <Button
+            android:id="@+id/button_to_my_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_profile_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_to_hr"
+            android:layout_margin="40dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

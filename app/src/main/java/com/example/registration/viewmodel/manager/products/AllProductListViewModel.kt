@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class allProductListViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
+class AllProductListViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
 
     private val _productArray = MutableLiveData<List<Product>>()
     val productArray: LiveData<List<Product>>

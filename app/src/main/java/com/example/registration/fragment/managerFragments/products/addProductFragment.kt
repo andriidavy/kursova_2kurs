@@ -7,18 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.example.registration.R
 import com.example.registration.databinding.FragmentAddProductBinding
 import com.example.registration.repository.ManagerRepository
 import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.managerApi.ManagerApi
-import com.example.registration.viewmodel.manager.products.addProductViewModel
-import com.example.registration.viewmodel.manager.products.addProductViewModelFactory
+import com.example.registration.viewmodel.manager.products.AddProductViewModel
+import com.example.registration.viewmodel.manager.products.AddProductViewModelFactory
 
 class addProductFragment : Fragment() {
     private lateinit var binding: FragmentAddProductBinding
-    private lateinit var viewModel: addProductViewModel
+    private lateinit var viewModel: AddProductViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,12 +27,12 @@ class addProductFragment : Fragment() {
         val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
         val managerRepository = ManagerRepository(managerApi)
         val viewModelFactory =
-            addProductViewModelFactory(managerRepository)
+            AddProductViewModelFactory(managerRepository)
         viewModel =
             ViewModelProvider(
                 this,
                 viewModelFactory
-            )[addProductViewModel::class.java]
+            )[AddProductViewModel::class.java]
 
         binding.addProductButton.setOnClickListener {
             val name: String = binding.productName.text.toString()

@@ -41,6 +41,10 @@ class EmployeeMainPageFragment : Fragment() {
             navController.navigate(R.id.action_employeeMainPageFragment_to_employeeReportsRejectedFragment)
         }
 
+        binding.buttonToMyProfile.setOnClickListener {
+            navController.navigate(R.id.action_employeeMainPageFragment_to_employeeProfilePageFragment)
+        }
+
         return binding.root
     }
 }

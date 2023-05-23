@@ -11,20 +11,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
-import com.example.registration.adapter.custom.ManagerCreatedCustomAdapter
 import com.example.registration.databinding.FragmentAllProductListBinding
 import com.example.registration.repository.ManagerRepository
 import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.managerApi.ManagerApi
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModel
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModelFactory
-import com.example.registration.viewmodel.manager.products.allProductListViewModel
-import com.example.registration.viewmodel.manager.products.allProductListViewModelFactory
+import com.example.registration.viewmodel.manager.products.AllProductListViewModel
+import com.example.registration.viewmodel.manager.products.AllProductListViewModelFactory
 
 
 class allProductListFragment : Fragment() {
     private lateinit var binding: FragmentAllProductListBinding
-    private lateinit var viewModel: allProductListViewModel
+    private lateinit var viewModel: AllProductListViewModel
     private lateinit var adapter: ProductAdapter
 
     override fun onCreateView(
@@ -42,12 +39,12 @@ class allProductListFragment : Fragment() {
         val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
         val managerRepository = ManagerRepository(managerApi)
         val viewModelFactory =
-            allProductListViewModelFactory(managerRepository)
+            AllProductListViewModelFactory(managerRepository)
         viewModel =
             ViewModelProvider(
                 this,
                 viewModelFactory
-            )[allProductListViewModel::class.java]
+            )[AllProductListViewModel::class.java]
 
         val navController = findNavController()
 

@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_employeeMainPageFragment_to_employeeReportsRejectedFragment"
             app:destination="@id/employeeReportsRejectedFragment" />
+        <action
+            android:id="@+id/action_employeeMainPageFragment_to_employeeProfilePageFragment"
+            app:destination="@id/employeeProfilePageFragment" />
     </fragment>
     <fragment
         android:id="@+id/managerMainPageFragment"
@@ -82,6 +85,12 @@
         <action
             android:id="@+id/action_managerMainPageFragment_to_allProductListFragment"
             app:destination="@id/allProductListFragment" />
+        <action
+            android:id="@+id/action_managerMainPageFragment_to_manageEmployeeFragment"
+            app:destination="@id/manageEmployeeFragment" />
+        <action
+            android:id="@+id/action_managerMainPageFragment_to_managerProfilePageFragment"
+            app:destination="@id/managerProfilePageFragment" />
     </fragment>
     <fragment
         android:id="@+id/productItemFragment"
@@ -260,4 +269,32 @@
         android:id="@+id/addProductFragment"
         android:name="com.example.registration.fragment.managerFragments.products.addProductFragment"
         android:label="addProductFragment" />
+    <fragment
+        android:id="@+id/manageEmployeeFragment"
+        android:name="com.example.registration.fragment.managerFragments.personManagement.ManageEmployeeFragment"
+        android:label="ManageEmployeeFragment" >
+        <action
+            android:id="@+id/action_manageEmployeeFragment_to_addEmployeeFragment"
+            app:destination="@id/addEmployeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEmployeeFragment"
+        android:name="com.example.registration.fragment.managerFragments.personManagement.AddEmployeeFragment"
+        android:label="AddEmployeeFragment" />
+    <fragment
+        android:id="@+id/managerProfilePageFragment"
+        android:name="com.example.registration.fragment.managerFragments.profile.ManagerProfilePageFragment"
+        android:label="ManagerProfilePageFragment" >
+        <action
+            android:id="@+id/action_managerProfilePageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeProfilePageFragment"
+        android:name="com.example.registration.fragment.employeeFragments.profile.EmployeeProfilePageFragment"
+        android:label="EmployeeProfilePageFragment" >
+        <action
+            android:id="@+id/action_employeeProfilePageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

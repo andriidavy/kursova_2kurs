@@ -67,4 +67,9 @@
     <string name="desc_hint">опис товару (якщо товар з таким найменуванням вже є в базі, залишіть це поле пустим)</string>
     <string name="add_text">Додати</string>
     <string name="personnel_management">Управління персоналом</string>
+    <string name="add_new_employee">Додати нового робітника</string>
+    <string name="remove">Видалити</string>
+    <string name="password_text">Пароль:</string>
+    <string name="add">Додати</string>
+    <string name="employee_registration">Реєстрація робітника</string>
 </resources>

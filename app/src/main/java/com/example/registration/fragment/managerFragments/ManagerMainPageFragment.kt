@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
-import com.example.registration.databinding.FragmentEmployeeMainPageBinding
 import com.example.registration.databinding.FragmentManagerMainPageBinding
 
 class ManagerMainPageFragment : Fragment() {
@@ -35,6 +33,14 @@ private lateinit var binding: FragmentManagerMainPageBinding
 
         binding.buttonToProductList.setOnClickListener {
             navController.navigate(R.id.action_managerMainPageFragment_to_allProductListFragment)
+        }
+
+        binding.buttonToHr.setOnClickListener {
+            navController.navigate(R.id.action_managerMainPageFragment_to_manageEmployeeFragment)
+        }
+
+        binding.buttonToMyProfile.setOnClickListener {
+            navController.navigate(R.id.action_managerMainPageFragment_to_managerProfilePageFragment)
         }
 
         return binding.root

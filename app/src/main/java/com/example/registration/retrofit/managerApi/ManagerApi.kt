@@ -3,16 +3,18 @@ package com.example.registration.retrofit.managerApi
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.report.ReportDTO
+import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.model.users.Manager
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.example.registration.model.users.ManagerProfileDTO
+import retrofit2.http.*
 
 interface ManagerApi {
     @GET("/manager/get-all")
     suspend fun getManagersAll(): List<Manager>
+
+    @GET("/manager/get-manager-by-id")
+    suspend fun  getManagerProfile(@Query("managerId") managerId: Int) : ManagerProfileDTO
 
     @GET("/manager/custom/get-created")
     suspend fun getAllCreatedCustoms(): List<CustomDTO>
@@ -25,6 +27,12 @@ interface ManagerApi {
 
     @GET("/manager/employee/profile/get-all")
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
+
+    @POST("/manager/employee/save")
+    suspend fun saveEmployee(@Body employee: Employee)
+
+    @DELETE("/manager/employee/delete-employee-by-id")
+    suspend fun deleteEmployeeById(@Query("employeeId") employeeId: Int)
 
     @GET("/manager/product/get-all")
     suspend fun getAllProducts(): List<Product>

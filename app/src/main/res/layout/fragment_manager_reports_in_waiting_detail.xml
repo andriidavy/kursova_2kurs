@@ -38,25 +38,23 @@
 
         <Button
             android:id="@+id/button_accept_report"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:layout_margin="50dp"
             android:text="@string/accept_report_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/report_text"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/report_text" />
 
         <Button
             android:id="@+id/button_reject_report"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
+            android:layout_margin="30dp"
             android:text="@string/reject_report_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_accept_report"
-            android:layout_margin="30dp"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/button_accept_report" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

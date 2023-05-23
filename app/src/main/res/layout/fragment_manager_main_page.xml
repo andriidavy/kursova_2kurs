@@ -4,24 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="managerMainPage"
-            type="com.example.registration.fragment.managerFragments.ManagerMainPageFragment" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutManagerMainPage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragment.managerFragments.ManagerMainPageFragment">
+        android:layout_height="match_parent">
 
 
         <Button
             android:id="@+id/button_to_created_customs"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="40dp"
             android:text="@string/created_customs_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,9 +22,9 @@
 
         <Button
             android:id="@+id/button_to_waiting_report"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="30dp"
             android:text="@string/waiting_reports"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,19 +32,19 @@
 
         <Button
             android:id="@+id/button_to_all_customs"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
+            android:layout_margin="30dp"
             android:text="@string/customs_history_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="20dp"
             app:layout_constraintTop_toBottomOf="@+id/button_to_waiting_report" />
 
         <Button
             android:id="@+id/button_to_product_list"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="30dp"
             android:text="@string/product_list_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,25 +52,23 @@
 
         <Button
             android:id="@+id/button_to_hr"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
+            android:layout_margin="30dp"
             android:text="@string/personnel_management"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_to_product_list"
-            android:layout_margin="20dp"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/button_to_product_list" />
 
         <Button
             android:id="@+id/button_to_my_profile"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:text="@string/my_profile_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_to_hr"
-            android:layout_margin="40dp"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/button_to_hr" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

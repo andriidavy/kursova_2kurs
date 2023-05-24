@@ -72,4 +72,12 @@
     <string name="password_text">Пароль:</string>
     <string name="add">Додати</string>
     <string name="employee_registration">Реєстрація робітника</string>
+    <string name="admin_mode">Режим адміністратора</string>
+    <string name="input_pin">Введіть PIN</string>
+    <string name="log_text">Ввійти</string>
+    <string name="admin_page">Сторінка адміністратора</string>
+    <string name="manage_managers">Управління менеджерами</string>
+    <string name="manage_departments">Управління відділами</string>
+    <string name="add_manager">Додати менеджера</string>
+    <string name="manager_id_text">Менеджер №</string>
 </resources>

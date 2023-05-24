@@ -65,10 +65,23 @@
             android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:text="@string/my_profile_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_to_hr"
+            android:layout_marginTop="30dp"
+            />
+
+        <Button
+            android:id="@+id/button_to_admin_mode"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:background="@color/design_default_color_error"
+            android:text="@string/admin_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_to_hr" />
+            app:layout_constraintTop_toBottomOf="@+id/button_to_my_profile" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

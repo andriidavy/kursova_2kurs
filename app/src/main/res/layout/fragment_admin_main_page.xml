@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/admin_main_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/admin_page"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="40dp"
+        />
+
+    <Button
+        android:id="@+id/button_to_managers"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="200dp"
+        android:text="@string/manage_managers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/admin_main_head" />
+
+    <Button
+        android:id="@+id/button_to_departments"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:text="@string/manage_departments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_to_managers" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

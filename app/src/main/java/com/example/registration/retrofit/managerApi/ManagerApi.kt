@@ -13,6 +13,15 @@ interface ManagerApi {
     @GET("/manager/get-all")
     suspend fun getManagersAll(): List<Manager>
 
+    @GET("/manager/profile/get-all")
+    suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
+
+
+
+    @DELETE("/manager/delete-manager-by-id")
+    suspend fun deleteManagerById(managerId: Int)
+
+
     @GET("/manager/get-manager-by-id")
     suspend fun  getManagerProfile(@Query("managerId") managerId: Int) : ManagerProfileDTO
 

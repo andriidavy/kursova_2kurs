@@ -19,15 +19,24 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getManagersAll()
     }
 
-    suspend fun  getManagerProfile(managerId: Int) : ManagerProfileDTO{
+    suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO> {
+        return managerApi.getAllManagersProfileDTO()
+    }
+
+    suspend fun getManagerProfile(managerId: Int): ManagerProfileDTO {
         return managerApi.getManagerProfile(managerId)
     }
 
-    suspend fun getAllCustoms(): List<CustomDTO>{
+
+    suspend fun deleteManagerById(managerId: Int){
+        return managerApi.deleteManagerById(managerId)
+    }
+
+    suspend fun getAllCustoms(): List<CustomDTO> {
         return managerApi.getAllCustoms()
     }
 
-    suspend fun getAllProducts(): List<Product>{
+    suspend fun getAllProducts(): List<Product> {
         return managerApi.getAllProducts()
     }
 
@@ -35,11 +44,11 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getAllCreatedCustoms()
     }
 
-    suspend fun  getAllWaiting(): List<ReportDTO>{
+    suspend fun getAllWaiting(): List<ReportDTO> {
         return managerApi.getAllWaiting()
     }
 
-    suspend fun  getAllEmployeesProfile(): List<EmployeeProfileDTO>{
+    suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO> {
         return managerApi.getAllEmployeesProfile()
     }
 
@@ -47,23 +56,23 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.saveEmployee(employee)
     }
 
-    suspend fun deleteEmployeeById(employeeId: Int){
+    suspend fun deleteEmployeeById(employeeId: Int) {
         return managerApi.deleteEmployeeById(employeeId)
     }
 
-    suspend fun assignEmployeeToCustom(customId: Int, employeeId: Int){
+    suspend fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
         managerApi.assignEmployeeToCustom(customId, employeeId)
     }
 
-    suspend fun setReportAccepted(reportId: Int){
+    suspend fun setReportAccepted(reportId: Int) {
         return managerApi.setReportAccepted(reportId)
     }
 
-    suspend fun setReportRejected(reportId: Int){
+    suspend fun setReportRejected(reportId: Int) {
         return managerApi.setReportRejected(reportId)
     }
 
-    suspend fun saveProduct(product: Product) : Product {
+    suspend fun saveProduct(product: Product): Product {
         return managerApi.saveProduct(product)
     }
 }

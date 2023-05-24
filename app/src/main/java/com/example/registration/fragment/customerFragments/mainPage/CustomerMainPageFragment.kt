@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
+import com.example.registration.model.custom.CustomProductDTO
+import com.example.registration.model.product.Product
 import com.example.registration.repository.CustomerRepository
 import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.customerApi.CustomerApi
@@ -56,20 +58,10 @@ class CustomerMainPageFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 //Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
-                viewModel.productsArray.value?.get(position)?.id?.let {
-                    bundle.putInt(
-                        "id_product",
-                        it
-                    )
-                }
-                viewModel.productsArray.value?.get(position)?.quantity?.let {
-                    bundle.putInt("quantity_product", it)
-                }
-                bundle.putString("name_product", viewModel.productsArray.value?.get(position)?.name)
-                bundle.putString(
-                    "description_product",
-                    viewModel.productsArray.value?.get(position)?.description
-                )
+                val product: Product? =
+                    viewModel.productsArray.value?.get(position)
+                bundle.putParcelable("product", product)
+
                 navController.navigate(
                     R.id.action_customerMainPageFragment_to_productItemFragment,
                     bundle

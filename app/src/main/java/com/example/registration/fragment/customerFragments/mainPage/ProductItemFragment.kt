@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.registration.databinding.FragmentProductItemBinding
+import com.example.registration.model.custom.CustomProductDTO
+import com.example.registration.model.product.Product
 import com.example.registration.repository.CustomerRepository
 import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.customerApi.CustomerApi
@@ -49,11 +51,13 @@ class ProductItemFragment : Fragment() {
             viewModel.addProductToCart(customerId, productId, quantity)
         }
 
+        val product: Product? =
+            arguments?.getParcelable("product")
 
-        binding.productName.text = arguments?.getString("name_product")
-        binding.productDescription.text = arguments?.getString("description_product")
-        binding.productId.text = arguments?.getInt("id_product").toString()
-        binding.productQuantity.text = arguments?.getInt("quantity_product").toString()
+        binding.productName.text = product?.name
+        binding.productDescription.text = product?.description
+        binding.productId.text = product?.id.toString()
+        binding.productQuantity.text = product?.quantity.toString()
 
         viewModel.message.observe(
             viewLifecycleOwner

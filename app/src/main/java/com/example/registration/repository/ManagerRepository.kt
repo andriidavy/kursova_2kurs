@@ -80,6 +80,14 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.saveProduct(product)
     }
 
+    suspend fun saveDepartment(department: DepartmentDTO): DepartmentDTO {
+        return managerApi.saveDepartment(department)
+    }
+
+    suspend fun removeDepartmentById(departmentId: Int) {
+        return managerApi.removeDepartmentById(departmentId)
+    }
+
     suspend fun getAllDepartmentsForManager(managerId: Int): List<DepartmentDTO> {
         return managerApi.getAllDepartmentsForManager(managerId)
     }

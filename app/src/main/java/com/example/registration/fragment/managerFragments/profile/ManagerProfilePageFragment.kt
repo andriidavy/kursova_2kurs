@@ -59,8 +59,6 @@ private lateinit var viewModel: ManagerProfilePageViewModel
             navController.navigate(R.id.action_managerProfilePageFragment_to_loginFragment)
         }
 
-
-
         return binding.root
     }
 }

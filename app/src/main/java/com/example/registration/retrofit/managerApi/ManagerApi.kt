@@ -64,6 +64,13 @@ interface ManagerApi {
     @POST("/manager/product/save")
     suspend fun saveProduct(@Body product: Product): Product
 
+
+    @POST("/manager/department/save")
+    suspend fun saveDepartment(@Body department: DepartmentDTO) : DepartmentDTO
+
+    @DELETE("/manager/department/delete-by-id")
+    suspend fun removeDepartmentById(@Query("departmentId") departmentId: Int)
+
     @GET("/manager/department/get-departments-for-manager")
     suspend fun getAllDepartmentsForManager(@Query("managerId") managerId: Int): List<DepartmentDTO>
 

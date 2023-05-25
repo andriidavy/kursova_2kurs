@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
+import com.example.registration.adapter.custom.CustomAdapter
 import com.example.registration.adapter.manager.ManageManagerAdapter
 import com.example.registration.databinding.FragmentEditManagerBinding
+import com.example.registration.model.custom.CustomProductDTO
 import com.example.registration.repository.ManagerRepository
 import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.managerApi.ManagerApi
@@ -49,6 +53,10 @@ class EditManagerFragment : Fragment() {
 //            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
 //        viewModel.setSharedPreferences(sharedManagerIdPreferences)
 
+        viewModel.managerAllArray.observe(viewLifecycleOwner) { managers ->
+            adapter.updateManagers(managers)
+        }
+
         viewModel.getAllManagersProfileDTO()
 
         fun removeManager(managerId: Int) {
@@ -62,6 +70,21 @@ class EditManagerFragment : Fragment() {
                 managerId?.let { removeManager(it) }
             }
         })
+
+        adapter.setOnItemClickListener(object : ManageManagerAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                //test
+                Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
+                val bundle = Bundle()
+                val managerId : Int? = viewModel.managerAllArray.value?.get(position)?.id
+                managerId?.let { bundle.putInt("managerId", it) }
+                navController.navigate(R.id.action_editManagerFragment_to_managerDepartDetailFragment, bundle)
+            }
+        })
+
+        binding.buttonAddManager.setOnClickListener {
+            navController.navigate(R.id.action_editManagerFragment_to_addManagerFragment)
+        }
 
 
         return binding.root

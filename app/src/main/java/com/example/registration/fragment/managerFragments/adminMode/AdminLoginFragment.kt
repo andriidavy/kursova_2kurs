@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentAdminLoginBinding
 
@@ -16,6 +17,12 @@ class AdminLoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAdminLoginBinding.inflate(inflater)
+
+        val navController = findNavController()
+
+        binding.loginButton.setOnClickListener {
+            navController.navigate(R.id.action_adminLoginFragment_to_adminMainPageFragment)
+        }
 
 
 

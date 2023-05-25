@@ -5,56 +5,78 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
+import com.example.registration.adapter.manager.ManageManagerAdapter
+import com.example.registration.adapter.manager.department.ManagerDepartmentAdapter
+import com.example.registration.databinding.FragmentManagerDepartDetailBinding
+import com.example.registration.repository.ManagerRepository
+import com.example.registration.retrofit.RetrofitService
+import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModel
+import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModelFactory
+import com.example.registration.viewmodel.manager.adminMode.ManagerDepartDetailViewModel
+import com.example.registration.viewmodel.manager.adminMode.ManagerDepartDetailViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ManagerDepartDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ManagerDepartDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding: FragmentManagerDepartDetailBinding
+    private lateinit var viewModel: ManagerDepartDetailViewModel
+    private lateinit var adapter: ManagerDepartmentAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manager_depart_detail, container, false)
-    }
+        binding = FragmentManagerDepartDetailBinding.inflate(inflater)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ManagerDepartDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ManagerDepartDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        adapter = ManagerDepartmentAdapter(emptyList())
+        binding.managerDepartDetailRecyclerView.adapter = adapter
+        binding.managerDepartDetailRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        val retrofitService = RetrofitService()
+        val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
+        val managerRepository = ManagerRepository(managerApi)
+        val viewModelFactory =
+            ManagerDepartDetailViewModelFactory(managerRepository)
+        viewModel =
+            ViewModelProvider(
+                this,
+                viewModelFactory
+            )[ManagerDepartDetailViewModel::class.java]
+
+        val navController = findNavController()
+
+        val managerId: Int? = arguments?.getInt("managerId")
+
+        managerId?.let { viewModel.getAllDepartmentsForManager(it) }
+
+
+        binding.buttonAddDepart.setOnClickListener {
+            val bundle = Bundle()
+            managerId?.let { it1 -> bundle.putInt("managerId", it1) }
+            navController.navigate(R.id.action_managerDepartDetailFragment_to_allDepartFragment, bundle)
+        }
+
+        viewModel.departForManagerArray.observe(viewLifecycleOwner) { departs ->
+            adapter.updateDepartments(departs)
+        }
+
+        fun removeDepartForManager(managerId: Int, departmentId: Int) {
+            viewModel.removeDepartmentFromManager(managerId, departmentId)
+        }
+
+        adapter.setOnRemoveManagerClickListener(object :
+            ManagerDepartmentAdapter.OnRemoveManagerClickListener {
+            override fun onRemoveManagerClick(position: Int) {
+                val departmentId: Int? = viewModel.departForManagerArray.value?.get(position)?.id
+                if (departmentId != null && managerId != null) {
+                    removeDepartForManager(managerId, departmentId)
                 }
             }
+        })
+
+        return binding.root
     }
+
 }

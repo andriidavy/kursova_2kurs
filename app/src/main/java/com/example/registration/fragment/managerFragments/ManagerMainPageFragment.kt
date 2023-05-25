@@ -43,6 +43,10 @@ private lateinit var binding: FragmentManagerMainPageBinding
             navController.navigate(R.id.action_managerMainPageFragment_to_managerProfilePageFragment)
         }
 
+        binding.buttonToAdminMode.setOnClickListener {
+            navController.navigate(R.id.action_managerMainPageFragment_to_adminLoginFragment)
+        }
+
         return binding.root
     }
 

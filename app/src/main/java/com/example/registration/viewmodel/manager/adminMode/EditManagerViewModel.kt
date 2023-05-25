@@ -19,13 +19,6 @@ class EditManagerViewModel(private val managerRepository: ManagerRepository): Vi
     val managerAllArray: LiveData<List<ManagerProfileDTO>>
         get() = _managerAllArray
 
-//    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
-//        this.sharedPreferences = sharedPreferences
-//    }
-//
-//    val managerId: Int
-//        get() = sharedPreferences.getInt("managerId", 0)
-
     fun getAllManagersProfileDTO(): LiveData<List<ManagerProfileDTO>> {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllManagersProfileDTO()

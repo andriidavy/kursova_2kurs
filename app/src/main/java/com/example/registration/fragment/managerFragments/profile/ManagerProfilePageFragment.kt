@@ -52,6 +52,7 @@ private lateinit var viewModel: ManagerProfilePageViewModel
             binding.name.text = manager?.name
             binding.surname.text = manager?.surname
             binding.email.text = manager?.email
+            binding.departments.text = manager?.departmentDTOstring
         }
 
         binding.buttonLogout.setOnClickListener {

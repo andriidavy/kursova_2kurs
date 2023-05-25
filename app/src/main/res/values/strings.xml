@@ -80,4 +80,10 @@
     <string name="manage_departments">Управління відділами</string>
     <string name="add_manager">Додати менеджера</string>
     <string name="manager_id_text">Менеджер №</string>
+    <string name="accepted_depart">Призначені відділи:</string>
+    <string name="accept_depart">Призначити відділ</string>
+    <string name="depart">Відділ:</string>
+    <string name="choose_depart">Оберіть відділ:</string>
+    <string name="manager_registration">Реєстрація менеджера</string>
+    <string name="departs">Відділи:</string>
 </resources>

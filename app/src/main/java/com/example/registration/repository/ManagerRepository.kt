@@ -1,6 +1,7 @@
 package com.example.registration.repository
 
 import com.example.registration.model.custom.CustomDTO
+import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.Employee
@@ -27,8 +28,11 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getManagerProfile(managerId)
     }
 
+    suspend fun saveManager(manager: Manager): Manager {
+        return managerApi.saveManager(manager)
+    }
 
-    suspend fun deleteManagerById(managerId: Int){
+    suspend fun deleteManagerById(managerId: Int) {
         return managerApi.deleteManagerById(managerId)
     }
 
@@ -74,5 +78,21 @@ class ManagerRepository(private val managerApi: ManagerApi) {
 
     suspend fun saveProduct(product: Product): Product {
         return managerApi.saveProduct(product)
+    }
+
+    suspend fun getAllDepartmentsForManager(managerId: Int): List<DepartmentDTO> {
+        return managerApi.getAllDepartmentsForManager(managerId)
+    }
+
+    suspend fun getDepartmentsWithoutManager(managerId: Int): List<DepartmentDTO> {
+        return managerApi.getDepartmentsWithoutManager(managerId)
+    }
+
+    suspend fun assignDepartmentToManager(managerId: Int, departmentId: Int) {
+        return managerApi.assignDepartmentToManager(managerId, departmentId)
+    }
+
+    suspend fun removeDepartmentFromManager(managerId: Int, departmentId: Int) {
+        return managerApi.removeDepartmentFromManager(managerId, departmentId)
     }
 }

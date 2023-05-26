@@ -86,4 +86,7 @@
     <string name="choose_depart">Оберіть відділ:</string>
     <string name="manager_registration">Реєстрація менеджера</string>
     <string name="departs">Відділи:</string>
+    <string name="add_depart_text">Додати відділ</string>
+    <string name="edit_departs">Редагування відділів</string>
+    <string name="depart_name">Назва відділу:</string>
 </resources>

@@ -316,6 +316,9 @@
         <action
             android:id="@+id/action_adminMainPageFragment_to_editManagerFragment"
             app:destination="@id/editManagerFragment" />
+        <action
+            android:id="@+id/action_adminMainPageFragment_to_editDepartsFragment"
+            app:destination="@id/editDepartsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editManagerFragment"
@@ -345,4 +348,17 @@
         android:id="@+id/addManagerFragment"
         android:name="com.example.registration.fragment.managerFragments.adminMode.managers.AddManagerFragment"
         android:label="AddManagerFragment" />
+    <fragment
+        android:id="@+id/editDepartsFragment"
+        android:name="com.example.registration.fragment.managerFragments.adminMode.departments.EditDepartsFragment"
+        android:label="EditDepartsFragment" >
+        <action
+            android:id="@+id/action_editDepartsFragment_to_addDepartFragment"
+            app:destination="@id/addDepartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDepartFragment"
+        android:name="com.example.registration.fragment.managerFragments.adminMode.departments.AddDepartFragment"
+        android:label="fragment_add_depart"
+        tools:layout="@layout/fragment_add_depart" />
 </navigation>

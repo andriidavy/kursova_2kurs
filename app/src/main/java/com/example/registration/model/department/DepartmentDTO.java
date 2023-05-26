@@ -5,6 +5,12 @@ public class DepartmentDTO {
 
     private String departmentName;
 
+    public DepartmentDTO(){}
+
+    public DepartmentDTO(String departmentName){
+        this.departmentName = departmentName;
+    }
+
     public int getId() {
         return id;
     }

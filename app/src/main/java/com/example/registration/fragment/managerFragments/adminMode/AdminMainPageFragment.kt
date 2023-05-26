@@ -25,6 +25,10 @@ class AdminMainPageFragment : Fragment() {
             navController.navigate(R.id.action_adminMainPageFragment_to_editManagerFragment)
         }
 
+        binding.buttonToDepartments.setOnClickListener {
+            navController.navigate(R.id.action_adminMainPageFragment_to_editDepartsFragment)
+        }
+
 
         return binding.root
     }

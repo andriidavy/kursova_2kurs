@@ -88,6 +88,10 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.removeDepartmentById(departmentId)
     }
 
+    suspend fun getAllDepartments() : List<DepartmentDTO>{
+        return managerApi.getAllDepartments()
+    }
+
     suspend fun getAllDepartmentsForManager(managerId: Int): List<DepartmentDTO> {
         return managerApi.getAllDepartmentsForManager(managerId)
     }

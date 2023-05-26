@@ -120,7 +120,11 @@
     <fragment
         android:id="@+id/customerCartPageFragment"
         android:name="com.example.registration.fragment.customerFragments.cart.CustomerCartPageFragment"
-        android:label="CustomerCartPageFragment" />
+        android:label="CustomerCartPageFragment" >
+        <action
+            android:id="@+id/action_customerCartPageFragment_to_addDepartForNewCustomFragment"
+            app:destination="@id/addDepartForNewCustomFragment" />
+    </fragment>
     <fragment
         android:id="@+id/customerCustomPageFragment"
         android:name="com.example.registration.fragment.customerFragments.custom.CustomerCustomPageFragment"
@@ -361,4 +365,12 @@
         android:name="com.example.registration.fragment.managerFragments.adminMode.departments.AddDepartFragment"
         android:label="fragment_add_depart"
         tools:layout="@layout/fragment_add_depart" />
+    <fragment
+        android:id="@+id/addDepartForNewCustomFragment"
+        android:name="com.example.registration.fragment.customerFragments.custom.AddDepartForNewCustomFragment"
+        android:label="AddDepartForNewCustomFragment" >
+        <action
+            android:id="@+id/action_addDepartForNewCustomFragment_to_customerMainPageFragment"
+            app:destination="@id/customerMainPageFragment" />
+    </fragment>
 </navigation>

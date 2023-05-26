@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
 import com.example.registration.adapter.CartAdapter
 import com.example.registration.databinding.FragmentCustomerCartPageBinding
 import com.example.registration.repository.CustomerRepository
@@ -17,6 +20,7 @@ import com.example.registration.retrofit.RetrofitService
 import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel
 import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModelFactory
+import kotlinx.coroutines.launch
 
 class CustomerCartPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerCartPageBinding
@@ -36,7 +40,8 @@ class CustomerCartPageFragment : Fragment() {
             CustomerCartPageViewModelFactory(customerRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerCartPageViewModel::class.java]
 
-        val sharedCustomerIdPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
+        val sharedCustomerIdPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
         viewModel.setSharedPreferences(sharedCustomerIdPreferences)
 
         adapter = CartAdapter(emptyList(), viewModel)
@@ -44,6 +49,8 @@ class CustomerCartPageFragment : Fragment() {
         binding.cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         binding.lifecycleOwner = this
+
+        val navController = findNavController()
 
         viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
             adapter.updateCart(cart)
@@ -56,7 +63,12 @@ class CustomerCartPageFragment : Fragment() {
         }
 
         binding.buttonCreateCustom.setOnClickListener {
-            viewModel.createCustom()
+            val bundle = Bundle()
+            viewModel.viewModelScope.launch {
+                val customId: Int = viewModel.createCustom()
+                bundle.putInt("customId", customId)
+                navController.navigate(R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment, bundle)
+            }
         }
 
         viewModel.message.observe(

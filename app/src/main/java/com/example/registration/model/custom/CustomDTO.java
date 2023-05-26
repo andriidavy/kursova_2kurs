@@ -13,6 +13,7 @@ public class CustomDTO {
     private String employeeName;
     private String employeeSurname;
 
+    private String department;
     private String status;
     private List<CustomProductDTO> customProductDTOList;
 
@@ -86,5 +87,13 @@ public class CustomDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

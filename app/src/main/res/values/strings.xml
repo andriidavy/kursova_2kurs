@@ -89,4 +89,6 @@
     <string name="add_depart_text">Додати відділ</string>
     <string name="edit_departs">Редагування відділів</string>
     <string name="depart_name">Назва відділу:</string>
+    <string name="depart_text">Відділ доставки:</string>
+    <string name="choose_depart_text">Оберіть відділ доставки:</string>
 </resources>

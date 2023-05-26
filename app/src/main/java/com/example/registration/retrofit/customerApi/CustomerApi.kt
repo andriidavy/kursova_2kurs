@@ -2,6 +2,7 @@ package com.example.registration.retrofit.customerApi
 
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
+import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
@@ -38,7 +39,7 @@ interface CustomerApi {
     )
 
     @POST("/customer/create-custom")
-    suspend fun createCustom(@Query("customerId") customerId: Int)
+    suspend fun createCustom(@Query("customerId") customerId: Int) : Int
 
     @DELETE("/customer/cart/remove-product-by-id")
     suspend fun removeProductFromCart(
@@ -48,4 +49,13 @@ interface CustomerApi {
 
     @POST("/customer/cart/clear")
     suspend fun clearCart(@Query("customerId") customerId: Int)
+
+    @POST("/customer/custom/assign-department")
+    suspend fun assignDepartmentToCustom(
+        @Query("customId") customId: Int,
+        @Query("departmentId") departmentId: Int
+    )
+
+    @GET("/customer/department/get-all")
+    suspend fun  getAllDepartments() : List<DepartmentDTO>
 }

@@ -1,6 +1,7 @@
 package com.example.registration.viewmodel.customer.cart
 
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,27 +41,25 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
         return cartProductsArrayDTO
     }
 
-    fun createCustom() {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun createCustom(): Int {
+        return withContext(Dispatchers.IO) {
             customerRepository.createCustom(customerId)
-            getAllCartProducts()
         }
-        _message.value = "Замовлення створено"
     }
 
     fun removeProductFromCart(productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.removeProductFromCart(customerId, productId)
-            getAllCartProducts()
         }
+        getAllCartProducts()
         _message.value = "Товар видалено з корзини"
     }
 
     fun clearCart() {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.clearCart(customerId)
-            getAllCartProducts()
         }
+        getAllCartProducts()
         _message.value = "Корзину очищено"
     }
 }

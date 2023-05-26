@@ -2,11 +2,13 @@ package com.example.registration.repository
 
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
+import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.Product
 import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
 import retrofit2.http.Body
+import retrofit2.http.Query
 
 class CustomerRepository(
 //    private val dao: CustomerDAO
@@ -41,7 +43,7 @@ class CustomerRepository(
         return customerApi.addProductToCart(customerId, productId, quantity)
     }
 
-    suspend fun createCustom(customerId: Int){
+    suspend fun createCustom(customerId: Int) : Int{
         return customerApi.createCustom(customerId)
     }
 
@@ -52,36 +54,12 @@ class CustomerRepository(
     suspend fun clearCart(customerId: Int){
         return customerApi.clearCart(customerId)
     }
+
+    suspend fun assignDepartmentToCustom(customId: Int, departmentId: Int){
+        return customerApi.assignDepartmentToCustom(customId, departmentId)
+    }
+
+    suspend fun  getAllDepartments() : List<DepartmentDTO>{
+        return customerApi.getAllDepartments()
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//ROOM DATABASE REALIZATION
-//import androidx.lifecycle.LiveData
-//import com.example.registration.database.CustomerDAO
-//import com.example.registration.model.users.Customer
-//import kotlinx.coroutines.flow.Flow
-
-//val customers: Flow<List<Customer>> get() =  dao.getAllCustomers()
-//
-//    suspend fun insert(customer: Customer){
-//        return dao.insertCustomer(customer)
-//    }
-//
-//    suspend fun update(customer: Customer){
-//        return dao.updateCustomer(customer)
-//    }
-//
-//    suspend fun delete(customer: Customer){
-//        return dao.deleteCustomer(customer)
-//    }

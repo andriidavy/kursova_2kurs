@@ -31,8 +31,12 @@ class MainActivity : AppCompatActivity() {
         ) {
             return false
         }
-        if (currentDestination?.id == R.id.managerCreatedCustomsPageFragment){
-              navController.navigate(R.id.managerMainPageFragment)
+        if (currentDestination?.id == R.id.managerCreatedCustomsPageFragment) {
+            navController.navigate(R.id.managerMainPageFragment)
+            return false
+        }
+        if (currentDestination?.id == R.id.addDepartForNewCustomFragment) {
+            navController.navigate(R.id.managerMainPageFragment)
             return false
         }
         return navController.navigateUp() || super.onSupportNavigateUp()

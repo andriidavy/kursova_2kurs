@@ -36,7 +36,6 @@ open class CartAdapter(
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.cartProduct = cartProductDTOList[position]
         viewHolder.view.productListItemName.text = cartProductDTOList[position].productName
         viewHolder.view.idForProduct.text = cartProductDTOList[position].productId.toString()
         viewHolder.view.countForProduct.text = cartProductDTOList[position].quantity.toString()

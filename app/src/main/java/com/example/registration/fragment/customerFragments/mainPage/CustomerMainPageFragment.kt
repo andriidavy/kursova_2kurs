@@ -43,9 +43,6 @@ class CustomerMainPageFragment : Fragment() {
             CustomerMainPageViewModelFactory(customerRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CustomerMainPageViewModel::class.java]
 
-        binding.customerMainPageViewModel = viewModel
-        binding.lifecycleOwner = this
-
         val navController = findNavController()
 
         viewModel.productsArray.observe(viewLifecycleOwner) { products ->
@@ -56,7 +53,6 @@ class CustomerMainPageFragment : Fragment() {
 
         adapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                //Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
                 val product: Product? =
                     viewModel.productsArray.value?.get(position)

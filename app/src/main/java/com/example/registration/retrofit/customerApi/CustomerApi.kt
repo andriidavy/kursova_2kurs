@@ -13,9 +13,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface CustomerApi {
-    @GET("/customer/get-all")
-    suspend fun getCustomersAll(): List<Customer>
-
     @POST("/customer/login")
     suspend fun loginCustomer(
         @Query("email") email: String,

@@ -15,11 +15,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 class ManagerRepository(private val managerApi: ManagerApi) {
-
-    suspend fun getManagers(): List<Manager> {
-        return managerApi.getManagersAll()
-    }
-
     suspend fun loginManager(email: String, password: String): Result<Manager> {
         return try {
             val manager = managerApi.loginManager(email, password)

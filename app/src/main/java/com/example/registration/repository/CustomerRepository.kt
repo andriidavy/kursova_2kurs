@@ -26,9 +26,6 @@ class CustomerRepository(
             Result.failure(e)
         }
     }
-    suspend fun getCustomers(): List<Customer> {
-        return customerApi.getCustomersAll()
-    }
 
     suspend fun loginCustomer(email: String, password: String): Result<Customer> {
         return try {

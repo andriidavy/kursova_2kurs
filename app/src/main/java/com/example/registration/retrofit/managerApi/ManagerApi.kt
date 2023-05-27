@@ -11,9 +11,6 @@ import com.example.registration.model.users.ManagerProfileDTO
 import retrofit2.http.*
 
 interface ManagerApi {
-    @GET("/manager/get-all")
-    suspend fun getManagersAll(): List<Manager>
-
     @GET("/manager/profile/get-all")
     suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
 

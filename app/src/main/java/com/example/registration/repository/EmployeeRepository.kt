@@ -10,11 +10,6 @@ import retrofit2.Call
 import retrofit2.http.Query
 
 class EmployeeRepository(private val employeeApi: EmployeeApi) {
-
-    suspend fun getEmployees(): List<Employee> {
-        return employeeApi.getEmployeeAll()
-    }
-
     suspend fun loginEmployee(email: String, password: String): Result<Employee> {
         return try {
             val employee = employeeApi.loginEmployee(email, password)

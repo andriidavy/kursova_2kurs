@@ -9,9 +9,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface EmployeeApi {
-    @GET("/employee/get-all")
-    suspend fun getEmployeeAll(): List<Employee>
-
     @POST("/employee/login")
     suspend fun loginEmployee(@Query("email") email:String, @Query("password") password: String) : Employee
 

@@ -51,6 +51,7 @@ class CustomerCartPageFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val navController = findNavController()
+        viewModel.setNavController(navController)
 
         viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
             adapter.updateCart(cart)
@@ -63,12 +64,7 @@ class CustomerCartPageFragment : Fragment() {
         }
 
         binding.buttonCreateCustom.setOnClickListener {
-            val bundle = Bundle()
-            viewModel.viewModelScope.launch {
-                val customId: Int = viewModel.createCustom()
-                bundle.putInt("customId", customId)
-                navController.navigate(R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment, bundle)
-            }
+                viewModel.createCustom()
         }
 
         viewModel.message.observe(

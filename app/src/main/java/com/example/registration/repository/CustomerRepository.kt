@@ -62,8 +62,13 @@ class CustomerRepository(
     }
 
 
-    suspend fun createCustom(customerId: Int): Int {
-        return customerApi.createCustom(customerId)
+    suspend fun createCustom(customerId: Int): Result<Int> {
+        return try {
+            val result: Int = customerApi.createCustom(customerId)
+            Result.success(result)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     suspend fun removeProductFromCart(customerId: Int, productId: Int) {

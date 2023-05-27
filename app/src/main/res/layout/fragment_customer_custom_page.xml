@@ -3,17 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="customerCustomPageViewModel"
-            type="com.example.registration.viewmodel.customer.custom.CustomerCustomPageViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCustomerCustomPage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragment.customerFragments.custom.CustomerCustomPageFragment">
+        android:layout_height="match_parent">
 
 
         <androidx.recyclerview.widget.RecyclerView

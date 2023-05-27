@@ -1,11 +1,14 @@
 package com.example.registration.viewmodel.customer.cart
 
 import android.content.SharedPreferences
+import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.registration.R
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.repository.CustomerRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +17,7 @@ import kotlinx.coroutines.withContext
 
 class CustomerCartPageViewModel(private val customerRepository: CustomerRepository) : ViewModel() {
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var navController: NavController
 
     private val _cartProductsArrayDTO = MutableLiveData<List<CartProductDTO>>()
     val cartProductsArrayDTO: LiveData<List<CartProductDTO>>
@@ -23,7 +27,9 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
     val message: LiveData<String>
         get() = _message
 
-
+    fun setNavController(navController: NavController) {
+        this.navController = navController
+    }
     fun setSharedPreferences(sharedPreferences: SharedPreferences) {
         this.sharedPreferences = sharedPreferences
     }
@@ -41,9 +47,19 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
         return cartProductsArrayDTO
     }
 
-    suspend fun createCustom(): Int {
-        return withContext(Dispatchers.IO) {
-            customerRepository.createCustom(customerId)
+    fun createCustom() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = customerRepository.createCustom(customerId)
+            withContext(Dispatchers.Main) {
+                val bundle = Bundle()
+                result.onSuccess {customId ->
+                    _message.value = "Замовлення створено!"
+                    bundle.putInt("customId", customId)
+                    navController.navigate(R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment, bundle)
+                }.onFailure {
+                    _message.value = "Помилка обробки замовлення!"
+                }
+            }
         }
     }
 

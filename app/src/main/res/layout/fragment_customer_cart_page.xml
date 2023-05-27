@@ -3,17 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="customerCartPageViewModel"
-            type="com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCustomerCartPage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragment.customerFragments.cart.CustomerCartPageFragment">
+        android:layout_height="match_parent">
 
 
         <Button

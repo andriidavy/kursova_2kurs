@@ -4,22 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="customerMainPageViewModel"
-            type="com.example.registration.viewmodel.customer.CustomerMainPageViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCustomerMainPage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragment.customerFragments.mainPage.CustomerMainPageFragment">
+        android:layout_height="match_parent">
 
 
         <Button
             android:id="@+id/button_to_profile"
-            android:layout_width="140dp"
+            android:layout_width="142dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/my_profile_text"
@@ -28,7 +20,7 @@
 
         <Button
             android:id="@+id/button_to_customs"
-            android:layout_width="140dp"
+            android:layout_width="142dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/my_customs_text"
@@ -37,7 +29,7 @@
 
         <Button
             android:id="@+id/button_to_cart"
-            android:layout_width="140dp"
+            android:layout_width="142dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/cart"

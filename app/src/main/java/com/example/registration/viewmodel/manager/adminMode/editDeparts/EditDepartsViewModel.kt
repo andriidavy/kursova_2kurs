@@ -33,8 +33,8 @@ class EditDepartsViewModel(private val managerRepository: ManagerRepository) : V
     fun removeDepartmentById(departmentId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             managerRepository.removeDepartmentById(departmentId)
+            getAllDepartments()
         }
-        getAllDepartments()
     }
 
 }

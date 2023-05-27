@@ -37,8 +37,18 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getManagerProfile(managerId)
     }
 
-    suspend fun saveManager(manager: Manager): Manager {
-        return managerApi.saveManager(manager)
+    suspend fun saveManager(
+        name: String,
+        surname: String,
+        email: String,
+        password: String
+        ): Result<Manager> {
+            return try {
+                val manager = managerApi.saveManager(name, surname, email, password)
+                Result.success(manager)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
     }
 
     suspend fun deleteManagerById(managerId: Int) {
@@ -65,8 +75,18 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getAllEmployeesProfile()
     }
 
-    suspend fun saveEmployee(employee: Employee) {
-        return managerApi.saveEmployee(employee)
+    suspend fun saveEmployee(
+        name: String,
+        surname: String,
+        email: String,
+        password: String
+        ): Result<Employee> {
+            return try {
+                val employee = managerApi.saveEmployee(name, surname, email, password)
+                Result.success(employee)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
     }
 
     suspend fun deleteEmployeeById(employeeId: Int) {

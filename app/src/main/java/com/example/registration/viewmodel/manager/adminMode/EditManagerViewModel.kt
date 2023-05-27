@@ -32,7 +32,7 @@ class EditManagerViewModel(private val managerRepository: ManagerRepository): Vi
     fun deleteManagerById(managerId : Int) {
         viewModelScope.launch(Dispatchers.IO){
             managerRepository.deleteManagerById(managerId);
+            getAllManagersProfileDTO()
         }
-        getAllManagersProfileDTO()
     }
 }

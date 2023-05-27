@@ -40,7 +40,15 @@ class RegistrationFragment : Fragment() {
             val surname: String = binding.etSurname.text.toString()
             val email: String = binding.etEmail.text.toString()
             val password: String = binding.etPassword.text.toString()
-            viewModel.insertCustomer(name, surname, email, password)
+            if (name.isNotEmpty() && surname.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                viewModel.insertCustomer(name, surname, email, password)
+                binding.etName.text.clear()
+                binding.etSurname.text.clear()
+                binding.etEmail.text.clear()
+                binding.etPassword.text.clear()
+            } else {
+                viewModel.message.value = "Всі поля мають бути заповнені!"
+            }
         }
 
         viewModel.message.observe(viewLifecycleOwner) { message ->

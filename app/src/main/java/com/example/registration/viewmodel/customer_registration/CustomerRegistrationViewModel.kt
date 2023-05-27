@@ -14,19 +14,17 @@ import retrofit2.Response
 class CustomerRegistrationViewModel(val customerRepository: CustomerRepository) : ViewModel() {
     private lateinit var navController: NavController
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String>
-        get() = _message
+    val message = MutableLiveData<String>()
 
     fun setNavController(navController: NavController) {
         this.navController = navController
     }
 
     private fun showInvalideMessage() {
-        _message.value = "Покупець з таким email вже існує!"
+        message.value = "Покупець з таким email вже існує!"
     }
     private fun showSuccessfulMessage(){
-        _message.value = "Реєстрація пройшла успішно!"
+        message.value = "Реєстрація пройшла успішно!"
     }
 
     fun insertCustomer(name: String, surname: String, email: String, password: String) {

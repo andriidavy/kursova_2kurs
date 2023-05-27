@@ -18,10 +18,18 @@ interface ManagerApi {
     suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
 
     @POST("/manager/login")
-    suspend fun loginManager(@Query("email") email:String, @Query("password") password: String) : Manager
+    suspend fun loginManager(
+        @Query("email") email: String,
+        @Query("password") password: String
+    ): Manager
 
     @POST("/manager/save")
-    suspend fun saveManager(@Body manager: Manager): Manager
+    suspend fun saveManager(
+        @Query("name") name: String,
+        @Query("surname") surname: String,
+        @Query("email") email: String,
+        @Query("password") password: String
+    ): Manager
 
 
     @DELETE("/manager/delete-manager-by-id")
@@ -44,7 +52,12 @@ interface ManagerApi {
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
 
     @POST("/manager/employee/save")
-    suspend fun saveEmployee(@Body employee: Employee)
+    suspend fun saveEmployee(
+        @Query("name") name: String,
+        @Query("surname") surname: String,
+        @Query("email") email: String,
+        @Query("password") password: String
+    ): Employee
 
     @DELETE("/manager/employee/delete-employee-by-id")
     suspend fun deleteEmployeeById(@Query("employeeId") employeeId: Int)
@@ -69,13 +82,13 @@ interface ManagerApi {
 
 
     @POST("/manager/department/save")
-    suspend fun saveDepartment(@Body department: DepartmentDTO) : DepartmentDTO
+    suspend fun saveDepartment(@Body department: DepartmentDTO): DepartmentDTO
 
     @DELETE("/manager/department/delete-by-id")
     suspend fun removeDepartmentById(@Query("departmentId") departmentId: Int)
 
     @GET("/manager/department/get-all")
-    suspend fun  getAllDepartments() : List<DepartmentDTO>
+    suspend fun getAllDepartments(): List<DepartmentDTO>
 
     @GET("/manager/department/get-departments-for-manager")
     suspend fun getAllDepartmentsForManager(@Query("managerId") managerId: Int): List<DepartmentDTO>

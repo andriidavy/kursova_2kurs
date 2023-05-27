@@ -7,19 +7,30 @@ import com.example.registration.model.users.Manager
 import com.example.registration.repository.ManagerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddManagerViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
 
     val message = MutableLiveData<String>()
 
+    private fun showInvalideMessage() {
+        message.value = "Робітник з таким email вже існує!"
+    }
+
+    private fun showSuccessfulMessage() {
+        message.value = "Реєстрація пройшла успішно!"
+    }
+
     fun addManager(name: String, surname: String, email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            managerRepository.saveManager(
-                Manager(
-                    name, surname, email, password
-                )
-            )
+            val result = managerRepository.saveManager(name, surname, email, password)
+            withContext(Dispatchers.Main) {
+                result.onSuccess {
+                    showSuccessfulMessage()
+                }.onFailure {
+                    showInvalideMessage()
+                }
+            }
         }
-        message.value = "Менеджера додано до бази даних!"
     }
 }

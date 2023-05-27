@@ -9,41 +9,49 @@ import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
 
 
-
 class CustomerRepository(
     private val customerApi: CustomerApi
 ) {
 
-    suspend fun save(customer: Customer): Customer {
-        return customerApi.save(customer)
+    suspend fun save(
+        name: String,
+        surname: String,
+        email: String,
+        password: String
+    ): Result<Customer> {
+        return try {
+            val customer = customerApi.save(name, surname, email, password)
+            Result.success(customer)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
-
     suspend fun getCustomers(): List<Customer> {
         return customerApi.getCustomersAll()
     }
 
     suspend fun loginCustomer(email: String, password: String): Result<Customer> {
         return try {
-           val customer = customerApi.loginCustomer(email, password)
+            val customer = customerApi.loginCustomer(email, password)
             Result.success(customer)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    suspend fun getCustomerProfileById(customerId: Int): CustomerProfileDTO{
+    suspend fun getCustomerProfileById(customerId: Int): CustomerProfileDTO {
         return customerApi.getCustomerProfileById(customerId)
     }
 
-    suspend fun getProducts(): List<Product>{
+    suspend fun getProducts(): List<Product> {
         return customerApi.getProductsAll()
     }
 
-    suspend fun getCartProducts(customerId: Int): List<CartProductDTO>{
+    suspend fun getCartProducts(customerId: Int): List<CartProductDTO> {
         return customerApi.getCartProducts(customerId)
     }
 
-    suspend fun getCustomsForCustomer(customerId: Int): List<CustomDTO>{
+    suspend fun getCustomsForCustomer(customerId: Int): List<CustomDTO> {
         return customerApi.getCustomsForCustomer(customerId)
     }
 
@@ -57,23 +65,23 @@ class CustomerRepository(
     }
 
 
-    suspend fun createCustom(customerId: Int) : Int{
+    suspend fun createCustom(customerId: Int): Int {
         return customerApi.createCustom(customerId)
     }
 
-    suspend fun removeProductFromCart(customerId: Int, productId: Int){
+    suspend fun removeProductFromCart(customerId: Int, productId: Int) {
         return customerApi.removeProductFromCart(customerId, productId)
     }
 
-    suspend fun clearCart(customerId: Int){
+    suspend fun clearCart(customerId: Int) {
         return customerApi.clearCart(customerId)
     }
 
-    suspend fun assignDepartmentToCustom(customId: Int, departmentId: Int){
+    suspend fun assignDepartmentToCustom(customId: Int, departmentId: Int) {
         return customerApi.assignDepartmentToCustom(customId, departmentId)
     }
 
-    suspend fun  getAllDepartments() : List<DepartmentDTO>{
+    suspend fun getAllDepartments(): List<DepartmentDTO> {
         return customerApi.getAllDepartments()
     }
 }

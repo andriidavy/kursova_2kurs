@@ -16,29 +16,31 @@ import com.example.registration.viewmodel.customer_registration.CustomerRegistra
 import com.example.registration.viewmodel.customer_registration.CustomerRegistrationViewModelFactory
 
 class RegistrationFragment : Fragment() {
+    private lateinit var binding: FragmentRegistrationBinding
     private lateinit var viewModel: CustomerRegistrationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentRegistrationBinding.inflate(inflater)
+        binding = FragmentRegistrationBinding.inflate(inflater)
+
         val retrofitService = RetrofitService()
         val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
         val repository = CustomerRepository(customerApi)
         val viewModelFactory = CustomerRegistrationViewModelFactory(repository)
         viewModel =
             ViewModelProvider(this, viewModelFactory)[CustomerRegistrationViewModel::class.java]
-        binding.registrationViewModel = viewModel
-        binding.lifecycleOwner = this
 
-        // Получаем NavController
         val navController = findNavController()
-        // Устанавливаем NavController в ViewModel
         viewModel.setNavController(navController)
 
         binding.buttonReg.setOnClickListener {
-            viewModel.registrationCustomer()
+            val name: String = binding.etName.text.toString()
+            val surname: String = binding.etSurname.text.toString()
+            val email: String = binding.etEmail.text.toString()
+            val password: String = binding.etPassword.text.toString()
+            viewModel.insertCustomer(name, surname, email, password)
         }
 
         viewModel.message.observe(viewLifecycleOwner) { message ->
@@ -51,5 +53,4 @@ class RegistrationFragment : Fragment() {
 
         return binding.root
     }
-
 }

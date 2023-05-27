@@ -7,46 +7,39 @@ import com.example.registration.R
 import com.example.registration.model.users.Customer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 
-class CustomerRegistrationViewModel(val repository: CustomerRepository) : ViewModel() {
+class CustomerRegistrationViewModel(val customerRepository: CustomerRepository) : ViewModel() {
     private lateinit var navController: NavController
 
-    val inputName = MutableLiveData<String>()
-    val inputSurname = MutableLiveData<String>()
-    val inputEmail = MutableLiveData<String>()
-    val inputPassword = MutableLiveData<String>()
-
-    var message = MutableLiveData<String>()
-    fun registrationCustomer() {
-        val name = inputName.value!!.toString()
-        val surname = inputSurname.value!!.toString()
-        val email = inputEmail.value!!.toString()
-        val password = inputPassword.value!!.toString()
-        insertCustomer(
-            Customer(
-                name,
-                surname,
-                email,
-                password
-            )
-        )
-        inputName.value = ""
-        inputSurname.value = ""
-        inputEmail.value = ""
-        inputPassword.value = ""
-//        message.value = "Реєстрація пройшла успішно"
-        navController.navigate(R.id.action_registrationFragment_to_loginFragment)
-    }
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String>
+        get() = _message
 
     fun setNavController(navController: NavController) {
         this.navController = navController
     }
 
-    private fun insertCustomer(customer: Customer) {
+    private fun showInvalideMessage() {
+        _message.value = "Покупець з таким email вже існує!"
+    }
+    private fun showSuccessfulMessage(){
+        _message.value = "Реєстрація пройшла успішно!"
+    }
+
+    fun insertCustomer(name: String, surname: String, email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.save(customer)
+            val result = customerRepository.save(name, surname, email, password)
+            withContext(Dispatchers.Main) {
+                result.onSuccess {
+                    showSuccessfulMessage()
+                    navController.navigate(R.id.action_registrationFragment_to_loginFragment)
+                }.onFailure {
+                    showInvalideMessage()
+                }
+            }
         }
     }
 }

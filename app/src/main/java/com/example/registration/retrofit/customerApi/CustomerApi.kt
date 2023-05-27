@@ -17,13 +17,21 @@ interface CustomerApi {
     suspend fun getCustomersAll(): List<Customer>
 
     @POST("/customer/login")
-    suspend fun loginCustomer(@Query("email") email:String, @Query("password") password: String) : Customer
+    suspend fun loginCustomer(
+        @Query("email") email: String,
+        @Query("password") password: String
+    ): Customer
 
     @GET("/customer/get-customer-by-id")
     suspend fun getCustomerProfileById(@Query("customerId") customerId: Int): CustomerProfileDTO
 
     @POST("/customer/save")
-    suspend fun save(@Body customer: Customer): Customer
+    suspend fun save(
+        @Query("name") name: String,
+        @Query("surname") surname: String,
+        @Query("email") email: String,
+        @Query("password") password: String
+    ): Customer
 
     @GET("/customer/product/get-all")
     suspend fun getProductsAll(): List<Product>
@@ -42,7 +50,7 @@ interface CustomerApi {
     )
 
     @POST("/customer/create-custom")
-    suspend fun createCustom(@Query("customerId") customerId: Int) : Int
+    suspend fun createCustom(@Query("customerId") customerId: Int): Int
 
     @DELETE("/customer/cart/remove-product-by-id")
     suspend fun removeProductFromCart(
@@ -60,5 +68,5 @@ interface CustomerApi {
     )
 
     @GET("/customer/department/get-all")
-    suspend fun  getAllDepartments() : List<DepartmentDTO>
+    suspend fun getAllDepartments(): List<DepartmentDTO>
 }

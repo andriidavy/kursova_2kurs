@@ -11,17 +11,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ManagerCreatedCustomsPageViewModel(private val managerRepository: ManagerRepository): ViewModel()  {
+class ManagerCreatedCustomsPageViewModel(private val managerRepository: ManagerRepository) :
+    ViewModel() {
+    private lateinit var sharedPreferences: SharedPreferences
 
     private val _customCreatedArray = MutableLiveData<List<CustomDTO>>()
     val customCreatedArray: LiveData<List<CustomDTO>>
         get() = _customCreatedArray
 
+    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
+        this.sharedPreferences = sharedPreferences
+    }
 
+    val managerId: Int
+        get() = sharedPreferences.getInt("managerId", 0)
 
     fun getCreatedCustomsForManager(): LiveData<List<CustomDTO>> {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllCreatedCustoms()
+            val result = managerRepository.getAllCreatedCustoms(managerId)
             withContext(Dispatchers.Main) {
                 _customCreatedArray.postValue(result)
             }

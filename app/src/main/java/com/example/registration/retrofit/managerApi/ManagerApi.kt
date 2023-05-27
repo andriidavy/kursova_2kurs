@@ -29,7 +29,7 @@ interface ManagerApi {
     suspend fun getManagerProfile(@Query("managerId") managerId: Int): ManagerProfileDTO
 
     @GET("/manager/custom/get-created")
-    suspend fun getAllCreatedCustoms(): List<CustomDTO>
+    suspend fun getAllCreatedCustoms(@Query("managerId") managerId: Int): List<CustomDTO>
 
     @GET("/manager/custom/get-waiting")
     suspend fun getAllWaiting(): List<ReportDTO>

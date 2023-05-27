@@ -41,6 +41,7 @@ class ManagerAllCustomAdapter(private var customDTOList: List<CustomDTO>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.view.idForCustom.text = customDTOList[position].customId.toString()
         viewHolder.view.statusForCustom.text = customDTOList[position].status
+        viewHolder.view.departForCustom.text = customDTOList[position].department
         viewHolder.view.customerId.text = customDTOList[position].customerId.toString()
         viewHolder.view.customerName.text = customDTOList[position].customerName
         viewHolder.view.customerSurname.text = customDTOList[position].customerSurname

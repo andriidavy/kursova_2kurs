@@ -27,15 +27,12 @@ class MainActivity : AppCompatActivity() {
         val currentDestination = navController.currentDestination
         if (currentDestination?.id == R.id.customerMainPageFragment ||
             currentDestination?.id == R.id.employeeMainPageFragment ||
-            currentDestination?.id == R.id.managerMainPageFragment
+            currentDestination?.id == R.id.managerMainPageFragment ||
+            currentDestination?.id == R.id.addDepartForNewCustomFragment
         ) {
             return false
         }
         if (currentDestination?.id == R.id.managerCreatedCustomsPageFragment) {
-            navController.navigate(R.id.managerMainPageFragment)
-            return false
-        }
-        if (currentDestination?.id == R.id.addDepartForNewCustomFragment) {
             navController.navigate(R.id.managerMainPageFragment)
             return false
         }

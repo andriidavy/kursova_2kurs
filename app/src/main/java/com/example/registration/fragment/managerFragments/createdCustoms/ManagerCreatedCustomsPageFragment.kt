@@ -1,5 +1,7 @@
 package com.example.registration.fragment.managerFragments.createdCustoms
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,12 +56,17 @@ class ManagerCreatedCustomsPageFragment : Fragment() {
 
         viewModel.getCreatedCustomsForManager()
 
-
+        val sharedManagerIdPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
+        viewModel.setSharedPreferences(sharedManagerIdPreferences)
 
         fun assignEmployeeToCustom(customId: Int) {
             val bundle = Bundle()
             bundle.putInt("customId", customId)
-            navController.navigate(R.id.action_managerCreatedCustomsPageFragment_to_employeesListForAssigneeToCustomFragment, bundle)
+            navController.navigate(
+                R.id.action_managerCreatedCustomsPageFragment_to_employeesListForAssigneeToCustomFragment,
+                bundle
+            )
         }
 
         adapter.setOnAssignEmployeeClickListener(object :

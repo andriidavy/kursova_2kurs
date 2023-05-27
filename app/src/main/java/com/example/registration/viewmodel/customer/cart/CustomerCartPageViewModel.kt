@@ -50,16 +50,16 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
     fun removeProductFromCart(productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.removeProductFromCart(customerId, productId)
+            getAllCartProducts()
         }
-        getAllCartProducts()
         _message.value = "Товар видалено з корзини"
     }
 
     fun clearCart() {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.clearCart(customerId)
+            getAllCartProducts()
         }
-        getAllCartProducts()
         _message.value = "Корзину очищено"
     }
 }

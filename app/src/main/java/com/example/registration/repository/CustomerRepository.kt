@@ -7,11 +7,11 @@ import com.example.registration.model.product.Product
 import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
-import retrofit2.http.Body
-import retrofit2.http.Query
+
+import com.example.registration.exceptionHandling.Result
+
 
 class CustomerRepository(
-//    private val dao: CustomerDAO
     private val customerApi: CustomerApi
 ) {
 
@@ -39,9 +39,15 @@ class CustomerRepository(
         return customerApi.getCustomsForCustomer(customerId)
     }
 
-    suspend fun addProductToCart(customerId: Int, productId: Int, quantity: Int){
-        return customerApi.addProductToCart(customerId, productId, quantity)
+    suspend fun addProductToCart(customerId: Int, productId: Int, quantity: Int): Result<Unit> {
+        return try {
+            customerApi.addProductToCart(customerId, productId, quantity)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
     }
+
 
     suspend fun createCustom(customerId: Int) : Int{
         return customerApi.createCustom(customerId)
@@ -63,3 +69,4 @@ class CustomerRepository(
         return customerApi.getAllDepartments()
     }
 }
+

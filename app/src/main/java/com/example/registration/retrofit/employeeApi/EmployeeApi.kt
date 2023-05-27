@@ -12,6 +12,9 @@ interface EmployeeApi {
     @GET("/employee/get-all")
     suspend fun getEmployeeAll(): List<Employee>
 
+    @POST("/employee/login")
+    suspend fun loginEmployee(@Query("email") email:String, @Query("password") password: String) : Employee
+
     @GET("/employee/get-employee-by-id")
     suspend fun getEmployeeProfile(@Query("employeeId") employeeId: Int) : EmployeeProfileDTO
     @GET("/employee/custom/get-in-processing")

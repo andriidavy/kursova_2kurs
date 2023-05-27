@@ -29,10 +29,6 @@ class AdminLoginFragment : Fragment() {
                 Toast.makeText(context,"Пін-код невірний!",Toast.LENGTH_LONG).show()
             }
         }
-
-
-
-
         return binding.root
     }
 

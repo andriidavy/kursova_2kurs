@@ -16,6 +16,9 @@ interface CustomerApi {
     @GET("/customer/get-all")
     suspend fun getCustomersAll(): List<Customer>
 
+    @POST("/customer/login")
+    suspend fun loginCustomer(@Query("email") email:String, @Query("password") password: String) : Customer
+
     @GET("/customer/get-customer-by-id")
     suspend fun getCustomerProfileById(@Query("customerId") customerId: Int): CustomerProfileDTO
 

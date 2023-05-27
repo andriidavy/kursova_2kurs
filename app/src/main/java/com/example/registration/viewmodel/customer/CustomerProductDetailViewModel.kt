@@ -9,8 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-import com.example.registration.exceptionHandling.Result
-
 class CustomerProductDetailViewModel(private val customerRepository: CustomerRepository) :
     ViewModel() {
 
@@ -22,13 +20,10 @@ class CustomerProductDetailViewModel(private val customerRepository: CustomerRep
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.addProductToCart(customerId, productId, quantity)
             withContext(Dispatchers.Main) {
-                when (result) {
-                    is Result.Success -> {
-                        _message.value = "Додано до корзини"
-                    }
-                    is Result.Error -> {
-                        _message.value = "Помилка: ${result.exception.message}"
-                    }
+                result.onSuccess {
+                    _message.value = "Додано до корзини"
+                }.onFailure { exception ->
+                    _message.value = "Помилка: ${exception.message}"
                 }
             }
         }

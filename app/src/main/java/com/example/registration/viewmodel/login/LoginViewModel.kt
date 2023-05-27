@@ -13,6 +13,7 @@ import com.example.registration.repository.EmployeeRepository
 import com.example.registration.repository.ManagerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginViewModel(
     private val customerRepository: CustomerRepository,
@@ -22,26 +23,11 @@ class LoginViewModel(
     private lateinit var navController: NavController
     private lateinit var sharedPreferences: SharedPreferences
 
-//FOR ONE WAY BINDING(ENCAPSULATION)
-//    private val _inputEmail = MutableLiveData<String>()
-//    val inputEmail : LiveData<String>
-//    get() = _inputEmail
-//
-//    private val _inputPassword = MutableLiveData<String>()
-//    val inputPassword: LiveData<String>
-//    get() = _inputPassword
-
-    //FOR TWO WAY BINDING (NON ENCAPSULATION)
-    val inputEmail = MutableLiveData<String?>()
-    val inputPassword = MutableLiveData<String?>()
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
 
-    private var customers: List<Customer>? = null
-    private var employees: List<Employee>? = null
-    private var managers: List<Manager>? = null
 
     //метод встановлення NavController, який викликається у фрагменті
     fun setNavController(navController: NavController) {
@@ -53,97 +39,56 @@ class LoginViewModel(
         this.sharedPreferences = sharedPreferences
     }
 
-
-//    //CUSTOMER LOGIN METHODS
-
-    private fun callGetAllCustomers() {
-        viewModelScope.launch(Dispatchers.IO) {
-        customers = customerRepository.getCustomers()
-        }
+    private fun showInvalideMessage() {
+        _message.value = "Невірний логін чи пароль!"
     }
 
-    fun loginCustomer() {
-        callGetAllCustomers()
-        val email = inputEmail.value
-        val password = inputPassword.value
+    private fun showSuccessfulMessage(name: String, surname: String){
+        _message.value = "Вітаємо, $name $surname"
+    }
 
-        customers?.let { customersList ->
-            for (i in customersList.indices) {
-                if (email == customersList[i].email && password == customersList[i].password) {
-                    sharedPreferences.edit().putInt("customerId", customersList[i].id).apply()
+    fun loginCustomer(email: String, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = customerRepository.loginCustomer(email, password)
+            withContext(Dispatchers.Main) {
+                result.onSuccess { customer ->
+                    sharedPreferences.edit().putInt("customerId", customer.id).apply()
+                    showSuccessfulMessage(customer.name, customer.surname)
                     navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                    _message.value = "Вітаємо ${customersList[i].name} ${customersList[i].surname}"
-                    return
-                } else {
-                    _message.value = "Помилка входу, перевірте вхідні дані"
-                    inputEmail.value = ""
-                    inputPassword.value = ""
+                }.onFailure {
+                    showInvalideMessage()
                 }
             }
-        } ?: run {
-            _message.value = "Empty database!"
         }
     }
 
-//EMPLOYEE LOGIN METHODS
-
-    private fun callGetAllEmployees() {
+    fun loginEmployee(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            employees = employeeRepository.getEmployees()
-        }
-    }
-
-    fun loginEmployee() {
-        callGetAllEmployees()
-        val email = inputEmail.value
-        val password = inputPassword.value
-
-        employees?.let { employeesList ->
-            for (i in employeesList.indices) {
-                if (email == employeesList[i].email && password == employeesList[i].password) {
-                    sharedPreferences.edit().putInt("employeeId", employeesList[i].id).apply()
+            val result = employeeRepository.loginEmployee(email, password)
+            withContext(Dispatchers.Main) {
+                result.onSuccess { employee ->
+                    sharedPreferences.edit().putInt("employeeId", employee.id).apply()
+                    showSuccessfulMessage(employee.name, employee.surname)
                     navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                    _message.value = "Вітаємо ${employeesList[i].name} ${employeesList[i].surname}"
-                    return
-                } else {
-                    _message.value = "Помилка входу, перевірте вхідні дані"
-                    inputEmail.value = ""
-                    inputPassword.value = ""
+                }.onFailure {
+                    showInvalideMessage()
                 }
             }
-        } ?: run {
-            _message.value = "Empty database!"
         }
     }
 
-//MANAGER LOGIN METHODS
-
-    private fun callGetAllManagers() {
+    fun loginManager(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            managers = managerRepository.getManagers()
-        }
-    }
-
-    fun loginManager() {
-        callGetAllManagers()
-        val email = inputEmail.value
-        val password = inputPassword.value
-
-        managers?.let { managersList ->
-            for (i in managersList.indices) {
-                if (email == managersList[i].email && password == managersList[i].password) {
-                    sharedPreferences.edit().putInt("managerId", managersList[i].id).apply()
+            val result = managerRepository.loginManager(email, password)
+            withContext(Dispatchers.Main) {
+                result.onSuccess { manager ->
+                    sharedPreferences.edit().putInt("managerId", manager.id).apply()
+                    showSuccessfulMessage(manager.name, manager.surname)
                     navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
-                    _message.value = "Вітаємо ${managersList[i].name} ${managersList[i].surname}"
-                    return
-                } else {
-                    _message.value = "Помилка входу, перевірте вхідні дані"
-                    inputEmail.value = ""
-                    inputPassword.value = ""
+                }.onFailure {
+                    showInvalideMessage()
                 }
             }
-        } ?: run {
-            _message.value = "Empty database!"
         }
     }
 }

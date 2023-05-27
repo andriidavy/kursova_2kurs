@@ -15,6 +15,15 @@ class EmployeeRepository(private val employeeApi: EmployeeApi) {
         return employeeApi.getEmployeeAll()
     }
 
+    suspend fun loginEmployee(email: String, password: String): Result<Employee> {
+        return try {
+            val employee = employeeApi.loginEmployee(email, password)
+            Result.success(employee)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     suspend fun getEmployeeProfile(employeeId: Int) : EmployeeProfileDTO{
         return employeeApi.getEmployeeProfile(employeeId)
     }

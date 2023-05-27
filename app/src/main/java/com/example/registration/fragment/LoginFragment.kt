@@ -12,10 +12,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
+import com.example.registration.model.users.Customer
+import com.example.registration.model.users.Employee
+import com.example.registration.model.users.Manager
 import com.example.registration.repository.EmployeeRepository
 import com.example.registration.repository.ManagerRepository
 import com.example.registration.retrofit.customerApi.CustomerApi
@@ -24,9 +28,12 @@ import com.example.registration.retrofit.employeeApi.EmployeeApi
 import com.example.registration.retrofit.managerApi.ManagerApi
 import com.example.registration.viewmodel.login.LoginViewModel
 import com.example.registration.viewmodel.login.LoginViewModelFactory
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private lateinit var viewModel: LoginViewModel
+    private lateinit var email : String
+    private lateinit var password : String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,14 +56,14 @@ class LoginFragment : Fragment() {
             LoginViewModelFactory(customerRepository, employeeRepository, managerRepository)
 
         viewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
-        binding.loginViewModel = viewModel
-        binding.lifecycleOwner = this
+
         // Получаем NavController
         val navController = findNavController()
         // Устанавливаем NavController в ViewModel
         viewModel.setNavController(navController)
         // Устанавливаем SharedPreferences для получение id пользователя с целью его использования в программе далее
-        val sharedLoginPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
+        val sharedLoginPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
         viewModel.setSharedPreferences(sharedLoginPreferences)
 
 
@@ -75,10 +82,9 @@ class LoginFragment : Fragment() {
                 id: Long
             ) {
                 num = position
-                if(position==0){
+                if (position == 0) {
                     binding.textHaveNotRegistration.visibility = View.VISIBLE
-                }
-                else{
+                } else {
                     binding.textHaveNotRegistration.visibility = View.GONE
                 }
             }
@@ -94,13 +100,30 @@ class LoginFragment : Fragment() {
             view.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
+        fun inputInit() {
+            email = binding.etEmail.text.toString()
+            password = binding.etPassword.text.toString()
+        }
+
+        fun loginCustomer() {
+            viewModel.loginCustomer(email, password)
+        }
+
+        fun loginEmployee() {
+            viewModel.loginEmployee(email, password)
+        }
+
+        fun loginManager() {
+            viewModel.loginManager(email, password)
+        }
 
         binding.buttonLog.setOnClickListener()
         {
+            inputInit()
             when (num) {
-                0 -> viewModel.loginCustomer()
-                1 -> viewModel.loginEmployee()
-                2 -> viewModel.loginManager()
+                0 -> loginCustomer()
+                1 -> loginEmployee()
+                2 -> loginManager()
             }
         }
 

@@ -17,6 +17,9 @@ interface ManagerApi {
     @GET("/manager/profile/get-all")
     suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
 
+    @POST("/manager/login")
+    suspend fun loginManager(@Query("email") email:String, @Query("password") password: String) : Manager
+
     @POST("/manager/save")
     suspend fun saveManager(@Body manager: Manager): Manager
 

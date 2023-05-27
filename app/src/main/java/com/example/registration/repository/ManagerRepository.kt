@@ -20,6 +20,15 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getManagersAll()
     }
 
+    suspend fun loginManager(email: String, password: String): Result<Manager> {
+        return try {
+            val manager = managerApi.loginManager(email, password)
+            Result.success(manager)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO> {
         return managerApi.getAllManagersProfileDTO()
     }

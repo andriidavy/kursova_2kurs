@@ -8,7 +8,6 @@ import com.example.registration.retrofit.customerApi.CustomerApi
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
 
-import com.example.registration.exceptionHandling.Result
 
 
 class CustomerRepository(
@@ -21,6 +20,15 @@ class CustomerRepository(
 
     suspend fun getCustomers(): List<Customer> {
         return customerApi.getCustomersAll()
+    }
+
+    suspend fun loginCustomer(email: String, password: String): Result<Customer> {
+        return try {
+           val customer = customerApi.loginCustomer(email, password)
+            Result.success(customer)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     suspend fun getCustomerProfileById(customerId: Int): CustomerProfileDTO{
@@ -42,9 +50,9 @@ class CustomerRepository(
     suspend fun addProductToCart(customerId: Int, productId: Int, quantity: Int): Result<Unit> {
         return try {
             customerApi.addProductToCart(customerId, productId, quantity)
-            Result.Success(Unit)
+            Result.success(Unit)
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.failure(e)
         }
     }
 

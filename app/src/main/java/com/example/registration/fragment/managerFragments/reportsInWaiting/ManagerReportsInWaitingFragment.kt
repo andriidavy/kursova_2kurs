@@ -1,5 +1,7 @@
 package com.example.registration.fragment.managerFragments.reportsInWaiting
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -44,6 +46,10 @@ class ManagerReportsInWaitingFragment : Fragment() {
         binding.managerReportsInWaitingRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         val navController = findNavController()
+
+        val sharedManagerIdPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
+        viewModel.setSharedPreferences(sharedManagerIdPreferences)
 
         viewModel.reportInWaitingArray.observe(viewLifecycleOwner) { reports ->
             adapter.updateReports(reports)

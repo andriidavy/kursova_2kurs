@@ -13,15 +13,22 @@ import kotlinx.coroutines.withContext
 
 class ManagerReportsInWaitingViewModel(private val managerRepository: ManagerRepository) :
     ViewModel() {
+    private lateinit var sharedPreferences: SharedPreferences
 
     private val _reportInWaitingArray = MutableLiveData<List<ReportDTO>>()
     val reportInWaitingArray: LiveData<List<ReportDTO>>
         get() = _reportInWaitingArray
 
+    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
+        this.sharedPreferences = sharedPreferences
+    }
+
+    val managerId: Int
+        get() = sharedPreferences.getInt("managerId", 0)
 
     fun getAllInWaitingReports(): LiveData<List<ReportDTO>> {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllWaiting()
+            val result = managerRepository.getAllWaiting(managerId)
             withContext(Dispatchers.Main) {
                 _reportInWaitingArray.postValue(result)
             }

@@ -62,8 +62,8 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.getAllCreatedCustoms(managerId)
     }
 
-    suspend fun getAllWaiting(): List<ReportDTO> {
-        return managerApi.getAllWaiting()
+    suspend fun getAllWaiting(managerId: Int): List<ReportDTO> {
+        return managerApi.getAllWaiting(managerId)
     }
 
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO> {

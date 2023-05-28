@@ -39,8 +39,8 @@ interface ManagerApi {
     @GET("/manager/custom/get-created")
     suspend fun getAllCreatedCustoms(@Query("managerId") managerId: Int): List<CustomDTO>
 
-    @GET("/manager/custom/get-waiting")
-    suspend fun getAllWaiting(): List<ReportDTO>
+    @GET("/manager/custom/report/get-waiting")
+    suspend fun getAllWaiting(@Query ("managerId") managerId: Int): List<ReportDTO>
 
     @GET("/manager/custom/get-all")
     suspend fun getAllCustoms(): List<CustomDTO>

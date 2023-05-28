@@ -64,7 +64,7 @@ class ManagerReportsInWaitingFragment : Fragment() {
                 val bundle = Bundle()
                 val reportText: String? = viewModel.reportInWaitingArray.value?.get(position)?.reportText
                 val reportId: Int? = viewModel.reportInWaitingArray.value?.get(position)?.reportId
-                    bundle.putString("reportText", reportText)
+                bundle.putString("reportText", reportText)
                 if (reportId != null) {
                     bundle.putInt("reportId", reportId)
                 }

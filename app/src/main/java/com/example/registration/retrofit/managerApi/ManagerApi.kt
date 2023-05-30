@@ -79,7 +79,7 @@ interface ManagerApi {
 
 
     @POST("/manager/department/save")
-    suspend fun saveDepartment(@Body department: DepartmentDTO): DepartmentDTO
+    suspend fun saveDepartment(@Query("departmentName") departmentName: String): DepartmentDTO
 
     @DELETE("/manager/department/delete-by-id")
     suspend fun removeDepartmentById(@Query("departmentId") departmentId: Int)

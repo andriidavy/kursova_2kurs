@@ -41,7 +41,7 @@ class addProductFragment : Fragment() {
             } else { 0 }
             val description: String = binding.productDescription.text.toString()
 
-            if (name.isNotEmpty() && quantity != 0) {
+            if (name.isNotEmpty() && quantity > 0) {
                 viewModel.saveProduct(name, description, quantity)
             } else {
                 viewModel.message.value = "поля name та quantity мають бути заповнені!"

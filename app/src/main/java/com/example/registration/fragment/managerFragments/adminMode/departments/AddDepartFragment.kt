@@ -53,7 +53,6 @@ private lateinit var viewModel: AddDepartsViewModel
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
 
-
         return binding.root
     }
 

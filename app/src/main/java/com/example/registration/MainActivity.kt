@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.adminMainPageFragment -> supportActionBar?.title = "Головна сторінка адміністратора"
                 R.id.editManagerFragment -> supportActionBar?.title = "Список менеджерів"
                 R.id.addManagerFragment -> supportActionBar?.title = "Додати менеджера"
+                R.id.managerDepartDetailFragment -> supportActionBar?.title = "Призначені відділи"
                 R.id.editDepartsFragment -> supportActionBar?.title = "Список відділів доставки"
                 R.id.addDepartFragment -> supportActionBar?.title = "Додати відділ доставки"
             }

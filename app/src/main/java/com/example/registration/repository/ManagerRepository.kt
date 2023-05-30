@@ -104,8 +104,13 @@ class ManagerRepository(private val managerApi: ManagerApi) {
         return managerApi.saveProduct(product)
     }
 
-    suspend fun saveDepartment(department: DepartmentDTO): DepartmentDTO {
-        return managerApi.saveDepartment(department)
+    suspend fun saveDepartment(departmentName: String): Result<DepartmentDTO> {
+        return try{
+           val result = managerApi.saveDepartment(departmentName)
+            Result.success(result)
+        } catch (e : Exception){
+            Result.failure(e);
+        }
     }
 
     suspend fun removeDepartmentById(departmentId: Int) {

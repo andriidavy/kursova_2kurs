@@ -92,4 +92,5 @@
     <string name="depart_text">Відділ доставки:</string>
     <string name="choose_depart_text">Оберіть відділ доставки:</string>
     <string name="product_сatalog">Каталог товарів</string>
+    <string name="depart_registration">Додати відділ</string>
 </resources>

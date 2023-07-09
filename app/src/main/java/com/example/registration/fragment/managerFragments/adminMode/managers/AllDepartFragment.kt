@@ -8,17 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.registration.R
-import com.example.registration.adapter.manager.ManageManagerAdapter
 import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.databinding.FragmentAllDepartBinding
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.adminMode.AllDepartViewModel
 import com.example.registration.viewmodel.manager.adminMode.AllDepartViewModelFactory
-import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModel
-import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModelFactory
 
 
 class AllDepartFragment : Fragment() {

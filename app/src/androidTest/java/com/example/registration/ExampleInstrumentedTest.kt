@@ -1,8 +1,8 @@
 package com.example.registration
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.registration.retrofit.customerApi.CustomerApi
-import com.example.registration.retrofit.RetrofitService
+import com.example.registration.database.customer.CustomerApi
+import com.example.registration.database.RetrofitService
 import com.example.registration.model.users.Customer
 
 import org.junit.Test

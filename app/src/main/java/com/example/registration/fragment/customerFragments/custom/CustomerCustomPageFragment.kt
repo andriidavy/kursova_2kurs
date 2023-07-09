@@ -15,9 +15,9 @@ import com.example.registration.R
 import com.example.registration.adapter.custom.CustomAdapter
 import com.example.registration.databinding.FragmentCustomerCustomPageBinding
 import com.example.registration.model.custom.CustomProductDTO
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.customerApi.CustomerApi
+import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.customer.CustomerApi
 import com.example.registration.viewmodel.customer.custom.CustomerCustomPageViewModel
 import com.example.registration.viewmodel.customer.custom.CustomerCustomPageViewModelFactory
 

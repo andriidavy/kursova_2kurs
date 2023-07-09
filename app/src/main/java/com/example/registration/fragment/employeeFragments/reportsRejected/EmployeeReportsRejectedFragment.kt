@@ -13,13 +13,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.report.ReportAdapter
-import com.example.registration.databinding.FragmentEmployeeReportsInWaitingBinding
 import com.example.registration.databinding.FragmentEmployeeReportsRejectedBinding
-import com.example.registration.repository.EmployeeRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.employeeApi.EmployeeApi
-import com.example.registration.viewmodel.employee.reports.inWaiting.EmployeeReportsInWaitingViewModel
-import com.example.registration.viewmodel.employee.reports.inWaiting.EmployeeReportsInWaitingViewModelFactory
+import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.viewmodel.employee.reports.rejected.EmployeeReportsRejectedViewModel
 import com.example.registration.viewmodel.employee.reports.rejected.EmployeeReportsRejectedViewModelFactory
 

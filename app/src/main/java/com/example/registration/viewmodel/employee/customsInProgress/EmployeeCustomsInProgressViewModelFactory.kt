@@ -2,7 +2,7 @@ package com.example.registration.viewmodel.employee.customsInProgress
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.repository.EmployeeRepository
+import com.example.registration.database.employee.EmployeeRepository
 
 
 class EmployeeCustomsInProgressViewModelFactory(

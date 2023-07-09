@@ -9,18 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.registration.R
 import com.example.registration.adapter.CartAdapter
 import com.example.registration.databinding.FragmentCustomerCartPageBinding
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.customerApi.CustomerApi
+import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.customer.CustomerApi
 import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel
 import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModelFactory
-import kotlinx.coroutines.launch
 
 class CustomerCartPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerCartPageBinding

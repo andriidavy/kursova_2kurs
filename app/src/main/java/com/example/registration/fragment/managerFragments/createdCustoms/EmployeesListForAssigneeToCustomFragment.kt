@@ -10,18 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
-import com.example.registration.adapter.custom.CustomProductAdapter
 import com.example.registration.adapter.custom.EmployeeForAssigneeAdapter
-import com.example.registration.adapter.custom.ManagerCreatedCustomAdapter
 import com.example.registration.databinding.FragmentEmployeesListForAssigneeToCustomBinding
-import com.example.registration.model.custom.CustomProductDTO
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.createdCustoms.EmployeesListForAssigneeToCustomViewModel
 import com.example.registration.viewmodel.manager.createdCustoms.EmployeesListForAssigneeToCustomViewModelFactory
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModel
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModelFactory
 
 
 class EmployeesListForAssigneeToCustomFragment : Fragment() {

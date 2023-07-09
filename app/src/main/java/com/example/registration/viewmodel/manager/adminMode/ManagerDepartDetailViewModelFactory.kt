@@ -2,7 +2,7 @@ package com.example.registration.viewmodel.manager.adminMode
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.repository.ManagerRepository
+import com.example.registration.database.manager.ManagerRepository
 
 class ManagerDepartDetailViewModelFactory (
     private val managerRepository: ManagerRepository

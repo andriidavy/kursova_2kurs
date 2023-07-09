@@ -5,9 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.users.ManagerProfileDTO
-import com.example.registration.repository.ManagerRepository
+import com.example.registration.database.manager.ManagerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

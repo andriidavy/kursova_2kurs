@@ -11,11 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentManagerProfileBinding
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
-import com.example.registration.viewmodel.manager.products.AddProductViewModel
-import com.example.registration.viewmodel.manager.products.AddProductViewModelFactory
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.profile.ManagerProfilePageViewModel
 import com.example.registration.viewmodel.manager.profile.ManagerProfilePageViewModelFactory
 

@@ -10,14 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.custom.ManageEmployeeAdapter
-import com.example.registration.adapter.custom.ManagerCreatedCustomAdapter
 import com.example.registration.databinding.FragmentManageEmployeeBinding
-import com.example.registration.databinding.ListManageEmployeeItemBinding
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModel
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModelFactory
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.personManagement.ManageEmployeeViewModel
 import com.example.registration.viewmodel.manager.personManagement.ManageEmployeeViewModelFactory
 

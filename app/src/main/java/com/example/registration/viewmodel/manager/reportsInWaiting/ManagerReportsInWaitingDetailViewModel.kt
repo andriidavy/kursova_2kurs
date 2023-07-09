@@ -2,7 +2,7 @@ package com.example.registration.viewmodel.manager.reportsInWaiting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.repository.ManagerRepository
+import com.example.registration.database.manager.ManagerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

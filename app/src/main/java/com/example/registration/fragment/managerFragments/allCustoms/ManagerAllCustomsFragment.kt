@@ -11,16 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.custom.ManagerAllCustomAdapter
-import com.example.registration.adapter.custom.ManagerCreatedCustomAdapter
 import com.example.registration.databinding.FragmentManagerAllCustomsBinding
 import com.example.registration.model.custom.CustomProductDTO
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.allCustoms.ManagerAllCustomsPageViewModel
 import com.example.registration.viewmodel.manager.allCustoms.ManagerAllCustomsPageViewModelFactory
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModel
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModelFactory
 
 
 class ManagerAllCustomsFragment : Fragment() {

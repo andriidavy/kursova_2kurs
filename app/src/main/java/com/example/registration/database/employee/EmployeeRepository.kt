@@ -1,15 +1,13 @@
-package com.example.registration.repository
+package com.example.registration.database.employee
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO
-import com.example.registration.model.users.Customer
 import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
-import com.example.registration.retrofit.employeeApi.EmployeeApi
-import retrofit2.Call
-import retrofit2.http.Query
+import com.example.registration.database.employee.EmployeeApi
+import javax.inject.Inject
 
-class EmployeeRepository(private val employeeApi: EmployeeApi) {
+class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeApi) {
     suspend fun loginEmployee(email: String, password: String): Result<Employee> {
         return try {
             val employee = employeeApi.loginEmployee(email, password)

@@ -3,7 +3,7 @@ package com.example.registration.viewmodel.employee.customsInProgress.report
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.repository.EmployeeRepository
+import com.example.registration.database.employee.EmployeeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

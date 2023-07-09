@@ -2,7 +2,6 @@ package com.example.registration.viewmodel.customer.cart
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.registration.R
 import com.example.registration.model.cart.CartProductDTO
-import com.example.registration.repository.CustomerRepository
+import com.example.registration.database.customer.CustomerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

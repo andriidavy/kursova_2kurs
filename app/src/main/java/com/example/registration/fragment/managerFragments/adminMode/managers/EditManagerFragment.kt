@@ -10,13 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
-import com.example.registration.adapter.custom.CustomAdapter
 import com.example.registration.adapter.manager.ManageManagerAdapter
 import com.example.registration.databinding.FragmentEditManagerBinding
-import com.example.registration.model.custom.CustomProductDTO
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModel
 import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModelFactory
 

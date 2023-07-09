@@ -2,8 +2,7 @@ package com.example.registration.viewmodel.customer.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.viewmodel.customer.CustomerMainPageViewModel
+import com.example.registration.database.customer.CustomerRepository
 
 class CustomerProfilePageViewModelFactory (
     private val customerRepository: CustomerRepository

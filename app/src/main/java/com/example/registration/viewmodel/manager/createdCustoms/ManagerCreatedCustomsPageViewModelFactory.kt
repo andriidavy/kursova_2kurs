@@ -2,9 +2,7 @@ package com.example.registration.viewmodel.manager.createdCustoms
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.viewmodel.customer.CustomerMainPageViewModel
+import com.example.registration.database.manager.ManagerRepository
 
 class ManagerCreatedCustomsPageViewModelFactory (
     private val managerRepository: ManagerRepository

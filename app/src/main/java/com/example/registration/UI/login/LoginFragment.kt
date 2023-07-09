@@ -1,8 +1,8 @@
-package com.example.registration.fragment
+package com.example.registration.UI.login
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.registration.repository.CustomerRepository
+import com.example.registration.database.customer.CustomerRepository
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,51 +11,33 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
-import com.example.registration.model.users.Customer
-import com.example.registration.model.users.Employee
-import com.example.registration.model.users.Manager
-import com.example.registration.repository.EmployeeRepository
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.customerApi.CustomerApi
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.employeeApi.EmployeeApi
-import com.example.registration.retrofit.managerApi.ManagerApi
-import com.example.registration.viewmodel.login.LoginViewModel
-import com.example.registration.viewmodel.login.LoginViewModelFactory
-import kotlinx.coroutines.launch
+import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.customer.CustomerApi
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.employee.EmployeeApi
+import com.example.registration.database.manager.ManagerApi
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
-    private lateinit var viewModel: LoginViewModel
     private lateinit var email : String
     private lateinit var password : String
+
+    //with hilt we setup view model into fragment like this
+    private val viewModel by viewModels<LoginViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         val binding = FragmentLoginBinding.inflate(inflater)
-
-        // Создаем экземпляр ViewModel
-        val retrofitService = RetrofitService()
-
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val employeeApi = retrofitService.retrofit.create(EmployeeApi::class.java)
-        val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
-
-        val customerRepository = CustomerRepository(customerApi)
-        val employeeRepository = EmployeeRepository(employeeApi)
-        val managerRepository = ManagerRepository(managerApi)
-
-        val viewModelFactory =
-            LoginViewModelFactory(customerRepository, employeeRepository, managerRepository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
         // Получаем NavController
         val navController = findNavController()

@@ -11,16 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentEmployeeProfilePageBinding
-import com.example.registration.databinding.FragmentManagerProfileBinding
-import com.example.registration.repository.EmployeeRepository
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.employeeApi.EmployeeApi
-import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.viewmodel.employee.profile.EmployeeProfilePageViewModel
 import com.example.registration.viewmodel.employee.profile.EmployeeProfilePageViewModelFactory
-import com.example.registration.viewmodel.manager.profile.ManagerProfilePageViewModel
-import com.example.registration.viewmodel.manager.profile.ManagerProfilePageViewModelFactory
 
 class EmployeeProfilePageFragment : Fragment() {
     private lateinit var binding: FragmentEmployeeProfilePageBinding

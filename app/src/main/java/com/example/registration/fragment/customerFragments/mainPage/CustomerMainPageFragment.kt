@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
-import com.example.registration.model.custom.CustomProductDTO
 import com.example.registration.model.product.Product
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.customerApi.CustomerApi
+import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.customer.CustomerApi
 import com.example.registration.viewmodel.customer.CustomerMainPageViewModel
 import com.example.registration.viewmodel.customer.CustomerMainPageViewModelFactory
 

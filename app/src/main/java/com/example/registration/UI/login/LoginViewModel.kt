@@ -1,21 +1,20 @@
-package com.example.registration.viewmodel.login
+package com.example.registration.UI.login
 
-import android.content.Context
 import android.content.SharedPreferences
-import com.example.registration.repository.CustomerRepository
+import com.example.registration.database.customer.CustomerRepository
 import androidx.lifecycle.*
 import androidx.navigation.NavController
 import com.example.registration.R
-import com.example.registration.model.users.Customer
-import com.example.registration.model.users.Employee
-import com.example.registration.model.users.Manager
-import com.example.registration.repository.EmployeeRepository
-import com.example.registration.repository.ManagerRepository
+import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.manager.ManagerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val customerRepository: CustomerRepository,
     private val employeeRepository: EmployeeRepository,
     private val managerRepository: ManagerRepository

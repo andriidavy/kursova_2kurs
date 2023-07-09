@@ -12,16 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
-import com.example.registration.adapter.custom.EmployeeCustomProcessedAdapter
 import com.example.registration.adapter.report.ReportAdapter
 import com.example.registration.databinding.FragmentEmployeeReportsAcceptedBinding
-import com.example.registration.model.custom.CustomProductDTO
-import com.example.registration.model.report.ReportDTO
-import com.example.registration.repository.EmployeeRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.employeeApi.EmployeeApi
-import com.example.registration.viewmodel.employee.customsProcessed.EmployeeCustomsProcessedViewModel
-import com.example.registration.viewmodel.employee.customsProcessed.EmployeeCustomsProcessedViewModelFactory
+import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.viewmodel.employee.reports.accepted.EmployeeReportsAcceptedViewModel
 import com.example.registration.viewmodel.employee.reports.accepted.EmployeeReportsAcceptedViewModelFactory
 

@@ -1,4 +1,4 @@
-package com.example.registration.retrofit.customerApi
+package com.example.registration.database.customer
 
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO

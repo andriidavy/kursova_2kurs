@@ -1,4 +1,4 @@
-package com.example.registration.retrofit.managerApi
+package com.example.registration.database.manager
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO

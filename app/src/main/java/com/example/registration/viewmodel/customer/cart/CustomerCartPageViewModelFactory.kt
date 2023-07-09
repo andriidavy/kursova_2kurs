@@ -2,7 +2,7 @@ package com.example.registration.viewmodel.customer.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.repository.CustomerRepository
+import com.example.registration.database.customer.CustomerRepository
 
 class CustomerCartPageViewModelFactory(
     private val customerRepository: CustomerRepository

@@ -1,15 +1,12 @@
-package com.example.registration.viewmodel.customer_registration
+package com.example.registration.UI.customer.registration
 
-import com.example.registration.repository.CustomerRepository
+import com.example.registration.database.customer.CustomerRepository
 import androidx.lifecycle.*
 import androidx.navigation.NavController
 import com.example.registration.R
-import com.example.registration.model.users.Customer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Response
 
 class CustomerRegistrationViewModel(val customerRepository: CustomerRepository) : ViewModel() {
     private lateinit var navController: NavController

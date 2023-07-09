@@ -1,15 +1,16 @@
-package com.example.registration.repository
+package com.example.registration.database.customer
 
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.Product
-import com.example.registration.retrofit.customerApi.CustomerApi
+import com.example.registration.database.customer.CustomerApi
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
+import javax.inject.Inject
 
 
-class CustomerRepository(
+class CustomerRepository @Inject constructor(
     private val customerApi: CustomerApi
 ) {
 

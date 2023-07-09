@@ -14,11 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.report.ReportAdapter
 import com.example.registration.databinding.FragmentManagerReportsInWaitingBinding
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModel
-import com.example.registration.viewmodel.manager.createdCustoms.ManagerCreatedCustomsPageViewModelFactory
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.reportsInWaiting.ManagerReportsInWaitingViewModel
 import com.example.registration.viewmodel.manager.reportsInWaiting.ManagerReportsInWaitingViewModelFactory
 

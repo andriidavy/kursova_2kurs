@@ -1,15 +1,11 @@
 package com.example.registration.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListCartProductItemBinding
 import com.example.registration.model.cart.CartProductDTO
-import com.example.registration.repository.CustomerRepository
 import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel
 
 open class CartAdapter(

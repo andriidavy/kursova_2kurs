@@ -2,7 +2,7 @@ package com.example.registration.viewmodel.manager.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.repository.ManagerRepository
+import com.example.registration.database.manager.ManagerRepository
 
 
 class ManagerProfilePageViewModelFactory  (private val managerRepository: ManagerRepository

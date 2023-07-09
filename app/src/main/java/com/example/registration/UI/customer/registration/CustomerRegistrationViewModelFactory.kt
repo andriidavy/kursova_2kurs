@@ -1,6 +1,6 @@
-package com.example.registration.viewmodel.customer_registration
+package com.example.registration.UI.customer.registration
 
-import com.example.registration.repository.CustomerRepository
+import com.example.registration.database.customer.CustomerRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 

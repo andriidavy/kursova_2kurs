@@ -1,4 +1,4 @@
-package com.example.registration.fragment.customerFragments
+package com.example.registration.UI.customer.registration
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,11 +9,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.registration.databinding.FragmentRegistrationBinding
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.retrofit.customerApi.CustomerApi
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.viewmodel.customer_registration.CustomerRegistrationViewModel
-import com.example.registration.viewmodel.customer_registration.CustomerRegistrationViewModelFactory
+import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.database.customer.CustomerApi
+import com.example.registration.database.RetrofitService
 
 class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding

@@ -9,13 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.R
 import com.example.registration.databinding.FragmentCreatingReportForCustomBinding
-import com.example.registration.repository.EmployeeRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.employeeApi.EmployeeApi
-import com.example.registration.viewmodel.employee.customsInProgress.EmployeeCustomsInProgressViewModel
-import com.example.registration.viewmodel.employee.customsInProgress.EmployeeCustomsInProgressViewModelFactory
+import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.viewmodel.employee.customsInProgress.report.CreatingReportForCustomViewModel
 import com.example.registration.viewmodel.employee.customsInProgress.report.CreatingReportForCustomViewModelFactory
 

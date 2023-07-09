@@ -1,4 +1,4 @@
-package com.example.registration.retrofit.employeeApi
+package com.example.registration.database.employee
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO

@@ -1,4 +1,4 @@
-package com.example.registration.retrofit;
+package com.example.registration.database;
 
 import com.google.gson.Gson;
 

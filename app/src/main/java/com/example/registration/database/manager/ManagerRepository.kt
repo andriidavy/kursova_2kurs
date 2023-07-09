@@ -1,4 +1,4 @@
-package com.example.registration.repository
+package com.example.registration.database.manager
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
@@ -8,13 +8,10 @@ import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.model.users.Manager
 import com.example.registration.model.users.ManagerProfileDTO
-import com.example.registration.retrofit.managerApi.ManagerApi
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.example.registration.database.manager.ManagerApi
+import javax.inject.Inject
 
-class ManagerRepository(private val managerApi: ManagerApi) {
+class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
     suspend fun loginManager(email: String, password: String): Result<Manager> {
         return try {
             val manager = managerApi.loginManager(email, password)

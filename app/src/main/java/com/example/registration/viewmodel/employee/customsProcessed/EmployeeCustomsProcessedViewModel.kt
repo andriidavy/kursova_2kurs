@@ -6,11 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.custom.CustomDTO
-import com.example.registration.repository.EmployeeRepository
+import com.example.registration.database.employee.EmployeeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.http.Query
 
 class EmployeeCustomsProcessedViewModel(private val employeeRepository: EmployeeRepository) :
     ViewModel() {

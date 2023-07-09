@@ -10,13 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.registration.databinding.FragmentProductItemBinding
-import com.example.registration.model.custom.CustomProductDTO
 import com.example.registration.model.product.Product
-import com.example.registration.repository.CustomerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.customerApi.CustomerApi
-import com.example.registration.viewmodel.customer.CustomerMainPageViewModel
-import com.example.registration.viewmodel.customer.CustomerMainPageViewModelFactory
+import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.customer.CustomerApi
 import com.example.registration.viewmodel.customer.CustomerProductDetailViewModel
 import com.example.registration.viewmodel.customer.CustomerProductDetailViewModelFactory
 

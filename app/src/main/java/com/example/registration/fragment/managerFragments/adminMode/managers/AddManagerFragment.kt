@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.registration.R
 import com.example.registration.databinding.FragmentAddManagerBinding
-import com.example.registration.repository.ManagerRepository
-import com.example.registration.retrofit.RetrofitService
-import com.example.registration.retrofit.managerApi.ManagerApi
+import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.database.RetrofitService
+import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.adminMode.AddManagerViewModel
 import com.example.registration.viewmodel.manager.adminMode.AddManagerViewModelFactory
-import com.example.registration.viewmodel.manager.personManagement.AddEmployeeViewModel
-import com.example.registration.viewmodel.manager.personManagement.AddEmployeeViewModelFactory
 
 class AddManagerFragment : Fragment() {
     private lateinit var binding: FragmentAddManagerBinding

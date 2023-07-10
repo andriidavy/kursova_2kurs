@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.registration.UI.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.registration.UI.customer.registration.RegistrationFragment"
-        android:label="RegistrationFragment" >
+        android:label="RegistrationFragment">
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/customerMainPageFragment"
         android:name="com.example.registration.fragment.customerFragments.mainPage.CustomerMainPageFragment"
-        android:label="CustomerMainPageFragment" >
+        android:label="CustomerMainPageFragment">
         <action
             android:id="@+id/action_customerMainPageFragment_to_productItemFragment"
             app:destination="@id/productItemFragment" />
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/employeeMainPageFragment"
         android:name="com.example.registration.fragment.employeeFragments.EmployeeMainPageFragment"
-        android:label="EmployeeMainPageFragment" >
+        android:label="EmployeeMainPageFragment">
         <action
             android:id="@+id/action_employeeMainPageFragment_to_employeeCustomsInProgressFragment"
             app:destination="@id/employeeCustomsInProgressFragment" />
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/managerMainPageFragment"
         android:name="com.example.registration.fragment.managerFragments.ManagerMainPageFragment"
-        android:label="ManagerMainPageFragment" >
+        android:label="ManagerMainPageFragment">
         <action
             android:id="@+id/action_managerMainPageFragment_to_managerCreatedCustomsPageFragment"
             app:destination="@id/managerCreatedCustomsPageFragment" />
@@ -99,28 +99,28 @@
     <fragment
         android:id="@+id/productItemFragment"
         android:name="com.example.registration.fragment.customerFragments.mainPage.ProductItemFragment"
-        android:label="ProductItemFragment" >
+        android:label="ProductItemFragment">
         <argument
             android:name="name_product"
-            app:argType="string"
-            android:defaultValue="Name" />
+            android:defaultValue="Name"
+            app:argType="string" />
         <argument
             android:name="id_product"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <argument
             android:name="description_product"
-            app:argType="string"
-            android:defaultValue="description" />
+            android:defaultValue="description"
+            app:argType="string" />
         <argument
             android:name="quantity_product"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/customerCartPageFragment"
         android:name="com.example.registration.fragment.customerFragments.cart.CustomerCartPageFragment"
-        android:label="CustomerCartPageFragment" >
+        android:label="CustomerCartPageFragment">
         <action
             android:id="@+id/action_customerCartPageFragment_to_addDepartForNewCustomFragment"
             app:destination="@id/addDepartForNewCustomFragment" />
@@ -128,7 +128,7 @@
     <fragment
         android:id="@+id/customerCustomPageFragment"
         android:name="com.example.registration.fragment.customerFragments.custom.CustomerCustomPageFragment"
-        android:label="CustomerCustomPageFragment" >
+        android:label="CustomerCustomPageFragment">
         <action
             android:id="@+id/action_customerCustomPageFragment_to_customProductDetailFragment"
             app:destination="@id/customProductDetailFragment" />
@@ -136,7 +136,7 @@
     <fragment
         android:id="@+id/customProductDetailFragment"
         android:name="com.example.registration.fragment.customerFragments.custom.CustomProductDetailFragment"
-        android:label="CustomProductDetailFragment" >
+        android:label="CustomProductDetailFragment">
         <argument
             android:name="customProductDTOList"
             app:argType="android.os.Parcelable[]"
@@ -145,7 +145,7 @@
     <fragment
         android:id="@+id/customerProfilePageFragment"
         android:name="com.example.registration.fragment.customerFragments.profile.CustomerProfilePageFragment"
-        android:label="CustomerProfilePageFragment" >
+        android:label="CustomerProfilePageFragment">
         <action
             android:id="@+id/action_customerProfilePageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -153,7 +153,7 @@
     <fragment
         android:id="@+id/managerCreatedCustomsPageFragment"
         android:name="com.example.registration.fragment.managerFragments.createdCustoms.ManagerCreatedCustomsPageFragment"
-        android:label="ManagerCreatedCustomsPageFragment" >
+        android:label="ManagerCreatedCustomsPageFragment">
         <action
             android:id="@+id/action_managerCreatedCustomsPageFragment_to_createdCustomsProductDetailFragment"
             app:destination="@id/createdCustomsProductDetailFragment" />
@@ -168,11 +168,11 @@
     <fragment
         android:id="@+id/employeesListForAssigneeToCustomFragment"
         android:name="com.example.registration.fragment.managerFragments.createdCustoms.EmployeesListForAssigneeToCustomFragment"
-        android:label="EmployeesListForAssigneeToCustomFragment" >
+        android:label="EmployeesListForAssigneeToCustomFragment">
         <argument
             android:name="customId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_employeesListForAssigneeToCustomFragment_to_managerCreatedCustomsPageFragment"
             app:destination="@id/managerCreatedCustomsPageFragment" />
@@ -180,7 +180,7 @@
     <fragment
         android:id="@+id/employeeCustomsInProgressFragment"
         android:name="com.example.registration.fragment.employeeFragments.customsInProgress.EmployeeCustomsInProgressFragment"
-        android:label="EmployeeCustomsInProgressFragment" >
+        android:label="EmployeeCustomsInProgressFragment">
         <action
             android:id="@+id/action_employeeCustomsInProgressFragment_to_customInProgressProductDetailFragment"
             app:destination="@id/customInProgressProductDetailFragment" />
@@ -195,16 +195,16 @@
     <fragment
         android:id="@+id/creatingReportForCustomFragment"
         android:name="com.example.registration.fragment.employeeFragments.customsInProgress.report.CreatingReportForCustomFragment"
-        android:label="CreatingReportForCustomFragment" >
+        android:label="CreatingReportForCustomFragment">
         <argument
             android:name="customInProgressId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/employeeCustomsProcessedFragment"
         android:name="com.example.registration.fragment.employeeFragments.customsProcessed.EmployeeCustomsProcessedFragment"
-        android:label="EmployeeCustomsProcessedFragment" >
+        android:label="EmployeeCustomsProcessedFragment">
         <action
             android:id="@+id/action_employeeCustomsProcessedFragment_to_customProcessedProductDetailFragment"
             app:destination="@id/customProcessedProductDetailFragment" />
@@ -216,7 +216,7 @@
     <fragment
         android:id="@+id/employeeReportsAcceptedFragment"
         android:name="com.example.registration.fragment.employeeFragments.reportsAccepted.EmployeeReportsAcceptedFragment"
-        android:label="EmployeeReportsAcceptedFragment" >
+        android:label="EmployeeReportsAcceptedFragment">
         <action
             android:id="@+id/action_employeeReportsAcceptedFragment_to_reportDetailFragment"
             app:destination="@id/reportDetailFragment" />
@@ -228,7 +228,7 @@
     <fragment
         android:id="@+id/employeeReportsInWaitingFragment"
         android:name="com.example.registration.fragment.employeeFragments.reportsInWaiting.EmployeeReportsInWaitingFragment"
-        android:label="EmployeeReportsInWaitingFragment" >
+        android:label="EmployeeReportsInWaitingFragment">
         <action
             android:id="@+id/action_employeeReportsInWaitingFragment_to_reportDetailFragment"
             app:destination="@id/reportDetailFragment" />
@@ -236,7 +236,7 @@
     <fragment
         android:id="@+id/employeeReportsRejectedFragment"
         android:name="com.example.registration.fragment.employeeFragments.reportsRejected.EmployeeReportsRejectedFragment"
-        android:label="EmployeeReportsRejectedFragment" >
+        android:label="EmployeeReportsRejectedFragment">
         <action
             android:id="@+id/action_employeeReportsRejectedFragment_to_reportDetailFragment"
             app:destination="@id/reportDetailFragment" />
@@ -244,7 +244,7 @@
     <fragment
         android:id="@+id/managerReportsInWaitingFragment"
         android:name="com.example.registration.fragment.managerFragments.reportsInWaiting.ManagerReportsInWaitingFragment"
-        android:label="ManagerReportsInWaitingFragment" >
+        android:label="ManagerReportsInWaitingFragment">
         <action
             android:id="@+id/action_managerReportsInWaitingFragment_to_managerReportsInWaitingDetailFragment"
             app:destination="@id/managerReportsInWaitingDetailFragment" />
@@ -256,7 +256,7 @@
     <fragment
         android:id="@+id/managerAllCustomsFragment"
         android:name="com.example.registration.fragment.managerFragments.allCustoms.ManagerAllCustomsFragment"
-        android:label="ManagerAllCustomsFragment" >
+        android:label="ManagerAllCustomsFragment">
         <action
             android:id="@+id/action_managerAllCustomsFragment_to_allCustomsDetailFragment"
             app:destination="@id/allCustomsDetailFragment" />
@@ -268,7 +268,7 @@
     <fragment
         android:id="@+id/allProductListFragment"
         android:name="com.example.registration.fragment.managerFragments.products.allProductListFragment"
-        android:label="allProductListFragment" >
+        android:label="allProductListFragment">
         <action
             android:id="@+id/action_allProductListFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
@@ -280,7 +280,7 @@
     <fragment
         android:id="@+id/manageEmployeeFragment"
         android:name="com.example.registration.fragment.managerFragments.personManagement.ManageEmployeeFragment"
-        android:label="ManageEmployeeFragment" >
+        android:label="ManageEmployeeFragment">
         <action
             android:id="@+id/action_manageEmployeeFragment_to_addEmployeeFragment"
             app:destination="@id/addEmployeeFragment" />
@@ -292,7 +292,7 @@
     <fragment
         android:id="@+id/managerProfilePageFragment"
         android:name="com.example.registration.fragment.managerFragments.profile.ManagerProfilePageFragment"
-        android:label="ManagerProfilePageFragment" >
+        android:label="ManagerProfilePageFragment">
         <action
             android:id="@+id/action_managerProfilePageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -300,7 +300,7 @@
     <fragment
         android:id="@+id/employeeProfilePageFragment"
         android:name="com.example.registration.fragment.employeeFragments.profile.EmployeeProfilePageFragment"
-        android:label="EmployeeProfilePageFragment" >
+        android:label="EmployeeProfilePageFragment">
         <action
             android:id="@+id/action_employeeProfilePageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -308,7 +308,7 @@
     <fragment
         android:id="@+id/adminLoginFragment"
         android:name="com.example.registration.fragment.managerFragments.adminMode.AdminLoginFragment"
-        android:label="AdminLoginFragment" >
+        android:label="AdminLoginFragment">
         <action
             android:id="@+id/action_adminLoginFragment_to_adminMainPageFragment"
             app:destination="@id/adminMainPageFragment" />
@@ -316,7 +316,7 @@
     <fragment
         android:id="@+id/adminMainPageFragment"
         android:name="com.example.registration.fragment.managerFragments.adminMode.AdminMainPageFragment"
-        android:label="AdminMainPageFragment" >
+        android:label="AdminMainPageFragment">
         <action
             android:id="@+id/action_adminMainPageFragment_to_editManagerFragment"
             app:destination="@id/editManagerFragment" />
@@ -327,7 +327,7 @@
     <fragment
         android:id="@+id/editManagerFragment"
         android:name="com.example.registration.fragment.managerFragments.adminMode.managers.EditManagerFragment"
-        android:label="EditManagerFragment" >
+        android:label="EditManagerFragment">
         <action
             android:id="@+id/action_editManagerFragment_to_managerDepartDetailFragment"
             app:destination="@id/managerDepartDetailFragment" />
@@ -339,7 +339,7 @@
         android:id="@+id/managerDepartDetailFragment"
         android:name="com.example.registration.fragment.managerFragments.adminMode.managers.ManagerDepartDetailFragment"
         android:label="fragment_manager_depart_detail"
-        tools:layout="@layout/fragment_manager_depart_detail" >
+        tools:layout="@layout/fragment_manager_depart_detail">
         <action
             android:id="@+id/action_managerDepartDetailFragment_to_allDepartFragment"
             app:destination="@id/allDepartFragment" />
@@ -355,7 +355,7 @@
     <fragment
         android:id="@+id/editDepartsFragment"
         android:name="com.example.registration.fragment.managerFragments.adminMode.departments.EditDepartsFragment"
-        android:label="EditDepartsFragment" >
+        android:label="EditDepartsFragment">
         <action
             android:id="@+id/action_editDepartsFragment_to_addDepartFragment"
             app:destination="@id/addDepartFragment" />
@@ -368,7 +368,7 @@
     <fragment
         android:id="@+id/addDepartForNewCustomFragment"
         android:name="com.example.registration.fragment.customerFragments.custom.AddDepartForNewCustomFragment"
-        android:label="AddDepartForNewCustomFragment" >
+        android:label="AddDepartForNewCustomFragment">
         <action
             android:id="@+id/action_addDepartForNewCustomFragment_to_customerMainPageFragment"
             app:destination="@id/customerMainPageFragment" />

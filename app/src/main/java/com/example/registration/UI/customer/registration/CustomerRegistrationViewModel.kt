@@ -4,11 +4,15 @@ import com.example.registration.database.customer.CustomerRepository
 import androidx.lifecycle.*
 import androidx.navigation.NavController
 import com.example.registration.R
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CustomerRegistrationViewModel(val customerRepository: CustomerRepository) : ViewModel() {
+@HiltViewModel
+class CustomerRegistrationViewModel @Inject constructor(val customerRepository: CustomerRepository) :
+    ViewModel() {
     private lateinit var navController: NavController
 
     val message = MutableLiveData<String>()
@@ -20,7 +24,8 @@ class CustomerRegistrationViewModel(val customerRepository: CustomerRepository) 
     private fun showInvalideMessage() {
         message.value = "Покупець з таким email вже існує!"
     }
-    private fun showSuccessfulMessage(){
+
+    private fun showSuccessfulMessage() {
         message.value = "Реєстрація пройшла успішно!"
     }
 

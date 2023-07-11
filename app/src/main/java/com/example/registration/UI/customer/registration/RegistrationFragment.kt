@@ -6,29 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.registration.UI.login.LoginViewModel
 import com.example.registration.databinding.FragmentRegistrationBinding
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.customer.CustomerApi
 import com.example.registration.database.RetrofitService
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding
-    private lateinit var viewModel: CustomerRegistrationViewModel
+
+    private val viewModel by viewModels<CustomerRegistrationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegistrationBinding.inflate(inflater)
-
-        val retrofitService = RetrofitService()
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val repository = CustomerRepository(customerApi)
-        val viewModelFactory = CustomerRegistrationViewModelFactory(repository)
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[CustomerRegistrationViewModel::class.java]
 
         val navController = findNavController()
         viewModel.setNavController(navController)

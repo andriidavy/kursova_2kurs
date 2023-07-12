@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.customer
+package com.example.registration.UI.customer.mainpage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.product.Product
 import com.example.registration.database.customer.CustomerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CustomerMainPageViewModel(
-    private val customerRepository: CustomerRepository,
+@HiltViewModel
+class CustomerMainPageViewModel @Inject constructor(
+    private val customerRepository: CustomerRepository
 ) : ViewModel() {
 
     private val _productsArray = MutableLiveData<List<Product>>()

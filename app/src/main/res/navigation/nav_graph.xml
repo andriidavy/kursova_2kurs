@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/customerMainPageFragment"
-        android:name="com.example.registration.fragment.customerFragments.mainPage.CustomerMainPageFragment"
+        android:name="com.example.registration.UI.customer.mainpage.CustomerMainPageFragment"
         android:label="CustomerMainPageFragment">
         <action
             android:id="@+id/action_customerMainPageFragment_to_productItemFragment"
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/productItemFragment"
-        android:name="com.example.registration.fragment.customerFragments.mainPage.ProductItemFragment"
+        android:name="com.example.registration.UI.customer.mainpage.ProductItemFragment"
         android:label="ProductItemFragment">
         <argument
             android:name="name_product"
@@ -144,7 +144,7 @@
     </fragment>
     <fragment
         android:id="@+id/customerProfilePageFragment"
-        android:name="com.example.registration.fragment.customerFragments.profile.CustomerProfilePageFragment"
+        android:name="com.example.registration.UI.customer.profile.CustomerProfilePageFragment"
         android:label="CustomerProfilePageFragment">
         <action
             android:id="@+id/action_customerProfilePageFragment_to_loginFragment"

@@ -11,12 +11,12 @@ class DataStoreViewModel @Inject constructor(
     private val datastoreRepository: DatastoreRepo
 ) : ViewModel() {
 
-    fun storeUserId(value: String) = runBlocking {
-        datastoreRepository.putString(USER_ID, value)
+    fun storeUserId(value: Int) = runBlocking {
+        datastoreRepository.putInt(USER_ID, value)
     }
 
-    fun getUserId(): String = runBlocking {
-        datastoreRepository.getString(USER_ID)!!
+    fun getUserId(): Int = runBlocking {
+        datastoreRepository.getInt(USER_ID)!!
     }
 
     fun clearPreferences(key: String) = runBlocking {

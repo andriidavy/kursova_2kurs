@@ -1,4 +1,4 @@
-package com.example.registration.fragment.customerFragments.mainPage
+package com.example.registration.UI.customer.mainpage
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,19 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.registration.databinding.FragmentProductItemBinding
 import com.example.registration.model.product.Product
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.customer.CustomerApi
-import com.example.registration.viewmodel.customer.CustomerProductDetailViewModel
-import com.example.registration.viewmodel.customer.CustomerProductDetailViewModelFactory
+import com.example.registration.datastore.DataStoreViewModel
 
 class ProductItemFragment : Fragment() {
     private lateinit var binding: FragmentProductItemBinding
-    private lateinit var viewModel: CustomerProductDetailViewModel
 
+    private val viewModel by viewModels<CustomerProductDetailViewModel>()
+    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,19 +29,8 @@ class ProductItemFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentProductItemBinding.inflate(inflater)
 
-        val retrofitService = RetrofitService()
-
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-
-        val customerRepository = CustomerRepository(customerApi)
-
-        val viewModelFactory =
-            CustomerProductDetailViewModelFactory(customerRepository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[CustomerProductDetailViewModel::class.java]
-
-        val sharedCustomerIdPreferences: SharedPreferences = requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
-        val customerId: Int = sharedCustomerIdPreferences.getInt("customerId",0)
+        //get customer id from datastore
+        val customerId = dataStoreViewModel.getUserId()
 
         binding.buttonAddToCart.setOnClickListener {
             val productId: Int = Integer.parseInt(binding.productId.text.toString())

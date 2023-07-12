@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.registration.datastore.Constants.DATASTORE_NAME
@@ -15,16 +16,16 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class DataStoreRepoImpl @Inject constructor(
     private val context: Context
 ) : DatastoreRepo {
-    override suspend fun putString(key: String, value: String) {
-        val preferenceKey = stringPreferencesKey(key)
+    override suspend fun putInt(key: String, value: Int) {
+        val preferenceKey = intPreferencesKey(key)
         context.dataStore.edit {
             it[preferenceKey] = value
         }
     }
 
-    override suspend fun getString(key: String): String? {
+    override suspend fun getInt(key: String): Int? {
         return try {
-            val preferenceKey = stringPreferencesKey(key)
+            val preferenceKey = intPreferencesKey(key)
             val preference = context.dataStore.data.first()
             preference[preferenceKey]
         } catch (e: Exception) {

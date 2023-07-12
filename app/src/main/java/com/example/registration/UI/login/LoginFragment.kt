@@ -25,15 +25,17 @@ import com.example.registration.database.customer.CustomerApi
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.database.manager.ManagerApi
+import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-    private lateinit var email : String
-    private lateinit var password : String
+    private lateinit var email: String
+    private lateinit var password: String
 
     //with hilt we setup view model into fragment like this
     private val viewModel by viewModels<LoginViewModel>()
+    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,10 +47,12 @@ class LoginFragment : Fragment() {
         val navController = findNavController()
         // Устанавливаем NavController в ViewModel
         viewModel.setNavController(navController)
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Устанавливаем SharedPreferences для получение id пользователя с целью его использования в программе далее
         val sharedLoginPreferences: SharedPreferences =
             requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
         viewModel.setSharedPreferences(sharedLoginPreferences)
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         //set Spinner
@@ -115,6 +119,10 @@ class LoginFragment : Fragment() {
             viewLifecycleOwner
         )
         { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+
+        viewModel.userId.observe(
+            viewLifecycleOwner
+        ) { userId -> dataStoreViewModel.storeUserId(userId) }
 
         return binding.root
     }

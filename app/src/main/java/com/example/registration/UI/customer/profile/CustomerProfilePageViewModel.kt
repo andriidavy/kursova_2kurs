@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.customer.profile
+package com.example.registration.UI.customer.profile
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
@@ -7,25 +7,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.users.CustomerProfileDTO
 import com.example.registration.database.customer.CustomerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CustomerProfilePageViewModel(val customerRepository: CustomerRepository) : ViewModel() {
-    private lateinit var sharedPreferences: SharedPreferences
-
+@HiltViewModel
+class CustomerProfilePageViewModel @Inject constructor(val customerRepository: CustomerRepository) : ViewModel() {
     private val _customerProfileDTO = MutableLiveData<CustomerProfileDTO>()
     val customerProfileDTO: LiveData<CustomerProfileDTO>
         get() = _customerProfileDTO
 
-    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
-        this.sharedPreferences = sharedPreferences
-    }
-
-    val customerId: Int
-        get() = sharedPreferences.getInt("customerId", 0)
-
-    fun getCustomerProfileById() : LiveData<CustomerProfileDTO> {
+    fun getCustomerProfileById(customerId: Int) : LiveData<CustomerProfileDTO> {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getCustomerProfileById(customerId)
             withContext(Dispatchers.Main) {

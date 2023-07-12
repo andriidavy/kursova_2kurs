@@ -1,29 +1,30 @@
-package com.example.registration.fragment.customerFragments.mainPage
+package com.example.registration.UI.customer.mainpage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
+import com.example.registration.UI.login.LoginViewModel
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
 import com.example.registration.model.product.Product
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.customer.CustomerApi
-import com.example.registration.viewmodel.customer.CustomerMainPageViewModel
-import com.example.registration.viewmodel.customer.CustomerMainPageViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CustomerMainPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerMainPageBinding
-    private lateinit var viewModel: CustomerMainPageViewModel
     private lateinit var adapter: ProductAdapter
 
+    private val viewModel by viewModels<CustomerMainPageViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,13 +35,6 @@ class CustomerMainPageFragment : Fragment() {
         adapter = ProductAdapter(emptyList())
         binding.productListRecyclerView.adapter = adapter
         binding.productListRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        val retrofitService = RetrofitService()
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val customerRepository = CustomerRepository(customerApi)
-        val viewModelFactory =
-            CustomerMainPageViewModelFactory(customerRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[CustomerMainPageViewModel::class.java]
 
         val navController = findNavController()
 

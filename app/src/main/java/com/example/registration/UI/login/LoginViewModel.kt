@@ -27,6 +27,10 @@ class LoginViewModel @Inject constructor(
     val message: LiveData<String>
         get() = _message
 
+    private val _userId = MutableLiveData<Int>()
+    val userId : LiveData<Int>
+    get() = _userId
+
 
     //метод встановлення NavController, який викликається у фрагменті
     fun setNavController(navController: NavController) {
@@ -52,6 +56,8 @@ class LoginViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 result.onSuccess { customer ->
                     sharedPreferences.edit().putInt("customerId", customer.id).apply()
+                    _userId.value = customer.id
+
                     showSuccessfulMessage(customer.name, customer.surname)
                     navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
                 }.onFailure {
@@ -90,4 +96,5 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
 }

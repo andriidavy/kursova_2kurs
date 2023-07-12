@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.customer
+package com.example.registration.UI.customer.mainpage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,10 @@ import com.example.registration.database.customer.CustomerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CustomerProductDetailViewModel(private val customerRepository: CustomerRepository) :
+class CustomerProductDetailViewModel @Inject constructor(
+    private val customerRepository: CustomerRepository):
     ViewModel() {
 
     private val _message = MutableLiveData<String>()

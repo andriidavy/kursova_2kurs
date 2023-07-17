@@ -47,13 +47,6 @@ class LoginFragment : Fragment() {
         val navController = findNavController()
         // Устанавливаем NavController в ViewModel
         viewModel.setNavController(navController)
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Устанавливаем SharedPreferences для получение id пользователя с целью его использования в программе далее
-        val sharedLoginPreferences: SharedPreferences =
-            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
-        viewModel.setSharedPreferences(sharedLoginPreferences)
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         //set Spinner
         val users = arrayOf("Customer", "Employee", "Manager")
@@ -77,49 +70,33 @@ class LoginFragment : Fragment() {
                 }
             }
 
-
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Code to perform some action when nothing is selected
             }
         }
 
+        // перехід на сторінку реєстрації
         binding.textHaveNotRegistration.setOnClickListener()
         { view: View ->
             view.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
-        fun inputInit() {
-            email = binding.etEmail.text.toString()
-            password = binding.etPassword.text.toString()
-        }
-
-        fun loginCustomer() {
-            viewModel.loginCustomer(email, password)
-        }
-
-        fun loginEmployee() {
-            viewModel.loginEmployee(email, password)
-        }
-
-        fun loginManager() {
-            viewModel.loginManager(email, password)
-        }
-
+        // логін
         binding.buttonLog.setOnClickListener()
         {
-            inputInit()
-            when (num) {
-                0 -> loginCustomer()
-                1 -> loginEmployee()
-                2 -> loginManager()
-            }
+            email = binding.etEmail.text.toString()
+            password = binding.etPassword.text.toString()
+
+            viewModel.login(email, password, num)
         }
 
+        // вивід повідомлення
         viewModel.message.observe(
             viewLifecycleOwner
         )
         { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
 
+        // установка ID користувача при вході
         viewModel.userId.observe(
             viewLifecycleOwner
         ) { userId -> dataStoreViewModel.storeUserId(userId) }

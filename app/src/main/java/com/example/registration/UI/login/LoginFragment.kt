@@ -32,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var email: String
     private lateinit var password: String
+    private lateinit var binding: FragmentLoginBinding
 
     //with hilt we setup view model into fragment like this
     private val viewModel by viewModels<LoginViewModel>()
@@ -40,13 +41,19 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentLoginBinding.inflate(inflater)
+        return binding.root
+    }
 
-        val binding = FragmentLoginBinding.inflate(inflater)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViews()
+        setObservers()
+    }
 
-        // Получаем NavController
+    private fun setupViews() {
+        //set navController
         val navController = findNavController()
-        // Устанавливаем NavController в ViewModel
-        viewModel.setNavController(navController)
 
         //set Spinner
         val users = arrayOf("Customer", "Employee", "Manager")
@@ -87,9 +94,19 @@ class LoginFragment : Fragment() {
             email = binding.etEmail.text.toString()
             password = binding.etPassword.text.toString()
 
-            viewModel.login(email, password, num)
+            viewModel.login(email, password, num).observe(viewLifecycleOwner) { loginResult ->
+                if (loginResult) {
+                    when (num) {
+                        0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+                        1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
+                        2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+                    }
+                }
+            }
         }
+    }
 
+    private fun setObservers() {
         // вивід повідомлення
         viewModel.message.observe(
             viewLifecycleOwner
@@ -100,7 +117,5 @@ class LoginFragment : Fragment() {
         viewModel.userId.observe(
             viewLifecycleOwner
         ) { userId -> dataStoreViewModel.storeUserId(userId) }
-
-        return binding.root
     }
 }

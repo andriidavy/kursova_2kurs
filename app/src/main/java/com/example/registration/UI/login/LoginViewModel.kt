@@ -19,9 +19,6 @@ class LoginViewModel @Inject constructor(
     private val employeeRepository: EmployeeRepository,
     private val managerRepository: ManagerRepository
 ) : ViewModel() {
-    private lateinit var navController: NavController
-
-
     private val _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
@@ -30,13 +27,8 @@ class LoginViewModel @Inject constructor(
     val userId: LiveData<Int>
         get() = _userId
 
-
-    //метод встановлення NavController, який викликається у фрагменті
-    fun setNavController(navController: NavController) {
-        this.navController = navController
-    }
-
-    fun login(email: String, password: String, num: Int) {
+    fun login(email: String, password: String, num: Int) : LiveData<Boolean> {
+        val loginResult = MutableLiveData<Boolean>()
         viewModelScope.launch(Dispatchers.IO) {
             val result = when (num) {
                 0 -> customerRepository.loginCustomer(email, password)
@@ -47,19 +39,19 @@ class LoginViewModel @Inject constructor(
 
             withContext(Dispatchers.Main) {
                 result?.onSuccess { user ->
+                    //set userId to datastore
                     _userId.value = user.id
                     _message.value = "Вітаємо, ${user.name} ${user.surname}"
-                    when (num) {
-                        0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                        1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                        2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
-                    }
+
+                    loginResult.value = true
                 }?.onFailure {
                     _message.value = "Невірний логін чи пароль!"
+
+                    loginResult.value = false
                 }
             }
         }
+        return loginResult
     }
-
 }
 

@@ -84,8 +84,8 @@ class LoginFragment : Fragment() {
 
         // перехід на сторінку реєстрації
         binding.textHaveNotRegistration.setOnClickListener()
-        { view: View ->
-            view.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        {
+            navController.navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
         // логін

@@ -35,7 +35,7 @@ class DataStoreRepoImpl @Inject constructor(
     }
 
     override suspend fun clearPreferences(key: String) {
-        val preferenceKey = stringPreferencesKey(key)
+        val preferenceKey = intPreferencesKey(key)
         context.dataStore.edit {
             if (it.contains(preferenceKey)) {
                 it.remove(preferenceKey)

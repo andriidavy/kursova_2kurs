@@ -1,30 +1,17 @@
 package com.example.registration.UI.login
 
-import android.content.Context
-import android.content.SharedPreferences
-import com.example.registration.database.customer.CustomerRepository
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
-import com.example.registration.database.employee.EmployeeRepository
-import com.example.registration.database.manager.ManagerRepository
-import com.example.registration.database.customer.CustomerApi
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.employee.EmployeeApi
-import com.example.registration.database.manager.ManagerApi
 import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,13 +38,13 @@ class LoginFragment : Fragment() {
         setObservers()
     }
 
-    private fun setupViews() {
+    private fun setupViews() = with(binding){
         //set navController
         val navController = findNavController()
 
         //set Spinner
         val users = arrayOf("Customer", "Employee", "Manager")
-        val spinner = binding.spinnerChooseUserType
+        val spinner = spinnerChooseUserType
         var num = -1
         val arrayAdapter =
             activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, users) }
@@ -70,11 +57,7 @@ class LoginFragment : Fragment() {
                 id: Long
             ) {
                 num = position
-                if (position == 0) {
-                    binding.textHaveNotRegistration.visibility = View.VISIBLE
-                } else {
-                    binding.textHaveNotRegistration.visibility = View.GONE
-                }
+                textHaveNotRegistration.visibility = if (position == 0) View.VISIBLE else View.GONE
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -83,16 +66,16 @@ class LoginFragment : Fragment() {
         }
 
         // перехід на сторінку реєстрації
-        binding.textHaveNotRegistration.setOnClickListener()
+        textHaveNotRegistration.setOnClickListener()
         {
             navController.navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
         // логін
-        binding.buttonLog.setOnClickListener()
+        buttonLog.setOnClickListener()
         {
-            email = binding.etEmail.text.toString()
-            password = binding.etPassword.text.toString()
+            email = etEmail.text.toString()
+            password = etPassword.text.toString()
 
             viewModel.login(email, password, num).observe(viewLifecycleOwner) { loginResult ->
                 if (loginResult) {

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.registration.R
 import com.example.registration.UI.login.LoginViewModel
 import com.example.registration.databinding.FragmentRegistrationBinding
 import com.example.registration.database.customer.CustomerRepository
@@ -27,34 +28,52 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegistrationBinding.inflate(inflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupView()
+        setObserves()
+    }
+
+    private fun setupView() = with(binding) {
         val navController = findNavController()
-        viewModel.setNavController(navController)
 
-        binding.buttonReg.setOnClickListener {
-            val name: String = binding.etName.text.toString()
-            val surname: String = binding.etSurname.text.toString()
-            val email: String = binding.etEmail.text.toString()
-            val password: String = binding.etPassword.text.toString()
-            if (name.isNotEmpty() && surname.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+        buttonReg.setOnClickListener {
+            val name: String = etName.text.toString().trim()
+            val surname: String = etSurname.text.toString().trim()
+            val email: String = etEmail.text.toString().trim()
+            val password: String = etPassword.text.toString().trim()
+            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
                 viewModel.insertCustomer(name, surname, email, password)
-                binding.etName.text.clear()
-                binding.etSurname.text.clear()
-                binding.etEmail.text.clear()
-                binding.etPassword.text.clear()
+                    .observe(viewLifecycleOwner) { insertResult ->
+                        if (insertResult) {
+                            navController.navigate(R.id.action_registrationFragment_to_loginFragment)
+
+                            etName.text.clear()
+                            etSurname.text.clear()
+                            etEmail.text.clear()
+                            etPassword.text.clear()
+                        }
+                    }
             } else {
-                viewModel.message.value = "Всі поля мають бути заповнені!"
+                etName.error = if (name.isBlank()) "Ім'я обов'язкове" else null
+                etSurname.error = if (surname.isBlank()) "Прізвище обов'язкове" else null
+                etEmail.error = if (email.isBlank()) "Email обов'язковий" else null
+                etPassword.error = if (password.isBlank()) "Пароль обов'язковий" else null
             }
         }
+    }
 
+    private fun setObserves() {
         viewModel.message.observe(viewLifecycleOwner) { message ->
             Toast.makeText(
                 context,
                 message,
-                Toast.LENGTH_SHORT
+                Toast.LENGTH_LONG
             ).show()
         }
-
-        return binding.root
     }
 }

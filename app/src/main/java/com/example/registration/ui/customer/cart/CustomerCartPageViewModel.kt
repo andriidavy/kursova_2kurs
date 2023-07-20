@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.customer.cart
+package com.example.registration.ui.customer.cart
 
 import android.content.SharedPreferences
 import android.os.Bundle

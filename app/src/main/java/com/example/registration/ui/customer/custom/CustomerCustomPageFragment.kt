@@ -1,4 +1,4 @@
-package com.example.registration.fragment.customerFragments.custom
+package com.example.registration.ui.customer.custom
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -18,8 +18,6 @@ import com.example.registration.model.custom.CustomProductDTO
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.customer.CustomerApi
-import com.example.registration.viewmodel.customer.custom.CustomerCustomPageViewModel
-import com.example.registration.viewmodel.customer.custom.CustomerCustomPageViewModelFactory
 
 class CustomerCustomPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerCustomPageBinding

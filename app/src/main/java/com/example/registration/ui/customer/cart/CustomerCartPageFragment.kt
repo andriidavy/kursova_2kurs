@@ -1,4 +1,4 @@
-package com.example.registration.fragment.customerFragments.cart
+package com.example.registration.ui.customer.cart
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -16,8 +16,6 @@ import com.example.registration.databinding.FragmentCustomerCartPageBinding
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.customer.CustomerApi
-import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel
-import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModelFactory
 
 class CustomerCartPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerCartPageBinding

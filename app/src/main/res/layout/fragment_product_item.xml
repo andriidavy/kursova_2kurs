@@ -14,7 +14,7 @@
         android:id="@+id/constraintLayoutProductItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UI.customer.mainpage.ProductItemFragment">
+        tools:context=".ui.customer.mainpage.ProductItemFragment">
 
         <TextView
             android:id="@+id/product_name"

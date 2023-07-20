@@ -1,16 +1,17 @@
-package com.example.registration.UI.customer.mainpage
+package com.example.registration.ui.customer.mainpage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.model.product.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CustomerProductDetailViewModel @Inject constructor(
+class ProductItemViewModel @Inject constructor(
     private val customerRepository: CustomerRepository):
     ViewModel() {
 

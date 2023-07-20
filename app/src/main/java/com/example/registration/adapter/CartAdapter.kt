@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListCartProductItemBinding
 import com.example.registration.model.cart.CartProductDTO
-import com.example.registration.viewmodel.customer.cart.CustomerCartPageViewModel
+import com.example.registration.ui.customer.cart.CustomerCartPageViewModel
 
 open class CartAdapter(
     private var cartProductDTOList: List<CartProductDTO>,

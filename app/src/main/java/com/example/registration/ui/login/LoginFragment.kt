@@ -1,4 +1,4 @@
-package com.example.registration.UI.login
+package com.example.registration.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
@@ -17,13 +18,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-    private lateinit var email: String
-    private lateinit var password: String
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var navController: NavController
 
-    //with hilt we setup view model into fragment like this
     private val viewModel by viewModels<LoginViewModel>()
     private val dataStoreViewModel by viewModels<DataStoreViewModel>()
+
+    private var num: Int = -1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,36 +36,41 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        setListeners()
         setObservers()
     }
 
-    private fun setupViews() = with(binding){
-        //set navController
-        val navController = findNavController()
+    private fun setupViews() = with(binding) {
+        navController = findNavController()
 
         //set Spinner
         val users = arrayOf("Customer", "Employee", "Manager")
         val spinner = spinnerChooseUserType
-        var num = -1
         val arrayAdapter =
             activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, users) }
-        spinner.adapter = arrayAdapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                num = position
-                textHaveNotRegistration.visibility = if (position == 0) View.VISIBLE else View.GONE
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Code to perform some action when nothing is selected
+        spinner.apply {
+            adapter = arrayAdapter
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    num = position
+                    textHaveNotRegistration.visibility =
+                        if (position == 0) View.VISIBLE else View.GONE
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // Code to perform some action when nothing is selected
+                }
             }
         }
+    }
 
+    private fun setListeners() = with(binding) {
         // перехід на сторінку реєстрації
         textHaveNotRegistration.setOnClickListener()
         {
@@ -74,8 +80,8 @@ class LoginFragment : Fragment() {
         // логін
         buttonLog.setOnClickListener()
         {
-            email = etEmail.text.toString()
-            password = etPassword.text.toString()
+            val email = etEmail.text.toString()
+            val password = etPassword.text.toString()
 
             viewModel.login(email, password, num).observe(viewLifecycleOwner) { loginResult ->
                 if (loginResult) {

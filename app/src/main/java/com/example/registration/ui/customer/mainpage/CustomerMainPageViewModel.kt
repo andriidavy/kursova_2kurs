@@ -1,4 +1,4 @@
-package com.example.registration.UI.customer.mainpage
+package com.example.registration.ui.customer.mainpage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

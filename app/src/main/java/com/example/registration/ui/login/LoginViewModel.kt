@@ -1,10 +1,7 @@
-package com.example.registration.UI.login
+package com.example.registration.ui.login
 
-import android.content.SharedPreferences
 import com.example.registration.database.customer.CustomerRepository
 import androidx.lifecycle.*
-import androidx.navigation.NavController
-import com.example.registration.R
 import com.example.registration.database.employee.EmployeeRepository
 import com.example.registration.database.manager.ManagerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

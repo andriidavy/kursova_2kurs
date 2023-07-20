@@ -1,4 +1,4 @@
-package com.example.registration.UI.customer.registration
+package com.example.registration.ui.customer.registration
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,14 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
-import com.example.registration.UI.login.LoginViewModel
 import com.example.registration.databinding.FragmentRegistrationBinding
-import com.example.registration.database.customer.CustomerRepository
-import com.example.registration.database.customer.CustomerApi
-import com.example.registration.database.RetrofitService
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,12 +29,11 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupView()
-        setObserves()
+        setListeners()
+        setObservers()
     }
 
-    private fun setupView() = with(binding) {
-        val navController = findNavController()
+    private fun setListeners() = with(binding) {
 
         buttonReg.setOnClickListener {
             val name: String = etName.text.toString().trim()
@@ -50,7 +44,7 @@ class RegistrationFragment : Fragment() {
                 viewModel.insertCustomer(name, surname, email, password)
                     .observe(viewLifecycleOwner) { insertResult ->
                         if (insertResult) {
-                            navController.navigate(R.id.action_registrationFragment_to_loginFragment)
+                            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
                             etName.text.clear()
                             etSurname.text.clear()
@@ -67,7 +61,7 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun setObserves() {
+    private fun setObservers() {
         viewModel.message.observe(viewLifecycleOwner) { message ->
             Toast.makeText(
                 context,

@@ -1,4 +1,4 @@
-package com.example.registration.fragment.customerFragments.custom
+package com.example.registration.ui.customer.custom
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,10 +15,6 @@ import com.example.registration.databinding.FragmentAddDepartForNewCustomBinding
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.customer.CustomerApi
-import com.example.registration.viewmodel.customer.custom.AddDepartForNewCustomViewModel
-import com.example.registration.viewmodel.customer.custom.AddDepartForNewCustomViewModelFactory
-
-
 
 
 class AddDepartForNewCustomFragment : Fragment() {

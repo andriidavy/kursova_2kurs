@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.customer.custom
+package com.example.registration.ui.customer.custom
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

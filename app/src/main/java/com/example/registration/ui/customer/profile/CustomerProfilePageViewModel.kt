@@ -1,6 +1,5 @@
-package com.example.registration.UI.customer.profile
+package com.example.registration.ui.customer.profile
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

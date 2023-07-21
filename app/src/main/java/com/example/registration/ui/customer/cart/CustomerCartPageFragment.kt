@@ -1,65 +1,67 @@
 package com.example.registration.ui.customer.cart
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
 import com.example.registration.adapter.CartAdapter
 import com.example.registration.databinding.FragmentCustomerCartPageBinding
-import com.example.registration.database.customer.CustomerRepository
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.customer.CustomerApi
+import com.example.registration.datastore.DataStoreViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CustomerCartPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerCartPageBinding
-    private lateinit var viewModel: CustomerCartPageViewModel
     private lateinit var adapter: CartAdapter
+    private lateinit var navController: NavController
+
+    private val viewModel by viewModels<CustomerCartPageViewModel>()
+    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
+
+    private val userId = dataStoreViewModel.getUserId()
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentCustomerCartPageBinding.inflate(inflater)
+        return binding.root
+    }
 
-        val retrofitService = RetrofitService()
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val customerRepository = CustomerRepository(customerApi)
-        val viewModelFactory =
-            CustomerCartPageViewModelFactory(customerRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[CustomerCartPageViewModel::class.java]
-
-        val sharedCustomerIdPreferences: SharedPreferences =
-            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
-        viewModel.setSharedPreferences(sharedCustomerIdPreferences)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = CartAdapter(emptyList(), viewModel)
         binding.cartListRecyclerView.adapter = adapter
         binding.cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        binding.lifecycleOwner = this
+        navController = findNavController()
 
-        val navController = findNavController()
-        viewModel.setNavController(navController)
-
-        viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
+        viewModel.getAllCartProducts(userId).observe(viewLifecycleOwner) { cart ->
             adapter.updateCart(cart)
         }
-
-        viewModel.getAllCartProducts()
 
         binding.buttonClearCart.setOnClickListener {
             viewModel.clearCart()
         }
 
         binding.buttonCreateCustom.setOnClickListener {
-                viewModel.createCustom()
+            viewModel.createCustom(userId).observe(viewLifecycleOwner) { customId ->
+                if (customId != null) {
+                    val bundle = Bundle()
+                    bundle.putInt("customId", customId)
+                    navController.navigate(
+                        R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment,
+                        bundle
+                    )
+                }
+            }
         }
 
         viewModel.message.observe(
@@ -67,7 +69,6 @@ class CustomerCartPageFragment : Fragment() {
         )
         { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
 
-        return binding.root
     }
 
 }

@@ -10,13 +10,15 @@ import androidx.navigation.NavController
 import com.example.registration.R
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.database.customer.CustomerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CustomerCartPageViewModel(private val customerRepository: CustomerRepository) : ViewModel() {
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var navController: NavController
+@HiltViewModel
+class CustomerCartPageViewModel @Inject constructor(private val customerRepository: CustomerRepository) :
+    ViewModel() {
 
     private val _cartProductsArrayDTO = MutableLiveData<List<CartProductDTO>>()
     val cartProductsArrayDTO: LiveData<List<CartProductDTO>>
@@ -26,17 +28,8 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
     val message: LiveData<String>
         get() = _message
 
-    fun setNavController(navController: NavController) {
-        this.navController = navController
-    }
-    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
-        this.sharedPreferences = sharedPreferences
-    }
 
-    val customerId: Int
-        get() = sharedPreferences.getInt("customerId", 0)
-
-    fun getAllCartProducts(): LiveData<List<CartProductDTO>> {
+    fun getAllCartProducts(customerId: Int): LiveData<List<CartProductDTO>> {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getCartProducts(customerId)
             withContext(Dispatchers.Main) {
@@ -46,23 +39,25 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
         return cartProductsArrayDTO
     }
 
-    fun createCustom() {
+    fun createCustom(customerId: Int): LiveData<Int> {
+        val customId = MutableLiveData<Int>()
+
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.createCustom(customerId)
+
             withContext(Dispatchers.Main) {
-                val bundle = Bundle()
-                result.onSuccess {customId ->
+                result.onSuccess { orderId ->
+                    customId.value = orderId
                     _message.value = "Замовлення створено!"
-                    bundle.putInt("customId", customId)
-                    navController.navigate(R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment, bundle)
                 }.onFailure {
                     _message.value = "Помилка обробки замовлення!"
                 }
             }
         }
+        return customId
     }
 
-    fun removeProductFromCart(productId: Int) {
+    fun removeProductFromCart(customerId: Int, productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.removeProductFromCart(customerId, productId)
             getAllCartProducts()
@@ -70,7 +65,7 @@ class CustomerCartPageViewModel(private val customerRepository: CustomerReposito
         _message.value = "Товар видалено з корзини"
     }
 
-    fun clearCart() {
+    fun clearCart(customerId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.clearCart(customerId)
             getAllCartProducts()

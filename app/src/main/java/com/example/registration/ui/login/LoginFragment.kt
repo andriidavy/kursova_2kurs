@@ -1,5 +1,6 @@
 package com.example.registration.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class LoginFragment : Fragment() {
     private val dataStoreViewModel by viewModels<DataStoreViewModel>()
 
     private var num: Int = -1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

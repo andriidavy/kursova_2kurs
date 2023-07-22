@@ -19,10 +19,6 @@ class CustomerProfilePageFragment : Fragment() {
     private lateinit var navController: NavController
 
     private val viewModel by viewModels<CustomerProfilePageViewModel>()
-    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
-
-    private val userId = dataStoreViewModel.getUserId()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +36,7 @@ class CustomerProfilePageFragment : Fragment() {
     }
 
     private fun setupView() {
+
         navController = findNavController()
     }
 
@@ -50,9 +47,10 @@ class CustomerProfilePageFragment : Fragment() {
     }
 
     private fun setObservers() = with(binding) {
-        viewModel.getCustomerProfileById(userId).observe(viewLifecycleOwner) { customer ->
+
+        viewModel.getCustomerProfileById().observe(viewLifecycleOwner) { customer ->
             // Обновление значений полей после получения данных профиля
-            customerId.text = customerId.toString()
+            customerId.text = customer?.id.toString()
             customerName.text = customer?.name
             customerSurname.text = customer?.surname
             customerEmail.text = customer?.email

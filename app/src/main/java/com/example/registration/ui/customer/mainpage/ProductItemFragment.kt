@@ -10,13 +10,14 @@ import androidx.fragment.app.viewModels
 import com.example.registration.databinding.FragmentProductItemBinding
 import com.example.registration.model.product.Product
 import com.example.registration.datastore.DataStoreViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductItemFragment : Fragment() {
     private lateinit var binding: FragmentProductItemBinding
 
     private val viewModel by viewModels<ProductItemViewModel>()
     private val dataStoreViewModel by viewModels<DataStoreViewModel>()
-    private val customerId = dataStoreViewModel.getUserId()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +48,9 @@ class ProductItemFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonAddToCart.setOnClickListener {
-            val productId: Int = Integer.parseInt(binding.productId.text.toString())
-            val quantity: Int = Integer.parseInt(binding.countAddToCart.text.toString())
-            viewModel.addProductToCart(customerId, productId, quantity)
+            val productId: Int = Integer.parseInt(productId.text.toString())
+            val quantity: Int = Integer.parseInt(countAddToCart.text.toString())
+            viewModel.addProductToCart(productId, quantity)
         }
     }
     private fun setObservers() {

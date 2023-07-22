@@ -10,14 +10,28 @@ import com.example.registration.ui.customer.cart.CustomerCartPageViewModel
 
 open class CartAdapter(
     private var cartProductDTOList: List<CartProductDTO>,
-    private val customerCartPageViewModel: CustomerCartPageViewModel
 ) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
+private lateinit var removeProductClickListener: OnRemoveProductClickListener
+    interface OnRemoveProductClickListener{
+        fun onRemoveProductClick(position: Int)
+    }
+
+    fun setOnRemoveProductClickListener(removeListener: OnRemoveProductClickListener){
+        removeProductClickListener = removeListener
+    }
+
 
     class ViewHolder(
         var view: ListCartProductItemBinding,
-        val viewModel: CustomerCartPageViewModel
-    ) : RecyclerView.ViewHolder(view.root)
+        var removeListener: OnRemoveProductClickListener
+    ) : RecyclerView.ViewHolder(view.root) {
+        init {
+            view.buttonDeleteItem.setOnClickListener {
+                removeListener.onRemoveProductClick(adapterPosition)
+            }
+        }
+    }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -27,18 +41,15 @@ open class CartAdapter(
                 viewGroup,
                 false
             )
-        return CartAdapter.ViewHolder(binding, customerCartPageViewModel)
+        return ViewHolder(binding, removeProductClickListener)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.productListItemName.text = cartProductDTOList[position].productName
-        viewHolder.view.idForProduct.text = cartProductDTOList[position].productId.toString()
-        viewHolder.view.countForProduct.text = cartProductDTOList[position].quantity.toString()
-
-        val productId: Int = Integer.parseInt(cartProductDTOList[position].productId.toString())
-        viewHolder.view.buttonDeleteItem.setOnClickListener {
-            viewHolder.viewModel.removeProductFromCart(productId)
+        viewHolder.view.apply {
+            productListItemName.text = cartProductDTOList[position].productName
+            idForProduct.text = cartProductDTOList[position].productId.toString()
+            countForProduct.text = cartProductDTOList[position].quantity.toString()
         }
     }
 

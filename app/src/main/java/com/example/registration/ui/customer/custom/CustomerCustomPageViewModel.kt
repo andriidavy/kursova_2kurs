@@ -7,32 +7,37 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.datastore.Constants
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CustomerCustomPageViewModel(private val customerRepository: CustomerRepository) :
+@HiltViewModel
+class CustomerCustomPageViewModel @Inject constructor(
+    private val customerRepository: CustomerRepository,
+    private val dataStoreRepository: DatastoreRepo
+) :
     ViewModel() {
-    private lateinit var sharedPreferences: SharedPreferences
 
     private val _customDTOArray = MutableLiveData<List<CustomDTO>>()
     val customDTOArray: LiveData<List<CustomDTO>>
         get() = _customDTOArray
 
-    fun setSharedPreferences(sharedPreferences: SharedPreferences) {
-        this.sharedPreferences = sharedPreferences
+    private val customerId: Int = runBlocking {
+        dataStoreRepository.getInt(Constants.USER_ID)!!
     }
 
-    val customerId: Int
-        get() = sharedPreferences.getInt("customerId", 0)
-
-    fun getCustomsForCustomer(): LiveData<List<CustomDTO>> {
+    fun getCustomsForCustomer() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getCustomsForCustomer(customerId)
             withContext(Dispatchers.Main) {
                 _customDTOArray.value = result
             }
         }
-        return customDTOArray
     }
 }

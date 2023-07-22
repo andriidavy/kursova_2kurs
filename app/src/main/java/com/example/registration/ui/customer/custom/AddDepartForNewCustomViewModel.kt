@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.database.customer.CustomerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AddDepartForNewCustomViewModel(private val customerRepository: CustomerRepository) :
+@HiltViewModel
+class AddDepartForNewCustomViewModel @Inject constructor(private val customerRepository: CustomerRepository) :
     ViewModel() {
     private val _departDTOArray = MutableLiveData<List<DepartmentDTO>>()
     val departDTOArray: LiveData<List<DepartmentDTO>>
@@ -36,6 +39,5 @@ class AddDepartForNewCustomViewModel(private val customerRepository: CustomerRep
         }
         _message.value = "Відділ доставки призначено!"
     }
-
 
 }

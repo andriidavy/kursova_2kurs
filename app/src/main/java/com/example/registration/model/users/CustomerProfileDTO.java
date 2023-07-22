@@ -1,14 +1,24 @@
 package com.example.registration.model.users;
 
 public class CustomerProfileDTO {
+    int id;
     String name;
     String surname;
     String email;
 
-    public CustomerProfileDTO(String name, String surname, String email) {
+    public CustomerProfileDTO(int id, String name, String surname, String email) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -33,22 +33,24 @@ class CustomerMainPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupViews()
         setObservers()
         setListeners()
     }
 
     private fun setupViews() = with(binding) {
-        adapter = ProductAdapter(emptyList())
-        productListRecyclerView.apply {
-            this.adapter = adapter
-            layoutManager = LinearLayoutManager(activity)
-        }
         navController = findNavController()
+
+        adapter = ProductAdapter(emptyList())
+        productListRecyclerView.adapter = adapter
+        productListRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        viewModel.getAllProducts()
     }
 
     private fun setObservers() {
-        viewModel.getAllProducts().observe(viewLifecycleOwner) { products ->
+        viewModel.productsArray.observe(viewLifecycleOwner) { products ->
             adapter.updateProducts(products)
             productList = products
         }

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.CartAdapter
 import com.example.registration.databinding.FragmentCustomerCartPageBinding
-import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,10 +22,7 @@ class CustomerCartPageFragment : Fragment() {
     private lateinit var navController: NavController
 
     private val viewModel by viewModels<CustomerCartPageViewModel>()
-    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
 
-    private val userId = dataStoreViewModel.getUserId()
-    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,23 +33,37 @@ class CustomerCartPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CartAdapter(emptyList(), viewModel)
-        binding.cartListRecyclerView.adapter = adapter
-        binding.cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        setupViews()
+        setObservers()
+        setListeners()
+    }
+
+    private fun setupViews() = with(binding) {
+        adapter = CartAdapter(emptyList())
+        cartListRecyclerView.adapter = adapter
+        cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
 
-        viewModel.getAllCartProducts(userId).observe(viewLifecycleOwner) { cart ->
+        viewModel.getAllCartProducts()
+    }
+
+    private fun setObservers() {
+        viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
             adapter.updateCart(cart)
         }
 
-        binding.buttonClearCart.setOnClickListener {
-            viewModel.clearCart()
-        }
+        viewModel.message.observe(
+            viewLifecycleOwner
+        )
+        { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+    }
 
-        binding.buttonCreateCustom.setOnClickListener {
-            viewModel.createCustom(userId).observe(viewLifecycleOwner) { customId ->
-                if (customId != null) {
+    private fun setListeners() = with(binding) {
+        buttonCreateCustom.setOnClickListener {
+            viewModel.createCustom().observe(viewLifecycleOwner) { customId ->
+                customId?.let {
                     val bundle = Bundle()
                     bundle.putInt("customId", customId)
                     navController.navigate(
@@ -64,11 +74,16 @@ class CustomerCartPageFragment : Fragment() {
             }
         }
 
-        viewModel.message.observe(
-            viewLifecycleOwner
-        )
-        { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+        buttonClearCart.setOnClickListener {
+            viewModel.clearCart()
+        }
 
+        adapter.setOnRemoveProductClickListener(object : CartAdapter.OnRemoveProductClickListener {
+            override fun onRemoveProductClick(position: Int) {
+                viewModel.cartProductsArrayDTO.value?.getOrNull(position)?.productId?.let { productId ->
+                    viewModel.removeProductFromCart(productId)
+                }
+            }
+        })
     }
-
 }

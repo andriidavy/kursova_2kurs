@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
@@ -18,58 +20,63 @@ import com.example.registration.model.custom.CustomProductDTO
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.customer.CustomerApi
+import com.example.registration.datastore.DataStoreViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CustomerCustomPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerCustomPageBinding
-    private lateinit var viewModel: CustomerCustomPageViewModel
     private lateinit var adapter: CustomAdapter
+    private lateinit var navController: NavController
+
+    private val viewModel by viewModels<CustomerCustomPageViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCustomerCustomPageBinding.inflate(inflater)
-
-        adapter = CustomAdapter(emptyList())
-        binding.customListRecyclerView.adapter = adapter
-        binding.customListRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        val retrofitService = RetrofitService()
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val customerRepository = CustomerRepository(customerApi)
-        val viewModelFactory =
-            CustomerCustomPageViewModelFactory(customerRepository)
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[CustomerCustomPageViewModel::class.java]
-
-        binding.lifecycleOwner = this
-
-        val navController = findNavController()
-
-        viewModel.customDTOArray.observe(viewLifecycleOwner) { customs ->
-            adapter.updateCustoms(customs)
-        }
-
-        val sharedCustomerIdPreferences: SharedPreferences =
-            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
-        viewModel.setSharedPreferences(sharedCustomerIdPreferences)
-
-        viewModel.getCustomsForCustomer()
-
-
-        adapter.setOnItemClickListener(object : CustomAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                //test
-                Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
-                val bundle = Bundle()
-                val list: ArrayList<CustomProductDTO>? =
-                    viewModel.customDTOArray.value?.get(position)?.customProductList as ArrayList<CustomProductDTO>?
-                bundle.putParcelableArrayList("customProductList", list)
-                navController.navigate(R.id.action_customerCustomPageFragment_to_customProductDetailFragment, bundle)
-            }
-        })
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupViews()
+        setObservers()
+        setListeners()
+    }
+
+    private fun setupViews() = with(binding) {
+        adapter = CustomAdapter(emptyList())
+        customListRecyclerView.adapter = adapter
+        customListRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        navController = findNavController()
+
+        viewModel.getCustomsForCustomer()
+    }
+
+    private fun setObservers() {
+        viewModel.customDTOArray.observe(viewLifecycleOwner) { customs ->
+            adapter.updateCustoms(customs)
+        }
+    }
+
+    private fun setListeners() {
+        adapter.setOnItemClickListener(object : CustomAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                val bundle = Bundle()
+
+                val list: ArrayList<CustomProductDTO>? =
+                    viewModel.customDTOArray.value?.getOrNull(position)?.customProductList as ArrayList<CustomProductDTO>?
+                bundle.putParcelableArrayList("customProductList", list)
+
+                navController.navigate(
+                    R.id.action_customerCustomPageFragment_to_customProductDetailFragment,
+                    bundle
+                )
+            }
+        })
+    }
 }

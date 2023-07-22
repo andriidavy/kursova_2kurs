@@ -6,65 +6,68 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.databinding.FragmentAddDepartForNewCustomBinding
-import com.example.registration.database.customer.CustomerRepository
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.customer.CustomerApi
 
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddDepartForNewCustomFragment : Fragment() {
     private lateinit var binding: FragmentAddDepartForNewCustomBinding
-    private lateinit var viewModel: AddDepartForNewCustomViewModel
     private lateinit var adapter: AllDepartmentAdapter
+    private lateinit var navController: NavController
 
+    private val viewModel by viewModels<AddDepartForNewCustomViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentAddDepartForNewCustomBinding.inflate(inflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupViews()
+        setObservers()
+        setListeners()
+    }
+
+    private fun setupViews() = with(binding) {
         adapter = AllDepartmentAdapter(emptyList())
-        binding.departForNewCustomRecyclerView.adapter = adapter
-        binding.departForNewCustomRecyclerView.layoutManager = LinearLayoutManager(activity)
+        departForNewCustomRecyclerView.adapter = adapter
+        departForNewCustomRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        val retrofitService = RetrofitService()
-        val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-        val customerRepository = CustomerRepository(customerApi)
-        val viewModelFactory =
-            AddDepartForNewCustomViewModelFactory(customerRepository)
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[AddDepartForNewCustomViewModel::class.java]
+        navController = findNavController()
+    }
 
-        val navController = findNavController()
-
-        viewModel.departDTOArray.observe(viewLifecycleOwner) { departs ->
+    private fun setObservers() {
+        viewModel.getAllDepartments().observe(viewLifecycleOwner) { departs ->
             adapter.updateDepartments(departs)
         }
 
-        val customId: Int? = arguments?.getInt("customId")
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
+    }
 
-        viewModel.getAllDepartments()
-
+    private fun setListeners() {
         adapter.setOnItemClickListener(object : AllDepartmentAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                val departmentId: Int? = viewModel.departDTOArray.value?.get(position)?.id
-                if (departmentId != null && customId != null) {
+                val departmentId = viewModel.departDTOArray.value?.getOrNull(position)?.id
+                val customId = arguments?.getInt("customId")
+
+                if (customId != null && departmentId != null) {
                     viewModel.assignDepartmentToCustom(customId, departmentId)
                     navController.navigate(R.id.action_addDepartForNewCustomFragment_to_customerMainPageFragment)
                 }
             }
         })
-
-        viewModel.message.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        }
-
-        return binding.root
     }
 }

@@ -1,15 +1,11 @@
 package com.example.registration.ui.customer.custom
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +13,6 @@ import com.example.registration.R
 import com.example.registration.adapter.custom.CustomAdapter
 import com.example.registration.databinding.FragmentCustomerCustomPageBinding
 import com.example.registration.model.custom.CustomProductDTO
-import com.example.registration.database.customer.CustomerRepository
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.customer.CustomerApi
-import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

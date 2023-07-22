@@ -1,6 +1,5 @@
 package com.example.registration.ui.customer.custom
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.datastore.Constants
-import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

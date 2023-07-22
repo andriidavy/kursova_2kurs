@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.registration.databinding.FragmentProductItemBinding
 import com.example.registration.model.product.Product
-import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,8 +16,6 @@ class ProductItemFragment : Fragment() {
     private lateinit var binding: FragmentProductItemBinding
 
     private val viewModel by viewModels<ProductItemViewModel>()
-    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

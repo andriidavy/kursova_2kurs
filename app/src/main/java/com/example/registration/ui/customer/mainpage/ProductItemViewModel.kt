@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.datastore.Constants
 import com.example.registration.datastore.DatastoreRepo
-import com.example.registration.model.product.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

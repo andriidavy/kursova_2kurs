@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/managerMainPageFragment"
-        android:name="com.example.registration.fragment.managerFragments.ManagerMainPageFragment"
+        android:name="com.example.registration.ui.manager.mainpage.ManagerMainPageFragment"
         android:label="ManagerMainPageFragment">
         <action
             android:id="@+id/action_managerMainPageFragment_to_managerCreatedCustomsPageFragment"
@@ -291,7 +291,7 @@
         android:label="AddEmployeeFragment" />
     <fragment
         android:id="@+id/managerProfilePageFragment"
-        android:name="com.example.registration.fragment.managerFragments.profile.ManagerProfilePageFragment"
+        android:name="com.example.registration.ui.manager.profile.ManagerProfilePageFragment"
         android:label="ManagerProfilePageFragment">
         <action
             android:id="@+id/action_managerProfilePageFragment_to_loginFragment"

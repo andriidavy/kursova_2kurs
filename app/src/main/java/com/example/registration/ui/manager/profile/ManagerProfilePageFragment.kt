@@ -1,4 +1,4 @@
-package com.example.registration.fragment.managerFragments.profile
+package com.example.registration.ui.manager.profile
 
 import android.content.Context
 import android.content.SharedPreferences

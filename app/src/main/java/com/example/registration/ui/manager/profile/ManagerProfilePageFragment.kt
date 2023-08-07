@@ -14,8 +14,6 @@ import com.example.registration.databinding.FragmentManagerProfileBinding
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.manager.ManagerApi
-import com.example.registration.viewmodel.manager.profile.ManagerProfilePageViewModel
-import com.example.registration.viewmodel.manager.profile.ManagerProfilePageViewModelFactory
 
 
 class ManagerProfilePageFragment : Fragment() {
@@ -27,17 +25,6 @@ private lateinit var viewModel: ManagerProfilePageViewModel
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentManagerProfileBinding.inflate(inflater)
-
-        val retrofitService = RetrofitService()
-        val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
-        val managerRepository = ManagerRepository(managerApi)
-        val viewModelFactory =
-            ManagerProfilePageViewModelFactory(managerRepository)
-        viewModel =
-            ViewModelProvider(
-                this,
-                viewModelFactory
-            )[ManagerProfilePageViewModel::class.java]
 
         val navController = findNavController()
 

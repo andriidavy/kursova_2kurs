@@ -33,7 +33,6 @@ class CustomProductDetailFragment : Fragment() {
         customProductDetailRecyclerView.adapter = adapter
         customProductDetailRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        @Suppress("DEPRECATION")
         val customProductDTOList: List<CustomProductDTO> =
             requireArguments().getParcelableArrayList("customProductList")
                 ?: emptyList()

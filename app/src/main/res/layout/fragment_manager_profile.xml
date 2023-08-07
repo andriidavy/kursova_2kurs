@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -12,148 +12,145 @@
             android:id="@+id/profile_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_profile_text"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="40dp"
-            android:textSize="24sp"
+            android:text="@string/user_profile_text"
             android:textColor="@color/black"
+            android:textSize="24sp"
             android:textStyle="bold"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/id_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_text"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="30dp"
             android:layout_marginTop="40dp"
-            android:textSize="20sp"
+            android:text="@string/id"
             android:textColor="@color/black"
-            android:text="@string/id" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_text" />
 
         <TextView
             android:id="@+id/id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/id_text"
             app:layout_constraintTop_toBottomOf="@id/profile_text"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="8dp"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="italic"
             tools:text="0" />
 
         <TextView
             android:id="@+id/name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/id_text"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="30dp"
-            android:textSize="20sp"
+            android:text="@string/customer_name"
             android:textColor="@color/black"
-            android:text="@string/customer_name" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id_text" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/name_text"
             app:layout_constraintTop_toBottomOf="@id/id_text"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="8dp"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="italic"
             tools:text="NAME" />
 
         <TextView
             android:id="@+id/surname_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/name_text"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="30dp"
-            android:textSize="20sp"
+            android:text="@string/customer_surname"
             android:textColor="@color/black"
-            android:text="@string/customer_surname" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_text" />
 
         <TextView
             android:id="@+id/surname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/surname_text"
             app:layout_constraintTop_toBottomOf="@id/name_text"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="8dp"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="italic"
             tools:text="SURNAME" />
 
         <TextView
             android:id="@+id/email_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/surname_text"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="30dp"
-            android:textSize="20sp"
+            android:text="@string/customer_email"
             android:textColor="@color/black"
-            android:text="@string/customer_email" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/surname_text" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/email_text"
             app:layout_constraintTop_toBottomOf="@id/surname_text"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="8dp"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="italic"
             tools:text="EMAIL" />
 
         <TextView
             android:id="@+id/departments_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_text"
             android:layout_margin="30dp"
-            android:textSize="20sp"
+            android:text="@string/departs"
             android:textColor="@color/black"
-            android:text="@string/departs" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_text" />
 
         <TextView
             android:id="@+id/departments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/departments_text"
             app:layout_constraintTop_toBottomOf="@id/email_text"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="8dp"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="italic"
             tools:text="DEPARTS" />
 
         <Button
             android:id="@+id/button_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="40dp"
             android:text="@string/logout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="40dp"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

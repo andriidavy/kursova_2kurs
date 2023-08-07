@@ -26,14 +26,13 @@ class CustomerMainPageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCustomerMainPageBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupViews()
         setObservers()
         setListeners()
@@ -45,8 +44,6 @@ class CustomerMainPageFragment : Fragment() {
         adapter = ProductAdapter(emptyList())
         productListRecyclerView.adapter = adapter
         productListRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        viewModel.getAllProducts()
     }
 
     private fun setObservers() {
@@ -57,30 +54,32 @@ class CustomerMainPageFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-        adapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                val bundle = Bundle()
-                val product: Product =
-                    productList[position]
-                bundle.putParcelable("product", product)
+        navController.apply {
+            adapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
+                override fun onItemClick(position: Int) {
+                    val bundle = Bundle()
+                    val product: Product =
+                        productList[position]
+                    bundle.putParcelable("product", product)
 
-                navController.navigate(
-                    R.id.action_customerMainPageFragment_to_productItemFragment,
-                    bundle
-                )
+                    navigate(
+                        R.id.action_customerMainPageFragment_to_productItemFragment,
+                        bundle
+                    )
+                }
+            })
+
+            buttonToCart.setOnClickListener {
+                navigate(R.id.action_customerMainPageFragment_to_customerCartPageFragment)
             }
-        })
 
-        buttonToCart.setOnClickListener {
-            navController.navigate(R.id.action_customerMainPageFragment_to_customerCartPageFragment)
-        }
+            buttonToCustoms.setOnClickListener {
+                navigate(R.id.action_customerMainPageFragment_to_customerCustomPageFragment)
+            }
 
-        buttonToCustoms.setOnClickListener {
-            navController.navigate(R.id.action_customerMainPageFragment_to_customerCustomPageFragment)
-        }
-
-        buttonToProfile.setOnClickListener {
-            navController.navigate(R.id.action_customerMainPageFragment_to_customerProfilePageFragment)
+            buttonToProfile.setOnClickListener {
+                navigate(R.id.action_customerMainPageFragment_to_customerProfilePageFragment)
+            }
         }
     }
 }

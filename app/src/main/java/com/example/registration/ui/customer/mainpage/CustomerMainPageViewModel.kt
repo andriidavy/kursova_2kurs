@@ -17,11 +17,15 @@ class CustomerMainPageViewModel @Inject constructor(
     private val customerRepository: CustomerRepository
 ) : ViewModel() {
 
+    init {
+        getAllProducts()
+    }
+
     private val _productsArray = MutableLiveData<List<Product>>()
     val productsArray: LiveData<List<Product>>
         get() = _productsArray
 
-    fun getAllProducts(): LiveData<List<Product>> {
+    private fun getAllProducts(): LiveData<List<Product>> {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getProducts()
             withContext(Dispatchers.Main) {

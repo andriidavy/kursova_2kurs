@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.manager.profile
+package com.example.registration.ui.manager.profile
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
@@ -10,8 +10,10 @@ import com.example.registration.database.manager.ManagerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ManagerProfilePageViewModel(private val managerRepository: ManagerRepository): ViewModel() {
+class ManagerProfilePageViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
+    ViewModel() {
     private lateinit var sharedPreferences: SharedPreferences
 
     private val _managerProfileDTO = MutableLiveData<ManagerProfileDTO>()
@@ -25,7 +27,7 @@ class ManagerProfilePageViewModel(private val managerRepository: ManagerReposito
     val managerId: Int
         get() = sharedPreferences.getInt("managerId", 0)
 
-    fun getManagerProfileById() : LiveData<ManagerProfileDTO> {
+    fun getManagerProfileById(): LiveData<ManagerProfileDTO> {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getManagerProfile(managerId)
             withContext(Dispatchers.Main) {

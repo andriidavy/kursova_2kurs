@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.datastore.Constants
+import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,17 +19,14 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomerCustomPageViewModel @Inject constructor(
     private val customerRepository: CustomerRepository,
-    private val dataStoreRepository: DatastoreRepo
-) :
-    ViewModel() {
+    dataStoreViewModel: DataStoreViewModel
+) : ViewModel() {
 
     private val _customDTOArray = MutableLiveData<List<CustomDTO>>()
     val customDTOArray: LiveData<List<CustomDTO>>
         get() = _customDTOArray
 
-    private val customerId: Int = runBlocking {
-        dataStoreRepository.getInt(Constants.USER_ID)!!
-    }
+    private val customerId: Int = dataStoreViewModel.getUserId()
 
     fun getCustomsForCustomer() {
         viewModelScope.launch(Dispatchers.IO) {

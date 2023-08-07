@@ -11,54 +11,57 @@ import com.example.registration.R
 import com.example.registration.databinding.FragmentManagerMainPageBinding
 
 class ManagerMainPageFragment : Fragment() {
-private lateinit var binding: FragmentManagerMainPageBinding
-private lateinit var navController: NavController
+
+    private lateinit var binding: FragmentManagerMainPageBinding
+    private lateinit var navController: NavController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentManagerMainPageBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupViews()
         setListeners()
     }
 
-    private fun setupViews(){
+    private fun setupViews() {
         navController = findNavController()
     }
 
-    private fun setListeners() = with(binding){
-        buttonToCreatedCustoms.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_managerCreatedCustomsPageFragment)
-        }
+    private fun setListeners() = with(binding) {
+        navController.apply {
+            buttonToCreatedCustoms.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_managerCreatedCustomsPageFragment)
+            }
 
-        buttonToWaitingReport.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_managerReportsInWaitingFragment)
-        }
+            buttonToWaitingReport.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_managerReportsInWaitingFragment)
+            }
 
-        buttonToAllCustoms.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_managerAllCustomsFragment)
-        }
+            buttonToAllCustoms.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_managerAllCustomsFragment)
+            }
 
-        buttonToProductList.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_allProductListFragment)
-        }
+            buttonToProductList.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_allProductListFragment)
+            }
 
-        buttonToHr.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_manageEmployeeFragment)
-        }
+            buttonToHr.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_manageEmployeeFragment)
+            }
 
-        buttonToMyProfile.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_managerProfilePageFragment)
-        }
+            buttonToMyProfile.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_managerProfilePageFragment)
+            }
 
-        buttonToAdminMode.setOnClickListener {
-            navController.navigate(R.id.action_managerMainPageFragment_to_adminLoginFragment)
+            buttonToAdminMode.setOnClickListener {
+                navigate(R.id.action_managerMainPageFragment_to_adminLoginFragment)
+            }
         }
     }
 

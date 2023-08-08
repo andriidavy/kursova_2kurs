@@ -17,36 +17,33 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CustomerCartPageFragment : Fragment() {
+
     private lateinit var binding: FragmentCustomerCartPageBinding
     private lateinit var adapter: CartAdapter
     private lateinit var navController: NavController
-
     private val viewModel by viewModels<CustomerCartPageViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCustomerCartPageBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupViews()
         setObservers()
         setListeners()
     }
 
     private fun setupViews() = with(binding) {
-        adapter = CartAdapter(emptyList())
+        adapter = CartAdapter(emptyList(), itemRemovedClick())
         cartListRecyclerView.adapter = adapter
         cartListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
-
-        viewModel.getAllCartProducts()
     }
 
     private fun setObservers() {
@@ -62,28 +59,27 @@ class CustomerCartPageFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonCreateCustom.setOnClickListener {
-            viewModel.createCustom().observe(viewLifecycleOwner) { customId ->
-                customId?.let {
-                    val bundle = Bundle()
-                    bundle.putInt("customId", customId)
-                    navController.navigate(
-                        R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment,
-                        bundle
-                    )
-                }
+            val customId = viewModel.createCustom()
+            customId?.let {
+                val bundle = Bundle()
+                bundle.putInt("customId", customId)
+                navController.navigate(
+                    R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment,
+                    bundle
+                )
             }
         }
 
         buttonClearCart.setOnClickListener {
             viewModel.clearCart()
         }
+    }
 
-        adapter.setOnRemoveProductClickListener(object : CartAdapter.OnRemoveProductClickListener {
-            override fun onRemoveProductClick(position: Int) {
-                viewModel.cartProductsArrayDTO.value?.getOrNull(position)?.productId?.let { productId ->
-                    viewModel.removeProductFromCart(productId)
-                }
+    private fun itemRemovedClick(): (Int) -> Unit {
+        return { position ->
+            viewModel.cartProductsArrayDTO.value?.getOrNull(position)?.productId?.let { productId ->
+                viewModel.removeProductFromCart(productId)
             }
-        })
+        }
     }
 }

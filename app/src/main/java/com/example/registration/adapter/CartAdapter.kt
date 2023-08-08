@@ -10,28 +10,10 @@ import com.example.registration.ui.customer.cart.CustomerCartPageViewModel
 
 open class CartAdapter(
     private var cartProductDTOList: List<CartProductDTO>,
-) :
-    RecyclerView.Adapter<CartAdapter.ViewHolder>() {
-private lateinit var removeProductClickListener: OnRemoveProductClickListener
-    interface OnRemoveProductClickListener{
-        fun onRemoveProductClick(position: Int)
-    }
+    private val itemRemovedClick: (Int) -> Unit
+) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
-    fun setOnRemoveProductClickListener(removeListener: OnRemoveProductClickListener){
-        removeProductClickListener = removeListener
-    }
-
-
-    class ViewHolder(
-        var view: ListCartProductItemBinding,
-        var removeListener: OnRemoveProductClickListener
-    ) : RecyclerView.ViewHolder(view.root) {
-        init {
-            view.buttonDeleteItem.setOnClickListener {
-                removeListener.onRemoveProductClick(adapterPosition)
-            }
-        }
-    }
+    class ViewHolder(var view: ListCartProductItemBinding) : RecyclerView.ViewHolder(view.root)
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +23,7 @@ private lateinit var removeProductClickListener: OnRemoveProductClickListener
                 viewGroup,
                 false
             )
-        return ViewHolder(binding, removeProductClickListener)
+        return ViewHolder(binding)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -50,6 +32,10 @@ private lateinit var removeProductClickListener: OnRemoveProductClickListener
             productListItemName.text = cartProductDTOList[position].productName
             idForProduct.text = cartProductDTOList[position].productId.toString()
             countForProduct.text = cartProductDTOList[position].quantity.toString()
+
+            buttonDeleteItem.setOnClickListener {
+                itemRemovedClick.invoke(position)
+            }
         }
     }
 

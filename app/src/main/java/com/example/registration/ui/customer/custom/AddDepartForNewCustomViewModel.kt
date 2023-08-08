@@ -15,22 +15,25 @@ import javax.inject.Inject
 @HiltViewModel
 class AddDepartForNewCustomViewModel @Inject constructor(private val customerRepository: CustomerRepository) :
     ViewModel() {
+
     private val _departDTOArray = MutableLiveData<List<DepartmentDTO>>()
     val departDTOArray: LiveData<List<DepartmentDTO>>
         get() = _departDTOArray
-
     private val _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
 
-    fun getAllDepartments(): LiveData<List<DepartmentDTO>> {
+    init {
+        getAllDepartments()
+    }
+
+    private fun getAllDepartments() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getAllDepartments()
             withContext(Dispatchers.Main) {
                 _departDTOArray.value = result
             }
         }
-        return departDTOArray
     }
 
     fun assignDepartmentToCustom(customId: Int, departmentId: Int) {

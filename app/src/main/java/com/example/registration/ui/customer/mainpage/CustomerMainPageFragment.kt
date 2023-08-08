@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -17,10 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CustomerMainPageFragment : Fragment() {
+
     private lateinit var binding: FragmentCustomerMainPageBinding
     private lateinit var adapter: ProductAdapter
     private lateinit var navController: NavController
-    private lateinit var productList: List<Product>
 
     private val viewModel by viewModels<CustomerMainPageViewModel>()
     override fun onCreateView(
@@ -41,7 +42,7 @@ class CustomerMainPageFragment : Fragment() {
     private fun setupViews() = with(binding) {
         navController = findNavController()
 
-        adapter = ProductAdapter(emptyList())
+        adapter = ProductAdapter(emptyList(), itemClicked())
         productListRecyclerView.adapter = adapter
         productListRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
@@ -49,25 +50,11 @@ class CustomerMainPageFragment : Fragment() {
     private fun setObservers() {
         viewModel.productsArray.observe(viewLifecycleOwner) { products ->
             adapter.updateProducts(products)
-            productList = products
         }
     }
 
     private fun setListeners() = with(binding) {
         navController.apply {
-            adapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    val bundle = Bundle()
-                    val product: Product =
-                        productList[position]
-                    bundle.putParcelable("product", product)
-
-                    navigate(
-                        R.id.action_customerMainPageFragment_to_productItemFragment,
-                        bundle
-                    )
-                }
-            })
 
             buttonToCart.setOnClickListener {
                 navigate(R.id.action_customerMainPageFragment_to_customerCartPageFragment)
@@ -81,5 +68,24 @@ class CustomerMainPageFragment : Fragment() {
                 navigate(R.id.action_customerMainPageFragment_to_customerProfilePageFragment)
             }
         }
+    }
+
+    private fun itemClicked(): (Int) -> Unit {
+        return { position ->
+            val bundle = Bundle()
+            val product: Product? =
+                viewModel.productsArray.value?.getOrNull(position)
+            product?.let {
+                bundle.putParcelable("product", it)
+                navController.navigate(
+                    R.id.action_customerMainPageFragment_to_productItemFragment,
+                    bundle
+                )
+            } ?: showToast("Error data!")
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

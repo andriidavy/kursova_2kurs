@@ -34,12 +34,12 @@ class ProductItemFragment : Fragment() {
     }
 
     private fun setupViews() = with(binding) {
-            product?.apply {
-                productName.text = name
-                productDescription.text = description
-                productId.text = id.toString()
-                productQuantity.text = quantity.toString()
-            } ?: viewModel.setMessage("Error getting product information")
+        product?.apply {
+            productName.text = name
+            productDescription.text = description
+            productId.text = id.toString()
+            productQuantity.text = quantity.toString()
+        } ?: viewModel.setMessage("Error getting product information")
     }
 
     private fun setListeners() = with(binding) {
@@ -51,9 +51,8 @@ class ProductItemFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.message.observe(
-            viewLifecycleOwner
-        )
-        { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

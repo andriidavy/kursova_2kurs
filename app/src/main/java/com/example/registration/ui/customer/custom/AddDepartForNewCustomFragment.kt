@@ -18,29 +18,28 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddDepartForNewCustomFragment : Fragment() {
+
     private lateinit var binding: FragmentAddDepartForNewCustomBinding
     private lateinit var adapter: AllDepartmentAdapter
     private lateinit var navController: NavController
-
     private val viewModel by viewModels<AddDepartForNewCustomViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddDepartForNewCustomBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupViews()
         setObservers()
-        setListeners()
     }
 
     private fun setupViews() = with(binding) {
-        adapter = AllDepartmentAdapter(emptyList())
+        adapter = AllDepartmentAdapter(emptyList(), itemClicked())
         departForNewCustomRecyclerView.adapter = adapter
         departForNewCustomRecyclerView.layoutManager = LinearLayoutManager(activity)
 
@@ -48,7 +47,7 @@ class AddDepartForNewCustomFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.getAllDepartments().observe(viewLifecycleOwner) { departs ->
+        viewModel.departDTOArray.observe(viewLifecycleOwner) { departs ->
             adapter.updateDepartments(departs)
         }
 
@@ -57,17 +56,15 @@ class AddDepartForNewCustomFragment : Fragment() {
         }
     }
 
-    private fun setListeners() {
-        adapter.setOnItemClickListener(object : AllDepartmentAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                val departmentId = viewModel.departDTOArray.value?.getOrNull(position)?.id
-                val customId = arguments?.getInt("customId")
+    private fun itemClicked(): (Int) -> Unit {
+        return { position ->
+            val departmentId = viewModel.departDTOArray.value?.getOrNull(position)?.id
+            val customId = arguments?.getInt("customId")
 
-                if (customId != null && departmentId != null) {
-                    viewModel.assignDepartmentToCustom(customId, departmentId)
-                    navController.navigate(R.id.action_addDepartForNewCustomFragment_to_customerMainPageFragment)
-                }
+            if (customId != null && departmentId != null) {
+                viewModel.assignDepartmentToCustom(customId, departmentId)
+                navController.navigate(R.id.action_addDepartForNewCustomFragment_to_customerMainPageFragment)
             }
-        })
+        }
     }
 }

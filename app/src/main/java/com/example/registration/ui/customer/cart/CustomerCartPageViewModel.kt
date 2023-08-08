@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.datastore.Constants
+import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,22 +20,22 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomerCartPageViewModel @Inject constructor(
     private val customerRepository: CustomerRepository,
-    private val datastoreRepository: DatastoreRepo
+    dataStoreViewModel: DataStoreViewModel
 ) : ViewModel() {
 
     private val _cartProductsArrayDTO = MutableLiveData<List<CartProductDTO>>()
     val cartProductsArrayDTO: LiveData<List<CartProductDTO>>
         get() = _cartProductsArrayDTO
-
     private val _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
+    private val customerId: Int = dataStoreViewModel.getUserId()
 
-    private val customerId: Int = runBlocking {
-        datastoreRepository.getInt(Constants.USER_ID)!!
+    init {
+        getAllCartProducts()
     }
 
-    fun getAllCartProducts() {
+    private fun getAllCartProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getCartProducts(customerId)
             withContext(Dispatchers.Main) {
@@ -43,15 +44,14 @@ class CustomerCartPageViewModel @Inject constructor(
         }
     }
 
-    fun createCustom(): LiveData<Int> {
-        val customId = MutableLiveData<Int>()
-
+    fun createCustom(): Int? {
+        var customId: Int? = null
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.createCustom(customerId)
 
             withContext(Dispatchers.Main) {
                 result.onSuccess { orderId ->
-                    customId.value = orderId
+                    customId = orderId
                     _message.value = "Замовлення створено!"
                 }.onFailure {
                     _message.value = "Помилка обробки замовлення!"

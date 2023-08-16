@@ -17,10 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CustomerCustomPageFragment : Fragment() {
+
     private lateinit var binding: FragmentCustomerCustomPageBinding
     private lateinit var adapter: CustomAdapter
     private lateinit var navController: NavController
-
     private val viewModel by viewModels<CustomerCustomPageViewModel>()
 
     override fun onCreateView(

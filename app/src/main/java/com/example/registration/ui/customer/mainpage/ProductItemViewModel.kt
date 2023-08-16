@@ -21,7 +21,6 @@ class ProductItemViewModel @Inject constructor(
     private val _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
-
     private val customerId: Int = dataStoreViewModel.getUserId()
 
     fun addProductToCart(productId: Int, quantity: Int) {

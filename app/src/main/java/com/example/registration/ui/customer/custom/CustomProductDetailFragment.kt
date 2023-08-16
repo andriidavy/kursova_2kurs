@@ -11,6 +11,7 @@ import com.example.registration.databinding.FragmentCustomProductDetailBinding
 import com.example.registration.model.custom.CustomProductDTO
 
 class CustomProductDetailFragment : Fragment() {
+
     private lateinit var binding: FragmentCustomProductDetailBinding
     private lateinit var adapter: CustomProductAdapter
 
@@ -24,7 +25,6 @@ class CustomProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupViews()
     }
 

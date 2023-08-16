@@ -7,28 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentRegistrationBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
-    private lateinit var binding: FragmentRegistrationBinding
 
+    private lateinit var binding: FragmentRegistrationBinding
     private val viewModel by viewModels<CustomerRegistrationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRegistrationBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setListeners()
         setObservers()
     }
@@ -41,17 +42,19 @@ class RegistrationFragment : Fragment() {
             val email: String = etEmail.text.toString().trim()
             val password: String = etPassword.text.toString().trim()
             if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
-                viewModel.insertCustomer(name, surname, email, password)
-                    .observe(viewLifecycleOwner) { insertResult ->
-                        if (insertResult) {
-                            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                lifecycleScope.launch {
+                    viewModel.insertCustomer(name, surname, email, password)
+                        .collect { insertResult ->
+                            insertResult.onSuccess {
+                                findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
-                            etName.text.clear()
-                            etSurname.text.clear()
-                            etEmail.text.clear()
-                            etPassword.text.clear()
+                                viewModel.showSuccessfulMessage()
+                            }
+                            insertResult.onFailure {
+                                viewModel.showInvalidMessage()
+                            }
                         }
-                    }
+                }
             } else {
                 etName.error = if (name.isBlank()) "Ім'я обов'язкове" else null
                 etSurname.error = if (surname.isBlank()) "Прізвище обов'язкове" else null

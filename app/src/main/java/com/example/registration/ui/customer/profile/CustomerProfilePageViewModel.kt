@@ -7,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.registration.model.users.CustomerProfileDTO
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.datastore.Constants
+import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -18,24 +22,12 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomerProfilePageViewModel @Inject constructor(
     private val customerRepository: CustomerRepository,
-    private val dataStoreRepository: DatastoreRepo
+    dataStoreViewModel: DataStoreViewModel
 ) : ViewModel() {
-    private val _customerProfileDTO = MutableLiveData<CustomerProfileDTO>()
-    val customerProfileDTO: LiveData<CustomerProfileDTO>
-        get() = _customerProfileDTO
 
-    private val customerId: Int = runBlocking {
-        dataStoreRepository.getInt(Constants.USER_ID)!!
-    }
+    private val customerId = dataStoreViewModel.getUserId()
 
-    fun getCustomerProfileById(): LiveData<CustomerProfileDTO> {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getCustomerProfileById(customerId)
-            withContext(Dispatchers.Main) {
-                _customerProfileDTO.value = result
-            }
-        }
-        return customerProfileDTO
-    }
-
+    fun getCustomerProfileById(): Flow<CustomerProfileDTO> = flow {
+        emit(customerRepository.getCustomerProfileById(customerId))
+    }.flowOn(Dispatchers.IO)
 }

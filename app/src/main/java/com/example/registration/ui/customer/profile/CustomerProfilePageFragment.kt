@@ -6,29 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentCustomerProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CustomerProfilePageFragment : Fragment() {
+
     private lateinit var binding: FragmentCustomerProfileBinding
     private lateinit var navController: NavController
-
     private val viewModel by viewModels<CustomerProfilePageViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCustomerProfileBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupView()
         setListeners()
         setObservers()
@@ -46,15 +48,13 @@ class CustomerProfilePageFragment : Fragment() {
     }
 
     private fun setObservers() = with(binding) {
-
-        viewModel.getCustomerProfileById().observe(viewLifecycleOwner) { customer ->
-            // Обновление значений полей после получения данных профиля
-            customerId.text = customer?.id.toString()
-            customerName.text = customer?.name
-            customerSurname.text = customer?.surname
-            customerEmail.text = customer?.email
+        lifecycleScope.launch {
+            viewModel.getCustomerProfileById().collect { customer ->
+                customerId.text = customer.id.toString()
+                customerName.text = customer.name
+                customerSurname.text = customer.surname
+                customerEmail.text = customer.email
+            }
         }
     }
-
-
 }

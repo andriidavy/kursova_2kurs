@@ -22,8 +22,8 @@ class CustomerMainPageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerMainPageBinding
     private lateinit var adapter: ProductAdapter
     private lateinit var navController: NavController
-
     private val viewModel by viewModels<CustomerMainPageViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,11 +40,11 @@ class CustomerMainPageFragment : Fragment() {
     }
 
     private fun setupViews() = with(binding) {
-        navController = findNavController()
-
         adapter = ProductAdapter(emptyList(), itemClicked())
         productListRecyclerView.adapter = adapter
         productListRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        navController = findNavController()
     }
 
     private fun setObservers() {

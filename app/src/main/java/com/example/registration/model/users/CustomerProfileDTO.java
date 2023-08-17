@@ -6,6 +6,9 @@ public class CustomerProfileDTO {
     String surname;
     String email;
 
+    public CustomerProfileDTO() {
+    }
+
     public CustomerProfileDTO(int id, String name, String surname, String email) {
         this.id = id;
         this.name = name;

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
@@ -48,12 +50,14 @@ class CustomerProfilePageFragment : Fragment() {
 
     private fun setObservers() = with(binding) {
         lifecycleScope.launch {
-            viewModel.getCustomerProfileById().collect { customer ->
-                customer.apply {
-                    customerId.text = id.toString()
-                    customerName.text = name
-                    customerSurname.text = surname
-                    customerEmail.text = email
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.customer.collect { customer ->
+                    customer.apply {
+                        customerId.text = id.toString()
+                        customerName.text = name
+                        customerSurname.text = surname
+                        customerEmail.text = email
+                    }
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.example.registration.ui.login
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,27 +9,28 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
 import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
+
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
-
     private val viewModel by viewModels<LoginViewModel>()
     private val dataStoreViewModel by viewModels<DataStoreViewModel>()
-
     private var num: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater)
         return binding.root
     }
@@ -39,7 +39,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setListeners()
-        setObservers()
     }
 
     private fun setupViews() = with(binding) {
@@ -85,28 +84,35 @@ class LoginFragment : Fragment() {
             val email = etEmail.text.toString()
             val password = etPassword.text.toString()
 
-            viewModel.login(email, password, num).observe(viewLifecycleOwner) { loginResult ->
-                if (loginResult) {
-                    when (num) {
-                        0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                        1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                        2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+            lifecycleScope.launch {
+                viewModel.login(email, password, num).collect { loginResult ->
+                    loginResult?.let {
+                        loginResult.onSuccess { user ->
+                            when (num) {
+                                0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+                                1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
+                                2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+                            }
+
+                            // установка ID користувача при вході
+                            dataStoreViewModel.storeUserId(user.id)
+
+                            showToast(getString(R.string.success_log, user.name, user.surname))
+                        }
+                        loginResult.onFailure {
+                            showToast(getString(R.string.invalid_log))
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun setObservers() {
-        // вивід повідомлення
-        viewModel.message.observe(
-            viewLifecycleOwner
-        )
-        { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
-
-        // установка ID користувача при вході
-        viewModel.userId.observe(
-            viewLifecycleOwner
-        ) { userId -> dataStoreViewModel.storeUserId(userId) }
+    private fun showToast(message: String) {
+        Toast.makeText(
+            context,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

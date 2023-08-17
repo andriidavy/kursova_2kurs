@@ -93,4 +93,15 @@
     <string name="choose_depart_text">Оберіть відділ доставки:</string>
     <string name="product_сatalog">Каталог товарів</string>
     <string name="depart_registration">Додати відділ</string>
+    <string name="success_reg_message">Реєстрація пройшла успішно!</string>
+    <string name="invalid_reg_message">Покупець з таким email вже існує!</string>
+    <string name="name_required">Ім\'я обов\'язкове!</string>
+    <string name="surname_required">Прізвище обов\'язкове!</string>
+    <string name="email_required">Email обов\'язковий!</string>
+    <string name="password_required">Пароль обов\'язковий!</string>
+    <string name="success_log">Вітаємо, %1$s %2$s!</string>
+    <string name="invalid_log">Невірний логін чи пароль!</string>
+    <string name="success_add_to_cart">Товар додано до корзини</string>
+    <string name="error_add_to_cart">Помилка: %1$s</string>
+    <string name="error_info_product">Помилка інформації про продукт</string>
 </resources>

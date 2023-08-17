@@ -8,6 +8,8 @@ import com.example.registration.model.product.Product
 import com.example.registration.database.customer.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -16,22 +18,20 @@ import javax.inject.Inject
 class CustomerMainPageViewModel @Inject constructor(
     private val customerRepository: CustomerRepository
 ) : ViewModel() {
+    private val _productsArray = MutableStateFlow<List<Product>>(emptyList())
+    val productsArray: StateFlow<List<Product>>
+        get() = _productsArray
 
     init {
         getAllProducts()
     }
 
-    private val _productsArray = MutableLiveData<List<Product>>()
-    val productsArray: LiveData<List<Product>>
-        get() = _productsArray
-
-    private fun getAllProducts(): LiveData<List<Product>> {
+    private fun getAllProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getProducts()
             withContext(Dispatchers.Main) {
                 _productsArray.value = result
             }
         }
-        return productsArray
     }
 }

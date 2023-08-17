@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.example.registration.R
 import com.example.registration.databinding.FragmentProductItemBinding
 import com.example.registration.model.product.Product
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProductItemFragment : Fragment() {
@@ -30,7 +33,6 @@ class ProductItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setListeners()
-        setObservers()
     }
 
     private fun setupViews() = with(binding) {
@@ -39,20 +41,24 @@ class ProductItemFragment : Fragment() {
             productDescription.text = description
             productId.text = id.toString()
             productQuantity.text = quantity.toString()
-        } ?: viewModel.setMessage("Error getting product information")
+        } ?: showToast(getString(R.string.error_info_product))
     }
 
     private fun setListeners() = with(binding) {
         buttonAddToCart.setOnClickListener {
             val productId: Int = productId.text.toString().toInt()
             val quantity: Int = countAddToCart.text.toString().toInt()
-            viewModel.addProductToCart(productId, quantity)
+
+            lifecycleScope.launch {
+                viewModel.addProductToCart(productId, quantity).collect { result ->
+                    result.onSuccess { showToast(getString(R.string.success_add_to_cart)) }
+                    result.onFailure { showToast(getString(R.string.error_add_to_cart, it)) }
+                }
+            }
         }
     }
 
-    private fun setObservers() {
-        viewModel.message.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

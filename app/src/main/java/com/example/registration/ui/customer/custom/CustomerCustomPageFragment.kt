@@ -26,7 +26,7 @@ class CustomerCustomPageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCustomerCustomPageBinding.inflate(inflater)
         return binding.root
     }

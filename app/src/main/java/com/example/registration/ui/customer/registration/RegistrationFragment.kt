@@ -31,7 +31,6 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        setObservers()
     }
 
     private fun setListeners() = with(binding) {
@@ -48,29 +47,27 @@ class RegistrationFragment : Fragment() {
                             insertResult.onSuccess {
                                 findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
-                                viewModel.showSuccessfulMessage()
+                                showToast(getString(R.string.success_reg_message))
                             }
                             insertResult.onFailure {
-                                viewModel.showInvalidMessage()
+                                showToast(getString(R.string.invalid_reg_message))
                             }
                         }
                 }
             } else {
-                etName.error = if (name.isBlank()) "Ім'я обов'язкове" else null
-                etSurname.error = if (surname.isBlank()) "Прізвище обов'язкове" else null
-                etEmail.error = if (email.isBlank()) "Email обов'язковий" else null
-                etPassword.error = if (password.isBlank()) "Пароль обов'язковий" else null
+                etName.error = if (name.isBlank()) getString(R.string.name_required) else null
+                etSurname.error = if (surname.isBlank()) getString(R.string.surname_required) else null
+                etEmail.error = if (email.isBlank()) getString(R.string.email_required) else null
+                etPassword.error = if (password.isBlank()) getString(R.string.password_required) else null
             }
         }
     }
 
-    private fun setObservers() {
-        viewModel.message.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(
-                context,
-                message,
-                Toast.LENGTH_LONG
-            ).show()
-        }
+    private fun showToast(message: String) {
+        Toast.makeText(
+            context,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

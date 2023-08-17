@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
 import com.example.registration.model.product.Product
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CustomerMainPageFragment : Fragment() {
@@ -48,14 +52,17 @@ class CustomerMainPageFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.productsArray.observe(viewLifecycleOwner) { products ->
-            adapter.updateProducts(products)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.productsArray.collect { products ->
+                    adapter.updateProducts(products)
+                }
+            }
         }
     }
 
     private fun setListeners() = with(binding) {
         navController.apply {
-
             buttonToCart.setOnClickListener {
                 navigate(R.id.action_customerMainPageFragment_to_customerCartPageFragment)
             }
@@ -74,7 +81,7 @@ class CustomerMainPageFragment : Fragment() {
         return { position ->
             val bundle = Bundle()
             val product: Product? =
-                viewModel.productsArray.value?.getOrNull(position)
+                viewModel.productsArray.value.getOrNull(position)
             product?.let {
                 bundle.putParcelable("product", it)
                 navController.navigate(

@@ -37,7 +37,6 @@ class CustomerProfilePageFragment : Fragment() {
     }
 
     private fun setupView() {
-
         navController = findNavController()
     }
 
@@ -50,10 +49,12 @@ class CustomerProfilePageFragment : Fragment() {
     private fun setObservers() = with(binding) {
         lifecycleScope.launch {
             viewModel.getCustomerProfileById().collect { customer ->
-                customerId.text = customer.id.toString()
-                customerName.text = customer.name
-                customerSurname.text = customer.surname
-                customerEmail.text = customer.email
+                customer.apply {
+                    customerId.text = id.toString()
+                    customerName.text = name
+                    customerSurname.text = surname
+                    customerEmail.text = email
+                }
             }
         }
     }

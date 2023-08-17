@@ -14,10 +14,6 @@ import javax.inject.Inject
 class CustomerRegistrationViewModel @Inject constructor(private val customerRepository: CustomerRepository) :
     ViewModel() {
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String>
-        get() = _message
-
     fun insertCustomer(
         name: String,
         surname: String,
@@ -26,13 +22,5 @@ class CustomerRegistrationViewModel @Inject constructor(private val customerRepo
     ): Flow<Result<Customer>> = flow {
         emit(customerRepository.save(name, surname, email, password))
     }.flowOn(Dispatchers.IO)
-
-    fun showSuccessfulMessage() {
-        _message.value = "Реєстрація пройшла успішно!"
-    }
-
-    fun showInvalidMessage() {
-        _message.value = "Покупець з таким email вже існує!"
-    }
 }
 

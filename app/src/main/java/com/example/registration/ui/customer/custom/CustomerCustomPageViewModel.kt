@@ -11,6 +11,8 @@ import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -22,8 +24,8 @@ class CustomerCustomPageViewModel @Inject constructor(
     dataStoreViewModel: DataStoreViewModel
 ) : ViewModel() {
 
-    private val _customDTOArray = MutableLiveData<List<CustomDTO>>()
-    val customDTOArray: LiveData<List<CustomDTO>>
+    private val _customDTOArray = MutableStateFlow<List<CustomDTO>>(emptyList())
+    val customDTOArray: StateFlow<List<CustomDTO>>
         get() = _customDTOArray
 
     private val customerId: Int = dataStoreViewModel.getUserId()

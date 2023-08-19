@@ -7,7 +7,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
-class DataStoreViewModel @Inject constructor(
+open class DataStoreViewModel @Inject constructor(
     private val datastoreRepository: DatastoreRepo
 ) : ViewModel() {
 

@@ -6,17 +6,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.product.Product
 import com.example.registration.database.manager.ManagerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AllProductListViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
+@HiltViewModel
+class AllProductListViewModel @Inject constructor(private val managerRepository: ManagerRepository) : ViewModel() {
 
     private val _productArray = MutableLiveData<List<Product>>()
     val productArray: LiveData<List<Product>>
         get() = _productArray
 
-    fun getAllProducts(): LiveData<List<Product>> {
+    init {
+        getAllProducts()
+    }
+
+    private fun getAllProducts(): LiveData<List<Product>> {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllProducts()
             withContext(Dispatchers.Main) {

@@ -14,7 +14,7 @@ import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.products.AddProductViewModel
 import com.example.registration.viewmodel.manager.products.AddProductViewModelFactory
 
-class addProductFragment : Fragment() {
+class AddProductFragment : Fragment() {
     private lateinit var binding: FragmentAddProductBinding
     private lateinit var viewModel: AddProductViewModel
     override fun onCreateView(

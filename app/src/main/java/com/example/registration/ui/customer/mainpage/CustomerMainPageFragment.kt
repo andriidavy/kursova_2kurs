@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
-import com.example.registration.model.product.Product
+import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -79,20 +78,15 @@ class CustomerMainPageFragment : Fragment() {
 
     private fun itemClicked(): (Int) -> Unit {
         return { position ->
-            val bundle = Bundle()
-            val product: Product? =
-                viewModel.productsArray.value.getOrNull(position)
+            val product = viewModel.productsArray.value.getOrNull(position)
             product?.let {
-                bundle.putParcelable("product", it)
+                val bundle = Bundle()
+                bundle.putParcelable("product", product)
                 navController.navigate(
                     R.id.action_customerMainPageFragment_to_productItemFragment,
                     bundle
                 )
-            } ?: showToast("Error data!")
+            } ?: ToastObj.shortToastMake(getString(R.string.error_info_product), context)
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

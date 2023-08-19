@@ -72,8 +72,4 @@ class AddDepartForNewCustomFragment : Fragment() {
             }
         }
     }
-
-    private fun showToast(message: String){
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
 }

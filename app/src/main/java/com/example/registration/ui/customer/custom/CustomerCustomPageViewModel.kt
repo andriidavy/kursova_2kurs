@@ -20,15 +20,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CustomerCustomPageViewModel @Inject constructor(
-    private val customerRepository: CustomerRepository,
-    dataStoreViewModel: DataStoreViewModel
-) : ViewModel() {
+    private val customerRepository: CustomerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
 
     private val _customDTOArray = MutableStateFlow<List<CustomDTO>>(emptyList())
     val customDTOArray: StateFlow<List<CustomDTO>>
         get() = _customDTOArray
 
-    private val customerId: Int = dataStoreViewModel.getUserId()
+    private val customerId: Int = getUserId()
 
     fun getCustomsForCustomer() {
         viewModelScope.launch(Dispatchers.IO) {

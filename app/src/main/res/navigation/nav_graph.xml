@@ -267,7 +267,7 @@
         android:label="AllCustomsDetailFragment" />
     <fragment
         android:id="@+id/allProductListFragment"
-        android:name="com.example.registration.fragment.managerFragments.products.allProductListFragment"
+        android:name="com.example.registration.fragment.managerFragments.products.AllProductListFragment"
         android:label="allProductListFragment">
         <action
             android:id="@+id/action_allProductListFragment_to_addProductFragment"
@@ -275,7 +275,7 @@
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
-        android:name="com.example.registration.fragment.managerFragments.products.addProductFragment"
+        android:name="com.example.registration.fragment.managerFragments.products.AddProductFragment"
         android:label="addProductFragment" />
     <fragment
         android:id="@+id/manageEmployeeFragment"

@@ -6,6 +6,7 @@ import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.Product
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

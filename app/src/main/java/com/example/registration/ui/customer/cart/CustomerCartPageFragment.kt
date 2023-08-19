@@ -7,13 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.CartAdapter
 import com.example.registration.databinding.FragmentCustomerCartPageBinding
+import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CustomerCartPageFragment : Fragment() {
@@ -47,8 +52,12 @@ class CustomerCartPageFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.cartProductsArrayDTO.observe(viewLifecycleOwner) { cart ->
-            adapter.updateCart(cart)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.cartProductsArrayDTO.collect { cart ->
+                    adapter.updateCart(cart)
+                }
+            }
         }
 
         viewModel.message.observe(
@@ -59,17 +68,19 @@ class CustomerCartPageFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonCreateCustom.setOnClickListener {
-            val customId = viewModel.createCustom()
-            customId?.let {
-                val bundle = Bundle()
-                bundle.putInt("customId", customId)
-                navController.navigate(
-                    R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment,
-                    bundle
-                )
+            lifecycleScope.launch {
+                viewModel.createCustom().collect { result ->
+                    result.onSuccess { customId ->
+                        val bundle = Bundle()
+                        bundle.putInt("customId", customId)
+                        navController.navigate(
+                            R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment,
+                            bundle
+                        )
+                    }
+                }
             }
         }
-
         buttonClearCart.setOnClickListener {
             viewModel.clearCart()
         }
@@ -77,9 +88,10 @@ class CustomerCartPageFragment : Fragment() {
 
     private fun itemRemovedClick(): (Int) -> Unit {
         return { position ->
-            viewModel.cartProductsArrayDTO.value?.getOrNull(position)?.productId?.let { productId ->
+            viewModel.cartProductsArrayDTO.value.getOrNull(position)?.productId?.let { productId ->
                 viewModel.removeProductFromCart(productId)
             }
         }
     }
+
 }

@@ -6,44 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.databinding.FragmentAllDepartBinding
-import com.example.registration.database.manager.ManagerRepository
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.manager.ManagerApi
 import com.example.registration.viewmodel.manager.adminMode.AllDepartViewModel
-import com.example.registration.viewmodel.manager.adminMode.AllDepartViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AllDepartFragment : Fragment() {
+
     private lateinit var binding: FragmentAllDepartBinding
-    private lateinit var viewModel: AllDepartViewModel
     private lateinit var adapter: AllDepartmentAdapter
+    private val viewModel by viewModels<AllDepartViewModel>()
+    private val managerId: Int? = arguments?.getInt("managerId")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAllDepartBinding.inflate(inflater)
+        return binding.root
+    }
 
-        adapter = AllDepartmentAdapter(emptyList())
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        adapter = AllDepartmentAdapter(emptyList(), onItemClick())
         binding.allDepartRecyclerView.adapter = adapter
         binding.allDepartRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        val retrofitService = RetrofitService()
-        val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
-        val managerRepository = ManagerRepository(managerApi)
-        val viewModelFactory =
-            AllDepartViewModelFactory(managerRepository)
-        viewModel =
-            ViewModelProvider(
-                this,
-                viewModelFactory
-            )[AllDepartViewModel::class.java]
-
-        val managerId: Int? = arguments?.getInt("managerId")
 
         viewModel.departNonForManagerArray.observe(viewLifecycleOwner) { departs ->
             adapter.updateDepartments(departs)
@@ -51,19 +42,17 @@ class AllDepartFragment : Fragment() {
 
         managerId?.let { viewModel.getDepartmentsWithoutManager(it) }
 
-        adapter.setOnItemClickListener(object : AllDepartmentAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                val departmentId = viewModel.departNonForManagerArray.value?.get(position)?.id
-                if (managerId != null && departmentId != null) {
-                    viewModel.assignDepartmentToManager(managerId, departmentId)
-                }
-            }
-        })
-
         viewModel.message.observe(viewLifecycleOwner) { message ->
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
+    }
 
-        return binding.root
+    private fun onItemClick(): (Int) -> Unit {
+        return { position ->
+            val departmentId = viewModel.departNonForManagerArray.value?.get(position)?.id
+            if (managerId != null && departmentId != null) {
+                viewModel.assignDepartmentToManager(managerId, departmentId)
+            }
+        }
     }
 }

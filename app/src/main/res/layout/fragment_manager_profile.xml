@@ -34,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@id/profile_text" />
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/manager_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -58,7 +58,7 @@
             app:layout_constraintTop_toBottomOf="@id/id_text" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/manager_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@id/name_text" />
 
         <TextView
-            android:id="@+id/surname"
+            android:id="@+id/manager_surname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -106,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@id/surname_text" />
 
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/manager_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -130,7 +130,7 @@
             app:layout_constraintTop_toBottomOf="@id/email_text" />
 
         <TextView
-            android:id="@+id/departments"
+            android:id="@+id/manager_departments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

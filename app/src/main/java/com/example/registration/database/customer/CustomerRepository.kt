@@ -8,6 +8,7 @@ import com.example.registration.database.customer.CustomerApi
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
@@ -46,8 +47,8 @@ class CustomerRepository @Inject constructor(
         return customerApi.getProductsAll()
     }
 
-    suspend fun getCartProducts(customerId: Int): List<CartProductDTO> {
-        return customerApi.getCartProducts(customerId)
+    fun getCartProducts(customerId: Int): Flow<List<CartProductDTO>> = flow {
+        emit(customerApi.getCartProducts(customerId))
     }
 
     suspend fun getCustomsForCustomer(customerId: Int): List<CustomDTO> {

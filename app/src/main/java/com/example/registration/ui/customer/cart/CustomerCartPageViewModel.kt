@@ -1,8 +1,5 @@
 package com.example.registration.ui.customer.cart
 
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.database.customer.CustomerRepository
@@ -26,9 +23,6 @@ class CustomerCartPageViewModel @Inject constructor(
     private val _cartProductsArrayDTO = MutableStateFlow<List<CartProductDTO>>(emptyList())
     val cartProductsArrayDTO: StateFlow<List<CartProductDTO>>
         get() = _cartProductsArrayDTO
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String>
-        get() = _message
     private val customerId = getUserId()
 
     init {
@@ -39,7 +33,9 @@ class CustomerCartPageViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getCartProducts(customerId)
             withContext(Dispatchers.Main) {
-                _cartProductsArrayDTO.value = result
+                result.collect {
+                    _cartProductsArrayDTO.value = it
+                }
             }
         }
     }
@@ -51,14 +47,18 @@ class CustomerCartPageViewModel @Inject constructor(
     fun removeProductFromCart(productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.removeProductFromCart(customerId, productId)
+            withContext(Dispatchers.Main) {
+                getAllCartProducts()
+            }
         }
-        _message.value = "Товар видалено з корзини"
     }
 
     fun clearCart() {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.clearCart(customerId)
+            withContext(Dispatchers.Main) {
+                getAllCartProducts()
+            }
         }
-        _message.value = "Корзину очищено"
     }
 }

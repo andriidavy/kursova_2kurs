@@ -7,7 +7,7 @@
     android:id="@+id/constraintLayoutManagerCreatedCustomsPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.managerFragments.createdCustoms.ManagerCreatedCustomsPageFragment">
+    tools:context=".ui.manager.createdCustoms.ManagerCreatedCustomsPageFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

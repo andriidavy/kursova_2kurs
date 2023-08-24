@@ -152,7 +152,7 @@
     </fragment>
     <fragment
         android:id="@+id/managerCreatedCustomsPageFragment"
-        android:name="com.example.registration.fragment.managerFragments.createdCustoms.ManagerCreatedCustomsPageFragment"
+        android:name="com.example.registration.ui.manager.createdCustoms.ManagerCreatedCustomsPageFragment"
         android:label="ManagerCreatedCustomsPageFragment">
         <action
             android:id="@+id/action_managerCreatedCustomsPageFragment_to_createdCustomsProductDetailFragment"

@@ -9,6 +9,8 @@ import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.model.users.Manager
 import com.example.registration.model.users.ManagerProfileDTO
 import com.example.registration.database.manager.ManagerApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
@@ -34,13 +36,13 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         surname: String,
         email: String,
         password: String
-        ): Result<Manager> {
-            return try {
-                val manager = managerApi.saveManager(name, surname, email, password)
-                Result.success(manager)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
+    ): Result<Manager> {
+        return try {
+            val manager = managerApi.saveManager(name, surname, email, password)
+            Result.success(manager)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     suspend fun deleteManagerById(managerId: Int) {
@@ -55,8 +57,8 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.getAllProducts()
     }
 
-    suspend fun getAllCreatedCustoms(managerId: Int): List<CustomDTO> {
-        return managerApi.getAllCreatedCustoms(managerId)
+    fun getAllCreatedCustoms(managerId: Int): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCreatedCustoms(managerId))
     }
 
     suspend fun getAllWaiting(managerId: Int): List<ReportDTO> {
@@ -72,13 +74,13 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         surname: String,
         email: String,
         password: String
-        ): Result<Employee> {
-            return try {
-                val employee = managerApi.saveEmployee(name, surname, email, password)
-                Result.success(employee)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
+    ): Result<Employee> {
+        return try {
+            val employee = managerApi.saveEmployee(name, surname, email, password)
+            Result.success(employee)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     suspend fun deleteEmployeeById(employeeId: Int) {
@@ -102,10 +104,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
     }
 
     suspend fun saveDepartment(departmentName: String): Result<DepartmentDTO> {
-        return try{
-           val result = managerApi.saveDepartment(departmentName)
+        return try {
+            val result = managerApi.saveDepartment(departmentName)
             Result.success(result)
-        } catch (e : Exception){
+        } catch (e: Exception) {
             Result.failure(e);
         }
     }
@@ -114,7 +116,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.removeDepartmentById(departmentId)
     }
 
-    suspend fun getAllDepartments() : List<DepartmentDTO>{
+    suspend fun getAllDepartments(): List<DepartmentDTO> {
         return managerApi.getAllDepartments()
     }
 

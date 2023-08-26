@@ -16,14 +16,16 @@ class CustomProductAdapter(private var customProductDTOList: List<CustomProductD
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ListProductItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return CustomProductAdapter.ViewHolder(binding)
+        return ViewHolder(binding)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.idForProduct.text = customProductDTOList[position].productId.toString()
-        viewHolder.view.productListItemName.text = customProductDTOList[position].productName
-        viewHolder.view.countForProduct.text = customProductDTOList[position].quantity.toString()
+        viewHolder.view.apply {
+            idForProduct.text = customProductDTOList[position].productId.toString()
+            productListItemName.text = customProductDTOList[position].productName
+            countForProduct.text = customProductDTOList[position].quantity.toString()
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

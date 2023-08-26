@@ -65,8 +65,8 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.getAllWaiting(managerId)
     }
 
-    suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO> {
-        return managerApi.getAllEmployeesProfile()
+    fun getAllEmployeesProfile(): Flow<List<EmployeeProfileDTO>> = flow {
+        emit(managerApi.getAllEmployeesProfile())
     }
 
     suspend fun saveEmployee(

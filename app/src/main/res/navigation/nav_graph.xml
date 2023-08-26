@@ -163,11 +163,11 @@
     </fragment>
     <fragment
         android:id="@+id/createdCustomsProductDetailFragment"
-        android:name="com.example.registration.fragment.managerFragments.createdCustoms.CreatedCustomsProductDetailFragment"
+        android:name="com.example.registration.ui.manager.createdCustoms.CreatedCustomsProductDetailFragment"
         android:label="CreatedCustomsProductDetailFragment" />
     <fragment
         android:id="@+id/employeesListForAssigneeToCustomFragment"
-        android:name="com.example.registration.fragment.managerFragments.createdCustoms.EmployeesListForAssigneeToCustomFragment"
+        android:name="com.example.registration.ui.manager.createdCustoms.EmployeesListForAssigneeToCustomFragment"
         android:label="EmployeesListForAssigneeToCustomFragment">
         <argument
             android:name="customId"

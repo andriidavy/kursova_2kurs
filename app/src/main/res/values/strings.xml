@@ -106,4 +106,6 @@
     <string name="error_info_product">Помилка інформації про продукт</string>
     <string name="product_removed_form_cart">Товар видалено з корзини</string>
     <string name="cart_cleaned">Корзину очищено</string>
+    <string name="assign_custom_to_employee">Для замовлення № %1$s призначений робітник № %2$s</string>
+    <string name="error_custom_id">id замовлення некоректне!</string>
 </resources>

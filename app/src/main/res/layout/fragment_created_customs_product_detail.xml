@@ -7,7 +7,7 @@
     android:id="@+id/constraintLayoutCreatedCustomsProductDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.managerFragments.createdCustoms.CreatedCustomsProductDetailFragment">
+    tools:context=".ui.manager.createdCustoms.CreatedCustomsProductDetailFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

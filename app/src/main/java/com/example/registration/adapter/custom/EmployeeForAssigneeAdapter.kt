@@ -9,51 +9,41 @@ import com.example.registration.databinding.ListEmployeeForAssigneToCustomItemBi
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.users.EmployeeProfileDTO
 
-class EmployeeForAssigneeAdapter (private var employeeDTOList: List<EmployeeProfileDTO>) :
-    RecyclerView.Adapter<EmployeeForAssigneeAdapter.ViewHolder>() {
-
-    private lateinit var mListener: EmployeeForAssigneeAdapter.OnItemClickListener
-
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        mListener = listener
-    }
+class EmployeeForAssigneeAdapter(
+    private var employeeDTOList: List<EmployeeProfileDTO>,
+    private val onItemClick: (Int) -> Unit
+) : RecyclerView.Adapter<EmployeeForAssigneeAdapter.ViewHolder>() {
 
     class ViewHolder(
-        var view: ListEmployeeForAssigneToCustomItemBinding,
-        listener: EmployeeForAssigneeAdapter.OnItemClickListener
-    ) : RecyclerView.ViewHolder(view.root) {
-        init {
-            view.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-        }
-    }
+        var view: ListEmployeeForAssigneToCustomItemBinding
+    ) : RecyclerView.ViewHolder(view.root)
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): EmployeeForAssigneeAdapter.ViewHolder {
+    ): ViewHolder {
         val binding =
             ListEmployeeForAssigneToCustomItemBinding.inflate(
                 LayoutInflater.from(viewGroup.context),
                 viewGroup,
                 false
             )
-        return EmployeeForAssigneeAdapter.ViewHolder(binding, mListener)
+        return ViewHolder(binding)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.employeeId.text = employeeDTOList[position].id.toString()
-        viewHolder.view.employeeName.text = employeeDTOList[position].name
-        viewHolder.view.employeeSurname.text = employeeDTOList[position].surname
-        viewHolder.view.employeeEmail.text = employeeDTOList[position].email
+        viewHolder.view.apply {
+            employeeId.text = employeeDTOList[position].id.toString()
+            employeeName.text = employeeDTOList[position].name
+            employeeSurname.text = employeeDTOList[position].surname
+            employeeEmail.text = employeeDTOList[position].email
+
+            root.setOnClickListener {
+                onItemClick.invoke(position)
+            }
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

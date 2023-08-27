@@ -49,12 +49,12 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.deleteManagerById(managerId)
     }
 
-    suspend fun getAllCustoms(): List<CustomDTO> {
-        return managerApi.getAllCustoms()
+    fun getAllCustoms(): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCustoms())
     }
 
-    suspend fun getAllProducts(): List<Product> {
-        return managerApi.getAllProducts()
+    fun getAllProducts(): Flow<List<Product>> = flow {
+        emit(managerApi.getAllProducts())
     }
 
     fun getAllCreatedCustoms(managerId: Int): Flow<List<CustomDTO>> = flow {

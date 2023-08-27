@@ -1,43 +1,39 @@
-package com.example.registration.fragment.managerFragments.allCustoms
+package com.example.registration.ui.manager.allCustoms
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.registration.R
 import com.example.registration.adapter.custom.CustomProductAdapter
 import com.example.registration.databinding.FragmentAllCustomsDetailBinding
-import com.example.registration.databinding.FragmentCreatedCustomsProductDetailBinding
 import com.example.registration.model.custom.CustomProductDTO
 
 class AllCustomsDetailFragment : Fragment() {
+
     private lateinit var binding: FragmentAllCustomsDetailBinding
     private lateinit var adapter: CustomProductAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAllCustomsDetailBinding.inflate(inflater)
+        return binding.root
+    }
 
-        adapter = CustomProductAdapter(emptyList())
-        binding.allCustomsProductDetailRecyclerView.adapter = adapter
-        binding.allCustomsProductDetailRecyclerView.layoutManager = LinearLayoutManager(activity)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setViews()
+    }
 
+    private fun setViews() = with(binding) {
         val customProductDTOList: ArrayList<CustomProductDTO>? =
             arguments?.getParcelableArrayList("allCustomProductList")
 
-        val customProductDTOListLiveData: MutableLiveData<List<CustomProductDTO>> = MutableLiveData()
-        customProductDTOListLiveData.value = customProductDTOList?.toList()
-
-        customProductDTOListLiveData.observe(viewLifecycleOwner) { createdCustomProducts ->
-            adapter.updateCustomProducts(createdCustomProducts)
-        }
-
-
-        return binding.root
+        customProductDTOList?.let { adapter = CustomProductAdapter(it) }
+        allCustomsProductDetailRecyclerView.adapter = adapter
+        allCustomsProductDetailRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 }

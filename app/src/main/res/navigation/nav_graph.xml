@@ -255,7 +255,7 @@
         android:label="ManagerReportsInWaitingDetailFragment" />
     <fragment
         android:id="@+id/managerAllCustomsFragment"
-        android:name="com.example.registration.fragment.managerFragments.allCustoms.ManagerAllCustomsFragment"
+        android:name="com.example.registration.ui.manager.allCustoms.ManagerAllCustomsFragment"
         android:label="ManagerAllCustomsFragment">
         <action
             android:id="@+id/action_managerAllCustomsFragment_to_allCustomsDetailFragment"
@@ -263,11 +263,11 @@
     </fragment>
     <fragment
         android:id="@+id/allCustomsDetailFragment"
-        android:name="com.example.registration.fragment.managerFragments.allCustoms.AllCustomsDetailFragment"
+        android:name="com.example.registration.ui.manager.allCustoms.AllCustomsDetailFragment"
         android:label="AllCustomsDetailFragment" />
     <fragment
         android:id="@+id/allProductListFragment"
-        android:name="com.example.registration.fragment.managerFragments.products.AllProductListFragment"
+        android:name="com.example.registration.ui.manager.products.AllProductListFragment"
         android:label="allProductListFragment">
         <action
             android:id="@+id/action_allProductListFragment_to_addProductFragment"
@@ -275,7 +275,7 @@
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
-        android:name="com.example.registration.fragment.managerFragments.products.AddProductFragment"
+        android:name="com.example.registration.ui.manager.products.AddProductFragment"
         android:label="addProductFragment" />
     <fragment
         android:id="@+id/manageEmployeeFragment"

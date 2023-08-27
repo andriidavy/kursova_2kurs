@@ -107,5 +107,7 @@
     <string name="product_removed_form_cart">Товар видалено з корзини</string>
     <string name="cart_cleaned">Корзину очищено</string>
     <string name="assign_custom_to_employee">Для замовлення № %1$s призначений робітник № %2$s</string>
-    <string name="error_custom_id">id замовлення некоректне!</string>
+    <string name="error_custom_id">ID замовлення некоректне!</string>
+    <string name="add_product_null_check">Поля name та quantity мають бути заповнені!</string>
+    <string name="success_add_product">Товар додано до бази данних!</string>
 </resources>

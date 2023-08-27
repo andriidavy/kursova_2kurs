@@ -8,53 +8,51 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListAllCustomItemBinding
 import com.example.registration.model.custom.CustomDTO
 
-class ManagerAllCustomAdapter(private var customDTOList: List<CustomDTO>) :
-    RecyclerView.Adapter<ManagerAllCustomAdapter.ViewHolder>() {
+class ManagerAllCustomAdapter(
+    private var customDTOList: List<CustomDTO>,
+    private val onItemClick: (Int) -> Unit
+) : RecyclerView.Adapter<ManagerAllCustomAdapter.ViewHolder>() {
 
-    private lateinit var mListener: ManagerAllCustomAdapter.OnItemClickListener
-
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        mListener = listener
-    }
-
-    class ViewHolder(var view: ListAllCustomItemBinding, listener: ManagerAllCustomAdapter.OnItemClickListener) : RecyclerView.ViewHolder(view.root) {
-        init{
-            view.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-        }
-    }
+    class ViewHolder(var view: ListAllCustomItemBinding) : RecyclerView.ViewHolder(view.root)
 
     // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ManagerAllCustomAdapter.ViewHolder {
+    override fun onCreateViewHolder(
+        viewGroup: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
         val binding =
-            ListAllCustomItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return ManagerAllCustomAdapter.ViewHolder(binding, mListener)
+            ListAllCustomItemBinding.inflate(
+                LayoutInflater.from(viewGroup.context),
+                viewGroup,
+                false
+            )
+        return ViewHolder(binding)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.idForCustom.text = customDTOList[position].customId.toString()
-        viewHolder.view.statusForCustom.text = customDTOList[position].status
-        viewHolder.view.departForCustom.text = customDTOList[position].department
-        viewHolder.view.customerId.text = customDTOList[position].customerId.toString()
-        viewHolder.view.customerName.text = customDTOList[position].customerName
-        viewHolder.view.customerSurname.text = customDTOList[position].customerSurname
-        if(viewHolder.view.statusForCustom.text != "CREATED") {
-            viewHolder.view.employeeText.visibility = View.VISIBLE
-            viewHolder.view.employeeId.visibility = View.VISIBLE
-            viewHolder.view.employeeNameText.visibility = View.VISIBLE
-            viewHolder.view.employeeName.visibility = View.VISIBLE
-            viewHolder.view.employeeSurnameText.visibility = View.VISIBLE
-            viewHolder.view.employeeSurname.visibility = View.VISIBLE
-            viewHolder.view.employeeId.text = customDTOList[position].employeeId.toString()
-            viewHolder.view.employeeName.text = customDTOList[position].employeeName
-            viewHolder.view.employeeSurname.text = customDTOList[position].employeeSurname
+        viewHolder.view.apply {
+            idForCustom.text = customDTOList[position].customId.toString()
+            statusForCustom.text = customDTOList[position].status
+            departForCustom.text = customDTOList[position].department
+            customerId.text = customDTOList[position].customerId.toString()
+            customerName.text = customDTOList[position].customerName
+            customerSurname.text = customDTOList[position].customerSurname
+            if (statusForCustom.text != "CREATED") {
+                employeeId.text = customDTOList[position].employeeId.toString()
+                employeeName.text = customDTOList[position].employeeName
+                employeeSurname.text = customDTOList[position].employeeSurname
+                employeeText.visibility = View.VISIBLE
+                employeeId.visibility = View.VISIBLE
+                employeeNameText.visibility = View.VISIBLE
+                employeeName.visibility = View.VISIBLE
+                employeeSurnameText.visibility = View.VISIBLE
+                employeeSurname.visibility = View.VISIBLE
+            }
+
+            root.setOnClickListener {
+                onItemClick.invoke(position)
+            }
         }
     }
 

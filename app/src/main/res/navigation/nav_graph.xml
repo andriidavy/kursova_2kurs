@@ -279,7 +279,7 @@
         android:label="addProductFragment" />
     <fragment
         android:id="@+id/manageEmployeeFragment"
-        android:name="com.example.registration.fragment.managerFragments.personManagement.ManageEmployeeFragment"
+        android:name="com.example.registration.ui.manager.personManagement.ManageEmployeeFragment"
         android:label="ManageEmployeeFragment">
         <action
             android:id="@+id/action_manageEmployeeFragment_to_addEmployeeFragment"
@@ -287,7 +287,7 @@
     </fragment>
     <fragment
         android:id="@+id/addEmployeeFragment"
-        android:name="com.example.registration.fragment.managerFragments.personManagement.AddEmployeeFragment"
+        android:name="com.example.registration.ui.manager.personManagement.AddEmployeeFragment"
         android:label="AddEmployeeFragment" />
     <fragment
         android:id="@+id/managerProfilePageFragment"

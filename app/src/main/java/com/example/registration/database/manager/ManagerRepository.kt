@@ -8,7 +8,6 @@ import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.model.users.Manager
 import com.example.registration.model.users.ManagerProfileDTO
-import com.example.registration.database.manager.ManagerApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -108,7 +107,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
             val result = managerApi.saveDepartment(departmentName)
             Result.success(result)
         } catch (e: Exception) {
-            Result.failure(e);
+            Result.failure(e)
         }
     }
 

@@ -94,7 +94,7 @@
     <string name="product_сatalog">Каталог товарів</string>
     <string name="depart_registration">Додати відділ</string>
     <string name="success_reg_message">Реєстрація пройшла успішно!</string>
-    <string name="invalid_reg_message">Покупець з таким email вже існує!</string>
+    <string name="invalid_reg_message">Користувач з таким email вже існує!</string>
     <string name="name_required">Ім\'я обов\'язкове!</string>
     <string name="surname_required">Прізвище обов\'язкове!</string>
     <string name="email_required">Email обов\'язковий!</string>
@@ -110,4 +110,6 @@
     <string name="error_custom_id">ID замовлення некоректне!</string>
     <string name="add_product_null_check">Поля name та quantity мають бути заповнені!</string>
     <string name="success_add_product">Товар додано до бази данних!</string>
+    <string name="null_check">Всі поля мають бути заповнені!</string>
+
 </resources>

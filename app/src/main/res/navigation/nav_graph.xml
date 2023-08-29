@@ -243,7 +243,7 @@
     </fragment>
     <fragment
         android:id="@+id/managerReportsInWaitingFragment"
-        android:name="com.example.registration.fragment.managerFragments.reportsInWaiting.ManagerReportsInWaitingFragment"
+        android:name="com.example.registration.ui.manager.reportsInWaiting.ManagerReportsInWaitingFragment"
         android:label="ManagerReportsInWaitingFragment">
         <action
             android:id="@+id/action_managerReportsInWaitingFragment_to_managerReportsInWaitingDetailFragment"
@@ -251,7 +251,7 @@
     </fragment>
     <fragment
         android:id="@+id/managerReportsInWaitingDetailFragment"
-        android:name="com.example.registration.fragment.managerFragments.reportsInWaiting.ManagerReportsInWaitingDetailFragment"
+        android:name="com.example.registration.ui.manager.reportsInWaiting.ManagerReportsInWaitingDetailFragment"
         android:label="ManagerReportsInWaitingDetailFragment" />
     <fragment
         android:id="@+id/managerAllCustomsFragment"

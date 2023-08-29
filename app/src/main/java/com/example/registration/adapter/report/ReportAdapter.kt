@@ -4,46 +4,34 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.registration.adapter.custom.CustomAdapter
-import com.example.registration.databinding.ListCustomItemBinding
 import com.example.registration.databinding.ListReportItemBinding
-import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO
 
-class ReportAdapter (private var reportDTOList: List<ReportDTO>) :
-    RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
+class ReportAdapter(
+    private var reportDTOList: List<ReportDTO>,
+    private val onItemClick: (Int) -> Unit
+) : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
-    private lateinit var mListener: ReportAdapter.OnItemClickListener
-
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        mListener = listener
-    }
-
-    class ViewHolder(var view: ListReportItemBinding, listener: ReportAdapter.OnItemClickListener) : RecyclerView.ViewHolder(view.root) {
-        init{
-            view.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-        }
-    }
+    class ViewHolder(var view: ListReportItemBinding) : RecyclerView.ViewHolder(view.root)
 
     // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ReportAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ListReportItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return ReportAdapter.ViewHolder(binding, mListener)
+        return ViewHolder(binding)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.idForReport.text = reportDTOList[position].reportId.toString()
-        viewHolder.view.customId.text = reportDTOList[position].customId.toString()
-        viewHolder.view.statusForReport.text = reportDTOList[position].status
+        viewHolder.view.apply {
+            idForReport.text = reportDTOList[position].reportId.toString()
+            customId.text = reportDTOList[position].customId.toString()
+            statusForReport.text = reportDTOList[position].status
+
+            root.setOnClickListener {
+                onItemClick.invoke(position)
+            }
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

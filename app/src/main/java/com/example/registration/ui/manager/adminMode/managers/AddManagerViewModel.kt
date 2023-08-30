@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.manager.adminMode.editDeparts
+package com.example.registration.ui.manager.adminMode.managers
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,20 +8,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddDepartsViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
+class AddManagerViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
+
     val message = MutableLiveData<String>()
 
     private fun showInvalideMessage() {
-        message.value = "Відділ з такою назвою вже існує!"
+        message.value = "Робітник з таким email вже існує!"
     }
 
     private fun showSuccessfulMessage() {
-        message.value = "Відділ доданий успішно!"
+        message.value = "Реєстрація пройшла успішно!"
     }
 
-    fun saveDepart(departmentName: String) {
+    fun addManager(name: String, surname: String, email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.saveDepartment(departmentName)
+            val result = managerRepository.saveManager(name, surname, email, password)
             withContext(Dispatchers.Main) {
                 result.onSuccess {
                     showSuccessfulMessage()

@@ -307,7 +307,7 @@
     </fragment>
     <fragment
         android:id="@+id/adminLoginFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.AdminLoginFragment"
+        android:name="com.example.registration.ui.manager.adminMode.AdminLoginFragment"
         android:label="AdminLoginFragment">
         <action
             android:id="@+id/action_adminLoginFragment_to_adminMainPageFragment"
@@ -315,7 +315,7 @@
     </fragment>
     <fragment
         android:id="@+id/adminMainPageFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.AdminMainPageFragment"
+        android:name="com.example.registration.ui.manager.adminMode.AdminMainPageFragment"
         android:label="AdminMainPageFragment">
         <action
             android:id="@+id/action_adminMainPageFragment_to_editManagerFragment"
@@ -326,7 +326,7 @@
     </fragment>
     <fragment
         android:id="@+id/editManagerFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.managers.EditManagerFragment"
+        android:name="com.example.registration.ui.manager.adminMode.managers.EditManagerFragment"
         android:label="EditManagerFragment">
         <action
             android:id="@+id/action_editManagerFragment_to_managerDepartDetailFragment"
@@ -337,7 +337,7 @@
     </fragment>
     <fragment
         android:id="@+id/managerDepartDetailFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.managers.ManagerDepartDetailFragment"
+        android:name="com.example.registration.ui.manager.adminMode.managers.ManagerDepartDetailFragment"
         android:label="fragment_manager_depart_detail"
         tools:layout="@layout/fragment_manager_depart_detail">
         <action
@@ -346,15 +346,15 @@
     </fragment>
     <fragment
         android:id="@+id/allDepartFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.managers.AllDepartFragment"
+        android:name="com.example.registration.ui.manager.adminMode.managers.AllDepartFragment"
         android:label="AllDepartFragment" />
     <fragment
         android:id="@+id/addManagerFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.managers.AddManagerFragment"
+        android:name="com.example.registration.ui.manager.adminMode.managers.AddManagerFragment"
         android:label="AddManagerFragment" />
     <fragment
         android:id="@+id/editDepartsFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.departments.EditDepartsFragment"
+        android:name="com.example.registration.ui.manager.adminMode.departments.EditDepartsFragment"
         android:label="EditDepartsFragment">
         <action
             android:id="@+id/action_editDepartsFragment_to_addDepartFragment"
@@ -362,7 +362,7 @@
     </fragment>
     <fragment
         android:id="@+id/addDepartFragment"
-        android:name="com.example.registration.fragment.managerFragments.adminMode.departments.AddDepartFragment"
+        android:name="com.example.registration.ui.manager.adminMode.departments.AddDepartFragment"
         android:label="fragment_add_depart"
         tools:layout="@layout/fragment_add_depart" />
     <fragment

@@ -111,5 +111,6 @@
     <string name="add_product_null_check">Поля name та quantity мають бути заповнені!</string>
     <string name="success_add_product">Товар додано до бази данних!</string>
     <string name="null_check">Всі поля мають бути заповнені!</string>
+    <string name="invalid_pin">Пін-код невірний!</string>
 
 </resources>

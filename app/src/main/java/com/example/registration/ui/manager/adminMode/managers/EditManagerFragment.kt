@@ -1,4 +1,4 @@
-package com.example.registration.fragment.managerFragments.adminMode.managers
+package com.example.registration.ui.manager.adminMode.managers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,8 +15,6 @@ import com.example.registration.databinding.FragmentEditManagerBinding
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.manager.ManagerApi
-import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModel
-import com.example.registration.viewmodel.manager.adminMode.EditManagerViewModelFactory
 
 
 class EditManagerFragment : Fragment() {

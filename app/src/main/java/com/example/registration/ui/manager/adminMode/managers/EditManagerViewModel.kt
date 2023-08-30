@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.manager.adminMode
+package com.example.registration.ui.manager.adminMode.managers
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData

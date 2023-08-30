@@ -1,4 +1,4 @@
-package com.example.registration.fragment.managerFragments.adminMode.managers
+package com.example.registration.ui.manager.adminMode.managers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,8 +11,6 @@ import com.example.registration.databinding.FragmentAddManagerBinding
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.manager.ManagerApi
-import com.example.registration.viewmodel.manager.adminMode.AddManagerViewModel
-import com.example.registration.viewmodel.manager.adminMode.AddManagerViewModelFactory
 
 class AddManagerFragment : Fragment() {
     private lateinit var binding: FragmentAddManagerBinding

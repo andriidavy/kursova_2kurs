@@ -1,4 +1,4 @@
-package com.example.registration.fragment.managerFragments.adminMode.departments
+package com.example.registration.ui.manager.adminMode.managers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,63 +10,66 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.manager.department.ManagerDepartmentAdapter
-import com.example.registration.databinding.FragmentEditDepartsBinding
+import com.example.registration.databinding.FragmentManagerDepartDetailBinding
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.database.RetrofitService
 import com.example.registration.database.manager.ManagerApi
-import com.example.registration.viewmodel.manager.adminMode.editDeparts.EditDepartsViewModel
-import com.example.registration.viewmodel.manager.adminMode.editDeparts.EditDepartsViewModelFactory
 
-
-class EditDepartsFragment : Fragment() {
-    private lateinit var binding: FragmentEditDepartsBinding
-    private lateinit var viewModel : EditDepartsViewModel
+class ManagerDepartDetailFragment : Fragment() {
+    private lateinit var binding: FragmentManagerDepartDetailBinding
+    private lateinit var viewModel: ManagerDepartDetailViewModel
     private lateinit var adapter: ManagerDepartmentAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEditDepartsBinding.inflate(inflater)
+        binding = FragmentManagerDepartDetailBinding.inflate(inflater)
 
         adapter = ManagerDepartmentAdapter(emptyList())
-        binding.editDepartsRecyclerView.adapter = adapter
-        binding.editDepartsRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.managerDepartDetailRecyclerView.adapter = adapter
+        binding.managerDepartDetailRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         val retrofitService = RetrofitService()
         val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
         val managerRepository = ManagerRepository(managerApi)
         val viewModelFactory =
-            EditDepartsViewModelFactory(managerRepository)
+            ManagerDepartDetailViewModelFactory(managerRepository)
         viewModel =
             ViewModelProvider(
                 this,
                 viewModelFactory
-            )[EditDepartsViewModel::class.java]
+            )[ManagerDepartDetailViewModel::class.java]
 
         val navController = findNavController()
 
-        viewModel.getAllDepartments()
+        val managerId: Int? = arguments?.getInt("managerId")
 
-        viewModel.departAllArray.observe(viewLifecycleOwner) { departs ->
+        managerId?.let { viewModel.getAllDepartmentsForManager(it) }
+
+
+        binding.buttonAddDepart.setOnClickListener {
+            val bundle = Bundle()
+            managerId?.let { it1 -> bundle.putInt("managerId", it1) }
+            navController.navigate(R.id.action_managerDepartDetailFragment_to_allDepartFragment, bundle)
+        }
+
+        viewModel.departForManagerArray.observe(viewLifecycleOwner) { departs ->
             adapter.updateDepartments(departs)
         }
 
-        fun removeDepartment(departmentId: Int) {
-            viewModel.removeDepartmentById(departmentId)
+        fun removeDepartForManager(managerId: Int, departmentId: Int) {
+            viewModel.removeDepartmentFromManager(managerId, departmentId)
         }
 
         adapter.setOnRemoveManagerClickListener(object :
             ManagerDepartmentAdapter.OnRemoveManagerClickListener {
             override fun onRemoveManagerClick(position: Int) {
-                val departmentId : Int? = viewModel.departAllArray.value?.get(position)?.id
-                departmentId?.let { removeDepartment(it) }
+                val departmentId: Int? = viewModel.departForManagerArray.value?.get(position)?.id
+                if (departmentId != null && managerId != null) {
+                    removeDepartForManager(managerId, departmentId)
+                }
             }
         })
-
-        binding.buttonToAddDeparts.setOnClickListener {
-            navController.navigate(R.id.action_editDepartsFragment_to_addDepartFragment)
-        }
 
         return binding.root
     }

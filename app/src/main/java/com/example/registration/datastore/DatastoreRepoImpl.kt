@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.registration.datastore.Constants.DATASTORE_NAME
 import kotlinx.coroutines.flow.first
@@ -16,6 +15,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class DataStoreRepoImpl @Inject constructor(
     private val context: Context
 ) : DatastoreRepo {
+
     override suspend fun putInt(key: String, value: Int) {
         val preferenceKey = intPreferencesKey(key)
         context.dataStore.edit {
@@ -42,5 +42,4 @@ class DataStoreRepoImpl @Inject constructor(
             }
         }
     }
-
 }

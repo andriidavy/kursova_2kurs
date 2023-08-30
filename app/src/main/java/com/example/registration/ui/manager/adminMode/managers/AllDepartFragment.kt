@@ -1,4 +1,4 @@
-package com.example.registration.fragment.managerFragments.adminMode.managers
+package com.example.registration.ui.manager.adminMode.managers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.databinding.FragmentAllDepartBinding
-import com.example.registration.viewmodel.manager.adminMode.AllDepartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

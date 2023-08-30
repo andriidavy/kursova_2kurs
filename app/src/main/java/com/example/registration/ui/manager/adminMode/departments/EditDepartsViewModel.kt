@@ -1,4 +1,4 @@
-package com.example.registration.viewmodel.manager.adminMode.editDeparts
+package com.example.registration.ui.manager.adminMode.departments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -56,7 +56,7 @@ class ManagerReportsInWaitingFragment : Fragment() {
             }
         }
     }
-    
+
     private fun onItemClick(): (Int) -> Unit {
         return { position ->
             val bundle = Bundle()

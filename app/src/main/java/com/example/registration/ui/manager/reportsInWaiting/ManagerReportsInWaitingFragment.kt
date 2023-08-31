@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.report.ReportAdapter
 import com.example.registration.databinding.FragmentManagerReportsInWaitingBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ManagerReportsInWaitingFragment : Fragment() {
 
     private lateinit var binding: FragmentManagerReportsInWaitingBinding

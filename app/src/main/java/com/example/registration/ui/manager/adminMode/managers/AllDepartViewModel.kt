@@ -6,39 +6,44 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class AllDepartViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
-    ViewModel() {
+class AllDepartViewModel @Inject constructor(
+    private val managerRepository: ManagerRepository,
+    datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
 
-    private val _departNonForManagerArray = MutableLiveData<List<DepartmentDTO>>()
-    val departNonForManagerArray: LiveData<List<DepartmentDTO>>
+    private val _departNonForManagerArray = MutableStateFlow<List<DepartmentDTO>>(emptyList())
+    val departNonForManagerArray: StateFlow<List<DepartmentDTO>>
         get() = _departNonForManagerArray
+    private val managerId = getUserId()
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String>
-        get() = _message
+    init {
+        getDepartmentsWithoutManager()
+    }
 
-    fun getDepartmentsWithoutManager(managerId: Int): LiveData<List<DepartmentDTO>> {
+    fun getDepartmentsWithoutManager() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getDepartmentsWithoutManager(managerId)
             withContext(Dispatchers.Main) {
-                _departNonForManagerArray.postValue(result)
+                result.collect {
+                    _departNonForManagerArray.value = it
+                }
             }
         }
-        return departNonForManagerArray
     }
 
-    fun assignDepartmentToManager(managerId: Int, departmentId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            managerRepository.assignDepartmentToManager(managerId, departmentId)
-        }
-        _message.value = "Відділ призначено менеджеру успішно"
-        getDepartmentsWithoutManager(managerId)
+    fun assignDepartmentToManager(departmentId: Int): Flow<Result<Unit>> {
+        return managerRepository.assignDepartmentToManager(managerId, departmentId)
     }
 }

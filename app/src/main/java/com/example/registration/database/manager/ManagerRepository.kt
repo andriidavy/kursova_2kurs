@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
+
     suspend fun loginManager(email: String, password: String): Result<Manager> {
         return try {
             val manager = managerApi.loginManager(email, password)
@@ -22,31 +23,41 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         }
     }
 
-    suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO> {
-        return managerApi.getAllManagersProfileDTO()
+    fun getAllManagersProfileDTO(): Flow<List<ManagerProfileDTO>> = flow {
+        emit(managerApi.getAllManagersProfileDTO())
     }
 
     suspend fun getManagerProfile(managerId: Int): ManagerProfileDTO {
         return managerApi.getManagerProfile(managerId)
     }
 
-    suspend fun saveManager(
+    fun saveManager(
         name: String,
         surname: String,
         email: String,
         password: String
-    ): Result<Manager> {
-        return try {
-            val manager = managerApi.saveManager(name, surname, email, password)
-            Result.success(manager)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    ): Flow<Result<Manager>> = flow {
+        emit(
+            try {
+                val manager = managerApi.saveManager(name, surname, email, password)
+                Result.success(manager)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
-    suspend fun deleteManagerById(managerId: Int) {
-        return managerApi.deleteManagerById(managerId)
+    fun deleteManagerById(managerId: Int): Flow<Result<Unit>> = flow {
+        emit(
+            try {
+                val result = managerApi.deleteManagerById(managerId)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
+
 
     fun getAllCustoms(): Flow<List<CustomDTO>> = flow {
         emit(managerApi.getAllCustoms())
@@ -60,7 +71,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.getAllCreatedCustoms(managerId))
     }
 
-    fun getAllWaiting(managerId: Int): Flow<List<ReportDTO>> = flow{
+    fun getAllWaiting(managerId: Int): Flow<List<ReportDTO>> = flow {
         emit(managerApi.getAllWaiting(managerId))
     }
 
@@ -119,19 +130,34 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.getAllDepartments()
     }
 
-    suspend fun getAllDepartmentsForManager(managerId: Int): List<DepartmentDTO> {
-        return managerApi.getAllDepartmentsForManager(managerId)
+    fun getAllDepartmentsForManager(managerId: Int): Flow<List<DepartmentDTO>> = flow {
+        emit(managerApi.getAllDepartmentsForManager(managerId))
     }
 
-    suspend fun getDepartmentsWithoutManager(managerId: Int): List<DepartmentDTO> {
-        return managerApi.getDepartmentsWithoutManager(managerId)
+    fun getDepartmentsWithoutManager(managerId: Int): Flow<List<DepartmentDTO>> = flow {
+        emit(managerApi.getDepartmentsWithoutManager(managerId))
     }
 
-    suspend fun assignDepartmentToManager(managerId: Int, departmentId: Int) {
-        return managerApi.assignDepartmentToManager(managerId, departmentId)
-    }
+    fun assignDepartmentToManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> =
+        flow {
+            emit(
+                try {
+                    val result = managerApi.assignDepartmentToManager(managerId, departmentId)
+                    Result.success(result)
+                } catch (e: Exception) {
+                    Result.failure(e)
+                }
+            )
+        }
 
-    suspend fun removeDepartmentFromManager(managerId: Int, departmentId: Int) {
-        return managerApi.removeDepartmentFromManager(managerId, departmentId)
+    fun removeDepartmentFromManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> = flow {
+        emit(
+            try {
+                val result = managerApi.removeDepartmentFromManager(managerId, departmentId)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 }

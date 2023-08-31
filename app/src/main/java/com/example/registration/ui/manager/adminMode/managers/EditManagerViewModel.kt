@@ -1,37 +1,42 @@
 package com.example.registration.ui.manager.adminMode.managers
 
-import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.model.users.ManagerProfileDTO
 import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.model.users.ManagerProfileDTO
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class EditManagerViewModel(private val managerRepository: ManagerRepository): ViewModel() {
-    private lateinit var sharedPreferences: SharedPreferences
+@HiltViewModel
+class EditManagerViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
+    ViewModel() {
 
-    private val _managerAllArray = MutableLiveData<List<ManagerProfileDTO>>()
-    val managerAllArray: LiveData<List<ManagerProfileDTO>>
+    private val _managerAllArray = MutableStateFlow<List<ManagerProfileDTO>>(emptyList())
+    val managerAllArray: StateFlow<List<ManagerProfileDTO>>
         get() = _managerAllArray
 
-    fun getAllManagersProfileDTO(): LiveData<List<ManagerProfileDTO>> {
+    init {
+        getAllManagersProfileDTO()
+    }
+
+    fun getAllManagersProfileDTO() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllManagersProfileDTO()
             withContext(Dispatchers.Main) {
-                _managerAllArray.postValue(result)
+                result.collect {
+                    _managerAllArray.value = it
+                }
             }
         }
-        return managerAllArray
     }
 
-    fun deleteManagerById(managerId : Int) {
-        viewModelScope.launch(Dispatchers.IO){
-            managerRepository.deleteManagerById(managerId);
-            getAllManagersProfileDTO()
-        }
+    fun deleteManagerById(managerId: Int): Flow<Result<Unit>> {
+        return managerRepository.deleteManagerById(managerId)
     }
 }

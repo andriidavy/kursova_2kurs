@@ -1,88 +1,99 @@
 package com.example.registration.ui.manager.adminMode.managers
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.manager.ManageManagerAdapter
 import com.example.registration.databinding.FragmentEditManagerBinding
-import com.example.registration.database.manager.ManagerRepository
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.manager.ManagerApi
+import com.example.registration.global.ToastObj
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class EditManagerFragment : Fragment() {
+
     private lateinit var binding: FragmentEditManagerBinding
-    private lateinit var viewModel: EditManagerViewModel
     private lateinit var adapter: ManageManagerAdapter
+    private lateinit var navController: NavController
+    private val viewModel by viewModels<EditManagerViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditManagerBinding.inflate(inflater)
+        return binding.root
+    }
 
-        adapter = ManageManagerAdapter(emptyList())
-        binding.editManagerRecyclerView.adapter = adapter
-        binding.editManagerRecyclerView.layoutManager = LinearLayoutManager(activity)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setViews()
+        setListeners()
+        setObservers()
+    }
 
-        val retrofitService = RetrofitService()
-        val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
-        val managerRepository = ManagerRepository(managerApi)
-        val viewModelFactory =
-            EditManagerViewModelFactory(managerRepository)
-        viewModel =
-            ViewModelProvider(
-                this,
-                viewModelFactory
-            )[EditManagerViewModel::class.java]
+    private fun setViews() = with(binding) {
+        adapter = ManageManagerAdapter(emptyList(), onItemClick(), onRemoveManagerClick())
+        editManagerRecyclerView.adapter = adapter
+        editManagerRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        val navController = findNavController()
+        navController = findNavController()
+    }
 
-//        val sharedManagerIdPreferences: SharedPreferences =
-//            requireContext().getSharedPreferences("PrefsUserId", Context.MODE_PRIVATE)
-//        viewModel.setSharedPreferences(sharedManagerIdPreferences)
-
-        viewModel.managerAllArray.observe(viewLifecycleOwner) { managers ->
-            adapter.updateManagers(managers)
-        }
-
-        viewModel.getAllManagersProfileDTO()
-
-        fun removeManager(managerId: Int) {
-            viewModel.deleteManagerById(managerId)
-        }
-
-        adapter.setOnRemoveManagerClickListener(object :
-            ManageManagerAdapter.OnRemoveManagerClickListener {
-            override fun onRemoveManagerClick(position: Int) {
-                val managerId : Int? = viewModel.managerAllArray.value?.get(position)?.id
-                managerId?.let { removeManager(it) }
+    private fun setObservers() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.managerAllArray.collect { managers ->
+                    adapter.updateManagers(managers)
+                }
             }
-        })
+        }
+    }
 
-        adapter.setOnItemClickListener(object : ManageManagerAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                //test
-                Toast.makeText(activity, "Clicked on item $position", Toast.LENGTH_SHORT).show()
-                val bundle = Bundle()
-                val managerId : Int? = viewModel.managerAllArray.value?.get(position)?.id
-                managerId?.let { bundle.putInt("managerId", it) }
-                navController.navigate(R.id.action_editManagerFragment_to_managerDepartDetailFragment, bundle)
-            }
-        })
-
-        binding.buttonAddManager.setOnClickListener {
+    private fun setListeners() = with(binding) {
+        buttonAddManager.setOnClickListener {
             navController.navigate(R.id.action_editManagerFragment_to_addManagerFragment)
         }
+    }
 
+    private fun onRemoveManagerClick(): (Int) -> Unit {
+        return { position ->
+            val managerId: Int = viewModel.managerAllArray.value[position].id
+            val deleteResult = viewModel.deleteManagerById(managerId)
 
-        return binding.root
+            lifecycleScope.launch {
+                deleteResult.collect { result ->
+                    result.onSuccess {
+                        ToastObj.shortToastMake("Менеджер: $managerId видалений", context)
+                        viewModel.getAllManagersProfileDTO()
+                    }
+                    result.onFailure {
+                        ToastObj.shortToastMake("Помилка: $it", context)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onItemClick(): (Int) -> Unit {
+        return { position ->
+            val bundle = Bundle()
+            val managerId: Int = viewModel.managerAllArray.value[position].id
+            bundle.putInt("managerId", managerId)
+            navController.navigate(
+                R.id.action_editManagerFragment_to_managerDepartDetailFragment,
+                bundle
+            )
+        }
     }
 }

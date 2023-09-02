@@ -1,34 +1,17 @@
 package com.example.registration.ui.manager.adminMode.departments
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.registration.database.manager.ManagerRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.registration.model.department.DepartmentDTO
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class AddDepartsViewModel(private val managerRepository: ManagerRepository) : ViewModel() {
-    val message = MutableLiveData<String>()
+@HiltViewModel
+class AddDepartsViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
+    ViewModel() {
 
-    private fun showInvalideMessage() {
-        message.value = "Відділ з такою назвою вже існує!"
-    }
-
-    private fun showSuccessfulMessage() {
-        message.value = "Відділ доданий успішно!"
-    }
-
-    fun saveDepart(departmentName: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.saveDepartment(departmentName)
-            withContext(Dispatchers.Main) {
-                result.onSuccess {
-                    showSuccessfulMessage()
-                }.onFailure {
-                    showInvalideMessage()
-                }
-            }
-        }
+    fun saveDepart(departmentName: String): Flow<Result<DepartmentDTO>> {
+        return managerRepository.saveDepartment(departmentName)
     }
 }

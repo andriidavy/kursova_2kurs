@@ -113,21 +113,30 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.saveProduct(product)
     }
 
-    suspend fun saveDepartment(departmentName: String): Result<DepartmentDTO> {
-        return try {
-            val result = managerApi.saveDepartment(departmentName)
-            Result.success(result)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    fun saveDepartment(departmentName: String): Flow<Result<DepartmentDTO>> = flow {
+        emit(
+            try {
+                val result = managerApi.saveDepartment(departmentName)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
-    suspend fun removeDepartmentById(departmentId: Int) {
-        return managerApi.removeDepartmentById(departmentId)
+    fun removeDepartmentById(departmentId: Int): Flow<Result<Unit>> = flow {
+        emit(
+            try {
+                val result = managerApi.removeDepartmentById(departmentId)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
-    suspend fun getAllDepartments(): List<DepartmentDTO> {
-        return managerApi.getAllDepartments()
+    fun getAllDepartments(): Flow<List<DepartmentDTO>> = flow {
+        emit(managerApi.getAllDepartments())
     }
 
     fun getAllDepartmentsForManager(managerId: Int): Flow<List<DepartmentDTO>> = flow {

@@ -1,54 +1,54 @@
 package com.example.registration.ui.manager.adminMode.departments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.registration.databinding.FragmentAddDepartBinding
-import com.example.registration.database.manager.ManagerRepository
-import com.example.registration.database.RetrofitService
-import com.example.registration.database.manager.ManagerApi
+import com.example.registration.global.ToastObj
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class AddDepartFragment : Fragment() {
-private lateinit var binding: FragmentAddDepartBinding
-private lateinit var viewModel: AddDepartsViewModel
+
+    private lateinit var binding: FragmentAddDepartBinding
+    private val viewModel by viewModels<AddDepartsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddDepartBinding.inflate(inflater)
-
-        val retrofitService = RetrofitService()
-        val managerApi = retrofitService.retrofit.create(ManagerApi::class.java)
-        val managerRepository = ManagerRepository(managerApi)
-        val viewModelFactory =
-            AddDepartsViewModelFactory(managerRepository)
-        viewModel =
-            ViewModelProvider(
-                this,
-                viewModelFactory
-            )[AddDepartsViewModel::class.java]
-
-        binding.buttonAdd.setOnClickListener {
-            val departmentName = binding.etName.text.toString()
-            if(departmentName.isNotEmpty()) {
-                viewModel.saveDepart(departmentName)
-                binding.etName.text.clear()
-            } else {
-                viewModel.message.value = "Всі поля мають бути заповнені!"
-            }
-        }
-
-        viewModel.message.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        }
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners()
+    }
+
+    private fun setListeners() = with(binding) {
+        buttonAdd.setOnClickListener {
+            val departmentName = etName.text.toString()
+            if (departmentName.isNotBlank()) {
+                lifecycleScope.launch {
+                    viewModel.saveDepart(departmentName).collect { result ->
+                        result.onSuccess {
+                            etName.text.clear()
+                            ToastObj.shortToastMake("Відділ додано успішно!", context)
+                        }
+                        result.onFailure {
+                            ToastObj.shortToastMake("Відділ з такою назвою вже існує!", context)
+                        }
+                    }
+                }
+            } else {
+                ToastObj.shortToastMake("Всі поля мають бути заповнені!", context)
+            }
+        }
+    }
 }

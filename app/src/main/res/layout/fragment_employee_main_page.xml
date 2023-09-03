@@ -4,16 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="employeeMainPage"
-            type="com.example.registration.fragment.employeeFragments.EmployeeMainPageFragment" />
-    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutEmployeeMainPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.employeeFragments.EmployeeMainPageFragment">
+        tools:context=".ui.employee.EmployeeMainPageFragment">
 
         <TextView
             android:id="@+id/my_customs_text"
@@ -24,8 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="20dp"
             android:textSize="20sp"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/button_to_custom_in_progress"
@@ -57,8 +51,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:textSize="20sp"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/button_to_rejected_report"

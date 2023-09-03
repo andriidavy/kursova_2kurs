@@ -34,7 +34,7 @@
             android:text="@string/id" />
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/employee_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/id_text"
@@ -58,7 +58,7 @@
             android:text="@string/customer_name" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/employee_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/name_text"
@@ -82,7 +82,7 @@
             android:text="@string/customer_surname" />
 
         <TextView
-            android:id="@+id/surname"
+            android:id="@+id/employee_surname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/surname_text"
@@ -106,7 +106,7 @@
             android:text="@string/customer_email" />
 
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/employee_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/email_text"

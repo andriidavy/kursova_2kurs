@@ -6,6 +6,9 @@ public class EmployeeProfileDTO {
     private String surname;
     private String email;
 
+    public EmployeeProfileDTO() {
+    }
+
     public EmployeeProfileDTO(int id, String name, String surname, String email) {
         this.id = id;
         this.name = name;

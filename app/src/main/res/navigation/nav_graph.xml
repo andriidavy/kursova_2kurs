@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/employeeMainPageFragment"
-        android:name="com.example.registration.fragment.employeeFragments.EmployeeMainPageFragment"
+        android:name="com.example.registration.ui.employee.EmployeeMainPageFragment"
         android:label="EmployeeMainPageFragment">
         <action
             android:id="@+id/action_employeeMainPageFragment_to_employeeCustomsInProgressFragment"
@@ -299,7 +299,7 @@
     </fragment>
     <fragment
         android:id="@+id/employeeProfilePageFragment"
-        android:name="com.example.registration.fragment.employeeFragments.profile.EmployeeProfilePageFragment"
+        android:name="com.example.registration.ui.employee.profile.EmployeeProfilePageFragment"
         android:label="EmployeeProfilePageFragment">
         <action
             android:id="@+id/action_employeeProfilePageFragment_to_loginFragment"

@@ -4,7 +4,8 @@ import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
-import com.example.registration.database.employee.EmployeeApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeApi) {
@@ -17,11 +18,11 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         }
     }
 
-    suspend fun getEmployeeProfile(employeeId: Int) : EmployeeProfileDTO{
-        return employeeApi.getEmployeeProfile(employeeId)
+    fun getEmployeeProfile(employeeId: Int): Flow<EmployeeProfileDTO> = flow {
+        emit(employeeApi.getEmployeeProfile(employeeId))
     }
 
-    suspend fun getProcessingCustomsForEmployee(employeeId: Int): List<CustomDTO>{
+    suspend fun getProcessingCustomsForEmployee(employeeId: Int): List<CustomDTO> {
         return employeeApi.getProcessingCustomsForEmployee(employeeId)
     }
 
@@ -29,15 +30,15 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         return employeeApi.getProcessedCustomsForEmployee(employeeId)
     }
 
-    suspend fun getAllAcceptedReportsForEmployee(employeeId: Int): List<ReportDTO>{
+    suspend fun getAllAcceptedReportsForEmployee(employeeId: Int): List<ReportDTO> {
         return employeeApi.getAllAcceptedReportsForEmployee(employeeId)
     }
 
-    suspend fun getAllWaitingReportsForEmployee(employeeId: Int): List<ReportDTO>{
+    suspend fun getAllWaitingReportsForEmployee(employeeId: Int): List<ReportDTO> {
         return employeeApi.getAllWaitingReportsForEmployee(employeeId)
     }
 
-    suspend fun getAllRejectedReportsForEmployee(employeeId: Int) : List<ReportDTO>{
+    suspend fun getAllRejectedReportsForEmployee(employeeId: Int): List<ReportDTO> {
         return employeeApi.getAllRejectedReportsForEmployee(employeeId)
     }
 
@@ -45,11 +46,11 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         employeeId: Int,
         customId: Int,
         reportText: String
-    ){
-        return employeeApi.createReport(employeeId,customId, reportText)
+    ) {
+        return employeeApi.createReport(employeeId, customId, reportText)
     }
 
-    suspend fun setCustomSent(customId: Int){
+    suspend fun setCustomSent(customId: Int) {
         return employeeApi.setCustomSent(customId)
     }
 }

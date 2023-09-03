@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.registration.databinding.ListCreatedCustomItemBinding
 import com.example.registration.databinding.ListEmployeeForAssigneToCustomItemBinding
-import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.users.EmployeeProfileDTO
 
 class EmployeeForAssigneeAdapter(

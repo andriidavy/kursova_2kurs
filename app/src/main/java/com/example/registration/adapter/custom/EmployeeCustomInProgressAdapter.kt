@@ -8,65 +8,48 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListInProgressCustomItemBinding
 import com.example.registration.model.custom.CustomDTO
 
-class EmployeeCustomInProgressAdapter (
-    private var customDTOList: List<CustomDTO>
-) :
-    RecyclerView.Adapter<EmployeeCustomInProgressAdapter.ViewHolder>() {
-
-    private lateinit var mListener: EmployeeCustomInProgressAdapter.OnItemClickListener
-    private lateinit var createReportClickListener: EmployeeCustomInProgressAdapter.OnCreateReportClickListener
-
-    interface OnCreateReportClickListener {
-        fun onCreateReportClick(customId: Int, position: Int)
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        mListener = listener
-    }
-
-    fun setOnCreateReportClickListener(reportListener: EmployeeCustomInProgressAdapter.OnCreateReportClickListener){
-        createReportClickListener = reportListener
-    }
+class EmployeeCustomInProgressAdapter(
+    private var customDTOList: List<CustomDTO>,
+    private val onItemClick: (Int) -> Unit,
+    private val onCreateReportClick: (Int) -> Unit
+) : RecyclerView.Adapter<EmployeeCustomInProgressAdapter.ViewHolder>() {
 
     class ViewHolder(
-        var view: ListInProgressCustomItemBinding,
-        listener: EmployeeCustomInProgressAdapter.OnItemClickListener,
-        reportListener: EmployeeCustomInProgressAdapter.OnCreateReportClickListener
-    ) : RecyclerView.ViewHolder(view.root) {
-        init {
-            view.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-            view.buttonCreateReport.setOnClickListener {
-                reportListener.onCreateReportClick(Integer.parseInt(view.idForCustom.text.toString()),adapterPosition)
-            }
-        }
-    }
+        var view: ListInProgressCustomItemBinding
+    ) : RecyclerView.ViewHolder(view.root)
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): EmployeeCustomInProgressAdapter.ViewHolder {
+    ): ViewHolder {
         val binding =
             ListInProgressCustomItemBinding.inflate(
                 LayoutInflater.from(viewGroup.context),
                 viewGroup,
                 false
             )
-        return EmployeeCustomInProgressAdapter.ViewHolder(binding, mListener, createReportClickListener)
+        return ViewHolder(
+            binding
+        )
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.view.idForCustom.text = customDTOList[position].customId.toString()
-        viewHolder.view.statusForCustom.text = customDTOList[position].status
-        if(viewHolder.view.statusForCustom.text == "WAITING_RESPONSE"){
-            viewHolder.view.buttonCreateReport.visibility = View.GONE
+        viewHolder.view.apply {
+            idForCustom.text = customDTOList[position].customId.toString()
+            statusForCustom.text = customDTOList[position].status
+            if (statusForCustom.text == "WAITING_RESPONSE") {
+                buttonCreateReport.visibility = View.GONE
+            }
+
+            root.setOnClickListener {
+                onItemClick.invoke(position)
+            }
+
+            buttonCreateReport.setOnClickListener {
+                onCreateReportClick.invoke(customDTOList[position].customId)
+            }
         }
     }
 

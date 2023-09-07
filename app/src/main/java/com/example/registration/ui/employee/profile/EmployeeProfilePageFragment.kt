@@ -13,8 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentEmployeeProfilePageBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class EmployeeProfilePageFragment : Fragment() {
 
     private lateinit var binding: FragmentEmployeeProfilePageBinding

@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.employeeFragments.customsInProgress.report.CreatingReportForCustomFragment">
+        tools:context=".ui.employee.customsInProgress.CreatingReportForCustomFragment">
 
         <TextView
             android:id="@+id/report_head_text"

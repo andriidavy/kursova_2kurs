@@ -179,7 +179,7 @@
     </fragment>
     <fragment
         android:id="@+id/employeeCustomsInProgressFragment"
-        android:name="com.example.registration.fragment.employeeFragments.customsInProgress.EmployeeCustomsInProgressFragment"
+        android:name="com.example.registration.ui.employee.customsInProgress.EmployeeCustomsInProgressFragment"
         android:label="EmployeeCustomsInProgressFragment">
         <action
             android:id="@+id/action_employeeCustomsInProgressFragment_to_customInProgressProductDetailFragment"
@@ -190,11 +190,11 @@
     </fragment>
     <fragment
         android:id="@+id/customInProgressProductDetailFragment"
-        android:name="com.example.registration.fragment.employeeFragments.customsInProgress.CustomInProgressProductDetailFragment"
+        android:name="com.example.registration.ui.employee.customsInProgress.CustomInProgressProductDetailFragment"
         android:label="CustomInProgressProductDetailFragment" />
     <fragment
         android:id="@+id/creatingReportForCustomFragment"
-        android:name="com.example.registration.fragment.employeeFragments.customsInProgress.report.CreatingReportForCustomFragment"
+        android:name="com.example.registration.ui.employee.customsInProgress.CreatingReportForCustomFragment"
         android:label="CreatingReportForCustomFragment">
         <argument
             android:name="customInProgressId"

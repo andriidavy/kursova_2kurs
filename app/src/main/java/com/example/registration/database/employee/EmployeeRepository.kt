@@ -22,8 +22,8 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         emit(employeeApi.getEmployeeProfile(employeeId))
     }
 
-    suspend fun getProcessingCustomsForEmployee(employeeId: Int): List<CustomDTO> {
-        return employeeApi.getProcessingCustomsForEmployee(employeeId)
+    fun getProcessingCustomsForEmployee(employeeId: Int): Flow<List<CustomDTO>> = flow {
+        emit(employeeApi.getProcessingCustomsForEmployee(employeeId))
     }
 
     suspend fun getProcessedCustomsForEmployee(employeeId: Int): List<CustomDTO> {
@@ -42,12 +42,19 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         return employeeApi.getAllRejectedReportsForEmployee(employeeId)
     }
 
-    suspend fun createReport(
+    fun createReport(
         employeeId: Int,
         customId: Int,
         reportText: String
-    ) {
-        return employeeApi.createReport(employeeId, customId, reportText)
+    ): Flow<Result<Unit>> = flow {
+        emit(
+            try {
+                val result = employeeApi.createReport(employeeId, customId, reportText)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     suspend fun setCustomSent(customId: Int) {

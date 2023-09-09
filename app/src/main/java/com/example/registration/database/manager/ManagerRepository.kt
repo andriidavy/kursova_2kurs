@@ -14,13 +14,15 @@ import javax.inject.Inject
 
 class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
 
-    suspend fun loginManager(email: String, password: String): Result<Manager> {
-        return try {
-            val manager = managerApi.loginManager(email, password)
-            Result.success(manager)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    fun loginManager(email: String, password: String): Flow<Result<Manager>> = flow {
+        emit(
+            try {
+                val manager = managerApi.loginManager(email, password)
+                Result.success(manager)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     fun getAllManagersProfileDTO(): Flow<List<ManagerProfileDTO>> = flow {

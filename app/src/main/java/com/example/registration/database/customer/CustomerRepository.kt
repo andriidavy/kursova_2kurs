@@ -4,7 +4,6 @@ import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.Product
-import com.example.registration.database.customer.CustomerApi
 import com.example.registration.model.users.Customer
 import com.example.registration.model.users.CustomerProfileDTO
 import kotlinx.coroutines.flow.Flow
@@ -30,13 +29,15 @@ class CustomerRepository @Inject constructor(
         }
     }
 
-    suspend fun loginCustomer(email: String, password: String): Result<Customer> {
-        return try {
-            val customer = customerApi.loginCustomer(email, password)
-            Result.success(customer)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    fun loginCustomer(email: String, password: String): Flow<Result<Customer>> = flow {
+        emit(
+            try {
+                val customer = customerApi.loginCustomer(email, password)
+                Result.success(customer)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     suspend fun getCustomerProfileById(customerId: Int): CustomerProfileDTO {

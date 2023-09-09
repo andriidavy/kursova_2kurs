@@ -10,7 +10,6 @@ import com.example.registration.adapter.custom.CustomProductAdapter
 import com.example.registration.databinding.FragmentEmployeeCustomInProgressBinding
 import com.example.registration.model.custom.CustomProductDTO
 
-
 class CustomInProgressProductDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentEmployeeCustomInProgressBinding

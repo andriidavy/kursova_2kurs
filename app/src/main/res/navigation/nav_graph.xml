@@ -203,7 +203,7 @@
     </fragment>
     <fragment
         android:id="@+id/employeeCustomsProcessedFragment"
-        android:name="com.example.registration.fragment.employeeFragments.customsProcessed.EmployeeCustomsProcessedFragment"
+        android:name="com.example.registration.ui.employee.customsProcessed.EmployeeCustomsProcessedFragment"
         android:label="EmployeeCustomsProcessedFragment">
         <action
             android:id="@+id/action_employeeCustomsProcessedFragment_to_customProcessedProductDetailFragment"
@@ -211,11 +211,11 @@
     </fragment>
     <fragment
         android:id="@+id/customProcessedProductDetailFragment"
-        android:name="com.example.registration.fragment.employeeFragments.customsProcessed.CustomProcessedProductDetailFragment"
+        android:name="com.example.registration.ui.employee.customsProcessed.CustomProcessedProductDetailFragment"
         android:label="CustomProcessedProductDetailFragment" />
     <fragment
         android:id="@+id/employeeReportsAcceptedFragment"
-        android:name="com.example.registration.fragment.employeeFragments.reportsAccepted.EmployeeReportsAcceptedFragment"
+        android:name="com.example.registration.ui.employee.reportsAccepted.EmployeeReportsAcceptedFragment"
         android:label="EmployeeReportsAcceptedFragment">
         <action
             android:id="@+id/action_employeeReportsAcceptedFragment_to_reportDetailFragment"
@@ -223,11 +223,11 @@
     </fragment>
     <fragment
         android:id="@+id/reportDetailFragment"
-        android:name="com.example.registration.fragment.employeeFragments.reportDetail.ReportDetailFragment"
+        android:name="com.example.registration.ui.employee.reportDetail.ReportDetailFragment"
         android:label="ReportDetailFragment" />
     <fragment
         android:id="@+id/employeeReportsInWaitingFragment"
-        android:name="com.example.registration.fragment.employeeFragments.reportsInWaiting.EmployeeReportsInWaitingFragment"
+        android:name="com.example.registration.ui.employee.reportsInWaiting.EmployeeReportsInWaitingFragment"
         android:label="EmployeeReportsInWaitingFragment">
         <action
             android:id="@+id/action_employeeReportsInWaitingFragment_to_reportDetailFragment"
@@ -235,7 +235,7 @@
     </fragment>
     <fragment
         android:id="@+id/employeeReportsRejectedFragment"
-        android:name="com.example.registration.fragment.employeeFragments.reportsRejected.EmployeeReportsRejectedFragment"
+        android:name="com.example.registration.ui.employee.reportsRejected.EmployeeReportsRejectedFragment"
         android:label="EmployeeReportsRejectedFragment">
         <action
             android:id="@+id/action_employeeReportsRejectedFragment_to_reportDetailFragment"

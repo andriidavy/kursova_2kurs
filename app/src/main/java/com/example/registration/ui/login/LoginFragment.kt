@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
 import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -73,46 +73,40 @@ class LoginFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         // перехід на сторінку реєстрації
-        textHaveNotRegistration.setOnClickListener()
-        {
+        textHaveNotRegistration.setOnClickListener {
             navController.navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
         // логін
-        buttonLog.setOnClickListener()
-        {
+        buttonLog.setOnClickListener {
             val email = etEmail.text.toString()
             val password = etPassword.text.toString()
 
             lifecycleScope.launch {
-                viewModel.login(email, password, num).collect { loginResult ->
-                    loginResult?.let {
-                        loginResult.onSuccess { user ->
-                            when (num) {
-                                0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                                1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                                2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
-                            }
-
-                            // установка ID користувача при вході
-                            dataStoreViewModel.storeUserId(user.id)
-
-                            showToast(getString(R.string.success_log, user.name, user.surname))
+                viewModel.login(email, password, num)?.collect { loginResult ->
+                    loginResult.onSuccess { user ->
+                        when (num) {
+                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
+                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
                         }
-                        loginResult.onFailure {
-                            showToast(getString(R.string.invalid_log))
-                        }
+
+                        // установка ID користувача при вході
+                        dataStoreViewModel.storeUserId(user.id)
+
+                        ToastObj.longToastMake(
+                            getString(
+                                R.string.success_log,
+                                user.name,
+                                user.surname
+                            ), context
+                        )
+                    }
+                    loginResult.onFailure {
+                        ToastObj.shortToastMake(getString(R.string.invalid_log), context)
                     }
                 }
             }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(
-            context,
-            message,
-            Toast.LENGTH_LONG
-        ).show()
     }
 }

@@ -9,13 +9,16 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeApi) {
-    suspend fun loginEmployee(email: String, password: String): Result<Employee> {
-        return try {
-            val employee = employeeApi.loginEmployee(email, password)
-            Result.success(employee)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+
+    fun loginEmployee(email: String, password: String): Flow<Result<Employee>> = flow {
+        emit(
+            try {
+                val employee = employeeApi.loginEmployee(email, password)
+                Result.success(employee)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     fun getEmployeeProfile(employeeId: Int): Flow<EmployeeProfileDTO> = flow {
@@ -26,20 +29,20 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         emit(employeeApi.getProcessingCustomsForEmployee(employeeId))
     }
 
-    suspend fun getProcessedCustomsForEmployee(employeeId: Int): List<CustomDTO> {
-        return employeeApi.getProcessedCustomsForEmployee(employeeId)
+    fun getProcessedCustomsForEmployee(employeeId: Int): Flow<List<CustomDTO>> = flow {
+        emit(employeeApi.getProcessedCustomsForEmployee(employeeId))
     }
 
-    suspend fun getAllAcceptedReportsForEmployee(employeeId: Int): List<ReportDTO> {
-        return employeeApi.getAllAcceptedReportsForEmployee(employeeId)
+    fun getAllAcceptedReportsForEmployee(employeeId: Int): Flow<List<ReportDTO>> = flow {
+        emit(employeeApi.getAllAcceptedReportsForEmployee(employeeId))
     }
 
-    suspend fun getAllWaitingReportsForEmployee(employeeId: Int): List<ReportDTO> {
-        return employeeApi.getAllWaitingReportsForEmployee(employeeId)
+    fun getAllWaitingReportsForEmployee(employeeId: Int): Flow<List<ReportDTO>> = flow {
+        emit(employeeApi.getAllWaitingReportsForEmployee(employeeId))
     }
 
-    suspend fun getAllRejectedReportsForEmployee(employeeId: Int): List<ReportDTO> {
-        return employeeApi.getAllRejectedReportsForEmployee(employeeId)
+    fun getAllRejectedReportsForEmployee(employeeId: Int): Flow<List<ReportDTO>> = flow {
+        emit(employeeApi.getAllRejectedReportsForEmployee(employeeId))
     }
 
     fun createReport(

@@ -1,16 +1,16 @@
 package com.example.registration.ui.customer.registration
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentRegistrationBinding
+import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-
         buttonReg.setOnClickListener {
             val name: String = etName.text.toString().trim()
             val surname: String = etSurname.text.toString().trim()
@@ -47,10 +46,10 @@ class RegistrationFragment : Fragment() {
                             insertResult.onSuccess {
                                 findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
-                                showToast(getString(R.string.success_reg_message))
+                                ToastObj.longToastMake(getString(R.string.success_reg_message), context)
                             }
                             insertResult.onFailure {
-                                showToast(getString(R.string.invalid_reg_message))
+                                ToastObj.longToastMake(getString(R.string.invalid_reg_message), context)
                             }
                         }
                 }
@@ -61,13 +60,5 @@ class RegistrationFragment : Fragment() {
                 etPassword.error = if (password.isBlank()) getString(R.string.password_required) else null
             }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(
-            context,
-            message,
-            Toast.LENGTH_LONG
-        ).show()
     }
 }

@@ -94,13 +94,7 @@ class LoginFragment : Fragment() {
                         // установка ID користувача при вході
                         dataStoreViewModel.storeUserId(user.id)
 
-                        ToastObj.longToastMake(
-                            getString(
-                                R.string.success_log,
-                                user.name,
-                                user.surname
-                            ), context
-                        )
+                        ToastObj.longToastMake(getString(R.string.success_log, user.name, user.surname), context)
                     }
                     loginResult.onFailure {
                         ToastObj.shortToastMake(getString(R.string.invalid_log), context)

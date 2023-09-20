@@ -15,18 +15,20 @@ class CustomerRepository @Inject constructor(
     private val customerApi: CustomerApi
 ) {
 
-    suspend fun save(
+    fun save(
         name: String,
         surname: String,
         email: String,
         password: String
-    ): Result<Customer> {
-        return try {
-            val customer = customerApi.save(name, surname, email, password)
-            Result.success(customer)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    ): Flow<Result<Customer>> = flow {
+        emit(
+            try {
+                val customer = customerApi.save(name, surname, email, password)
+                Result.success(customer)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     fun loginCustomer(email: String, password: String): Flow<Result<Customer>> = flow {

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -31,8 +34,17 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(inflater)
-        return binding.root
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        val view = binding.root
+        binding.loginComposeView.apply {
+            // Dispose of the Composition when the view's LifecycleOwner
+            // is destroyed
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+
+            }
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,7 +106,13 @@ class LoginFragment : Fragment() {
                         // установка ID користувача при вході
                         dataStoreViewModel.storeUserId(user.id)
 
-                        ToastObj.longToastMake(getString(R.string.success_log, user.name, user.surname), context)
+                        ToastObj.longToastMake(
+                            getString(
+                                R.string.success_log,
+                                user.name,
+                                user.surname
+                            ), context
+                        )
                     }
                     loginResult.onFailure {
                         ToastObj.shortToastMake(getString(R.string.invalid_log), context)

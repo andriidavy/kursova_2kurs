@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -372,5 +372,19 @@
         <action
             android:id="@+id/action_addDepartForNewCustomFragment_to_customerMainPageFragment"
             app:destination="@id/customerMainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.registration.ui.start.StartFragment"
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_customerMainPageFragment"
+            app:destination="@id/customerMainPageFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_managerMainPageFragment"
+            app:destination="@id/managerMainPageFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_employeeMainPageFragment"
+            app:destination="@id/employeeMainPageFragment" />
     </fragment>
 </navigation>

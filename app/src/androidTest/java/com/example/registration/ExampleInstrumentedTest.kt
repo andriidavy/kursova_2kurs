@@ -2,10 +2,7 @@ package com.example.registration
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.registration.database.customer.CustomerApi
-import com.example.registration.database.RetrofitService
-import com.example.registration.model.users.Customer
 
-import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
@@ -24,21 +21,4 @@ class ExampleInstrumentedTest {
 //        assertEquals("com.example.registration", appContext.packageName)
 //    }
 
-    val retrofitService = RetrofitService()
-    val customerApi = retrofitService.retrofit.create(CustomerApi::class.java)
-
-    @Test
-    fun addCustomer(){
-        val name: String = "Andy"
-        val surname: String = "Davy"
-        val email: String = "and@gmail.com"
-        val password: String ="and123"
-        val customer = Customer(
-            name,
-            surname,
-            email,
-            password
-        )
-        customerApi.save(customer)
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.registration.ui.start.loginscreens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -52,8 +54,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.registration.global.ToastObj
 import com.example.registration.ui.theme.MyAppTheme
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun LoginScreen(
     login: (String, String, Int) -> Unit
@@ -63,6 +67,7 @@ fun LoginScreen(
         val dropList = listOf("a Customer", "an Employee", "a Manager")
         val dropListIsExpanded = remember { mutableStateOf(false) }
         val currentUserTypeIndex = rememberSaveable { mutableIntStateOf(0) }
+        val context = LocalContext.current
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -127,21 +132,27 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                Button(
-                    onClick = {
-                        login.invoke(
-                            credentials.login,
-                            credentials.password,
-                            currentUserTypeIndex.intValue
+                Box {
+                    Button(
+                        onClick = {
+                            if (!credentials.isEmpty()) {
+                                login.invoke(
+                                    credentials.login,
+                                    credentials.password,
+                                    currentUserTypeIndex.intValue
+                                )
+                            } else {
+                                ToastObj.shortToastMake("all fields must be completed!", context)
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Text(
+                            text = "Log in",
+                            style = MaterialTheme.typography.body1
                         )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    Text(
-                        text = "Log in",
-                        style = MaterialTheme.typography.body1
-                    )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -275,12 +286,12 @@ fun OutlinedPasswordTextField(
     )
 }
 
-
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun LoginScreenPreview() {
     LoginScreen(previewLogin())
 }
-fun previewLogin(): (String, String, Int) -> Unit{
-    return {email, password, num->}
+
+private fun previewLogin(): (String, String, Int) -> Unit {
+    return { _, _, _ -> }
 }

@@ -1,12 +1,17 @@
 package com.example.registration.ui.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.registration.database.customer.CustomerRepository
 import com.example.registration.database.employee.EmployeeRepository
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,7 +21,7 @@ class LoginViewModel @Inject constructor(
     private val managerRepository: ManagerRepository
 ) : ViewModel() {
 
-    fun login(email: String, password: String, num: Int): Flow<Result<User>>?{
+   fun login(email: String, password: String, num: Int): Flow<Result<User>>? {
         val result = when (num) {
             0 -> customerRepository.loginCustomer(email, password)
             1 -> employeeRepository.loginEmployee(email, password)

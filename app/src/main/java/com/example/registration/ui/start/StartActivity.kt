@@ -11,9 +11,9 @@ import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.global.ToastObj
 import com.example.registration.ui.customer.CustomerActivity
 import com.example.registration.ui.employee.EmployeeActivity
-import com.example.registration.ui.login.LoginViewModel
+import com.example.registration.ui.start.login.LoginViewModel
 import com.example.registration.ui.manager.ManagerActivity
-import com.example.registration.ui.start.loginscreens.LoginScreen
+import com.example.registration.ui.start.login.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

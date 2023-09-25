@@ -1,4 +1,4 @@
-package com.example.registration.ui.start.loginscreens
+package com.example.registration.ui.start.login
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement

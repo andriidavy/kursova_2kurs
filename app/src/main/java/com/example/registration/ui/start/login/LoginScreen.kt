@@ -1,6 +1,5 @@
 package com.example.registration.ui.start.login
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +38,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,20 +54,23 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.global.ToastObj
 import com.example.registration.ui.theme.MyAppTheme
+import kotlinx.coroutines.launch
 
-@SuppressLint("UnrememberedMutableState")
 @Composable
-fun LoginScreen(
-    login: (String, String, Int) -> Unit
-) {
+fun LoginScreen() {
     MyAppTheme {
         var credentials by remember { mutableStateOf(Credentials()) }
         val dropList = listOf("a Customer", "an Employee", "a Manager")
         val dropListIsExpanded = remember { mutableStateOf(false) }
         val currentUserTypeIndex = rememberSaveable { mutableIntStateOf(0) }
+        val viewModel: LoginViewModel = viewModel()
+        val dataStoreViewModel: DataStoreViewModel = viewModel()
         val context = LocalContext.current
+        val coroutineScope = rememberCoroutineScope()
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -136,11 +139,16 @@ fun LoginScreen(
                     Button(
                         onClick = {
                             if (!credentials.isEmpty()) {
-                                login.invoke(
-                                    credentials.login,
-                                    credentials.password,
-                                    currentUserTypeIndex.intValue
-                                )
+                                coroutineScope.launch {
+                                    LoginUtils.login(
+                                        viewModel,
+                                        dataStoreViewModel,
+                                        credentials.login,
+                                        credentials.password,
+                                        currentUserTypeIndex.intValue,
+                                        context
+                                    )
+                                }
                             } else {
                                 ToastObj.shortToastMake("all fields must be completed!", context)
                             }
@@ -289,9 +297,5 @@ fun OutlinedPasswordTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(previewLogin())
-}
-
-private fun previewLogin(): (String, String, Int) -> Unit {
-    return { _, _, _ -> }
+    LoginScreen()
 }

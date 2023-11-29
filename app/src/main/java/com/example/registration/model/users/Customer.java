@@ -1,25 +1,8 @@
 package com.example.registration.model.users;
 
-import androidx.annotation.NonNull;
-
 import com.example.registration.model.User;
 
 public class Customer extends User {
-
-//    private int id;
-//    private String name;
-//    private String surname;
-//    private String email;
-//    private String password;
-//
-//    public Customer(){}
-//    public Customer(String name, String surname, String email, String password ){
-//        this.name=name;
-//        this.surname=surname;
-//        this.email=email;
-//        this.password=password;
-//    }
-
 
     public Customer() {
     }

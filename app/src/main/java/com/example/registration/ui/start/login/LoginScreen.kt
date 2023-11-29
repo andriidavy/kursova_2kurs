@@ -1,5 +1,6 @@
 package com.example.registration.ui.start.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,15 +22,11 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
@@ -44,31 +41,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.registration.R
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.global.ToastObj
+import com.example.registration.ui.start.OutlinedLoginTextField
+import com.example.registration.ui.start.OutlinedPasswordTextField
 import com.example.registration.ui.theme.MyAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(openCustomerRegistration: () -> Unit) {
     MyAppTheme {
         var credentials by remember { mutableStateOf(Credentials()) }
+        val viewModel: LoginViewModel = hiltViewModel()
+        val dataStoreViewModel: DataStoreViewModel = hiltViewModel()
         val dropList = listOf("a Customer", "an Employee", "a Manager")
         val dropListIsExpanded = remember { mutableStateOf(false) }
         val currentUserTypeIndex = rememberSaveable { mutableIntStateOf(0) }
-        val viewModel: LoginViewModel = viewModel()
-        val dataStoreViewModel: DataStoreViewModel = viewModel()
         val context = LocalContext.current
         val coroutineScope = rememberCoroutineScope()
 
@@ -114,9 +112,9 @@ fun LoginScreen() {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 OutlinedLoginTextField(
-                    value = credentials.login,
+                    value = credentials.email,
                     onChange = { userInput ->
-                        credentials = credentials.copy(login = userInput)
+                        credentials = credentials.copy(email = userInput)
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.small
@@ -130,7 +128,8 @@ fun LoginScreen() {
                         credentials = credentials.copy(password = userInput)
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.small
+                    shape = MaterialTheme.shapes.small,
+                    isError = false
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -143,14 +142,14 @@ fun LoginScreen() {
                                     LoginUtils.login(
                                         viewModel,
                                         dataStoreViewModel,
-                                        credentials.login,
+                                        credentials.email,
                                         credentials.password,
                                         currentUserTypeIndex.intValue,
                                         context
                                     )
                                 }
                             } else {
-                                ToastObj.shortToastMake("all fields must be completed!", context)
+                                ToastObj.shortToastMake(context.getString(R.string.null_check), context)
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
@@ -181,7 +180,11 @@ fun LoginScreen() {
                             text = "Create a New Account",
                             style = MaterialTheme.typography.body1,
                             fontWeight = FontWeight.SemiBold,
-                            textDecoration = TextDecoration.Underline
+                            textDecoration = TextDecoration.Underline,
+                            color = Color.Blue,
+                            modifier = Modifier.clickable {
+                                openCustomerRegistration.invoke()
+                            }
                         )
                     }
                 }
@@ -239,63 +242,9 @@ fun UserTypeDropList(
     }
 }
 
-@Composable
-fun OutlinedLoginTextField(
-    value: String,
-    onChange: (String) -> Unit,
-    modifier: Modifier,
-    shape: Shape,
-    label: String = "Login",
-    placeholder: String = "Enter your login"
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onChange,
-        modifier = modifier,
-        shape = shape,
-        label = { Text(text = label) },
-        placeholder = { Text(text = placeholder) }
-    )
-}
-
-@Composable
-fun OutlinedPasswordTextField(
-    value: String,
-    onChange: (String) -> Unit,
-    modifier: Modifier,
-    shape: Shape,
-    label: String = "Password",
-    placeholder: String = "Enter your password"
-) {
-    var showPassword by rememberSaveable { mutableStateOf(false) }
-
-    OutlinedTextField(
-        value = value,
-        onValueChange = onChange,
-        modifier = modifier,
-        shape = shape,
-        label = { Text(text = label) },
-        placeholder = { Text(text = placeholder) },
-        visualTransformation = if (showPassword) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        }, trailingIcon = {
-            if (showPassword) {
-                IconButton(onClick = { showPassword = false }) {
-                    Icon(imageVector = Icons.Filled.Visibility, contentDescription = null)
-                }
-            } else {
-                IconButton(onClick = { showPassword = true }) {
-                    Icon(imageVector = Icons.Filled.VisibilityOff, contentDescription = null)
-                }
-            }
-        }
-    )
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen()
-}
+//@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+//@Composable
+//fun LogScreenPreview() {
+//    val prevNavController = rememberNavController()
+//    LoginScreen(prevNavController)
+//}

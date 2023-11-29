@@ -1,4 +1,4 @@
-package com.example.registration.ui.customer.registration
+package com.example.registration.ui.start.customerRegistration
 
 import androidx.lifecycle.ViewModel
 import com.example.registration.database.customer.CustomerRepository

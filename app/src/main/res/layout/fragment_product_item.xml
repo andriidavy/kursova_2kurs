@@ -1,127 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
 
-    <data>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <variable
-            name="product"
-            type="com.example.registration.model.product.Product" />
-    </data>
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Назва товару" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutProductItem"
+
+    <TextView
+        android:id="@+id/product_id_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/product_name" />
+
+    <TextView
+        android:id="@+id/product_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@id/product_id_text"
+        app:layout_constraintTop_toBottomOf="@id/product_name"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/product_quantity_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/product_count"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/product_id_text" />
+
+    <TextView
+        android:id="@+id/product_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/product_quantity_text"
+        app:layout_constraintTop_toBottomOf="@id/product_id"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/product_price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/product_quantity_text" />
+
+    <TextView
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/product_price_text"
+        app:layout_constraintTop_toBottomOf="@id/product_quantity_text"
+        tools:text="0" />
+
+    <EditText
+        android:id="@+id/countAddToCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:ems="3"
+        android:inputType="number"
+        android:text="1"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/buttonAddToCart"
+        app:layout_constraintTop_toBottomOf="@id/product_price_text"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/buttonAddToCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/toBasket"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/product_price_text" />
+
+    <ScrollView
+        android:id="@+id/product_description_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.customer.mainpage.ProductItemFragment">
-
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Назва товару" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddToCart">
 
 
-        <TextView
-            android:id="@+id/product_id_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/id"
-            app:layout_constraintTop_toBottomOf="@id/product_name"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            />
-
-        <TextView
-            android:id="@+id/product_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/product_name"
-            app:layout_constraintStart_toEndOf="@id/product_id_text"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            tools:text ="0"
-            />
-
-        <TextView
-            android:id="@+id/product_quantity_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/product_id_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="32dp"
-            android:text="@string/product_count" />
-
-        <TextView
-            android:id="@+id/product_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/product_quantity_text"
-            app:layout_constraintTop_toBottomOf="@id/product_id"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            tools:text="0" />
-
-        <EditText
-            android:id="@+id/countAddToCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="32dp"
-            android:ems="3"
-            android:inputType="number"
-            android:text="1"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/buttonAddToCart"
-            app:layout_constraintTop_toBottomOf="@id/product_quantity_text"
-            tools:ignore="HardcodedText" />
-
-        <Button
-            android:id="@+id/buttonAddToCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="96dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/toBasket"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/product_quantity_text" />
-
-        <ScrollView
-            android:id="@+id/product_description_scroll_view"
+        <LinearLayout
+            android:id="@+id/linearLayout_description_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonAddToCart"
-            android:layout_marginTop="32dp">
+            android:orientation="vertical">
 
-
-            <LinearLayout
-                android:id="@+id/linearLayout_description_product"
+            <TextView
+                android:id="@+id/product_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:textSize="20sp"
+                tools:text="Опис товару" />
+        </LinearLayout>
+    </ScrollView>
 
-                <TextView
-                    android:id="@+id/product_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    tools:text="Опис товару" />
-            </LinearLayout>
-        </ScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,6 +32,7 @@ open class CartAdapter(
             productListItemName.text = cartProductDTOList[position].productName
             idForProduct.text = cartProductDTOList[position].productId.toString()
             countForProduct.text = cartProductDTOList[position].quantity.toString()
+            priceForProduct.text = cartProductDTOList[position].price.toString()
 
             buttonDeleteItem.setOnClickListener {
                 itemRemovedClick.invoke(position)

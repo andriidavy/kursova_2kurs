@@ -40,10 +40,6 @@ class CustomerCartPageViewModel @Inject constructor(
         }
     }
 
-    fun createCustom(): Flow<Result<Int>> = flow {
-        emit(customerRepository.createCustom(customerId))
-    }
-
     fun removeProductFromCart(productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             customerRepository.removeProductFromCart(customerId, productId)

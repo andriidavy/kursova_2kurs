@@ -1,5 +1,6 @@
 package com.example.registration.ui.customer.custom
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Message
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.databinding.FragmentAddDepartForNewCustomBinding
+import com.example.registration.global.ToastObj
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -64,10 +66,26 @@ class AddDepartForNewCustomFragment : Fragment() {
     private fun itemClicked(): (Int) -> Unit {
         return { position ->
             val departmentId = viewModel.departDTOArray.value.getOrNull(position)?.id
-            val customId = arguments?.getInt("customId")
 
-            if (customId != null && departmentId != null) {
-                viewModel.assignDepartmentToCustom(customId, departmentId)
+            departmentId?.let {
+                lifecycleScope.launch {
+                    viewModel.createCustom(departmentId).collect { result ->
+                        result.onSuccess { customId ->
+                            ToastObj.longToastMake(
+                                getString(
+                                    R.string.success_create_custom,
+                                    customId
+                                ), context
+                            )
+                        }
+                        result.onFailure {
+                            ToastObj.shortToastMake(
+                                getString(R.string.wrong_create_custom),
+                                context
+                            )
+                        }
+                    }
+                }
                 navController.navigate(R.id.action_addDepartForNewCustomFragment_to_customerMainPageFragment)
             }
         }

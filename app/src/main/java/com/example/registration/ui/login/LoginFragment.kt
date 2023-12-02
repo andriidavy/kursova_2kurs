@@ -54,8 +54,8 @@ class LoginFragment : Fragment() {
             adapter = arrayAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
+                    parent: AdapterView<*>?,
+                    view: View?,
                     position: Int,
                     id: Long
                 ) {
@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
                         if (position == 0) View.VISIBLE else View.GONE
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
                     // Code to perform some action when nothing is selected
                 }
             }
@@ -84,7 +84,7 @@ class LoginFragment : Fragment() {
 
             lifecycleScope.launch {
                 viewModel.login(email, password, num)?.collect { loginResult ->
-                    loginResult.onSuccess { user ->
+                    loginResult.onSuccess { userId ->
                         when (num) {
                             0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
                             1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
@@ -92,9 +92,9 @@ class LoginFragment : Fragment() {
                         }
 
                         // установка ID користувача при вході
-                        dataStoreViewModel.storeUserId(user.id)
+                        dataStoreViewModel.storeUserId(userId)
 
-                        ToastObj.longToastMake(getString(R.string.success_log, user.name, user.surname), context)
+                        ToastObj.longToastMake(getString(R.string.success_log), context)
                     }
                     loginResult.onFailure {
                         ToastObj.shortToastMake(getString(R.string.invalid_log), context)

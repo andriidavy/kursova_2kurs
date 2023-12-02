@@ -43,7 +43,7 @@ class CustomerCustomPageFragment : Fragment() {
     }
 
     private fun setupViews() = with(binding) {
-        adapter = CustomAdapter(emptyList())
+        adapter = CustomAdapter(emptyList(), itemClick())
         customListRecyclerView.adapter = adapter
         customListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
@@ -63,19 +63,21 @@ class CustomerCustomPageFragment : Fragment() {
     }
 
     private fun setListeners() {
-        adapter.setOnItemClickListener(object : CustomAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                val bundle = Bundle()
 
-                val list: ArrayList<CustomProductDTO>? =
-                    viewModel.customDTOArray.value.getOrNull(position)?.customProductList as ArrayList<CustomProductDTO>?
-                bundle.putParcelableArrayList("customProductList", list)
+    }
 
-                navController.navigate(
-                    R.id.action_customerCustomPageFragment_to_customProductDetailFragment,
-                    bundle
-                )
-            }
-        })
+    private fun itemClick(): (Int) -> Unit {
+        return { position ->
+            val bundle = Bundle()
+
+            val list: ArrayList<CustomProductDTO>? =
+                viewModel.customDTOArray.value.getOrNull(position)?.customProductList as ArrayList<CustomProductDTO>?
+            bundle.putParcelableArrayList("customProductList", list)
+
+            navController.navigate(
+                R.id.action_customerCustomPageFragment_to_customProductDetailFragment,
+                bundle
+            )
+        }
     }
 }

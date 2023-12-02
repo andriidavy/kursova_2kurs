@@ -37,9 +37,9 @@ class AddEmployeeFragment : Fragment() {
             if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
                 lifecycleScope.launch {
                     viewModel.addEmployee(name, surname, email, password).collect { result ->
-                        result.onSuccess {
+                        result.onSuccess { userId ->
                             ToastObj.shortToastMake(
-                                getString(R.string.success_reg_message),
+                                getString(R.string.success_reg_message, userId),
                                 context
                             )
 
@@ -61,5 +61,4 @@ class AddEmployeeFragment : Fragment() {
             }
         }
     }
-
 }

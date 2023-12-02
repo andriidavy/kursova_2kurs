@@ -2,15 +2,14 @@ package com.example.registration.database.employee
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO
-import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface EmployeeApi {
-    @POST("/employee/login")
-    suspend fun loginEmployee(@Query("email") email:String, @Query("password") password: String) : Employee
+    @GET("/employee/login")
+    suspend fun loginEmployee(@Query("email") email:String, @Query("password") password: String) : Int
 
     @GET("/employee/get-employee-by-id")
     suspend fun getEmployeeProfile(@Query("employeeId") employeeId: Int) : EmployeeProfileDTO

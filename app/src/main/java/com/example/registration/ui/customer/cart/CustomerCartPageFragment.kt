@@ -62,19 +62,11 @@ class CustomerCartPageFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonCreateCustom.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.createCustom().collect { result ->
-                    result.onSuccess { customId ->
-                        val bundle = Bundle()
-                        bundle.putInt("customId", customId)
-                        navController.navigate(
-                            R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment,
-                            bundle
-                        )
-                    }
-                }
-            }
+            navController.navigate(
+                R.id.action_customerCartPageFragment_to_addDepartForNewCustomFragment
+            )
         }
+
         buttonClearCart.setOnClickListener {
             viewModel.clearCart()
             ToastObj.shortToastMake(getString(R.string.cart_cleaned), context)

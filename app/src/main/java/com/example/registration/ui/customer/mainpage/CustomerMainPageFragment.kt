@@ -19,13 +19,10 @@ import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class CustomerMainPageFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomerMainPageBinding
-    private lateinit var adapter: ProductAdapter
     private lateinit var navController: NavController
-    private val viewModel by viewModels<CustomerMainPageViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,26 +35,11 @@ class CustomerMainPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        setObservers()
         setListeners()
     }
 
-    private fun setupViews() = with(binding) {
-        adapter = ProductAdapter(emptyList(), itemClicked())
-        productListRecyclerView.adapter = adapter
-        productListRecyclerView.layoutManager = LinearLayoutManager(activity)
-
+    private fun setupViews() {
         navController = findNavController()
-    }
-
-    private fun setObservers() {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.productsArray.collect { products ->
-                    adapter.updateProducts(products)
-                }
-            }
-        }
     }
 
     private fun setListeners() = with(binding) {
@@ -73,20 +55,9 @@ class CustomerMainPageFragment : Fragment() {
             buttonToProfile.setOnClickListener {
                 navigate(R.id.action_customerMainPageFragment_to_customerProfilePageFragment)
             }
-        }
-    }
-
-    private fun itemClicked(): (Int) -> Unit {
-        return { position ->
-            val product = viewModel.productsArray.value.getOrNull(position)
-            product?.let {
-                val bundle = Bundle()
-                bundle.putParcelable("product", product)
-                navController.navigate(
-                    R.id.action_customerMainPageFragment_to_productItemFragment,
-                    bundle
-                )
-            } ?: ToastObj.shortToastMake(getString(R.string.error_info_product), context)
+            buttonToProductList.setOnClickListener {
+                navigate(R.id.action_customerMainPageFragment_to_customerProductsListFragment)
+            }
         }
     }
 }

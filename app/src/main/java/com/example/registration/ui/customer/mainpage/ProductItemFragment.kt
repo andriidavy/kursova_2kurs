@@ -5,13 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.registration.R
 import com.example.registration.databinding.FragmentProductItemBinding
 import com.example.registration.global.ToastObj
-import com.example.registration.model.product.Product
+import com.example.registration.model.product.ProductDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -36,12 +35,14 @@ class ProductItemFragment : Fragment() {
     }
 
     private fun setupViews() = with(binding) {
-        val product: Product? = arguments?.getParcelable("product")
-        product?.apply {
+
+        val productDTO: ProductDTO? = arguments?.getParcelable("product")
+        productDTO?.apply {
             productName.text = name
             productDescription.text = description
             productId.text = id.toString()
             productQuantity.text = quantity.toString()
+            productPrice.text = price.toString()
         }
     }
 
@@ -52,8 +53,20 @@ class ProductItemFragment : Fragment() {
 
             lifecycleScope.launch {
                 viewModel.addProductToCart(productId, quantity).collect { result ->
-                    result.onSuccess { ToastObj.shortToastMake(getString(R.string.success_add_to_cart), context) }
-                    result.onFailure { ToastObj.shortToastMake(getString(R.string.error_add_to_cart, it), context) }
+                    result.onSuccess {
+                        ToastObj.shortToastMake(
+                            getString(R.string.success_add_to_cart),
+                            context
+                        )
+                    }
+                    result.onFailure {
+                        ToastObj.shortToastMake(
+                            getString(
+                                R.string.error_add_to_cart,
+                                it
+                            ), context
+                        )
+                    }
                 }
             }
         }

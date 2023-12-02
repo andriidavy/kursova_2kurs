@@ -25,6 +25,7 @@ class CustomProductAdapter(private var customProductDTOList: List<CustomProductD
             idForProduct.text = customProductDTOList[position].productId.toString()
             productListItemName.text = customProductDTOList[position].productName
             countForProduct.text = customProductDTOList[position].quantity.toString()
+            priceForProduct.text = customProductDTOList[position].price.toString()
         }
     }
 

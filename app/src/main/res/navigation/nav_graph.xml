@@ -35,9 +35,6 @@
         android:name="com.example.registration.ui.customer.mainpage.CustomerMainPageFragment"
         android:label="CustomerMainPageFragment">
         <action
-            android:id="@+id/action_customerMainPageFragment_to_productItemFragment"
-            app:destination="@id/productItemFragment" />
-        <action
             android:id="@+id/action_customerMainPageFragment_to_customerCartPageFragment"
             app:destination="@id/customerCartPageFragment" />
         <action
@@ -46,6 +43,9 @@
         <action
             android:id="@+id/action_customerMainPageFragment_to_customerProfilePageFragment"
             app:destination="@id/customerProfilePageFragment" />
+        <action
+            android:id="@+id/action_customerMainPageFragment_to_customerProductsListFragment"
+            app:destination="@id/customerProductsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/employeeMainPageFragment"
@@ -372,5 +372,13 @@
         <action
             android:id="@+id/action_addDepartForNewCustomFragment_to_customerMainPageFragment"
             app:destination="@id/customerMainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerProductsListFragment"
+        android:name="com.example.registration.ui.customer.mainpage.CustomerProductsListFragment"
+        android:label="CustomerProductsListFragment" >
+        <action
+            android:id="@+id/action_customerProductsListFragment_to_productItemFragment"
+            app:destination="@id/productItemFragment" />
     </fragment>
 </navigation>

@@ -2,7 +2,6 @@ package com.example.registration
 
 import com.example.registration.database.customer.CustomerApi
 import com.example.registration.database.RetrofitService
-import com.example.registration.model.users.Customer
 import org.junit.Test
 
 /**

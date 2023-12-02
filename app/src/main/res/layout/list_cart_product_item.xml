@@ -21,52 +21,84 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/product_name"/>
+        tools:text="@string/product_name" />
 
     <TextView
         android:id="@+id/id_for_product_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/id"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/id_for_product"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/id" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productListItem_name" />
 
     <TextView
         android:id="@+id/id_for_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/button_delete_item"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="40dp"
-        tools:text="0"/>
+        app:layout_constraintStart_toEndOf="@id/id_for_product_text"
+        app:layout_constraintTop_toBottomOf="@id/productListItem_name"
+        tools:text="0" />
 
     <TextView
         android:id="@+id/count_for_product_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/count_for_product"
-        app:layout_constraintTop_toBottomOf="@id/id_for_product_text"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/product_count" />
+        android:layout_marginStart="20dp"
+        android:text="@string/product_count"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/id_for_product_text" />
 
     <TextView
         android:id="@+id/count_for_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/id_for_product"
-        app:layout_constraintEnd_toStartOf="@id/button_delete_item"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/count_for_product_text"
+        app:layout_constraintTop_toBottomOf="@id/id_for_product_text"
         tools:text="0" />
+
+    <TextView
+        android:id="@+id/price_for_product_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/price"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/count_for_product" />
+
+    <TextView
+        android:id="@+id/price_for_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/price_for_product_text"
+        app:layout_constraintTop_toBottomOf="@id/count_for_product"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/price_symb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/price_for_product"
+        app:layout_constraintTop_toBottomOf="@id/count_for_product"
+        android:text="@string/price_symb" />
 
     <Button
         android:id="@+id/button_delete_item"

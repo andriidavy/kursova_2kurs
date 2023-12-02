@@ -43,13 +43,21 @@ class RegistrationFragment : Fragment() {
                 lifecycleScope.launch {
                     viewModel.insertCustomer(name, surname, email, password)
                         .collect { insertResult ->
-                            insertResult.onSuccess {
+                            insertResult.onSuccess { userId ->
                                 findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
-                                ToastObj.longToastMake(getString(R.string.success_reg_message), context)
+                                ToastObj.longToastMake(
+                                    getString(
+                                        R.string.success_reg_message,
+                                        userId
+                                    ), context
+                                )
                             }
                             insertResult.onFailure {
-                                ToastObj.longToastMake(getString(R.string.invalid_reg_message), context)
+                                ToastObj.longToastMake(
+                                    getString(R.string.invalid_reg_message),
+                                    context
+                                )
                             }
                         }
                 }

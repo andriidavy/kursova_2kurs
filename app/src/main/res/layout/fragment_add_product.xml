@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+
 <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,9 +31,8 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_product_head"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="60dp"
-        />
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="60dp" />
 
     <EditText
         android:id="@+id/product_name"
@@ -43,9 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_name_text"
-        android:layout_margin="16dp"
-        />
-
+        android:layout_margin="16dp" />
 
     <TextView
         android:id="@+id/product_quantity_text"
@@ -58,7 +57,8 @@
         app:layout_constraintTop_toBottomOf="@+id/product_name"
         android:layout_marginTop="20dp"
         android:layout_marginStart="60dp"
-        />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/product_quantity"
@@ -71,7 +71,36 @@
         app:layout_constraintTop_toBottomOf="@+id/product_quantity_text"
         android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
-        />
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/product_price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_price"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_quantity"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="60dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:ems="5"
+        android:hint="@string/price_hint"
+        android:inputType="number|numberDecimal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_price_text"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/product_description_text"
@@ -81,17 +110,18 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_quantity"
+        app:layout_constraintTop_toBottomOf="@+id/product_price"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
-        />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/product_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="14"
-        android:lines="8"
+        android:lines="7"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:hint="@string/desc_hint"
@@ -99,7 +129,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_description_text"
         android:layout_margin="16dp"
-        />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/add_product_button"
@@ -109,7 +140,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_description"
-        android:layout_margin="40dp"
-        />
+        android:layout_margin="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-    </layout>

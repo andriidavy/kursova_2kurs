@@ -4,38 +4,47 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 
-public class Product implements Parcelable {
+public class ProductDTO implements Parcelable {
 
     private int id;
     private String name;
     private String description;
     private int quantity;
+    private double price;
 
-    public Product() {
+    public ProductDTO() {
     }
 
-    public Product(String name, String description, int quantity) {
+    public ProductDTO(String name, String description, int quantity, double price) {
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public ProductDTO(String name, String description, int quantity) {
         this.name = name;
         this.description = description;
         this.quantity = quantity;
     }
 
-    protected Product(Parcel in) {
+    protected ProductDTO(Parcel in) {
         id = in.readInt();
         name = in.readString();
         description = in.readString();
         quantity = in.readInt();
+        price = in.readDouble();
     }
 
-    public static final Creator<Product> CREATOR = new Creator<Product>() {
+    public static final Creator<ProductDTO> CREATOR = new Creator<ProductDTO>() {
         @Override
-        public Product createFromParcel(Parcel in) {
-            return new Product(in);
+        public ProductDTO createFromParcel(Parcel in) {
+            return new ProductDTO(in);
         }
 
         @Override
-        public Product[] newArray(int size) {
-            return new Product[size];
+        public ProductDTO[] newArray(int size) {
+            return new ProductDTO[size];
         }
     };
 
@@ -45,6 +54,7 @@ public class Product implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeInt(quantity);
+        dest.writeDouble(price);
     }
 
     @Override
@@ -84,13 +94,22 @@ public class Product implements Parcelable {
         this.quantity = quantity;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
+                ", price=" + price +
                 '}';
     }
 }

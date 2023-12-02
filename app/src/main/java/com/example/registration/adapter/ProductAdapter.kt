@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ListProductItemBinding
-import com.example.registration.model.product.Product
+import com.example.registration.model.product.ProductDTO
 
 open class ProductAdapter(
-    private var productList: List<Product>,
+    private var productDTOList: List<ProductDTO>,
     private var itemClicked: (Int) -> Unit
 ) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
@@ -25,10 +25,10 @@ open class ProductAdapter(
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.view.apply {
-            product = productList[position]
-            productListItemName.text = productList[position].name
-            idForProduct.text = productList[position].id.toString()
-            countForProduct.text = productList[position].quantity.toString()
+            productListItemName.text = productDTOList[position].name
+            idForProduct.text = productDTOList[position].id.toString()
+            countForProduct.text = productDTOList[position].quantity.toString()
+            priceForProduct.text = productDTOList[position].price.toString()
 
             root.setOnClickListener {
                 itemClicked.invoke(position)
@@ -37,11 +37,11 @@ open class ProductAdapter(
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = productList.size
+    override fun getItemCount() = productDTOList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateProducts(newProducts: List<Product>) {
-        productList = newProducts
+    fun updateProducts(newProductDTOS: List<ProductDTO>) {
+        productDTOList = newProductDTOS
         notifyDataSetChanged()
     }
 

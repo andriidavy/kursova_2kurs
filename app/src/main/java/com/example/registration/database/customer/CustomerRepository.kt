@@ -3,8 +3,7 @@ package com.example.registration.database.customer
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
-import com.example.registration.model.product.Product
-import com.example.registration.model.users.Customer
+import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.users.CustomerProfileDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,15 +14,15 @@ class CustomerRepository @Inject constructor(
     private val customerApi: CustomerApi
 ) {
 
-    fun save(
+    fun insertCustomer(
         name: String,
         surname: String,
         email: String,
         password: String
-    ): Flow<Result<Customer>> = flow {
+    ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val customer = customerApi.save(name, surname, email, password)
+                val customer = customerApi.insertCustomer(name, surname, email, password)
                 Result.success(customer)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -31,7 +30,7 @@ class CustomerRepository @Inject constructor(
         )
     }
 
-    fun loginCustomer(email: String, password: String): Flow<Result<Customer>> = flow {
+    fun loginCustomer(email: String, password: String): Flow<Result<Int>> = flow {
         emit(
             try {
                 val customer = customerApi.loginCustomer(email, password)
@@ -46,16 +45,37 @@ class CustomerRepository @Inject constructor(
         return customerApi.getCustomerProfileById(customerId)
     }
 
-    suspend fun getProducts(): List<Product> {
-        return customerApi.getProductsAll()
+    fun getProducts(): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.getProductsAll())
+    }
+
+    fun searchProduct(searchStr: String, chooseType: Int): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.searchProduct(searchStr, chooseType))
+    }
+
+    fun searchProductWithPriceRange(
+        searchStr: String,
+        chooseType: Int,
+        minPrice: Double,
+        maxPrice: Double
+    ): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.searchProductWithPriceRange(searchStr, chooseType, minPrice, maxPrice))
+    }
+
+    fun getMinProductPrice(): Flow<Double> = flow {
+        emit(customerApi.getMinProductPrice())
+    }
+
+    fun getMaxProductPrice(): Flow<Double> = flow {
+        emit(customerApi.getMaxProductPrice())
     }
 
     fun getCartProducts(customerId: Int): Flow<List<CartProductDTO>> = flow {
         emit(customerApi.getCartProducts(customerId))
     }
 
-    suspend fun getCustomsForCustomer(customerId: Int): List<CustomDTO> {
-        return customerApi.getCustomsForCustomer(customerId)
+    fun getCustomsForCustomer(customerId: Int): Flow<List<CustomDTO>> = flow {
+        emit(customerApi.getCustomsForCustomer(customerId))
     }
 
     suspend fun addProductToCart(customerId: Int, productId: Int, quantity: Int): Result<Unit> {
@@ -68,13 +88,15 @@ class CustomerRepository @Inject constructor(
     }
 
 
-    suspend fun createCustom(customerId: Int): Result<Int> {
-        return try {
-            val result: Int = customerApi.createCustom(customerId)
-            Result.success(result)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    fun createCustom(customerId: Int, departmentId: Int): Flow<Result<Int>> = flow {
+        emit(
+            try {
+                val result: Int = customerApi.createCustom(customerId, departmentId)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     suspend fun removeProductFromCart(customerId: Int, productId: Int) {
@@ -83,10 +105,6 @@ class CustomerRepository @Inject constructor(
 
     suspend fun clearCart(customerId: Int) {
         return customerApi.clearCart(customerId)
-    }
-
-    suspend fun assignDepartmentToCustom(customId: Int, departmentId: Int) {
-        return customerApi.assignDepartmentToCustom(customId, departmentId)
     }
 
     suspend fun getAllDepartments(): List<DepartmentDTO> {

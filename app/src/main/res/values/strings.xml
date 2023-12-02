@@ -15,7 +15,7 @@
     <string name="basket">Кошик</string>
     <string name="order_placed">Оформлені \nзамовлення</string>
     <string name="product_name">Product name</string>
-    <string name="product_count">кількість:</string>
+    <string name="product_count">Кількість:</string>
     <string name="toBasket">В кошик</string>
     <string name="itemInMagazine">штук на складі:</string>
     <string name="product_id_text">ID товару:</string>
@@ -64,7 +64,7 @@
     <string name="quantity">Кількість товару:</string>
     <string name="quantity_hint">к-сть шт.</string>
     <string name="product_desc_text">Опис товару:</string>
-    <string name="desc_hint">опис товару (якщо товар з таким найменуванням вже є в базі, залишіть це поле пустим)</string>
+    <string name="desc_hint">опис товару</string>
     <string name="add_text">Додати</string>
     <string name="personnel_management">Управління персоналом</string>
     <string name="add_new_employee">Додати нового робітника</string>
@@ -93,13 +93,13 @@
     <string name="choose_depart_text">Оберіть відділ доставки:</string>
     <string name="product_сatalog">Каталог товарів</string>
     <string name="depart_registration">Додати відділ</string>
-    <string name="success_reg_message">Реєстрація пройшла успішно!</string>
+    <string name="success_reg_message">Реєстрація пройшла успішно! Ваш ID користувача: %1$d</string>
     <string name="invalid_reg_message">Користувач з таким email вже існує!</string>
     <string name="name_required">Ім\'я обов\'язкове!</string>
     <string name="surname_required">Прізвище обов\'язкове!</string>
     <string name="email_required">Email обов\'язковий!</string>
     <string name="password_required">Пароль обов\'язковий!</string>
-    <string name="success_log">Вітаємо, %1$s %2$s!</string>
+    <string name="success_log">Вхід виконано успішно!</string>
     <string name="invalid_log">Невірний логін чи пароль!</string>
     <string name="success_add_to_cart">Товар додано до корзини</string>
     <string name="error_add_to_cart">Помилка: %1$s</string>
@@ -108,9 +108,24 @@
     <string name="cart_cleaned">Корзину очищено</string>
     <string name="assign_custom_to_employee">Для замовлення № %1$s призначений робітник № %2$s</string>
     <string name="error_custom_id">ID замовлення некоректне!</string>
-    <string name="add_product_null_check">Поля name та quantity мають бути заповнені!</string>
-    <string name="success_add_product">Товар додано до бази данних!</string>
+    <string name="add_product_null_check">Поля name, quantity та price мають бути заповнені!</string>
+    <string name="provide_product_null_check">Поля name, quantity мають бути заповнені!</string>
+    <string name="success_add_product">Товар додано до бази данних! ID товару: %1$d</string>
     <string name="null_check">Всі поля мають бути заповнені!</string>
     <string name="invalid_pin">Пін-код невірний!</string>
+    <string name="search_hint">Пошук</string>
+    <string name="product_list">Список товарів</string>
+    <string name="main_page">Головне меню</string>
+    <string name="search_type">Тип пошуку:</string>
+    <string name="price_range">ціновий діапазон</string>
+    <string name="min_price">Мін. ціна</string>
+    <string name="max_price">Макс. ціна</string>
+    <string name="price">Ціна:</string>
+    <string name="price_symb">$</string>
+    <string name="wrong_create_custom">Помилка оброблення замовлення!</string>
+    <string name="success_create_custom">Замовлення № %1$d прийнято!</string>
+    <string name="product_price">Ціна товару:</string>
+    <string name="price_hint">ціна в $</string>
+    <string name="add_product_error">Помилка додавання продукту!</string>
 
 </resources>

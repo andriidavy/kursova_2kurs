@@ -2,7 +2,6 @@ package com.example.registration.database.employee
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO
-import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -10,7 +9,7 @@ import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeApi) {
 
-    fun loginEmployee(email: String, password: String): Flow<Result<Employee>> = flow {
+    fun loginEmployee(email: String, password: String): Flow<Result<Int>> = flow {
         emit(
             try {
                 val employee = employeeApi.loginEmployee(email, password)

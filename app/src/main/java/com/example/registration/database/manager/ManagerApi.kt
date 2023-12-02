@@ -2,11 +2,9 @@ package com.example.registration.database.manager
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
-import com.example.registration.model.product.Product
+import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.report.ReportDTO
-import com.example.registration.model.users.Employee
 import com.example.registration.model.users.EmployeeProfileDTO
-import com.example.registration.model.users.Manager
 import com.example.registration.model.users.ManagerProfileDTO
 import retrofit2.http.*
 
@@ -14,19 +12,19 @@ interface ManagerApi {
     @GET("/manager/profile/get-all")
     suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
 
-    @POST("/manager/login")
+    @GET("/manager/login")
     suspend fun loginManager(
         @Query("email") email: String,
         @Query("password") password: String
-    ): Manager
+    ): Int
 
-    @POST("/manager/save")
-    suspend fun saveManager(
+    @POST("/manager/insert")
+    suspend fun insertManager(
         @Query("name") name: String,
         @Query("surname") surname: String,
         @Query("email") email: String,
         @Query("password") password: String
-    ): Manager
+    ): Int
 
 
     @DELETE("/manager/delete-manager-by-id")
@@ -48,19 +46,19 @@ interface ManagerApi {
     @GET("/manager/employee/profile/get-all")
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
 
-    @POST("/manager/employee/save")
-    suspend fun saveEmployee(
+    @POST("/manager/employee/insert")
+    suspend fun insertEmployee(
         @Query("name") name: String,
         @Query("surname") surname: String,
         @Query("email") email: String,
         @Query("password") password: String
-    ): Employee
+    ): Int
 
     @DELETE("/manager/employee/delete-employee-by-id")
     suspend fun deleteEmployeeById(@Query("employeeId") employeeId: Int)
 
     @GET("/manager/product/get-all")
-    suspend fun getAllProducts(): List<Product>
+    suspend fun getAllProducts(): List<ProductDTO>
 
     @POST("/manager/custom/assign-employee/")
     suspend fun assignEmployeeToCustom(
@@ -74,9 +72,11 @@ interface ManagerApi {
     @POST("/manager/custom/report/reject")
     suspend fun setReportRejected(@Query("reportId") reportId: Int)
 
-    @POST("/manager/product/save")
-    suspend fun saveProduct(@Body product: Product): Product
+    @POST("/manager/provide-product")
+    suspend fun provideProduct(@Query("productName") productName: String, @Query("quantity") quantity: Int, @Query("price") price: Double, @Query("description") description: String): Int
 
+    @GET("/manager/is-product-exist")
+    suspend fun isProductExists(@Query("productName") productName: String): Boolean
 
     @POST("/manager/department/save")
     suspend fun saveDepartment(@Query("departmentName") departmentName: String): DepartmentDTO

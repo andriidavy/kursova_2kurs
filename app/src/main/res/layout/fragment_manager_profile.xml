@@ -129,18 +129,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_text" />
 
-        <TextView
-            android:id="@+id/manager_departments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="30dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:layout_constraintStart_toEndOf="@id/departments_text"
-            app:layout_constraintTop_toBottomOf="@id/email_text"
-            tools:text="DEPARTS" />
+    <TextView
+        android:id="@+id/manager_departments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingStart="116dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toEndOf="@id/departments_text"
+        app:layout_constraintTop_toBottomOf="@id/email_text"
+        tools:text="DEPARTS" />
 
         <Button
             android:id="@+id/button_logout"

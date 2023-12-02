@@ -53,7 +53,7 @@ class AllProductListFragment : Fragment() {
     private fun setObservers() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.productArray.collect { products ->
+                viewModel.productDTOArray.collect { products ->
                     adapter.updateProducts(products)
                 }
             }

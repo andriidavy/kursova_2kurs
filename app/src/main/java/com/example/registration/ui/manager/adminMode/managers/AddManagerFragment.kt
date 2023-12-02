@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.registration.R
 import com.example.registration.databinding.FragmentAddManagerBinding
 import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +42,13 @@ class AddManagerFragment : Fragment() {
             if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
                 lifecycleScope.launch {
                     viewModel.addManager(name, surname, email, password).collect { result ->
-                        result.onSuccess {
-                            ToastObj.shortToastMake("Реєстрація пройшла успішно!", context)
+                        result.onSuccess { userId ->
+                            ToastObj.longToastMake(
+                                getString(
+                                    R.string.success_reg_message,
+                                    userId
+                                ), context
+                            )
 
                             etName.text.clear()
                             etSurname.text.clear()

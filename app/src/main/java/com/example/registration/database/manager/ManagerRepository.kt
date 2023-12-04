@@ -6,6 +6,7 @@ import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.model.users.ManagerProfileDTO
+import com.example.registration.model.users.StaffDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -35,11 +36,12 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        repPassword: String
     ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val manager = managerApi.insertManager(name, surname, email, password)
+                val manager = managerApi.insertManager(name, surname, email, password, repPassword)
                 Result.success(manager)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -66,8 +68,30 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.getAllProducts())
     }
 
-    fun getAllCreatedCustoms(managerId: Int): Flow<List<CustomDTO>> = flow {
-        emit(managerApi.getAllCreatedCustoms(managerId))
+    fun searchProductById(productId: Int): Flow<Result<ProductDTO>> = flow {
+        emit(
+            try {
+                val result = managerApi.searchProductById(productId)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
+    }
+
+    fun getAllCustomsWithoutEmployee(managerId: Int): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCustomsWithoutEmployee(managerId))
+    }
+
+    fun searchCustomById(customId: Int): Flow<Result<CustomDTO>> = flow {
+        emit(
+            try {
+                val result = managerApi.searchCustomById(customId)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
     }
 
     fun getAllWaiting(managerId: Int): Flow<List<ReportDTO>> = flow {
@@ -82,11 +106,13 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        repPassword: String
     ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val employee = managerApi.insertEmployee(name, surname, email, password)
+                val employee =
+                    managerApi.insertEmployee(name, surname, email, password, repPassword)
                 Result.success(employee)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -100,6 +126,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
 
     suspend fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
         managerApi.assignEmployeeToCustom(customId, employeeId)
+    }
+
+    fun getStaff(): Flow<List<StaffDTO>> = flow {
+        emit(managerApi.getStaff())
     }
 
     suspend fun setReportAccepted(reportId: Int) {
@@ -137,21 +167,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun saveDepartment(departmentName: String): Flow<Result<DepartmentDTO>> = flow {
+    fun saveDepartment(departmentName: String): Flow<Result<Unit>> = flow {
         emit(
             try {
                 val result = managerApi.saveDepartment(departmentName)
-                Result.success(result)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        )
-    }
-
-    fun removeDepartmentById(departmentId: Int): Flow<Result<Unit>> = flow {
-        emit(
-            try {
-                val result = managerApi.removeDepartmentById(departmentId)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)

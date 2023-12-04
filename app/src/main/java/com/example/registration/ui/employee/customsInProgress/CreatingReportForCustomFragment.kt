@@ -32,10 +32,10 @@ class CreatingReportForCustomFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-        buttonSendReport.setOnClickListener {
-            val customId: Int? = arguments?.getInt("customInProgressId")
-            reportId.text = customId.toString()
+        val customId: Int? = arguments?.getInt("customInProgressId")
+        reportId.text = customId.toString()
 
+        buttonSendReport.setOnClickListener {
             customId?.let { id ->
                 val reportText: String = reportText.text.toString()
 

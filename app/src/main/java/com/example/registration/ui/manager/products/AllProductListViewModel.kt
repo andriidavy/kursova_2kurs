@@ -24,12 +24,28 @@ class AllProductListViewModel @Inject constructor(private val managerRepository:
         getAllProducts()
     }
 
-    private fun getAllProducts() {
+    fun getAllProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllProducts()
             withContext(Dispatchers.Main) {
                 result.collect {
                     _productDTOArray.value = it
+                }
+            }
+        }
+    }
+
+    fun searchProductById(productId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = managerRepository.searchProductById(productId)
+            withContext(Dispatchers.Main) {
+                result.collect { result ->
+                    result.onSuccess { product ->
+                        _productDTOArray.value = listOf(product)
+                    }
+                    result.onFailure {
+                        _productDTOArray.value = emptyList()
+                    }
                 }
             }
         }

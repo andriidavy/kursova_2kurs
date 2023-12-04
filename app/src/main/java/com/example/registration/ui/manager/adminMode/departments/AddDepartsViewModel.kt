@@ -11,7 +11,7 @@ import javax.inject.Inject
 class AddDepartsViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
     ViewModel() {
 
-    fun saveDepart(departmentName: String): Flow<Result<DepartmentDTO>> {
+    fun saveDepart(departmentName: String): Flow<Result<Unit>> {
         return managerRepository.saveDepartment(departmentName)
     }
 }

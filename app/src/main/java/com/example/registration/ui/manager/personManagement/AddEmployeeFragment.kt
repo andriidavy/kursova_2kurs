@@ -30,31 +30,34 @@ class AddEmployeeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
         buttonAdd.setOnClickListener {
-            val name: String = etName.text.toString()
-            val surname: String = etSurname.text.toString()
-            val email: String = etEmail.text.toString()
-            val password: String = etPassword.text.toString()
-            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+            val name: String = etName.text.toString().trim()
+            val surname: String = etSurname.text.toString().trim()
+            val email: String = etEmail.text.toString().trim()
+            val password: String = etPassword.text.toString().trim()
+            val repPassword: String = etRepPassword.text.toString().trim()
+            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
                 lifecycleScope.launch {
-                    viewModel.addEmployee(name, surname, email, password).collect { result ->
-                        result.onSuccess { userId ->
-                            ToastObj.shortToastMake(
-                                getString(R.string.success_reg_message, userId),
-                                context
-                            )
+                    viewModel.addEmployee(name, surname, email, password, repPassword)
+                        .collect { result ->
+                            result.onSuccess { userId ->
+                                ToastObj.shortToastMake(
+                                    getString(R.string.success_reg_message, userId),
+                                    context
+                                )
 
-                            etName.text.clear()
-                            etSurname.text.clear()
-                            etEmail.text.clear()
-                            etPassword.text.clear()
+                                etName.text.clear()
+                                etSurname.text.clear()
+                                etEmail.text.clear()
+                                etPassword.text.clear()
+                                etRepPassword.text.clear()
+                            }
+                            result.onFailure {
+                                ToastObj.shortToastMake(
+                                    getString(R.string.invalid_reg_message),
+                                    context
+                                )
+                            }
                         }
-                        result.onFailure {
-                            ToastObj.shortToastMake(
-                                getString(R.string.invalid_reg_message),
-                                context
-                            )
-                        }
-                    }
                 }
             } else {
                 ToastObj.shortToastMake(getString(R.string.null_check), context)

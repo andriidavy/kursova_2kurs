@@ -71,6 +71,19 @@
         app:layout_constraintTop_toBottomOf="@+id/etEmail"
         android:layout_margin="40dp"/>
 
+    <EditText
+        android:id="@+id/etRepPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/repeat_password"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        android:layout_margin="40dp"/>
+
     <Button
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
@@ -79,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etRepPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

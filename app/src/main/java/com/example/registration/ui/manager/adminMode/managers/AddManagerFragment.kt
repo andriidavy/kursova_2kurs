@@ -34,14 +34,15 @@ class AddManagerFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonAdd.setOnClickListener {
-            val name: String = etName.text.toString()
-            val surname: String = etSurname.text.toString()
-            val email: String = etEmail.text.toString()
-            val password: String = etPassword.text.toString()
+            val name: String = etName.text.toString().trim()
+            val surname: String = etSurname.text.toString().trim()
+            val email: String = etEmail.text.toString().trim()
+            val password: String = etPassword.text.toString().trim()
+            val repPassword: String = etRepPassword.text.toString().trim()
 
-            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
                 lifecycleScope.launch {
-                    viewModel.addManager(name, surname, email, password).collect { result ->
+                    viewModel.addManager(name, surname, email, password, repPassword).collect { result ->
                         result.onSuccess { userId ->
                             ToastObj.longToastMake(
                                 getString(

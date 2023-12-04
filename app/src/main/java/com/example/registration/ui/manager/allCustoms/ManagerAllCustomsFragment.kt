@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,8 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.custom.ManagerAllCustomAdapter
 import com.example.registration.databinding.FragmentManagerAllCustomsBinding
+import com.example.registration.global.ToastObj
 import com.example.registration.model.custom.CustomProductDTO
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,6 +31,7 @@ class ManagerAllCustomsFragment : Fragment() {
     private lateinit var adapter: ManagerAllCustomAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<ManagerAllCustomsPageViewModel>()
+    private val searchStr = MutableStateFlow(0)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +45,7 @@ class ManagerAllCustomsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setViews()
         setObservers()
+        setListeners()
     }
 
     private fun setViews() = with(binding) {
@@ -47,6 +54,10 @@ class ManagerAllCustomsFragment : Fragment() {
         allCustomListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
+        etSearchCustomField.doOnTextChanged { text, _, _, _ ->
+            if (text.toString().isNotBlank()) searchStr.value =
+                text.toString().toInt() else searchStr.value = 0
+        }
     }
 
     private fun setObservers() {
@@ -54,6 +65,23 @@ class ManagerAllCustomsFragment : Fragment() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.customAllArray.collect { customs ->
                     adapter.updateCustoms(customs)
+                }
+            }
+        }
+    }
+
+    private fun setListeners() = with(binding) {
+        buttonSearch.setOnClickListener {
+            val searchId: Int = searchStr.value
+            if (searchId <= 0) viewModel.getAllCustomsForManager() else viewModel.searchCustomById(
+                searchId
+            )
+            lifecycleScope.launch {
+                delay(2000)
+                if (viewModel.customAllArray.value.isEmpty()) {
+                    ToastObj.longToastMake(
+                        getString(R.string.custom_not_found), context
+                    )
                 }
             }
         }

@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.report.ReportAdapter
 import com.example.registration.databinding.FragmentEmployeeReportsAcceptedBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EmployeeReportsAcceptedFragment : Fragment() {
 
     private lateinit var binding: FragmentEmployeeReportsAcceptedBinding

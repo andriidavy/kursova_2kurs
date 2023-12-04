@@ -1,23 +1,14 @@
 package com.example.registration.ui.customer.mainpage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
-import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerMainPageBinding
-import com.example.registration.global.ToastObj
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 class CustomerMainPageFragment : Fragment() {
 

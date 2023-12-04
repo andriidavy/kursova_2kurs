@@ -26,6 +26,7 @@ class ManagerDepartDetailFragment : Fragment() {
     private lateinit var adapter: ManagerDepartmentAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<ManagerDepartDetailViewModel>()
+    private var managerId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +48,13 @@ class ManagerDepartDetailFragment : Fragment() {
         managerDepartDetailRecyclerView.adapter = adapter
         managerDepartDetailRecyclerView.layoutManager = LinearLayoutManager(activity)
 
+        managerId = arguments?.getInt("managerId") ?: 0
+        viewModel.getAllDepartmentsForManager(managerId)
+
         navController = findNavController()
     }
 
     private fun setListeners() = with(binding) {
-        val managerId: Int = viewModel.managerId
-
         buttonAddDepart.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("managerId", managerId)
@@ -76,11 +78,11 @@ class ManagerDepartDetailFragment : Fragment() {
     private fun onRemoveManagerClick(): (Int) -> Unit {
         return { position ->
             val departmentId: Int = viewModel.departForManagerArray.value[position].id
-            val removeResult = viewModel.removeDepartmentFromManager(departmentId)
+            val removeResult = viewModel.removeDepartmentFromManager(managerId, departmentId)
             lifecycleScope.launch {
                 removeResult.collect { result ->
                     result.onSuccess {
-                        viewModel.getAllDepartmentsForManager()
+                        viewModel.getAllDepartmentsForManager(managerId)
                     }
                     result.onFailure {
                         ToastObj.shortToastMake("Помилка: $it", context)

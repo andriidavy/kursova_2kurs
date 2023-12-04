@@ -18,11 +18,12 @@ class CustomerRepository @Inject constructor(
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        repPassword: String
     ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val customer = customerApi.insertCustomer(name, surname, email, password)
+                val customer = customerApi.insertCustomer(name, surname, email, password, repPassword)
                 Result.success(customer)
             } catch (e: Exception) {
                 Result.failure(e)

@@ -1,13 +1,10 @@
 package com.example.registration.ui.manager.adminMode.managers
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
+import com.example.registration.model.department.DepartmentDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,13 +23,9 @@ class AllDepartViewModel @Inject constructor(
     private val _departNonForManagerArray = MutableStateFlow<List<DepartmentDTO>>(emptyList())
     val departNonForManagerArray: StateFlow<List<DepartmentDTO>>
         get() = _departNonForManagerArray
-    private val managerId = getUserId()
 
-    init {
-        getDepartmentsWithoutManager()
-    }
 
-    fun getDepartmentsWithoutManager() {
+    fun getDepartmentsWithoutManager(managerId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getDepartmentsWithoutManager(managerId)
             withContext(Dispatchers.Main) {
@@ -43,7 +36,7 @@ class AllDepartViewModel @Inject constructor(
         }
     }
 
-    fun assignDepartmentToManager(departmentId: Int): Flow<Result<Unit>> {
+    fun assignDepartmentToManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> {
         return managerRepository.assignDepartmentToManager(managerId, departmentId)
     }
 }

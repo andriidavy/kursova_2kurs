@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +19,8 @@ import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentAllProductListBinding
 import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,6 +30,7 @@ class AllProductListFragment : Fragment() {
     private lateinit var adapter: ProductAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<AllProductListViewModel>()
+    private val searchStr = MutableStateFlow(0)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +53,10 @@ class AllProductListFragment : Fragment() {
         allProductListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
+        etSearchProductField.doOnTextChanged { text, _, _, _ ->
+            if (text.toString().isNotBlank()) searchStr.value =
+                text.toString().toInt() else searchStr.value = 0
+        }
     }
 
     private fun setObservers() {
@@ -63,6 +72,17 @@ class AllProductListFragment : Fragment() {
     private fun setListeners() = with(binding) {
         buttonAddProduct.setOnClickListener {
             navController.navigate(R.id.action_allProductListFragment_to_addProductFragment)
+        }
+
+        buttonSearchProduct.setOnClickListener {
+            val searchId: Int = searchStr.value
+            if (searchId <= 0) viewModel.getAllProducts() else viewModel.searchProductById(searchId)
+            lifecycleScope.launch {
+                delay(2000)
+                if (viewModel.productDTOArray.value.isEmpty()) {
+                    ToastObj.longToastMake(getString(R.string.search_product_error), context)
+                }
+            }
         }
     }
 

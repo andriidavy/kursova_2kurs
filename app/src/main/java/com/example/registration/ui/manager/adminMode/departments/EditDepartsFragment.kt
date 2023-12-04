@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
+import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.adapter.manager.department.ManagerDepartmentAdapter
 import com.example.registration.databinding.FragmentEditDepartsBinding
 import com.example.registration.global.ToastObj
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 class EditDepartsFragment : Fragment() {
 
     private lateinit var binding: FragmentEditDepartsBinding
-    private lateinit var adapter: ManagerDepartmentAdapter
+    private lateinit var adapter: AllDepartmentAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<EditDepartsViewModel>()
 
@@ -42,10 +43,10 @@ class EditDepartsFragment : Fragment() {
         setObservers()
     }
 
-    private fun setViews() {
-        adapter = ManagerDepartmentAdapter(emptyList(), onRemoveManagerClick())
-        binding.editDepartsRecyclerView.adapter = adapter
-        binding.editDepartsRecyclerView.layoutManager = LinearLayoutManager(activity)
+    private fun setViews() = with(binding){
+        adapter = AllDepartmentAdapter(emptyList(), onItemClick())
+        editDepartsRecyclerView.adapter = adapter
+        editDepartsRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
     }
@@ -66,22 +67,11 @@ class EditDepartsFragment : Fragment() {
         }
     }
 
-    private fun onRemoveManagerClick(): (Int) -> Unit {
+    private fun onItemClick(): (Int) -> Unit {
         return { position ->
             val departmentId: Int = viewModel.departAllArray.value[position].id
-            lifecycleScope.launch {
-                lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.removeDepartmentById(departmentId).collect { result ->
-                        result.onSuccess {
-                            viewModel.getAllDepartments()
-                            ToastObj.shortToastMake("Відділ видалено успішно!", context)
-                        }
-                        result.onFailure {
-                            ToastObj.shortToastMake("Помилка: $it", context)
-                        }
-                    }
-                }
-            }
+            val departmentName: String = viewModel.departAllArray.value[position].departmentName
+            ToastObj.longToastMake(getString(R.string.depart_message, departmentName, departmentId), context)
         }
     }
 }

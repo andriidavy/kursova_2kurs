@@ -39,9 +39,10 @@ class RegistrationFragment : Fragment() {
             val surname: String = etSurname.text.toString().trim()
             val email: String = etEmail.text.toString().trim()
             val password: String = etPassword.text.toString().trim()
-            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+            val repPassword: String = etRepPassword.text.toString().trim()
+            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
                 lifecycleScope.launch {
-                    viewModel.insertCustomer(name, surname, email, password)
+                    viewModel.insertCustomer(name, surname, email, password, repPassword)
                         .collect { insertResult ->
                             insertResult.onSuccess { userId ->
                                 findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)

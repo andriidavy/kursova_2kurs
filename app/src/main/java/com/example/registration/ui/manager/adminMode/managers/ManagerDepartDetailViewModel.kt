@@ -23,13 +23,8 @@ class ManagerDepartDetailViewModel @Inject constructor(
     private val _departForManagerArray = MutableStateFlow<List<DepartmentDTO>>(emptyList())
     val departForManagerArray: StateFlow<List<DepartmentDTO>>
         get() = _departForManagerArray
-    val managerId = getUserId()
 
-    init {
-        getAllDepartmentsForManager()
-    }
-
-    fun getAllDepartmentsForManager() {
+    fun getAllDepartmentsForManager(managerId : Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllDepartmentsForManager(managerId)
             withContext(Dispatchers.Main) {
@@ -40,7 +35,7 @@ class ManagerDepartDetailViewModel @Inject constructor(
         }
     }
 
-    fun removeDepartmentFromManager(departmentId: Int): Flow<Result<Unit>> {
+    fun removeDepartmentFromManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> {
             return managerRepository.removeDepartmentFromManager(managerId, departmentId)
     }
 }

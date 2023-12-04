@@ -41,5 +41,9 @@ class AdminMainPageFragment : Fragment() {
         buttonToDepartments.setOnClickListener {
             navController.navigate(R.id.action_adminMainPageFragment_to_editDepartsFragment)
         }
+
+        buttonToStaff.setOnClickListener {
+            navController.navigate(R.id.action_adminMainPageFragment_to_staffFragment)
+        }
     }
 }

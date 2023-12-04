@@ -114,6 +114,7 @@
     <string name="null_check">Всі поля мають бути заповнені!</string>
     <string name="invalid_pin">Пін-код невірний!</string>
     <string name="search_hint">Пошук</string>
+    <string name="search_hint_by_id">Пошук по ID</string>
     <string name="product_list">Список товарів</string>
     <string name="main_page">Головне меню</string>
     <string name="search_type">Тип пошуку:</string>
@@ -127,5 +128,10 @@
     <string name="product_price">Ціна товару:</string>
     <string name="price_hint">ціна в $</string>
     <string name="add_product_error">Помилка додавання продукту!</string>
+    <string name="custom_not_found">Замовлення не знайдено!</string>
+    <string name="search_product_error">Продукт не знайдено</string>
+    <string name="repeat_password">Повторіть пароль:</string>
+    <string name="depart_message">Відділ: %1$s, ID відділу: %2$d</string>
+    <string name="staff_list">Cписок персоналу</string>
 
 </resources>

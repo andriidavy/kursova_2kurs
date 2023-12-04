@@ -30,7 +30,7 @@ class ManagerCreatedCustomsPageViewModel @Inject constructor(
 
     private fun getCreatedCustomsForManager() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllCreatedCustoms(managerId)
+            val result = managerRepository.getAllCustomsWithoutEmployee(managerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customCreatedArray.value = it

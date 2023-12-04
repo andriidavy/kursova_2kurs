@@ -14,9 +14,10 @@ class CustomerRegistrationViewModel @Inject constructor(private val customerRepo
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        repPassword: String
     ): Flow<Result<Int>> {
-        return customerRepository.insertCustomer(name, surname, email, password)
+        return customerRepository.insertCustomer(name, surname, email, password, repPassword)
     }
 }
 

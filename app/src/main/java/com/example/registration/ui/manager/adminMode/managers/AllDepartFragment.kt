@@ -22,6 +22,7 @@ class AllDepartFragment : Fragment() {
     private lateinit var binding: FragmentAllDepartBinding
     private lateinit var adapter: AllDepartmentAdapter
     private val viewModel by viewModels<AllDepartViewModel>()
+    private var managerId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +42,9 @@ class AllDepartFragment : Fragment() {
         adapter = AllDepartmentAdapter(emptyList(), onItemClick())
         allDepartRecyclerView.adapter = adapter
         allDepartRecyclerView.layoutManager = LinearLayoutManager(activity)
+        managerId = arguments?.getInt("managerId") ?: 0
+
+        viewModel.getDepartmentsWithoutManager(managerId)
     }
 
     private fun setObservers() {
@@ -56,13 +60,13 @@ class AllDepartFragment : Fragment() {
     private fun onItemClick(): (Int) -> Unit {
         return { position ->
             val departmentId = viewModel.departNonForManagerArray.value[position].id
-            val assignResult = viewModel.assignDepartmentToManager(departmentId)
+            val assignResult = viewModel.assignDepartmentToManager(managerId, departmentId)
 
             lifecycleScope.launch {
                 assignResult.collect { result ->
                     result.onSuccess {
                         ToastObj.shortToastMake("Відділ призначено менеджеру успішно", context)
-                        viewModel.getDepartmentsWithoutManager()
+                        viewModel.getDepartmentsWithoutManager(managerId)
                     }
                     result.onFailure {
                         ToastObj.shortToastMake("Помилка: $it", context)

@@ -48,6 +48,13 @@ class ManagerAllCustomAdapter(
                 employeeName.visibility = View.VISIBLE
                 employeeSurnameText.visibility = View.VISIBLE
                 employeeSurname.visibility = View.VISIBLE
+            } else {
+                employeeText.visibility = View.GONE
+                employeeId.visibility = View.GONE
+                employeeNameText.visibility = View.GONE
+                employeeName.visibility = View.GONE
+                employeeSurnameText.visibility = View.GONE
+                employeeSurname.visibility = View.GONE
             }
 
             root.setOnClickListener {

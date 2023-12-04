@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <Button
             android:id="@+id/button_add_product"
             android:layout_width="wrap_content"
@@ -16,8 +15,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp"
-            />
+            android:layout_margin="30dp" />
+
+        <EditText
+            android:id="@+id/et_search_product_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/search_hint_by_id"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_add_product" />
+
+        <Button
+            android:id="@+id/button_search_product"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:background="@android:drawable/ic_menu_search"
+            app:layout_constraintStart_toEndOf="@id/et_search_product_field"
+            app:layout_constraintTop_toBottomOf="@id/button_add_product" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/allProductList_recyclerView"
@@ -27,7 +48,6 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_add_product"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/et_search_product_field" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

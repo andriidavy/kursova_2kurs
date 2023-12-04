@@ -323,6 +323,9 @@
         <action
             android:id="@+id/action_adminMainPageFragment_to_editDepartsFragment"
             app:destination="@id/editDepartsFragment" />
+        <action
+            android:id="@+id/action_adminMainPageFragment_to_staffFragment"
+            app:destination="@id/staffFragment" />
     </fragment>
     <fragment
         android:id="@+id/editManagerFragment"
@@ -381,4 +384,8 @@
             android:id="@+id/action_customerProductsListFragment_to_productItemFragment"
             app:destination="@id/productItemFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/staffFragment"
+        android:name="com.example.registration.ui.manager.adminMode.staff.StaffFragment"
+        android:label="StaffFragment" />
 </navigation>

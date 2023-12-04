@@ -25,7 +25,8 @@ interface CustomerApi {
         @Query("name") name: String,
         @Query("surname") surname: String,
         @Query("email") email: String,
-        @Query("password") password: String
+        @Query("password") password: String,
+        @Query("repPassword") repPassword: String
     ): Int
 
     @GET("/customer/product/get-all")

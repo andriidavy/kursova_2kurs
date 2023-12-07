@@ -3,6 +3,9 @@ package com.example.registration.di
 import com.example.registration.database.customer.CustomerApi
 import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.database.manager.ManagerApi
+import com.example.registration.database.myIsam.customer.MiCustomerApi
+import com.example.registration.database.myIsam.employee.MiEmployeeApi
+import com.example.registration.database.myIsam.manager.MiManagerApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -43,4 +46,16 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideManagerApi(retrofit: Retrofit): ManagerApi = retrofit.create(ManagerApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMiCustomerApi(retrofit: Retrofit): MiCustomerApi = retrofit.create(MiCustomerApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMiEmployeeApi(retrofit: Retrofit): MiEmployeeApi = retrofit.create(MiEmployeeApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMiManagerApi(retrofit: Retrofit): MiManagerApi = retrofit.create(MiManagerApi::class.java)
 }

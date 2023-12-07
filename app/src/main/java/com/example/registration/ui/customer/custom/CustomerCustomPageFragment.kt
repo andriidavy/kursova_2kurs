@@ -39,7 +39,6 @@ class CustomerCustomPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setObservers()
-        setListeners()
     }
 
     private fun setupViews() = with(binding) {
@@ -60,10 +59,6 @@ class CustomerCustomPageFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setListeners() {
-
     }
 
     private fun itemClick(): (Int) -> Unit {

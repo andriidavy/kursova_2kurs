@@ -1,13 +1,10 @@
 package com.example.registration.ui.customer.custom
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Message
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +16,6 @@ import com.example.registration.R
 import com.example.registration.adapter.manager.department.AllDepartmentAdapter
 import com.example.registration.databinding.FragmentAddDepartForNewCustomBinding
 import com.example.registration.global.ToastObj
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

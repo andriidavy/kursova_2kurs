@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/customer_mi_nav_graph"
+    app:startDestination="@id/miCustomerMainPageFragment">
+
+    <fragment
+        android:id="@+id/miCustomerMainPageFragment"
+        android:name="com.example.registration.myISAM.ui.customer.mainpage.MiCustomerMainPageFragment"
+        android:label="MiCustomerMainPageFragment" >
+        <action
+            android:id="@+id/action_miCustomerMainPageFragment_to_miCustomerProductsListFragment"
+            app:destination="@id/miCustomerProductsListFragment" />
+        <action
+            android:id="@+id/action_miCustomerMainPageFragment_to_miCustomerCartPageFragment"
+            app:destination="@id/miCustomerCartPageFragment" />
+        <action
+            android:id="@+id/action_miCustomerMainPageFragment_to_miCustomerProfilePageFragment"
+            app:destination="@id/miCustomerProfilePageFragment" />
+        <action
+            android:id="@+id/action_miCustomerMainPageFragment_to_miCustomerCustomPageFragment"
+            app:destination="@id/miCustomerCustomPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCustomerProductsListFragment"
+        android:name="com.example.registration.myISAM.ui.customer.productsList.MiCustomerProductsListFragment"
+        android:label="MiCustomerProductsListFragment" >
+        <action
+            android:id="@+id/action_miCustomerProductsListFragment_to_miProductItemFragment"
+            app:destination="@id/miProductItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miProductItemFragment"
+        android:name="com.example.registration.myISAM.ui.customer.productsList.MiProductItemFragment"
+        android:label="MiProductItemFragment" />
+    <fragment
+        android:id="@+id/miCustomerCartPageFragment"
+        android:name="com.example.registration.myISAM.ui.customer.cart.MiCustomerCartPageFragment"
+        android:label="MiCustomerCartPageFragment" >
+        <action
+            android:id="@+id/action_miCustomerCartPageFragment_to_miAddDepartForNewCustomFragment"
+            app:destination="@id/miAddDepartForNewCustomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCustomerProfilePageFragment"
+        android:name="com.example.registration.myISAM.ui.customer.profile.MiCustomerProfilePageFragment"
+        android:label="MiCustomerProfilePageFragment" />
+    <fragment
+        android:id="@+id/miCustomerCustomPageFragment"
+        android:name="com.example.registration.myISAM.ui.customer.custom.MiCustomerCustomPageFragment"
+        android:label="MiCustomerCustomPageFragment" >
+        <action
+            android:id="@+id/action_miCustomerCustomPageFragment_to_miCustomProductDetailFragment"
+            app:destination="@id/miCustomProductDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCustomProductDetailFragment"
+        android:name="com.example.registration.myISAM.ui.customer.custom.MiCustomProductDetailFragment"
+        android:label="MiCustomProductDetailFragment" />
+    <fragment
+        android:id="@+id/miAddDepartForNewCustomFragment"
+        android:name="com.example.registration.myISAM.ui.customer.custom.MiAddDepartForNewCustomFragment"
+        android:label="MiAddDepartForNewCustomFragment" >
+        <action
+            android:id="@+id/action_miAddDepartForNewCustomFragment_to_miCustomerMainPageFragment"
+            app:destination="@id/miCustomerMainPageFragment" />
+    </fragment>
+</navigation>

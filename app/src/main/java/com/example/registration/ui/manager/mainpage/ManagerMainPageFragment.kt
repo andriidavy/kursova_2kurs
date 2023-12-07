@@ -64,5 +64,4 @@ class ManagerMainPageFragment : Fragment() {
             }
         }
     }
-
 }

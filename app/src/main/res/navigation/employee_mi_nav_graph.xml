@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/employee_mi_nav_graph"
+    app:startDestination="@id/miEmployeeMainPageFragment">
+
+    <fragment
+        android:id="@+id/miEmployeeMainPageFragment"
+        android:name="com.example.registration.myISAM.ui.employee.mainpage.MiEmployeeMainPageFragment"
+        android:label="MiEmployeeMainPageFragment" >
+        <action
+            android:id="@+id/action_miEmployeeMainPageFragment_to_miEmployeeCustomsInProgressFragment"
+            app:destination="@id/miEmployeeCustomsInProgressFragment" />
+        <action
+            android:id="@+id/action_miEmployeeMainPageFragment_to_miEmployeeCustomsProcessedFragment"
+            app:destination="@id/miEmployeeCustomsProcessedFragment" />
+        <action
+            android:id="@+id/action_miEmployeeMainPageFragment_to_miEmployeeReportsAcceptedFragment"
+            app:destination="@id/miEmployeeReportsAcceptedFragment" />
+        <action
+            android:id="@+id/action_miEmployeeMainPageFragment_to_miEmployeeReportsInWaitingFragment"
+            app:destination="@id/miEmployeeReportsInWaitingFragment" />
+        <action
+            android:id="@+id/action_miEmployeeMainPageFragment_to_miEmployeeReportsRejectedFragment"
+            app:destination="@id/miEmployeeReportsRejectedFragment" />
+        <action
+            android:id="@+id/action_miEmployeeMainPageFragment_to_miEmployeeProfilePageFragment"
+            app:destination="@id/miEmployeeProfilePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miEmployeeCustomsInProgressFragment"
+        android:name="com.example.registration.myISAM.ui.employee.customsInProgress.MiEmployeeCustomsInProgressFragment"
+        android:label="MiEmployeeCustomsInProgressFragment" >
+        <action
+            android:id="@+id/action_miEmployeeCustomsInProgressFragment_to_miCreatingReportForCustomFragment"
+            app:destination="@id/miCreatingReportForCustomFragment" />
+        <action
+            android:id="@+id/action_miEmployeeCustomsInProgressFragment_to_miCustomInProgressProductDetailFragment"
+            app:destination="@id/miCustomInProgressProductDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCreatingReportForCustomFragment"
+        android:name="com.example.registration.myISAM.ui.employee.customsInProgress.MiCreatingReportForCustomFragment"
+        android:label="MiCreatingReportForCustomFragment" />
+    <fragment
+        android:id="@+id/miCustomInProgressProductDetailFragment"
+        android:name="com.example.registration.myISAM.ui.employee.customsInProgress.MiCustomInProgressProductDetailFragment"
+        android:label="MiCustomInProgressProductDetailFragment" />
+    <fragment
+        android:id="@+id/miEmployeeCustomsProcessedFragment"
+        android:name="com.example.registration.myISAM.ui.employee.customsProcessed.MiEmployeeCustomsProcessedFragment"
+        android:label="MiEmployeeCustomsProcessedFragment" >
+        <action
+            android:id="@+id/action_miEmployeeCustomsProcessedFragment_to_miCustomProcessedProductDetailFragment"
+            app:destination="@id/miCustomProcessedProductDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miCustomProcessedProductDetailFragment"
+        android:name="com.example.registration.myISAM.ui.employee.customsProcessed.MiCustomProcessedProductDetailFragment"
+        android:label="MiCustomProcessedProductDetailFragment" />
+    <fragment
+        android:id="@+id/miEmployeeReportsAcceptedFragment"
+        android:name="com.example.registration.myISAM.ui.employee.reportsAccepted.MiEmployeeReportsAcceptedFragment"
+        android:label="MiEmployeeReportsAcceptedFragment" >
+        <action
+            android:id="@+id/action_miEmployeeReportsAcceptedFragment_to_miReportDetailFragment"
+            app:destination="@id/miReportDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miReportDetailFragment"
+        android:name="com.example.registration.myISAM.ui.employee.reportDetail.MiReportDetailFragment"
+        android:label="MiReportDetailFragment" />
+    <fragment
+        android:id="@+id/miEmployeeReportsInWaitingFragment"
+        android:name="com.example.registration.myISAM.ui.employee.reportsInWaiting.MiEmployeeReportsInWaitingFragment"
+        android:label="MiEmployeeReportsInWaitingFragment" >
+        <action
+            android:id="@+id/action_miEmployeeReportsInWaitingFragment_to_miReportDetailFragment"
+            app:destination="@id/miReportDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miEmployeeReportsRejectedFragment"
+        android:name="com.example.registration.myISAM.ui.employee.reportsRejected.MiEmployeeReportsRejectedFragment"
+        android:label="MiEmployeeReportsRejectedFragment" >
+        <action
+            android:id="@+id/action_miEmployeeReportsRejectedFragment_to_miReportDetailFragment"
+            app:destination="@id/miReportDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miEmployeeProfilePageFragment"
+        android:name="com.example.registration.myISAM.ui.employee.profile.MiEmployeeProfilePageFragment"
+        android:label="MiEmployeeProfilePageFragment" />
+</navigation>

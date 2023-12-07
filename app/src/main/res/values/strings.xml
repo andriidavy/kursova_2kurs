@@ -133,5 +133,6 @@
     <string name="repeat_password">Повторіть пароль:</string>
     <string name="depart_message">Відділ: %1$s, ID відділу: %2$d</string>
     <string name="staff_list">Cписок персоналу</string>
+    <string name="myisam_mode">MyISAM mode:</string>
 
 </resources>

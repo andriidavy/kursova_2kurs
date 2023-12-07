@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/productItemFragment"
-        android:name="com.example.registration.ui.customer.mainpage.ProductItemFragment"
+        android:name="com.example.registration.ui.customer.productsList.ProductItemFragment"
         android:label="ProductItemFragment">
         <argument
             android:name="name_product"
@@ -378,7 +378,7 @@
     </fragment>
     <fragment
         android:id="@+id/customerProductsListFragment"
-        android:name="com.example.registration.ui.customer.mainpage.CustomerProductsListFragment"
+        android:name="com.example.registration.ui.customer.productsList.CustomerProductsListFragment"
         android:label="CustomerProductsListFragment" >
         <action
             android:id="@+id/action_customerProductsListFragment_to_productItemFragment"

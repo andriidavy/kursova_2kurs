@@ -34,6 +34,11 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
+        var modeNum = 0
+        switchMode.setOnCheckedChangeListener { _, isChecked ->
+            modeNum = if (isChecked) 1 else 0
+        }
+
         buttonReg.setOnClickListener {
             val name: String = etName.text.toString().trim()
             val surname: String = etSurname.text.toString().trim()
@@ -41,32 +46,58 @@ class RegistrationFragment : Fragment() {
             val password: String = etPassword.text.toString().trim()
             val repPassword: String = etRepPassword.text.toString().trim()
             if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
-                lifecycleScope.launch {
-                    viewModel.insertCustomer(name, surname, email, password, repPassword)
-                        .collect { insertResult ->
-                            insertResult.onSuccess { userId ->
-                                findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                when (modeNum) {
+                    0 -> lifecycleScope.launch {
+                        viewModel.insertCustomer(name, surname, email, password, repPassword)
+                            .collect { insertResult ->
+                                insertResult.onSuccess { userId ->
+                                    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
-                                ToastObj.longToastMake(
-                                    getString(
-                                        R.string.success_reg_message,
-                                        userId
-                                    ), context
-                                )
+                                    ToastObj.longToastMake(
+                                        getString(
+                                            R.string.success_reg_message,
+                                            userId
+                                        ), context
+                                    )
+                                }
+                                insertResult.onFailure {
+                                    ToastObj.longToastMake(
+                                        getString(R.string.invalid_reg_message),
+                                        context
+                                    )
+                                }
                             }
-                            insertResult.onFailure {
-                                ToastObj.longToastMake(
-                                    getString(R.string.invalid_reg_message),
-                                    context
-                                )
+                    }
+
+                    1 -> lifecycleScope.launch {
+                        viewModel.miInsertCustomer(name, surname, email, password, repPassword)
+                            .collect { insertResult ->
+                                insertResult.onSuccess { userId ->
+                                    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+
+                                    ToastObj.longToastMake(
+                                        getString(
+                                            R.string.success_reg_message,
+                                            userId
+                                        ), context
+                                    )
+                                }
+                                insertResult.onFailure {
+                                    ToastObj.longToastMake(
+                                        getString(R.string.invalid_reg_message),
+                                        context
+                                    )
+                                }
                             }
-                        }
+                    }
                 }
             } else {
                 etName.error = if (name.isBlank()) getString(R.string.name_required) else null
-                etSurname.error = if (surname.isBlank()) getString(R.string.surname_required) else null
+                etSurname.error =
+                    if (surname.isBlank()) getString(R.string.surname_required) else null
                 etEmail.error = if (email.isBlank()) getString(R.string.email_required) else null
-                etPassword.error = if (password.isBlank()) getString(R.string.password_required) else null
+                etPassword.error =
+                    if (password.isBlank()) getString(R.string.password_required) else null
             }
         }
     }

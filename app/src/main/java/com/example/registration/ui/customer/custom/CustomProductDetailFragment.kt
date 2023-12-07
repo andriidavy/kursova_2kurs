@@ -39,5 +39,4 @@ class CustomProductDetailFragment : Fragment() {
 
         adapter.updateCustomProducts(customProductDTOList)
     }
-
 }

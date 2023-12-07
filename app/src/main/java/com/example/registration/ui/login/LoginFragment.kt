@@ -1,5 +1,6 @@
 package com.example.registration.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.global.ToastObj
+import com.example.registration.myISAM.activities.CustomerMyIsamActivity
+import com.example.registration.myISAM.activities.EmployeeMyIsamActivity
+import com.example.registration.myISAM.activities.ManagerMyIsamActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -72,6 +76,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
+        var modeNum = 0
+        switchMode.setOnCheckedChangeListener { _, isChecked ->
+            modeNum = if (isChecked) 1 else 0
+        }
+
         // перехід на сторінку реєстрації
         textHaveNotRegistration.setOnClickListener {
             navController.navigate(R.id.action_loginFragment_to_registrationFragment)
@@ -82,22 +91,61 @@ class LoginFragment : Fragment() {
             val email = etEmail.text.toString()
             val password = etPassword.text.toString()
 
-            lifecycleScope.launch {
-                viewModel.login(email, password, num)?.collect { loginResult ->
-                    loginResult.onSuccess { userId ->
-                        when (num) {
-                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+            when (modeNum) {
+                0 -> lifecycleScope.launch {
+                    viewModel.login(email, password, num)?.collect { loginResult ->
+                        loginResult.onSuccess { userId ->
+                            when (num) {
+                                0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+                                1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
+                                2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+                            }
+
+                            // установка ID користувача при вході
+                            dataStoreViewModel.storeUserId(userId)
+
+                            ToastObj.longToastMake(getString(R.string.success_log), context)
                         }
-
-                        // установка ID користувача при вході
-                        dataStoreViewModel.storeUserId(userId)
-
-                        ToastObj.longToastMake(getString(R.string.success_log), context)
+                        loginResult.onFailure {
+                            ToastObj.shortToastMake(getString(R.string.invalid_log), context)
+                        }
                     }
-                    loginResult.onFailure {
-                        ToastObj.shortToastMake(getString(R.string.invalid_log), context)
+                }
+
+                1 -> lifecycleScope.launch {
+                    viewModel.loginMi(email, password, num)?.collect { loginResult ->
+                        loginResult.onSuccess { userId ->
+                            when (num) {
+                                0 -> startActivity(
+                                    Intent(
+                                        activity,
+                                        CustomerMyIsamActivity::class.java
+                                    )
+                                )
+
+                                1 -> startActivity(
+                                    Intent(
+                                        activity,
+                                        EmployeeMyIsamActivity::class.java
+                                    )
+                                )
+
+                                2 -> startActivity(
+                                    Intent(
+                                        activity,
+                                        ManagerMyIsamActivity::class.java
+                                    )
+                                )
+                            }
+
+                            // установка ID користувача при вході
+                            dataStoreViewModel.storeUserId(userId)
+
+                            ToastObj.longToastMake(getString(R.string.success_log), context)
+                        }
+                        loginResult.onFailure {
+                            ToastObj.shortToastMake(getString(R.string.invalid_log), context)
+                        }
                     }
                 }
             }

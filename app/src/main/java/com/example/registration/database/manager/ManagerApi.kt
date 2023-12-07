@@ -118,6 +118,4 @@ interface ManagerApi {
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int
     )
-
-
 }

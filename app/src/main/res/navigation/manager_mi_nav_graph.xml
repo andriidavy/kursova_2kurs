@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/manager_mi_nav_graph"
+    app:startDestination="@id/miManagerMainPageFragment">
+
+    <fragment
+        android:id="@+id/miManagerMainPageFragment"
+        android:name="com.example.registration.myISAM.ui.manager.mainpage.MiManagerMainPageFragment"
+        android:label="MiManagerMainPageFragment" >
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miManagerCreatedCustomsPageFragment"
+            app:destination="@id/miManagerCreatedCustomsPageFragment" />
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miManagerAllCustomsFragment"
+            app:destination="@id/miManagerAllCustomsFragment" />
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miManageEmployeeFragment"
+            app:destination="@id/miManageEmployeeFragment" />
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miAllProductListFragment"
+            app:destination="@id/miAllProductListFragment" />
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miManagerReportsInWaitingFragment"
+            app:destination="@id/miManagerReportsInWaitingFragment" />
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miAdminLoginFragment"
+            app:destination="@id/miAdminLoginFragment" />
+        <action
+            android:id="@+id/action_miManagerMainPageFragment_to_miManagerProfilePageFragment"
+            app:destination="@id/miManagerProfilePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miManagerCreatedCustomsPageFragment"
+        android:name="com.example.registration.myISAM.ui.manager.createdCustoms.MiManagerCreatedCustomsPageFragment"
+        android:label="MiManagerCreatedCustomsPageFragment" >
+        <action
+            android:id="@+id/action_miManagerCreatedCustomsPageFragment_to_miEmployeesListForAssigneeToCustomFragment"
+            app:destination="@id/miEmployeesListForAssigneeToCustomFragment" />
+        <action
+            android:id="@+id/action_miManagerCreatedCustomsPageFragment_to_miCreatedCustomsProductDetailFragment"
+            app:destination="@id/miCreatedCustomsProductDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miEmployeesListForAssigneeToCustomFragment"
+        android:name="com.example.registration.myISAM.ui.manager.createdCustoms.MiEmployeesListForAssigneeToCustomFragment"
+        android:label="MiEmployeesListForAssigneeToCustomFragment" />
+    <fragment
+        android:id="@+id/miCreatedCustomsProductDetailFragment"
+        android:name="com.example.registration.myISAM.ui.manager.createdCustoms.MiCreatedCustomsProductDetailFragment"
+        android:label="MiCreatedCustomsProductDetailFragment" />
+    <fragment
+        android:id="@+id/miManagerAllCustomsFragment"
+        android:name="com.example.registration.myISAM.ui.manager.allCustoms.MiManagerAllCustomsFragment"
+        android:label="MiManagerAllCustomsFragment" >
+        <action
+            android:id="@+id/action_miManagerAllCustomsFragment_to_miAllCustomsDetailFragment"
+            app:destination="@id/miAllCustomsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAllCustomsDetailFragment"
+        android:name="com.example.registration.myISAM.ui.manager.allCustoms.MiAllCustomsDetailFragment"
+        android:label="MiAllCustomsDetailFragment" />
+    <fragment
+        android:id="@+id/miManageEmployeeFragment"
+        android:name="com.example.registration.myISAM.ui.manager.personManagement.MiManageEmployeeFragment"
+        android:label="MiManageEmployeeFragment" >
+        <action
+            android:id="@+id/action_miManageEmployeeFragment_to_miAddEmployeeFragment"
+            app:destination="@id/miAddEmployeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAddEmployeeFragment"
+        android:name="com.example.registration.myISAM.ui.manager.personManagement.MiAddEmployeeFragment"
+        android:label="MiAddEmployeeFragment" />
+    <fragment
+        android:id="@+id/miAllProductListFragment"
+        android:name="com.example.registration.myISAM.ui.manager.products.MiAllProductListFragment"
+        android:label="MiAllProductListFragment" >
+        <action
+            android:id="@+id/action_miAllProductListFragment_to_miAddProductFragment"
+            app:destination="@id/miAddProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAddProductFragment"
+        android:name="com.example.registration.myISAM.ui.manager.products.MiAddProductFragment"
+        android:label="MiAddProductFragment" />
+    <fragment
+        android:id="@+id/miManagerReportsInWaitingFragment"
+        android:name="com.example.registration.myISAM.ui.manager.reportsInWaiting.MiManagerReportsInWaitingFragment"
+        android:label="MiManagerReportsInWaitingFragment" >
+        <action
+            android:id="@+id/action_miManagerReportsInWaitingFragment_to_miManagerReportsInWaitingDetailFragment"
+            app:destination="@id/miManagerReportsInWaitingDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miManagerReportsInWaitingDetailFragment"
+        android:name="com.example.registration.myISAM.ui.manager.reportsInWaiting.MiManagerReportsInWaitingDetailFragment"
+        android:label="MiManagerReportsInWaitingDetailFragment" />
+    <fragment
+        android:id="@+id/miAdminLoginFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.MiAdminLoginFragment"
+        android:label="MiAdminLoginFragment" >
+        <action
+            android:id="@+id/action_miAdminLoginFragment_to_miAdminMainPageFragment"
+            app:destination="@id/miAdminMainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAdminMainPageFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.MiAdminMainPageFragment"
+        android:label="MiAdminMainPageFragment" >
+        <action
+            android:id="@+id/action_miAdminMainPageFragment_to_miEditDepartsFragment"
+            app:destination="@id/miEditDepartsFragment" />
+        <action
+            android:id="@+id/action_miAdminMainPageFragment_to_miEditManagerFragment"
+            app:destination="@id/miEditManagerFragment" />
+        <action
+            android:id="@+id/action_miAdminMainPageFragment_to_miStaffFragment"
+            app:destination="@id/miStaffFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miEditDepartsFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.departments.MiEditDepartsFragment"
+        android:label="MiEditDepartsFragment" >
+        <action
+            android:id="@+id/action_miEditDepartsFragment_to_miAddDepartFragment"
+            app:destination="@id/miAddDepartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAddDepartFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.departments.MiAddDepartFragment"
+        android:label="MiAddDepartFragment" />
+    <fragment
+        android:id="@+id/miEditManagerFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.managers.MiEditManagerFragment"
+        android:label="MiEditManagerFragment" >
+        <action
+            android:id="@+id/action_miEditManagerFragment_to_miAddManagerFragment"
+            app:destination="@id/miAddManagerFragment" />
+        <action
+            android:id="@+id/action_miEditManagerFragment_to_miManagerDepartDetailFragment"
+            app:destination="@id/miManagerDepartDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAddManagerFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.managers.MiAddManagerFragment"
+        android:label="MiAddManagerFragment" />
+    <fragment
+        android:id="@+id/miManagerDepartDetailFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.managers.MiManagerDepartDetailFragment"
+        android:label="MiManagerDepartDetailFragment" >
+        <action
+            android:id="@+id/action_miManagerDepartDetailFragment_to_miAllDepartFragment"
+            app:destination="@id/miAllDepartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/miAllDepartFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.managers.MiAllDepartFragment"
+        android:label="MiAllDepartFragment" />
+    <fragment
+        android:id="@+id/miStaffFragment"
+        android:name="com.example.registration.myISAM.ui.manager.adminMode.staff.MiStaffFragment"
+        android:label="MiStaffFragment" />
+    <fragment
+        android:id="@+id/miManagerProfilePageFragment"
+        android:name="com.example.registration.myISAM.ui.manager.profile.MiManagerProfilePageFragment"
+        android:label="MiManagerProfilePageFragment" />
+</navigation>

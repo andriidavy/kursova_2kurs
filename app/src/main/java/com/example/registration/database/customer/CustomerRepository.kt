@@ -23,7 +23,8 @@ class CustomerRepository @Inject constructor(
     ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val customer = customerApi.insertCustomer(name, surname, email, password, repPassword)
+                val customer =
+                    customerApi.insertCustomer(name, surname, email, password, repPassword)
                 Result.success(customer)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -79,14 +80,17 @@ class CustomerRepository @Inject constructor(
         emit(customerApi.getCustomsForCustomer(customerId))
     }
 
-    suspend fun addProductToCart(customerId: Int, productId: Int, quantity: Int): Result<Unit> {
-        return try {
-            customerApi.addProductToCart(customerId, productId, quantity)
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
+    fun addProductToCart(customerId: Int, productId: Int, quantity: Int): Flow<Result<Unit>> =
+        flow {
+            emit(
+                try {
+                    customerApi.addProductToCart(customerId, productId, quantity)
+                    Result.success(Unit)
+                } catch (e: Exception) {
+                    Result.failure(e)
+                }
+            )
         }
-    }
 
 
     fun createCustom(customerId: Int, departmentId: Int): Flow<Result<Int>> = flow {

@@ -1,4 +1,4 @@
-package com.example.registration.ui.customer.mainpage
+package com.example.registration.myISAM.ui.customer.productsList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,16 +21,14 @@ import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerProductsListBinding
 import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CustomerProductsListFragment : Fragment() {
+class MiCustomerProductsListFragment : Fragment() {
     private lateinit var binding: FragmentCustomerProductsListBinding
     private lateinit var adapter: ProductAdapter
     private lateinit var navController: NavController
-    private val viewModel by viewModels<CustomerProductsListViewModel>()
+    private val viewModel by viewModels<MiCustomerProductsListViewModel>()
     private var num: Int = -1
     private var isChecked: Boolean = false
 
@@ -81,10 +79,10 @@ class CustomerProductsListFragment : Fragment() {
 
             etSearchField.doOnTextChanged { text, _, _, _ ->
                 if (text.toString().isBlank()) {
-                    cbRangeOption.isEnabled = false;
+                    cbRangeOption.isEnabled = false
                     cbRangeOption.alpha = 0.5f
                 } else {
-                    cbRangeOption.isEnabled = true;
+                    cbRangeOption.isEnabled = true
                     cbRangeOption.alpha = 1f
                 }
             }
@@ -140,7 +138,7 @@ class CustomerProductsListFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable("product", product)
                 navController.navigate(
-                    R.id.action_customerProductsListFragment_to_productItemFragment,
+                    R.id.action_miCustomerProductsListFragment_to_miProductItemFragment,
                     bundle
                 )
             } ?: ToastObj.shortToastMake(getString(R.string.error_info_product), context)

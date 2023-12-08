@@ -35,9 +35,9 @@ class MiEmployeesListForAssigneeToCustomViewModel @Inject constructor(private va
         }
     }
 
-    fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
+    fun assignEmployeeToCustom(employeeId: Int, customId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            miManagerRepository.assignEmployeeToCustom(customId, employeeId)
+            miManagerRepository.assignEmployeeToCustom(employeeId, customId)
         }
     }
 }

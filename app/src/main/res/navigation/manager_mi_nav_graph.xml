@@ -44,7 +44,11 @@
     <fragment
         android:id="@+id/miEmployeesListForAssigneeToCustomFragment"
         android:name="com.example.registration.myISAM.ui.manager.createdCustoms.MiEmployeesListForAssigneeToCustomFragment"
-        android:label="MiEmployeesListForAssigneeToCustomFragment" />
+        android:label="MiEmployeesListForAssigneeToCustomFragment" >
+        <action
+            android:id="@+id/action_miEmployeesListForAssigneeToCustomFragment_to_miManagerCreatedCustomsPageFragment"
+            app:destination="@id/miManagerCreatedCustomsPageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/miCreatedCustomsProductDetailFragment"
         android:name="com.example.registration.myISAM.ui.manager.createdCustoms.MiCreatedCustomsProductDetailFragment"

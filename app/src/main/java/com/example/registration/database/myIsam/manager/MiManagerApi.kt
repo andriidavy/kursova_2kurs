@@ -31,10 +31,8 @@ interface MiManagerApi {
         @Query("repPassword") repPassword: String
     ): Int
 
-
     @DELETE("/mi/manager/delete-manager-by-id")
     suspend fun deleteManagerById(@Query("managerId") managerId: Int)
-
 
     @GET("/mi/manager/get-manager-by-id")
     suspend fun getManagerProfile(@Query("managerId") managerId: Int): ManagerProfileDTO
@@ -45,10 +43,10 @@ interface MiManagerApi {
     @GET("/mi/manager/search-custom-by-id")
     suspend fun searchCustomById(@Query("customId") customId: Int): CustomDTO
 
-    @GET("/mi/manager/custom/report/get-waiting")
+    @GET("/mi/manager/get-waiting-reports")
     suspend fun getAllWaiting(@Query("managerId") managerId: Int): List<ReportDTO>
 
-    @GET("/mi/manager/custom/get-all")
+    @GET("/mi/manager/get-all-customs")
     suspend fun getAllCustoms(): List<CustomDTO>
 
     @GET("/mi/manager/employee/profile/get-all")
@@ -63,22 +61,23 @@ interface MiManagerApi {
         @Query("repPassword") repPassword: String
     ): Int
 
-    @DELETE("/mi/manager/employee/delete-employee-by-id")
+    @DELETE("/mi/manager/employee/delete-by-id")
     suspend fun deleteEmployeeById(@Query("employeeId") employeeId: Int)
 
     @GET("/mi/manager/get-staff")
     suspend fun getStaff(): List<StaffDTO>
 
-    @GET("/mi/manager/product/get-all")
+    @GET("/mi/manager/get-all-product")
     suspend fun getAllProducts(): List<ProductDTO>
 
     @GET("/mi/manager/search-product-by-id")
     suspend fun searchProductById(@Query("productId") productId: Int): ProductDTO
 
-    @POST("/mi/manager/custom/assign-employee")
+    @POST("/mi/manager/assign-employee-to-custom")
     suspend fun assignEmployeeToCustom(
-        @Query("customId") customId: Int,
-        @Query("employeeId") employeeId: Int
+        @Query("employeeId") employeeId: Int,
+        @Query("customId") customId: Int
+
     )
 
     @POST("/mi/manager/custom/report/accept")
@@ -98,25 +97,25 @@ interface MiManagerApi {
     @GET("/mi/manager/is-product-exist")
     suspend fun isProductExists(@Query("productName") productName: String): Boolean
 
-    @POST("/mi/manager/department/save")
+    @POST("/mi/manager/insert-department")
     suspend fun saveDepartment(@Query("departmentName") departmentName: String)
 
     @GET("/mi/manager/department/get-all")
     suspend fun getAllDepartments(): List<DepartmentDTO>
 
-    @GET("/mi/manager/department/get-departments-for-manager")
+    @GET("/mi/manager/get-departments-for-manager")
     suspend fun getAllDepartmentsForManager(@Query("managerId") managerId: Int): List<DepartmentDTO>
 
-    @GET("/mi/manager/department/get-departments-non-for-manager")
+    @GET("/mi/manager/get-departments-without-manager")
     suspend fun getDepartmentsWithoutManager(@Query("managerId") managerId: Int): List<DepartmentDTO>
 
-    @POST("/mi/manager/department/remove-department-from-manager")
+    @DELETE("/mi/manager/remove-department-for-manager")
     suspend fun removeDepartmentFromManager(
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int
     )
 
-    @POST("/mi/manager/department/assign-department-to-manager")
+    @POST("/mi/manager/assign-manager-to-department")
     suspend fun assignDepartmentToManager(
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int

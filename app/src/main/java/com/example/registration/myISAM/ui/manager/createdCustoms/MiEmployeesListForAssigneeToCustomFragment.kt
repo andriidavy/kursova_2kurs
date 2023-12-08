@@ -66,7 +66,7 @@ class MiEmployeesListForAssigneeToCustomFragment : Fragment() {
             val employeeId: Int = viewModel.employeeDTOArray.value[position].id
 
             customId?.let {
-                viewModel.assignEmployeeToCustom(customId, employeeId)
+                viewModel.assignEmployeeToCustom(employeeId, customId)
 
                 ToastObj.shortToastMake(
                     getString(
@@ -77,7 +77,7 @@ class MiEmployeesListForAssigneeToCustomFragment : Fragment() {
                     context
                 )
 
-                navController.navigate(R.id.action_employeesListForAssigneeToCustomFragment_to_managerCreatedCustomsPageFragment)
+                navController.navigate(R.id.action_miEmployeesListForAssigneeToCustomFragment_to_miManagerCreatedCustomsPageFragment)
             } ?: ToastObj.shortToastMake(getString(R.string.error_custom_id), context)
         }
     }

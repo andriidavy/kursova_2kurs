@@ -125,8 +125,8 @@ class MiManagerRepository @Inject constructor(private val miManagerApi: MiManage
         return miManagerApi.deleteEmployeeById(employeeId)
     }
 
-    suspend fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
-        miManagerApi.assignEmployeeToCustom(customId, employeeId)
+    suspend fun assignEmployeeToCustom(employeeId: Int, customId: Int) {
+        miManagerApi.assignEmployeeToCustom(employeeId, customId)
     }
 
     fun getStaff(): Flow<List<StaffDTO>> = flow {

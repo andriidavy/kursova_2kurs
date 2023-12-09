@@ -2,6 +2,7 @@ package com.example.registration.myISAM.ui.employee.reportsRejected
 
 import androidx.lifecycle.viewModelScope
 import com.example.registration.database.employee.EmployeeRepository
+import com.example.registration.database.myIsam.employee.MiEmployeeRepository
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import com.example.registration.model.report.ReportDTO
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MiEmployeeReportsRejectedViewModel @Inject constructor(
-    val employeeRepository: EmployeeRepository,
+    val miEmployeeRepository: MiEmployeeRepository,
     datastoreRepository: DatastoreRepo
 ) : DataStoreViewModel(datastoreRepository) {
     private val _reportRejectedArray = MutableStateFlow<List<ReportDTO>>(emptyList())
@@ -29,7 +30,7 @@ class MiEmployeeReportsRejectedViewModel @Inject constructor(
 
     private fun getRejectedReportsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getAllRejectedReportsForEmployee(employeeId)
+            val result = miEmployeeRepository.getAllRejectedReportsForEmployee(employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _reportRejectedArray.value = it

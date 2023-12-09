@@ -80,10 +80,10 @@ interface MiManagerApi {
 
     )
 
-    @POST("/mi/manager/custom/report/accept")
+    @POST("/mi/manager/set-report-accepted")
     suspend fun setReportAccepted(@Query("reportId") reportId: Int)
 
-    @POST("/mi/manager/custom/report/reject")
+    @POST("/mi/manager/set-report-rejected")
     suspend fun setReportRejected(@Query("reportId") reportId: Int)
 
     @POST("/mi/manager/provide-product")

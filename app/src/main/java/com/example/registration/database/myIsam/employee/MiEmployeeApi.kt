@@ -14,10 +14,10 @@ interface MiEmployeeApi {
     @GET("/mi/employee/get-employee-by-id")
     suspend fun getEmployeeProfile(@Query("employeeId") employeeId: Int) : EmployeeProfileDTO
 
-    @GET("/mi/employee/custom/get-in-processing")
+    @GET("/mi/employee/get-processing-customs-for-employee")
     suspend fun getProcessingCustomsForEmployee(@Query("employeeId") employeeId: Int): List<CustomDTO>
 
-    @GET("/mi/employee/custom/get-processed")
+    @GET("/mi/employee/get-processed-customs-for-employee")
     suspend fun getProcessedCustomsForEmployee(@Query("employeeId") employeeId: Int): List<CustomDTO>
 
     @GET("/mi/employee/get-accepted-reports-for-employee")
@@ -29,13 +29,13 @@ interface MiEmployeeApi {
     @GET("/mi/employee/get-rejected-reports-for-employee")
     suspend fun getAllRejectedReportsForEmployee(@Query("employeeId") employeeId: Int) : List<ReportDTO>
 
-    @POST("/mi/employee/custom/provide-report")
+    @POST("/mi/employee/provide-report")
     suspend fun createReport(
         @Query("employeeId") employeeId: Int,
         @Query("customId") customId: Int,
         @Query("reportText") reportText: String
     )
 
-    @POST("/mi/employee/custom/set-sent-status")
+    @POST("/mi/employee/set-custom-sent")
     suspend fun setCustomSent(@Query("customId") customId: Int)
 }

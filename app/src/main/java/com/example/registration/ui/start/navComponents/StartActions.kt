@@ -9,7 +9,7 @@ class StartActions(navHostController: NavHostController) {
     val openCustomerRegistration: () -> Unit = {
         navHostController.navigate(StartDestinations.CustomerRegistration)
     }
-    val navigateBack: ()->Unit = {
+    val navigateBack: () -> Unit = {
         navHostController.popBackStack()
     }
 }

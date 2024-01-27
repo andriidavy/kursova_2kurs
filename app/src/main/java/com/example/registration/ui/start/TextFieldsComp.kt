@@ -1,6 +1,7 @@
 package com.example.registration.ui.start
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -9,17 +10,20 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -127,11 +131,57 @@ fun OutlinedPasswordTextField(
                 }
             }
         )
-        if(isError) {
-            Text(text = errorMessage,
+        if (isError) {
+            Text(
+                text = errorMessage,
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp))
+                modifier = Modifier.padding(start = 16.dp)
+            )
         }
     }
+}
+
+@Composable
+fun OutlinedSearchTextField(
+    value: String,
+    onChange: (String) -> Unit,
+    modifier: Modifier,
+    shape: Shape,
+    label: String = "Search",
+    placeholder: String = "Enter your keywords",
+    onSearchClick: ()->Unit
+) {
+
+    Column {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onChange,
+            modifier = modifier,
+            shape = shape,
+            label = { Text(text = label, style = MaterialTheme.typography.h5) },
+            placeholder = { Text(text = placeholder, style = MaterialTheme.typography.h5) },
+            trailingIcon = {
+                IconButton(onClick = { onSearchClick.invoke()}) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "search"
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+fun Test() {
+    var searchField by rememberSaveable {mutableStateOf("")}
+    OutlinedSearchTextField(
+        value = searchField,
+        onChange = {userInput -> searchField = userInput},
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.small,
+        onSearchClick = { if(searchField.isBlank()) println("Empty field!") else println(searchField) }
+    )
 }

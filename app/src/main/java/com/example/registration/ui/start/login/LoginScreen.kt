@@ -42,19 +42,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.registration.R
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.global.ToastObj
-import com.example.registration.ui.start.OutlinedLoginTextField
-import com.example.registration.ui.start.OutlinedPasswordTextField
+import com.example.registration.ui.composeFunc.OutlinedLoginTextField
+import com.example.registration.ui.composeFunc.OutlinedPasswordTextField
 import com.example.registration.ui.theme.MyAppTheme
 import kotlinx.coroutines.launch
 

@@ -1,6 +1,7 @@
 package com.example.registration.ui.customer.mainpage
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.registration.ui.start.OutlinedSearchTextField
+import com.example.registration.ui.composeFunc.OutlinedSearchTextField
 import com.example.registration.ui.theme.MyAppTheme
 
 @Composable
@@ -89,7 +90,8 @@ fun GridItem(itemList: List<String>, index: Int) {
             .background(color = Color.White, shape = MaterialTheme.shapes.small)
             .width(100.dp)
             .height(100.dp)
-            .shadow(elevation = 1.dp),
+            .shadow(elevation = 1.dp)
+            .clickable { println(itemList[index]) },
         contentAlignment = Alignment.Center
 
     ) {

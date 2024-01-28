@@ -14,7 +14,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,14 +30,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.registration.R
 import com.example.registration.global.ToastObj
-import com.example.registration.ui.start.OutlinedLoginTextField
-import com.example.registration.ui.start.OutlinedNameTextField
-import com.example.registration.ui.start.OutlinedPasswordTextField
-import com.example.registration.ui.start.OutlinedSurnameTextField
+import com.example.registration.ui.composeFunc.OutlinedLoginTextField
+import com.example.registration.ui.composeFunc.OutlinedNameTextField
+import com.example.registration.ui.composeFunc.OutlinedPasswordTextField
+import com.example.registration.ui.composeFunc.OutlinedSurnameTextField
 import com.example.registration.ui.theme.MyAppTheme
 import kotlinx.coroutines.launch
 

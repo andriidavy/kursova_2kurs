@@ -17,15 +17,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".myISAM.activities.ManagerMyIsamActivity"
-            android:exported="false" />
-        <activity
-            android:name=".myISAM.activities.EmployeeMyIsamActivity"
-            android:exported="false" />
-        <activity
-            android:name=".myISAM.activities.CustomerMyIsamActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

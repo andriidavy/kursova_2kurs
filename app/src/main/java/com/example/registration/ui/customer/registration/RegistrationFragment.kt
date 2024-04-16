@@ -34,10 +34,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-        var modeNum = 0
-        switchMode.setOnCheckedChangeListener { _, isChecked ->
-            modeNum = if (isChecked) 1 else 0
-        }
 
         buttonReg.setOnClickListener {
             val name: String = etName.text.toString().trim()
@@ -46,50 +42,26 @@ class RegistrationFragment : Fragment() {
             val password: String = etPassword.text.toString().trim()
             val repPassword: String = etRepPassword.text.toString().trim()
             if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
-                when (modeNum) {
-                    0 -> lifecycleScope.launch {
-                        viewModel.insertCustomer(name, surname, email, password, repPassword)
-                            .collect { insertResult ->
-                                insertResult.onSuccess { userId ->
-                                    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                lifecycleScope.launch {
+                    viewModel.insertCustomer(name, surname, email, password, repPassword)
+                        .collect { insertResult ->
+                            insertResult.onSuccess { userId ->
+                                findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
 
-                                    ToastObj.longToastMake(
-                                        getString(
-                                            R.string.success_reg_message,
-                                            userId
-                                        ), context
-                                    )
-                                }
-                                insertResult.onFailure {
-                                    ToastObj.longToastMake(
-                                        getString(R.string.invalid_reg_message),
-                                        context
-                                    )
-                                }
+                                ToastObj.longToastMake(
+                                    getString(
+                                        R.string.success_reg_message,
+                                        userId
+                                    ), context
+                                )
                             }
-                    }
-
-                    1 -> lifecycleScope.launch {
-                        viewModel.miInsertCustomer(name, surname, email, password, repPassword)
-                            .collect { insertResult ->
-                                insertResult.onSuccess { userId ->
-                                    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
-
-                                    ToastObj.longToastMake(
-                                        getString(
-                                            R.string.success_reg_message,
-                                            userId
-                                        ), context
-                                    )
-                                }
-                                insertResult.onFailure {
-                                    ToastObj.longToastMake(
-                                        getString(R.string.invalid_reg_message),
-                                        context
-                                    )
-                                }
+                            insertResult.onFailure {
+                                ToastObj.longToastMake(
+                                    getString(R.string.invalid_reg_message),
+                                    context
+                                )
                             }
-                    }
+                        }
                 }
             } else {
                 etName.error = if (name.isBlank()) getString(R.string.name_required) else null

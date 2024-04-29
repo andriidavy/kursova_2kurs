@@ -3,6 +3,7 @@ package com.example.registration.di
 import com.example.registration.database.customer.CustomerApi
 import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.database.manager.ManagerApi
+import com.example.registration.database.user.UserApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -28,7 +29,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(gson: Gson): Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://192.168.90.122:5001")
+            .baseUrl("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
@@ -43,4 +44,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideManagerApi(retrofit: Retrofit): ManagerApi = retrofit.create(ManagerApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
 }

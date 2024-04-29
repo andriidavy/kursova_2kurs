@@ -93,8 +93,8 @@
     <string name="choose_depart_text">Оберіть відділ доставки:</string>
     <string name="product_сatalog">Каталог товарів</string>
     <string name="depart_registration">Додати відділ</string>
-    <string name="success_reg_message">Реєстрація пройшла успішно! Ваш ID користувача: %1$d</string>
-    <string name="invalid_reg_message">Користувач з таким email вже існує!</string>
+    <string name="success_reg_message">Реєстрація пройшла успішно! Ваш ID користувача: %1$s</string>
+    <string name="invalid_reg_message">Помилка реєстрації: %1$s</string>
     <string name="name_required">Ім\'я обов\'язкове!</string>
     <string name="surname_required">Прізвище обов\'язкове!</string>
     <string name="email_required">Email обов\'язковий!</string>
@@ -134,5 +134,13 @@
     <string name="depart_message">Відділ: %1$s, ID відділу: %2$d</string>
     <string name="staff_list">Cписок персоналу</string>
     <string name="myisam_mode">MyISAM mode:</string>
-
+    <string name="choose_your_birthday">Оберіть вашу дату народження:</string>
+    <string name="min_age"> Мінімальний вік: 5 років!</string>
+    <string name="invalid_email">Невірний формат email!</string>
+    <string name="nationality">Національність:</string>
+    <string name="sex_choose">Обери стать:</string>
+    <string name="Men">Чоловік</string>
+    <string name="Woman">Жінка</string>
+    <string name="gender_required">Стать не обрана!</string>
+    <string name="nationality_required">Національність не обрана</string>
 </resources>

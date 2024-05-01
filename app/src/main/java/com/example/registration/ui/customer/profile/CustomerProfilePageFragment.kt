@@ -13,6 +13,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentCustomerProfileBinding
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.ui.login.data.UserDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -21,6 +23,7 @@ class CustomerProfilePageFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomerProfileBinding
     private lateinit var navController: NavController
+    private val viewModelDataStore by viewModels<DataStoreViewModel>()
     private val viewModel by viewModels<CustomerProfilePageViewModel>()
 
     override fun onCreateView(
@@ -33,33 +36,34 @@ class CustomerProfilePageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val user = viewModelDataStore.getUser()
         setupView()
-        setListeners()
-        setObservers()
+        setListeners(user)
+        setObservers(user)
     }
 
     private fun setupView() {
         navController = findNavController()
     }
 
-    private fun setListeners() = with(binding) {
+    private fun setListeners(user: UserDTO?) = with(binding) {
         buttonLogout.setOnClickListener {
+                lifecycleScope.launch {
+                    viewModel.logout(user).collect { logoutResult ->
+                        logoutResult.onSuccess {}
+                        logoutResult.onFailure {}
+                    }
+                }
             navController.navigate(R.id.action_customerProfilePageFragment_to_loginFragment)
         }
     }
 
-    private fun setObservers() = with(binding) {
+    private fun setObservers(user: UserDTO?) = with(binding) {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getUserProfile().collect { getUserResult ->
-                    getUserResult.onSuccess {getUserResponse ->
-                        getUserResponse.apply {
-                            customerName.text = name
-                            customerEmail.text = email
-                        }
-                    }
-                    getUserResult.onFailure {
-                    }
+                user?.let { user ->
+                    customerName.text = user.name
+                    customerEmail.text = user.email
                 }
             }
         }

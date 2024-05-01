@@ -16,9 +16,5 @@ class LoginViewModel @Inject constructor(
     fun login(email: String, password: String): Flow<Result<UserDTO>> {
         return userRepository.loginUser(email, password)
     }
-
-    fun logout(): Flow<Result<Unit>>{
-        return userRepository.logoutUser(getUserToken())
-    }
 }
 

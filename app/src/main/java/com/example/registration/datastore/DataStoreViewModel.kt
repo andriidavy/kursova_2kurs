@@ -1,9 +1,9 @@
 package com.example.registration.datastore
 
 import androidx.lifecycle.ViewModel
-import com.example.registration.datastore.Constants.USER_EMAIL
 import com.example.registration.datastore.Constants.USER_ID
-import com.example.registration.datastore.Constants.USER_TOKEN
+import com.example.registration.datastore.Constants.USER_KEY
+import com.example.registration.ui.login.data.UserDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -13,20 +13,12 @@ open class DataStoreViewModel @Inject constructor(
     private val datastoreRepository: DatastoreRepo
 ) : ViewModel() {
 
-    fun storeUserToken(value: String) = runBlocking {
-        datastoreRepository.putString(USER_TOKEN, value)
+    fun storeUser(user: UserDTO) = runBlocking {
+        datastoreRepository.putUser(USER_KEY, user)
     }
 
-    fun getUserToken(): String = runBlocking {
-        datastoreRepository.getString(USER_TOKEN)!!
-    }
-
-    fun storeUserObjectId(value: String) = runBlocking {
-        datastoreRepository.putString(USER_EMAIL, value)
-    }
-
-    fun getUserObjectId() = runBlocking {
-        datastoreRepository.getString(USER_EMAIL)!!
+    fun getUser(): UserDTO? = runBlocking {
+        datastoreRepository.getUser(USER_KEY)
     }
 
     fun clearPreferences(key: String) = runBlocking {

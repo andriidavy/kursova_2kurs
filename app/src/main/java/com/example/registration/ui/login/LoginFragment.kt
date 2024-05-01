@@ -56,27 +56,17 @@ class LoginFragment : Fragment() {
 
             lifecycleScope.launch {
                 viewModel.login(email, password).collect { loginResult ->
-                    loginResult.onSuccess {loginResponse ->
+                    loginResult.onSuccess {user ->
                         navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
 
                         // установка token i email користувача при вході
-                        dataStoreViewModel.storeUserToken(loginResponse.userToken)
-                        dataStoreViewModel.storeUserObjectId(loginResponse.objectId)
+                        dataStoreViewModel.storeUser(user)
 
-                        ToastObj.longToastMake(getString(R.string.success_log, loginResponse.userToken), context)
+                        ToastObj.longToastMake(getString(R.string.success_log, user.userToken), context)
                     }
                     loginResult.onFailure {
                         ToastObj.shortToastMake(getString(R.string.invalid_log), context)
                     }
-                }
-            }
-        }
-
-        btLogout.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.logout().collect { logoutResult ->
-                    logoutResult.onSuccess {}
-                    logoutResult.onFailure {}
                 }
             }
         }

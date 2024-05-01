@@ -8,7 +8,10 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.registration.datastore.Constants.DATASTORE_NAME
+import com.example.registration.ui.login.data.UserDTO
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
@@ -17,18 +20,21 @@ class DataStoreRepoImpl @Inject constructor(
     private val context: Context
 ) : DatastoreRepo {
 
-    override suspend fun putString(key: String, value: String) {
+    override suspend fun putUser(key: String, user: UserDTO) {
         val preferenceKey = stringPreferencesKey(key)
-        context.dataStore.edit {
-            it[preferenceKey] = value
+        val jsonString = Gson().toJson(user)
+        context.dataStore.edit { preferences ->
+            preferences[preferenceKey] = jsonString
         }
     }
 
-    override suspend fun getString(key: String): String? {
+    override suspend fun getUser(key: String): UserDTO? {
         return try {
             val preferenceKey = stringPreferencesKey(key)
-            val preference = context.dataStore.data.first()
-            preference[preferenceKey]
+            val jsonString = context.dataStore.data.firstOrNull()?.get(preferenceKey)
+            jsonString?.let {
+                Gson().fromJson(it, UserDTO::class.java)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null

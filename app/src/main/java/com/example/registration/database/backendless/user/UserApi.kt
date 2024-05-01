@@ -15,6 +15,10 @@ interface UserApi {
     @POST("users/register")
     suspend fun registerUser(@Body user: User): User
 
+    @POST("files/{folderName}")
+    suspend fun createFolder(
+        @Path("folderName") folderName: String
+    )
     @POST("users/login")
     @Headers("Content-Type: application/json")
     suspend fun loginUser(@Body loginRequest: LoginRequest): UserDTO

@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Backendless.initApp(applicationContext, "FF1A5A1D-9D50-49DE-FF52-3A572F090300", "2240799C-8598-4FE5-A987-E63812C61590")
+        Backendless.initApp(applicationContext, "FF1A5A1D-9D50-49DE-FF52-3A572F090300", "D9A001DE-5CCD-4424-A5D9-E721278818E6")
         setContentView(R.layout.activity_main)
 
         val navHostFragment = supportFragmentManager

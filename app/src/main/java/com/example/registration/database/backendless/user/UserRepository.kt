@@ -22,6 +22,7 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             try {
                 val user =
                     userApi.registerUser(User(name, email, password, nationality, age, gender))
+                userApi.createFolder(name)
                 Result.success(user)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -40,7 +41,7 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
         }
     }
 
-    suspend fun restorePassword(email: String){
+    suspend fun restorePassword(email: String) {
         userApi.restorePassword(email)
     }
 
@@ -65,7 +66,8 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             emit(Result.failure(e))
         }
     }
-    suspend fun isTokenValid(token:String): Boolean {
+
+    suspend fun isTokenValid(token: String): Boolean {
         return userApi.isTokenValid(token)
     }
 }

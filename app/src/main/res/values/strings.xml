@@ -143,4 +143,6 @@
     <string name="Woman">Жінка</string>
     <string name="gender_required">Стать не обрана!</string>
     <string name="nationality_required">Національність не обрана</string>
+    <string name="forget_password">Не пам\'ятаю пароль</string>
+    <string name = "restore_password">На ваш email вислано інструкції з відновленню паролю!</string>
 </resources>

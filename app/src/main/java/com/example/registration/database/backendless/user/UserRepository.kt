@@ -40,6 +40,10 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
         }
     }
 
+    suspend fun restorePassword(email: String){
+        userApi.restorePassword(email)
+    }
+
     fun getUser(objectId: String, token: String): Flow<Result<UserDTO>> = flow {
         try {
             val getUser = userApi.getUser(objectId, token)

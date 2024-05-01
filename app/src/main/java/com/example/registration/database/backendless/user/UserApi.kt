@@ -24,6 +24,11 @@ interface UserApi {
         @Path("userToken") userToken: String
     ): Boolean
 
+    @GET("users/restorepassword/{userIdentity}")
+    suspend fun restorePassword(
+        @Path("userIdentity") userIdentity: String
+    )
+
     @GET("data/Users/{objectId}")
     @Headers("user-token: {userToken}")
     suspend fun getUser(

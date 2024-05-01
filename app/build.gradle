@@ -93,6 +93,8 @@ dependencies {
 
     //Data store
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation 'com.backendless:backendless:6.3.6'
 }
 
 kapt {

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.backendless.Backendless
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
 import com.example.registration.datastore.DataStoreViewModel
@@ -47,6 +48,11 @@ class LoginFragment : Fragment() {
         // перехід на сторінку реєстрації
         textHaveNotRegistration.setOnClickListener {
             navController.navigate(R.id.action_loginFragment_to_registrationFragment)
+        }
+
+        textForgetPassword.setOnClickListener {
+            viewModel.restorePassword(etEmail.text.toString())
+            ToastObj.longToastMake(getString(R.string.restore_password), context)
         }
 
         // логін

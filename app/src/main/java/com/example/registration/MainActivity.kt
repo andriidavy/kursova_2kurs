@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.backendless.Backendless
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Backendless.initApp(applicationContext, "FF1A5A1D-9D50-49DE-FF52-3A572F090300", "2240799C-8598-4FE5-A987-E63812C61590")
         setContentView(R.layout.activity_main)
 
         val navHostFragment = supportFragmentManager

@@ -44,16 +44,15 @@
             app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
         <TextView
-            android:id="@+id/textHaveNotRegistration"
+            android:id="@+id/textForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/goToRegistration"
-            android:textColor="@color/ref_color"
+            android:layout_marginTop="10dp"
+            android:text="@string/forget_password"
+            android:textColor="#006064"
             android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/etPassword"
             app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
         <Button
@@ -65,14 +64,18 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textHaveNotRegistration" />
+            app:layout_constraintTop_toBottomOf="@+id/textForgetPassword" />
 
-        <Button
-            android:id="@+id/bt_logout"
+
+        <TextView
+            android:id="@+id/textHaveNotRegistration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Вийти"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="24dp"
+            android:text="@string/goToRegistration"
+            android:textColor="@color/ref_color"
+            android:textSize="14sp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_log" />

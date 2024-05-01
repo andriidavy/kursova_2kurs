@@ -3,7 +3,7 @@ package com.example.registration.di
 import com.example.registration.database.customer.CustomerApi
 import com.example.registration.database.employee.EmployeeApi
 import com.example.registration.database.manager.ManagerApi
-import com.example.registration.database.user.UserApi
+import com.example.registration.database.backendless.user.UserApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

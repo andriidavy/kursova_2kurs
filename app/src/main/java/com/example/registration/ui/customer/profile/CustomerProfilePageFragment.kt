@@ -51,12 +51,14 @@ class CustomerProfilePageFragment : Fragment() {
     private fun setObservers() = with(binding) {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.customer.collect { customer ->
-                    customer.apply {
-                        customerId.text = id.toString()
-                        customerName.text = name
-                        customerSurname.text = surname
-                        customerEmail.text = email
+                viewModel.getUserProfile().collect { getUserResult ->
+                    getUserResult.onSuccess {getUserResponse ->
+                        getUserResponse.apply {
+                            customerName.text = name
+                            customerEmail.text = email
+                        }
+                    }
+                    getUserResult.onFailure {
                     }
                 }
             }

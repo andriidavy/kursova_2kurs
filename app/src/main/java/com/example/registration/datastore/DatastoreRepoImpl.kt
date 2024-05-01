@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.registration.datastore.Constants.DATASTORE_NAME
 import kotlinx.coroutines.flow.first
@@ -16,12 +17,30 @@ class DataStoreRepoImpl @Inject constructor(
     private val context: Context
 ) : DatastoreRepo {
 
-    override suspend fun putInt(key: String, value: Int) {
-        val preferenceKey = intPreferencesKey(key)
+    override suspend fun putString(key: String, value: String) {
+        val preferenceKey = stringPreferencesKey(key)
         context.dataStore.edit {
             it[preferenceKey] = value
         }
     }
+
+    override suspend fun getString(key: String): String? {
+        return try {
+            val preferenceKey = stringPreferencesKey(key)
+            val preference = context.dataStore.data.first()
+            preference[preferenceKey]
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+//    override suspend fun putInt(key: String, value: Int) {
+//        val preferenceKey = intPreferencesKey(key)
+//        context.dataStore.edit {
+//            it[preferenceKey] = value
+//        }
+//    }
 
     override suspend fun getInt(key: String): Int? {
         return try {

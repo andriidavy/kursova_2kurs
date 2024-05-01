@@ -2,7 +2,7 @@ package com.example.registration.ui.customer.registration
 
 import androidx.lifecycle.ViewModel
 import com.example.registration.database.customer.CustomerRepository
-import com.example.registration.database.user.UserRepository
+import com.example.registration.database.backendless.user.UserRepository
 import com.example.registration.model.users.User
 import com.example.registration.model.users.User.Gender
 import dagger.hilt.android.lifecycle.HiltViewModel

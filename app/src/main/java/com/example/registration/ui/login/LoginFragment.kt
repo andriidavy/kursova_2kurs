@@ -1,11 +1,10 @@
 package com.example.registration.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +24,6 @@ class LoginFragment : Fragment() {
     private lateinit var navController: NavController
     private val viewModel by viewModels<LoginViewModel>()
     private val dataStoreViewModel by viewModels<DataStoreViewModel>()
-    private var num: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,34 +39,8 @@ class LoginFragment : Fragment() {
         setListeners()
     }
 
-    private fun setupViews() = with(binding) {
+    private fun setupViews() {
         navController = findNavController()
-
-        //set Spinner
-        val users = arrayOf("Customer", "Employee", "Manager")
-        val spinner = spinnerChooseUserType
-        val arrayAdapter =
-            activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, users) }
-
-        spinner.apply {
-            adapter = arrayAdapter
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    num = position
-                    textHaveNotRegistration.visibility =
-                        if (position == 0) View.VISIBLE else View.GONE
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Code to perform some action when nothing is selected
-                }
-            }
-        }
     }
 
     private fun setListeners() = with(binding) {
@@ -83,22 +55,28 @@ class LoginFragment : Fragment() {
             val password = etPassword.text.toString()
 
             lifecycleScope.launch {
-                viewModel.login(email, password, num)?.collect { loginResult ->
-                    loginResult.onSuccess { userId ->
-                        when (num) {
-                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
-                        }
+                viewModel.login(email, password).collect { loginResult ->
+                    loginResult.onSuccess {loginResponse ->
+                        navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
 
-                        // установка ID користувача при вході
-                        dataStoreViewModel.storeUserId(userId)
+                        // установка token i email користувача при вході
+                        dataStoreViewModel.storeUserToken(loginResponse.userToken)
+                        dataStoreViewModel.storeUserObjectId(loginResponse.objectId)
 
-                        ToastObj.longToastMake(getString(R.string.success_log), context)
+                        ToastObj.longToastMake(getString(R.string.success_log, loginResponse.userToken), context)
                     }
                     loginResult.onFailure {
                         ToastObj.shortToastMake(getString(R.string.invalid_log), context)
                     }
+                }
+            }
+        }
+
+        btLogout.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.logout().collect { logoutResult ->
+                    logoutResult.onSuccess {}
+                    logoutResult.onFailure {}
                 }
             }
         }

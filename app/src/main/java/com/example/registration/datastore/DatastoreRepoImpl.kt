@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.registration.datastore.Constants.DATASTORE_NAME
-import com.example.registration.ui.login.data.UserDTO
+import com.example.registration.model.users.data.UserDTO
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull

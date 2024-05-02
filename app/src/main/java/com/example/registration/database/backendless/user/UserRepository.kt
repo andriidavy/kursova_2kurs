@@ -3,8 +3,8 @@ package com.example.registration.database.backendless.user
 import android.util.Log
 import com.example.registration.model.users.User
 import com.example.registration.model.users.User.Gender
-import com.example.registration.ui.login.data.LoginRequest
-import com.example.registration.ui.login.data.UserDTO
+import com.example.registration.model.users.data.LoginRequest
+import com.example.registration.model.users.data.UserDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

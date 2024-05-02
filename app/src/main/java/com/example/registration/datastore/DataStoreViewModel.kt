@@ -3,7 +3,7 @@ package com.example.registration.datastore
 import androidx.lifecycle.ViewModel
 import com.example.registration.datastore.Constants.USER_ID
 import com.example.registration.datastore.Constants.USER_KEY
-import com.example.registration.ui.login.data.UserDTO
+import com.example.registration.model.users.data.UserDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

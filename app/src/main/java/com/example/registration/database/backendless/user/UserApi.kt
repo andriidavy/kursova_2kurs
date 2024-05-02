@@ -1,8 +1,8 @@
 package com.example.registration.database.backendless.user
 
 import com.example.registration.model.users.User
-import com.example.registration.ui.login.data.LoginRequest
-import com.example.registration.ui.login.data.UserDTO
+import com.example.registration.model.users.data.LoginRequest
+import com.example.registration.model.users.data.UserDTO
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -15,7 +15,7 @@ interface UserApi {
     @POST("users/register")
     suspend fun registerUser(@Body user: User): User
 
-    @POST("files/{folderName}")
+    @POST("files/{folderName}/sharedWithMe")
     suspend fun createFolder(
         @Path("folderName") folderName: String
     )

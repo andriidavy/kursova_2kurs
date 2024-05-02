@@ -1,6 +1,6 @@
 package com.example.registration.datastore
 
-import com.example.registration.ui.login.data.UserDTO
+import com.example.registration.model.users.data.UserDTO
 
 interface DatastoreRepo {
     suspend fun putUser(key: String, user: UserDTO)

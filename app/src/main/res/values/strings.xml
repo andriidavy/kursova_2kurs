@@ -145,4 +145,5 @@
     <string name="nationality_required">Національність не обрана</string>
     <string name="forget_password">Не пам\'ятаю пароль</string>
     <string name = "restore_password">На ваш email вислано інструкції з відновленню паролю!</string>
+    <string name="file_manage">Управління файлами</string>
 </resources>

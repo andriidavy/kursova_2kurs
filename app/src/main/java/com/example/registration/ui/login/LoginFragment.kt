@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
             lifecycleScope.launch {
                 viewModel.login(email, password).collect { loginResult ->
                     loginResult.onSuccess {user ->
-                        navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+                        navController.navigate(R.id.action_loginFragment_to_userMainPageFragment)
 
                         // установка token i email користувача при вході
                         dataStoreViewModel.storeUser(user)

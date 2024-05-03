@@ -27,6 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/et_way_to_folder" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_files_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

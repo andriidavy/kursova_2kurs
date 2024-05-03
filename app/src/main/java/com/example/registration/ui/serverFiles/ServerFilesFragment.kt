@@ -8,12 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
+import com.example.registration.adapter.ServerFilesListAdapter
 import com.example.registration.databinding.FragmentServerFilesBinding
+import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ServerFilesFragment : Fragment() {
     private lateinit var binding: FragmentServerFilesBinding
+    private lateinit var adapter: ServerFilesListAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<ServerFilesViewModel>()
     override fun onCreateView(
@@ -30,7 +35,10 @@ class ServerFilesFragment : Fragment() {
         setListeners()
     }
 
-    private fun setupViews() {
+    private fun setupViews() = with(binding) {
+        adapter = ServerFilesListAdapter(emptyList(), itemRemovedClick())
+        rvFilesList.adapter = adapter
+        rvFilesList.layoutManager = LinearLayoutManager(activity)
         navController = findNavController()
     }
 
@@ -38,6 +46,15 @@ class ServerFilesFragment : Fragment() {
         btFileSearch.setOnClickListener {
             val pathToFolder = etWayToFolder.text.toString()
             viewModel.getFilesFromServerFolder(pathToFolder)
+        }
+    }
+
+ private fun itemRemovedClick(): (Int) -> Unit {
+        return { position ->
+            viewModel.cartProductsArrayDTO.value.getOrNull(position)?.productId?.let { productId ->
+                viewModel.removeProductFromCart(productId)
+                ToastObj.shortToastMake(getString(R.string.product_removed_form_cart), context)
+            }
         }
     }
 }

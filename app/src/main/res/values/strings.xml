@@ -151,4 +151,8 @@
     <string name="server_files">Файли на сервері</string>
     <string name="ht_full_way_to_folder">Введіть шлях до теки:</string>
     <string name="bt_file_search">Пошук</string>
+    <string name="public_url">public URL:</string>
+    <string name="file_size">Розмір:</string>
+    <string name="url">URL:</string>
+    <string name="created_on">Створено:</string>
 </resources>

@@ -144,6 +144,11 @@
     <string name="gender_required">Стать не обрана!</string>
     <string name="nationality_required">Національність не обрана</string>
     <string name="forget_password">Не пам\'ятаю пароль</string>
-    <string name = "restore_password">На ваш email вислано інструкції з відновленню паролю!</string>
+    <string name="restore_password">На ваш email вислано інструкції з відновленню паролю!</string>
     <string name="file_manage">Управління файлами</string>
+    <string name="to_create_folder">Створити папку</string>
+    <string name="ht_folder_name">Назва папки:</string>
+    <string name="server_files">Файли на сервері</string>
+    <string name="ht_full_way_to_folder">Введіть шлях до теки:</string>
+    <string name="bt_file_search">Пошук</string>
 </resources>

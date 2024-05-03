@@ -1,11 +1,15 @@
 package com.example.registration
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.backendless.Backendless
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.ui.user.profile.UserProfilePageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

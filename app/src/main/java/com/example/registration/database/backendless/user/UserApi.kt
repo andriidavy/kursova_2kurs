@@ -16,7 +16,7 @@ interface UserApi {
     suspend fun registerUser(@Body user: User): User
 
     @POST("files/{folderName}/sharedWithMe")
-    suspend fun createFolder(
+    suspend fun createStartUserFolder(
         @Path("folderName") folderName: String
     )
     @POST("users/login")
@@ -34,12 +34,11 @@ interface UserApi {
     )
 
     @GET("data/Users/{objectId}")
-    @Headers("user-token: {userToken}")
     suspend fun getUser(
         @Path("objectId") objectId: String,
         @Header("user-token") userToken: String
     ): UserDTO
 
     @GET("users/logout")
-    suspend fun logoutUser(@Query("user_token") token: String)
+    suspend fun logoutUser(@Header("user-token") userToken: String)
 }

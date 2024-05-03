@@ -22,7 +22,7 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             try {
                 val user =
                     userApi.registerUser(User(name, email, password, nationality, age, gender))
-                userApi.createFolder(name)
+                userApi.createStartUserFolder(name)
                 Result.success(user)
             } catch (e: Exception) {
                 Result.failure(e)

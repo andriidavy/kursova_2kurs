@@ -39,5 +39,20 @@
         <action
             android:id="@+id/action_userMainPageFragment_to_userProfilePageFragment"
             app:destination="@id/userProfilePageFragment" />
+        <action
+            android:id="@+id/action_userMainPageFragment_to_fileManageFragment"
+            app:destination="@id/fileManageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/fileManageFragment"
+        android:name="com.example.registration.ui.fileManage.FileManageFragment"
+        android:label="FileManageFragment" >
+        <action
+            android:id="@+id/action_fileManageFragment_to_serverFilesFragment"
+            app:destination="@id/serverFilesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serverFilesFragment"
+        android:name="com.example.registration.ui.serverFiles.ServerFilesFragment"
+        android:label="ServerFilesFragment" />
 </navigation>

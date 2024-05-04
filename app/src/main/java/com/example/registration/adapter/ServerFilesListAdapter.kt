@@ -9,7 +9,9 @@ import com.example.registration.model.directoryItem.ServerItem
 
 open class ServerFilesListAdapter(
     private var serverItemList: List<ServerItem>,
-    private val itemRemovedClick: (Int) -> Unit
+    private val itemRemovedClick: (Int) -> Unit,
+    private val itemClick: (Int) -> Unit,
+    private val itemDownloadClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ServerFilesListAdapter.ViewHolder>() {
 
     class ViewHolder(var view: ServerFileItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -36,6 +38,14 @@ open class ServerFilesListAdapter(
 
             buttonDeleteItem.setOnClickListener {
                 itemRemovedClick.invoke(position)
+            }
+
+            buttonDownload.setOnClickListener {
+                itemDownloadClick.invoke(position)
+            }
+
+            root.setOnClickListener {
+                itemClick.invoke(position)
             }
         }
     }

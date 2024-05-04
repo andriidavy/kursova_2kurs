@@ -39,44 +39,8 @@ class FileManageFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-        btToCreateFolder.setOnClickListener {
-            btToCreateFolder.visibility = View.INVISIBLE
-            btCreateFolderConfirm.visibility = View.VISIBLE
-            etFolderName.visibility = View.VISIBLE
-            etFolderName.requestFocus()
-            showKeyboard()
-        }
-
-        root.setOnClickListener {
-            btToCreateFolder.visibility = View.VISIBLE
-            btCreateFolderConfirm.visibility = View.INVISIBLE
-            etFolderName.visibility = View.INVISIBLE
-            hideKeyboard()
-        }
-
-        btCreateFolderConfirm.setOnClickListener {
-            btToCreateFolder.visibility = View.VISIBLE
-            btCreateFolderConfirm.visibility = View.INVISIBLE
-            etFolderName.visibility = View.INVISIBLE
-            ToastObj.longToastMake("Папку створено", context)
-            val folderName = etFolderName.text.toString()
-            viewModel.createFolder(folderName)
-        }
-
         btToServerFiles.setOnClickListener {
             navController.navigate(R.id.action_fileManageFragment_to_serverFilesFragment)
         }
-    }
-
-    private fun showKeyboard() {
-        val inputMethodManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-    }
-
-    private fun hideKeyboard() {
-        val inputMethodManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 }

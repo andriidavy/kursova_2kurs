@@ -65,7 +65,7 @@ class LoginFragment : Fragment() {
                     loginResult.onSuccess {user ->
                         navController.navigate(R.id.action_loginFragment_to_userMainPageFragment)
 
-                        // установка token i email користувача при вході
+                        // установка користувача при вході
                         dataStoreViewModel.storeUser(user)
 
                         ToastObj.longToastMake(getString(R.string.success_log, user.userToken), context)

@@ -1,6 +1,7 @@
 package com.example.registration.ui.serverFiles
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +11,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.registration.R
 import com.example.registration.adapter.ServerFilesListAdapter
 import com.example.registration.databinding.FragmentServerFilesBinding
+import com.example.registration.global.KeyboardObj
 import com.example.registration.global.ToastObj
 import com.example.registration.model.directoryItem.ServerItem
+import com.google.android.material.internal.ViewUtils.hideKeyboard
+import com.google.android.material.internal.ViewUtils.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
 
 @AndroidEntryPoint
 class ServerFilesFragment : Fragment() {
@@ -26,6 +30,7 @@ class ServerFilesFragment : Fragment() {
     private lateinit var itemsList: List<ServerItem>
     private lateinit var pathToFolder: String
     private val viewModel by viewModels<ServerFilesViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +46,12 @@ class ServerFilesFragment : Fragment() {
     }
 
     private fun setupViews() = with(binding) {
-        adapter = ServerFilesListAdapter(emptyList(), itemRemovedClick())
+        adapter = ServerFilesListAdapter(
+            emptyList(),
+            itemRemovedClick(),
+            itemClick(),
+            itemDownloadClick()
+        )
         rvFilesList.adapter = adapter
         rvFilesList.layoutManager = LinearLayoutManager(activity)
         navController = findNavController()
@@ -49,8 +59,24 @@ class ServerFilesFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         btFileSearch.setOnClickListener {
-            pathToFolder = etWayToFolder.text.toString()
+            refreshPath()
             itemListUpdate(pathToFolder)
+        }
+
+        btToCreateFolder.setOnClickListener {
+            viewSettings(2)
+            etNewFolderName.requestFocus()
+            KeyboardObj.showKeyboard(requireActivity())
+        }
+
+        root.setOnClickListener {
+            viewSettings(1)
+            KeyboardObj.hideKeyboard(requireActivity(), requireView())
+        }
+
+        btCreateFolderConfirm.setOnClickListener {
+            viewSettings(1)
+            createNewFolder()
         }
     }
 
@@ -68,6 +94,14 @@ class ServerFilesFragment : Fragment() {
         }
     }
 
+    private fun createNewFolder() = with(binding) {
+        val newFolderName = etNewFolderName.text.toString()
+        val encodedFilePath = URLEncoder.encode(pathToFolder, "UTF-8")
+        viewModel.createFolder(encodedFilePath, newFolderName)
+        itemListUpdate(pathToFolder)
+        ToastObj.shortToastMake("Створено нову папку!", context)
+    }
+
     private fun itemRemovedClick(): (Int) -> Unit {
         return { position ->
             itemsList.getOrNull(position)?.url?.let { url ->
@@ -75,6 +109,62 @@ class ServerFilesFragment : Fragment() {
                 itemListUpdate(pathToFolder)
                 ToastObj.shortToastMake("Файл видалено!", context)
             }
+        }
+    }
+
+    private fun itemClick(): (Int) -> Unit = with(binding) {
+        return { position ->
+            itemsList.getOrNull(position)?.name?.let { name ->
+                val newPath = if (pathToFolder.isNotEmpty()) {
+                    "$pathToFolder/$name"
+                } else {
+                    name
+                }
+                etWayToFolder.setText(newPath)
+                refreshPath()
+                itemListUpdate(pathToFolder)
+            }
+        }
+    }
+
+    private fun refreshPath() = with(binding) {
+        pathToFolder = etWayToFolder.text.toString()
+    }
+
+    private fun itemDownloadClick(): (Int) -> Unit {
+        return { position ->
+            val itemResp = itemsList.getOrNull(position)
+
+            itemResp?.let { item ->
+                lifecycleScope.launch {
+                    viewModel.downloadFile(item.url).collect { result ->
+                        result.onSuccess { responseBody ->
+                            val downloadRes = viewModel.saveFileToDevice(responseBody, item.name)
+                            if (downloadRes) {
+                                ToastObj.longToastMake("файл завантажено", context)
+                            } else {
+                                ToastObj.longToastMake("файл не завантажено", context)
+                            }
+                        }
+                        result.onFailure {
+                            ToastObj.longToastMake("помилка завантаження", context)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun viewSettings(settingsType: Int) = with(binding) {
+        if (settingsType == 1) {
+            btToCreateFolder.visibility = View.VISIBLE
+            btCreateFolderConfirm.visibility = View.INVISIBLE
+            etNewFolderName.visibility = View.INVISIBLE
+        } else if (settingsType == 2) {
+            btToCreateFolder.visibility = View.INVISIBLE
+            btCreateFolderConfirm.visibility = View.VISIBLE
+            etNewFolderName.visibility = View.VISIBLE
+            etNewFolderName.setText("")
         }
     }
 }

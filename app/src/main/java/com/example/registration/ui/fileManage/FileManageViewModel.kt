@@ -14,11 +14,4 @@ class FileManageViewModel @Inject constructor(
     datastoreRepository: DatastoreRepo
 ) : DataStoreViewModel(datastoreRepository) {
     private val userName: String = getUser()?.name ?: ""
-    fun createFolder(folderName: String) {
-        viewModelScope.launch {
-            if (userName != "") {
-                filesRepository.createFolder(userName, folderName)
-            }
-        }
-    }
 }

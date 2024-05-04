@@ -15,10 +15,9 @@ interface FilesApi {
         @Path("folderName") folderName: String
     )
 
-    @DELETE("files/{userName}/{folderName}")
-    suspend fun deleteFolder(
-        @Path("userName") userName: String,
-        @Path("folderName") folderName: String
+    @DELETE("files/{filePath}")
+    suspend fun deleteFile(
+        @Path("filePath") filePath: String
     )
 
     @GET("files/{userName}/{path}")

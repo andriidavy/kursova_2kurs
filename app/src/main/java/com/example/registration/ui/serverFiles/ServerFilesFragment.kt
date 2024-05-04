@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,13 +14,17 @@ import com.example.registration.R
 import com.example.registration.adapter.ServerFilesListAdapter
 import com.example.registration.databinding.FragmentServerFilesBinding
 import com.example.registration.global.ToastObj
+import com.example.registration.model.directoryItem.ServerItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ServerFilesFragment : Fragment() {
     private lateinit var binding: FragmentServerFilesBinding
     private lateinit var adapter: ServerFilesListAdapter
     private lateinit var navController: NavController
+    private lateinit var itemsList: List<ServerItem>
+    private lateinit var pathToFolder: String
     private val viewModel by viewModels<ServerFilesViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,16 +49,31 @@ class ServerFilesFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         btFileSearch.setOnClickListener {
-            val pathToFolder = etWayToFolder.text.toString()
-            viewModel.getFilesFromServerFolder(pathToFolder)
+            pathToFolder = etWayToFolder.text.toString()
+            itemListUpdate(pathToFolder)
         }
     }
 
- private fun itemRemovedClick(): (Int) -> Unit {
+    private fun itemListUpdate(path: String) {
+        lifecycleScope.launch {
+            viewModel.getFilesFromServerFolder(path).collect { result ->
+                result.onSuccess { listOfItem ->
+                    adapter.updateCart(listOfItem)
+                    itemsList = listOfItem
+                }
+                result.onFailure {
+                    ToastObj.longToastMake("Файли не знайдено!", context)
+                }
+            }
+        }
+    }
+
+    private fun itemRemovedClick(): (Int) -> Unit {
         return { position ->
-            viewModel.cartProductsArrayDTO.value.getOrNull(position)?.productId?.let { productId ->
-                viewModel.removeProductFromCart(productId)
-                ToastObj.shortToastMake(getString(R.string.product_removed_form_cart), context)
+            itemsList.getOrNull(position)?.url?.let { url ->
+                viewModel.deleteFile(url)
+                itemListUpdate(pathToFolder)
+                ToastObj.shortToastMake("Файл видалено!", context)
             }
         }
     }

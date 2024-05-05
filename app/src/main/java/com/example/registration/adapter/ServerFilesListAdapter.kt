@@ -12,7 +12,8 @@ open class ServerFilesListAdapter(
     private var serverItemList: List<ServerItem>,
     private val itemRemovedClick: (Int) -> Unit,
     private val itemClick: (Int) -> Unit,
-    private val itemDownloadClick: (Int) -> Unit
+    private val itemDownloadClick: (Int) -> Unit,
+    private val shareFile: (Int) -> Unit
 ) : RecyclerView.Adapter<ServerFilesListAdapter.ViewHolder>() {
 
     class ViewHolder(var view: ServerFileItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -44,6 +45,8 @@ open class ServerFilesListAdapter(
                 sizeText.visibility = View.GONE
                 buttonDownload.isEnabled = false
                 buttonDownload.visibility = View.INVISIBLE
+                buttonShare.isEnabled = false
+                buttonShare.visibility = View.INVISIBLE
             } else {
                 root.isEnabled = false
             }
@@ -58,6 +61,9 @@ open class ServerFilesListAdapter(
 
             root.setOnClickListener {
                 itemClick.invoke(position)
+            }
+            buttonShare.setOnClickListener {
+                shareFile.invoke(position)
             }
         }
     }

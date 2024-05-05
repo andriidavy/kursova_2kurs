@@ -57,9 +57,17 @@
     <fragment
         android:id="@+id/serverFilesFragment"
         android:name="com.example.registration.ui.serverFiles.ServerFilesFragment"
-        android:label="ServerFilesFragment" />
+        android:label="ServerFilesFragment" >
+        <action
+            android:id="@+id/action_serverFilesFragment_to_shareToUserFragment"
+            app:destination="@id/shareToUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/uploadToServerFragment"
         android:name="com.example.registration.ui.uploadToServer.UploadToServerFragment"
         android:label="UploadToServerFragment" />
+    <fragment
+        android:id="@+id/shareToUserFragment"
+        android:name="com.example.registration.ui.shareToUser.ShareToUserFragment"
+        android:label="ShareToUserFragment" />
 </navigation>

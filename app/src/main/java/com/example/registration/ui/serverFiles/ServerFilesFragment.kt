@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
 import com.example.registration.adapter.ServerFilesListAdapter
 import com.example.registration.databinding.FragmentServerFilesBinding
 import com.example.registration.global.KeyboardObj
@@ -50,7 +51,8 @@ class ServerFilesFragment : Fragment() {
             emptyList(),
             itemRemovedClick(),
             itemClick(),
-            itemDownloadClick()
+            itemDownloadClick(),
+            shareFile()
         )
         rvFilesList.adapter = adapter
         rvFilesList.layoutManager = LinearLayoutManager(activity)
@@ -151,6 +153,14 @@ class ServerFilesFragment : Fragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun shareFile(): (Int) -> Unit {
+        return { position ->
+            itemsList.getOrNull(position)?.let { item ->
+                navController.navigate(R.id.action_serverFilesFragment_to_shareToUserFragment)
             }
         }
     }

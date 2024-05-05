@@ -2,6 +2,7 @@ package com.example.registration.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ServerFileItemBinding
@@ -35,6 +36,17 @@ open class ServerFilesListAdapter(
             size.text = serverItemList[position].size.toString()
             url.text = serverItemList[position].url
             createdOn.text = serverItemList[position].createdOn.toString()
+
+            if (serverItemList[position].size.toString() == "0") {
+                publicUrl.visibility = View.GONE
+                publicUrlText.visibility = View.GONE
+                size.visibility = View.GONE
+                sizeText.visibility = View.GONE
+                buttonDownload.isEnabled = false
+                buttonDownload.visibility = View.INVISIBLE
+            } else {
+                root.isEnabled = false
+            }
 
             buttonDeleteItem.setOnClickListener {
                 itemRemovedClick.invoke(position)

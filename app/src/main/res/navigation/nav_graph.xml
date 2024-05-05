@@ -50,9 +50,16 @@
         <action
             android:id="@+id/action_fileManageFragment_to_serverFilesFragment"
             app:destination="@id/serverFilesFragment" />
+        <action
+            android:id="@+id/action_fileManageFragment_to_uploadToServerFragment"
+            app:destination="@id/uploadToServerFragment" />
     </fragment>
     <fragment
         android:id="@+id/serverFilesFragment"
         android:name="com.example.registration.ui.serverFiles.ServerFilesFragment"
         android:label="ServerFilesFragment" />
+    <fragment
+        android:id="@+id/uploadToServerFragment"
+        android:name="com.example.registration.ui.uploadToServer.UploadToServerFragment"
+        android:label="UploadToServerFragment" />
 </navigation>

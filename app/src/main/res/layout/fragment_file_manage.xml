@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/bt_to_server_files"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:text="@string/server_files"
         android:textSize="16sp"
@@ -16,5 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="32dp" />
+
+    <Button
+        android:id="@+id/bt_load_to_server"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_to_server_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/bt_to_server_files" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

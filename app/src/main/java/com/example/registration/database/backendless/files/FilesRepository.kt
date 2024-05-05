@@ -6,6 +6,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import java.io.File
 import java.io.FileOutputStream
@@ -47,4 +51,26 @@ class FilesRepository @Inject constructor(private val filesApi: FilesApi) {
                 emit(Result.failure(e))
             }
         }
+
+    fun uploadFile(
+        userName: String,
+        file: File,
+        fileName: String,
+        userToken: String,
+        path: String
+    ): Flow<Result<String>> = flow {
+        val fileRequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val filePart = MultipartBody.Part.createFormData("file", file.name, fileRequestBody)
+
+        try {
+            val response = filesApi.uploadFile(userName, path, fileName, userToken, filePart)
+            if (response.isSuccessful) {
+                emit(Result.success(response.body().toString()))
+            } else {
+                emit(Result.failure(Exception("File upload failed: ${response.message()}")))
+            }
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
 }

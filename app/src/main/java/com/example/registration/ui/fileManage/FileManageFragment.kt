@@ -42,5 +42,9 @@ class FileManageFragment : Fragment() {
         btToServerFiles.setOnClickListener {
             navController.navigate(R.id.action_fileManageFragment_to_serverFilesFragment)
         }
+
+        btLoadToServer.setOnClickListener {
+            navController.navigate(R.id.action_fileManageFragment_to_uploadToServerFragment)
+        }
     }
 }

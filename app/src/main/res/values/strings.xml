@@ -155,4 +155,6 @@
     <string name="file_size">Розмір:</string>
     <string name="url">URL:</string>
     <string name="created_on">Створено:</string>
+    <string name="tv_file_choose">Обрати файл</string>
+    <string name="upload_to_server_text">Завантажити файл на сервер</string>
 </resources>

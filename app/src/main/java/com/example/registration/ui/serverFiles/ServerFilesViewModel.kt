@@ -50,7 +50,7 @@ class ServerFilesViewModel @Inject constructor(
     suspend fun saveFileToDevice(responseBody: ResponseBody, fileName: String): Boolean {
         return withContext(Dispatchers.IO) {
             try {
-                val filePath = "/storage/emulated/0/Download/$fileName"
+                val filePath = "/storage/emulated/0/Download/MyAppStoredFiles/$fileName"
                 val file = File(filePath)
                 val inputStream = responseBody.byteStream()
                 val outputStream = FileOutputStream(file)

@@ -13,7 +13,8 @@ open class ServerFilesListAdapter(
     private val itemRemovedClick: (Int) -> Unit,
     private val itemClick: (Int) -> Unit,
     private val itemDownloadClick: (Int) -> Unit,
-    private val shareFile: (Int) -> Unit
+    private val shareFile: (Int) -> Unit,
+    private val sharedWithMeDownloadClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ServerFilesListAdapter.ViewHolder>() {
 
     class ViewHolder(var view: ServerFileItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -47,7 +48,16 @@ open class ServerFilesListAdapter(
                 buttonDownload.visibility = View.INVISIBLE
                 buttonShare.isEnabled = false
                 buttonShare.visibility = View.INVISIBLE
+                root.isEnabled = true
             } else {
+                publicUrl.visibility = View.VISIBLE
+                publicUrlText.visibility = View.VISIBLE
+                size.visibility = View.VISIBLE
+                sizeText.visibility = View.VISIBLE
+                buttonDownload.isEnabled = true
+                buttonDownload.visibility = View.VISIBLE
+                buttonShare.isEnabled = true
+                buttonShare.visibility = View.VISIBLE
                 root.isEnabled = false
             }
 
@@ -55,15 +65,27 @@ open class ServerFilesListAdapter(
                 itemRemovedClick.invoke(position)
             }
 
-            buttonDownload.setOnClickListener {
-                itemDownloadClick.invoke(position)
-            }
-
             root.setOnClickListener {
                 itemClick.invoke(position)
             }
             buttonShare.setOnClickListener {
                 shareFile.invoke(position)
+            }
+
+//            if (serverItemList[position].url.contains("sharedWithMe")) {
+//                buttonShare.isEnabled = false
+//                buttonShare.visibility = View.GONE
+//                buttonDownload.setOnClickListener {
+//                    sharedWithMeDownloadClick.invoke(position)
+//                }
+//            } else {
+//                buttonShare.isEnabled = true
+//                buttonShare.visibility = View.VISIBLE
+//                buttonDownload.setOnClickListener {
+//                    itemDownloadClick.invoke(position)
+//                }
+            buttonDownload.setOnClickListener {
+                sharedWithMeDownloadClick.invoke(position)
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.example.registration.ui.serverFiles
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -52,7 +54,8 @@ class ServerFilesFragment : Fragment() {
             itemRemovedClick(),
             itemClick(),
             itemDownloadClick(),
-            shareFile()
+            shareFile(),
+            itemSharedMeDownloadClick()
         )
         rvFilesList.adapter = adapter
         rvFilesList.layoutManager = LinearLayoutManager(activity)
@@ -157,10 +160,45 @@ class ServerFilesFragment : Fragment() {
         }
     }
 
+    private fun itemSharedMeDownloadClick(): (Int) -> Unit {
+        return { position ->
+            val itemResp = itemsList.getOrNull(position)
+            var urlFromResponse = ""
+
+            itemResp?.let { item ->
+                lifecycleScope.launch {
+                    viewModel.downloadFile(item.url).collect { result ->
+                        result.onSuccess { responseBody ->
+                            urlFromResponse = responseBody.toString()
+//                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFromResponse))
+//                            startActivity(intent)
+                        }
+                        result.onFailure {
+                            ToastObj.longToastMake("помилка завантаження", context)
+                        }
+                    }
+                }
+            }
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFromResponse))
+                startActivity(intent)
+        }
+    }
+
     private fun shareFile(): (Int) -> Unit {
         return { position ->
             itemsList.getOrNull(position)?.let { item ->
-                navController.navigate(R.id.action_serverFilesFragment_to_shareToUserFragment)
+
+                val bundle = Bundle()
+
+                val itemPublicUrl = item.publicUrl
+                val itemName = item.name
+                bundle.putString("itemPublicUrl", itemPublicUrl)
+                bundle.putString("itemName", itemName)
+
+                navController.navigate(
+                    R.id.action_serverFilesFragment_to_shareToUserFragment,
+                    bundle
+                )
             }
         }
     }

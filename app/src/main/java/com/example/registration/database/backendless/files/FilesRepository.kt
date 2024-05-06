@@ -73,4 +73,24 @@ class FilesRepository @Inject constructor(private val filesApi: FilesApi) {
             emit(Result.failure(e))
         }
     }
+
+    fun shareFile(
+        userName: String,
+        file: MultipartBody.Part,
+        fileName: String,
+        userToken: String,
+        path: String
+    ): Flow<Result<String>> = flow {
+
+        try {
+            val response = filesApi.uploadFile(userName, path, fileName, userToken, file)
+            if (response.isSuccessful) {
+                emit(Result.success(response.body().toString()))
+            } else {
+                emit(Result.failure(Exception("File upload failed: ${response.message()}")))
+            }
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
 }

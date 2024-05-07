@@ -1,27 +1,27 @@
 package com.example.registration.ui.uploadToServer
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.OpenableColumns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.registration.R
-import com.example.registration.adapter.ServerFilesListAdapter
 import com.example.registration.databinding.FragmentUploadToServerBinding
 import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class UploadToServerFragment : Fragment() {
@@ -79,9 +79,27 @@ class UploadToServerFragment : Fragment() {
     }
 
     private fun selectFile() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*" // Указываем тип файлов, которые можно выбирать (все файлы)
-        startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
+        val options = arrayOf<CharSequence>("Обрати з файлосховища", "Зробити фото")
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Оберіть джерело файлу")
+        builder.setItems(options) { dialog, item ->
+            when {
+                options[item] == "Обрати з файлосховища" -> {
+                    val intent = Intent(Intent.ACTION_GET_CONTENT)
+                    intent.type = "*/*" // Фильтр только для изображений: "image/*"
+                    startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
+                }
+                options[item] == "Зробити фото" -> {
+                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    if (takePictureIntent.resolveActivity(requireContext().packageManager) != null) {
+                        startActivityForResult(takePictureIntent, PICK_FILE_REQUEST_CODE)
+                    } else {
+                        ToastObj.longToastMake("Відсутній додаток для камери", context)
+                    }
+                }
+            }
+        }
+        builder.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -93,6 +111,12 @@ class UploadToServerFragment : Fragment() {
                 fileFromDevice = getFileFromUri(uri)
                 fileName = getFileName(uri)
                 // Теперь у вас есть выбранный файл (selectedFile), который можно использовать в вашем приложении
+                viewModel.setFileSelected(true)
+            }
+            if (data?.extras?.containsKey("data") == true) { // Если есть данные (фото), полученные из камеры
+                val imageBitmap = data.extras?.get("data") as Bitmap
+                fileFromDevice = bitmapToFile(imageBitmap)
+                fileName = "photo_${System.currentTimeMillis()}.jpg"
                 viewModel.setFileSelected(true)
             }
         }
@@ -120,5 +144,14 @@ class UploadToServerFragment : Fragment() {
             e.printStackTrace()
         }
         return filename
+    }
+
+    private fun bitmapToFile(bitmap: Bitmap): File {
+        val filesDir = requireContext().filesDir
+        val imageFile = File(filesDir, "image.jpg")
+        val outputStream = FileOutputStream(imageFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.close()
+        return imageFile
     }
 }

@@ -56,9 +56,20 @@ open class ServerFilesListAdapter(
                 sizeText.visibility = View.VISIBLE
                 buttonDownload.isEnabled = true
                 buttonDownload.visibility = View.VISIBLE
-                buttonShare.isEnabled = true
-                buttonShare.visibility = View.VISIBLE
                 root.isEnabled = false
+                if (serverItemList[position].url.contains("sharedWithMe")) {
+                    buttonShare.isEnabled = false
+                    buttonShare.visibility = View.GONE
+                    buttonDownload.setOnClickListener {
+                        sharedWithMeDownloadClick.invoke(position)
+                    }
+                } else {
+                    buttonShare.isEnabled = true
+                    buttonShare.visibility = View.VISIBLE
+                    buttonDownload.setOnClickListener {
+                        itemDownloadClick.invoke(position)
+                    }
+                }
             }
 
             buttonDeleteItem.setOnClickListener {
@@ -68,24 +79,9 @@ open class ServerFilesListAdapter(
             root.setOnClickListener {
                 itemClick.invoke(position)
             }
+
             buttonShare.setOnClickListener {
                 shareFile.invoke(position)
-            }
-
-//            if (serverItemList[position].url.contains("sharedWithMe")) {
-//                buttonShare.isEnabled = false
-//                buttonShare.visibility = View.GONE
-//                buttonDownload.setOnClickListener {
-//                    sharedWithMeDownloadClick.invoke(position)
-//                }
-//            } else {
-//                buttonShare.isEnabled = true
-//                buttonShare.visibility = View.VISIBLE
-//                buttonDownload.setOnClickListener {
-//                    itemDownloadClick.invoke(position)
-//                }
-            buttonDownload.setOnClickListener {
-                sharedWithMeDownloadClick.invoke(position)
             }
         }
     }

@@ -47,15 +47,40 @@ class ShareToUserFragment : Fragment() {
         btUpload.setOnClickListener {
             val guestUserName = etUsername.text.toString()
             lifecycleScope.launch {
-                viewModel.shareFile(
-                    guestUserName,
-                    FileMappingObj.createMultipartFromString(sharedFilePublicUrl, sharedFileName),
-                    sharedFileName
-                ).collect { result ->
-                    result.onSuccess { finishUrl ->
-                        ToastObj.longToastMake("Файл завантажено: $finishUrl", context)
+                viewModel.getUserByName(guestUserName).collect { res ->
+                    res.onSuccess { guestResponseList ->
+                        if (guestResponseList.isNotEmpty()) {
+                            viewModel.shareFile(
+                                guestUserName,
+                                FileMappingObj.createMultipartFromString(
+                                    sharedFilePublicUrl,
+                                    sharedFileName
+                                ),
+                                sharedFileName
+                            ).collect { result ->
+                                result.onSuccess { finishUrl ->
+                                    ToastObj.longToastMake("Файл завантажено: $finishUrl", context)
+                                }
+                                result.onFailure {
+                                    ToastObj.longToastMake(
+                                        "Файл не завантажено",
+                                        context
+                                    )
+                                }
+                            }
+                        } else {
+                            ToastObj.longToastMake(
+                                "Даного користувача не знайдено!",
+                                context
+                            )
+                        }
                     }
-                    result.onFailure { ToastObj.longToastMake("Файл не завантажено", context) }
+                    res.onFailure {
+                        ToastObj.longToastMake(
+                            "Помилка запиту!",
+                            context
+                        )
+                    }
                 }
             }
         }

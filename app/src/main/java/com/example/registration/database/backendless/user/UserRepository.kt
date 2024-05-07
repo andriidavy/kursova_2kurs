@@ -3,6 +3,7 @@ package com.example.registration.database.backendless.user
 import android.util.Log
 import com.example.registration.model.users.User
 import com.example.registration.model.users.User.Gender
+import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.LoginRequest
 import com.example.registration.model.users.data.UserDTO
 import kotlinx.coroutines.flow.Flow
@@ -69,5 +70,17 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
 
     suspend fun isTokenValid(token: String): Boolean {
         return userApi.isTokenValid(token)
+    }
+
+    fun getUserByName(userName: String): Flow<Result<List<GuestUserDTO>>> = flow {
+        try {
+            val whereClause = "name = '$userName'"
+            val property = "name"
+            val getUser = userApi.getUserByName(whereClause, property)
+            Log.e("getUser", "user: $getUser")
+            emit(Result.success(getUser))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
     }
 }

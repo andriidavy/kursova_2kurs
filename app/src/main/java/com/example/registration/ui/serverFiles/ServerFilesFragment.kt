@@ -169,9 +169,10 @@ class ServerFilesFragment : Fragment() {
                 lifecycleScope.launch {
                     viewModel.downloadFile(item.url).collect { result ->
                         result.onSuccess { responseBody ->
-                            urlFromResponse = responseBody.toString()
-//                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFromResponse))
-//                            startActivity(intent)
+                            urlFromResponse = responseBody.string()
+                            Log.e("testURL", urlFromResponse)
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFromResponse))
+                            startActivity(intent)
                         }
                         result.onFailure {
                             ToastObj.longToastMake("помилка завантаження", context)
@@ -179,8 +180,6 @@ class ServerFilesFragment : Fragment() {
                     }
                 }
             }
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFromResponse))
-                startActivity(intent)
         }
     }
 

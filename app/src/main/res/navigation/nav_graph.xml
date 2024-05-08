@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_userProfilePageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_userProfilePageFragment_to_profileEditFragment"
+            app:destination="@id/profileEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/userMainPageFragment"
@@ -70,4 +73,15 @@
         android:id="@+id/shareToUserFragment"
         android:name="com.example.registration.ui.shareToUser.ShareToUserFragment"
         android:label="ShareToUserFragment" />
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="com.example.registration.ui.user.profile.editProfile.ProfileEditFragment"
+        android:label="ProfileEditFragment" >
+        <action
+            android:id="@+id/action_profileEditFragment_to_userProfilePageFragment"
+            app:destination="@id/userProfilePageFragment" />
+        <action
+            android:id="@+id/action_profileEditFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

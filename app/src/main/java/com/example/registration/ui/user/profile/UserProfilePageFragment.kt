@@ -48,13 +48,19 @@ class UserProfilePageFragment : Fragment() {
 
     private fun setListeners(user: UserDTO?) = with(binding) {
         buttonLogout.setOnClickListener {
-                lifecycleScope.launch {
-                    viewModel.logout(user).collect { logoutResult ->
-                        logoutResult.onSuccess {}
-                        logoutResult.onFailure {}
-                    }
+            lifecycleScope.launch {
+                viewModel.logout(user).collect { logoutResult ->
+                    logoutResult.onSuccess {}
+                    logoutResult.onFailure {}
                 }
+            }
             navController.navigate(R.id.action_userProfilePageFragment_to_loginFragment)
+        }
+
+        buttonChangeDate.setOnClickListener {
+            lifecycleScope.launch {
+                navController.navigate(R.id.action_userProfilePageFragment_to_profileEditFragment)
+            }
         }
     }
 
@@ -62,8 +68,12 @@ class UserProfilePageFragment : Fragment() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 user?.let { user ->
+                    customerId.text = user.objectId
                     customerName.text = user.name
                     customerEmail.text = user.email
+                    customerNationality.text = user.nationality
+                    customerAge.text = user.age.toString()
+                    customerGender.text = user.gender
                 }
             }
         }

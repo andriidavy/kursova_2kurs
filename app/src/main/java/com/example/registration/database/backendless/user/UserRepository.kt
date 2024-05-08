@@ -83,4 +83,14 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             emit(Result.failure(e))
         }
     }
+
+    fun updateUser(userToken: String, updateRequest: UserDTO): Flow<Result<UserDTO>> = flow {
+        try {
+            val updatedUser = userApi.updateUser(userToken,updateRequest)
+            Log.e("updateUser", "user: $updatedUser")
+            emit(Result.success(updatedUser))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
 }

@@ -158,4 +158,10 @@
     <string name="tv_file_choose">Обрати файл</string>
     <string name="upload_to_server_text">Завантажити файл на сервер</string>
     <string name="ht_username">Введіть ім\'я користувача:</string>
+    <string name="age">Вік:</string>
+    <string name="gender">Стать:</string>
+    <string name="data_update">Оновлення даних</string>
+    <string name="save_update">Зберегти зміни</string>
+    <string name="update_date">Змінити мої дані</string>
+    <string name="update_notification_text">Після оновлення потрібно заново авторизуватись!</string>
 </resources>

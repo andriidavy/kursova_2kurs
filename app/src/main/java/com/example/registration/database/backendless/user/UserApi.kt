@@ -9,6 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -20,6 +21,7 @@ interface UserApi {
     suspend fun createStartUserFolder(
         @Path("folderName") folderName: String
     )
+
     @POST("users/login")
     @Headers("Content-Type: application/json")
     suspend fun loginUser(@Body loginRequest: LoginRequest): UserDTO
@@ -41,7 +43,17 @@ interface UserApi {
     ): UserDTO
 
     @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Users")
-    suspend fun getUserByName(@Query("where") where: String, @Query("property") property: String): List<GuestUserDTO>
+    suspend fun getUserByName(
+        @Query("where") where: String,
+        @Query("property") property: String
+    ): List<GuestUserDTO>
+
+    @PUT("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Users")
+    @Headers("Content-Type: application/json")
+    suspend fun updateUser(
+        @Header("user-token") userToken: String,
+        @Body updateRequest: UserDTO
+    ): UserDTO
 
     @GET("users/logout")
     suspend fun logoutUser(@Header("user-token") userToken: String)

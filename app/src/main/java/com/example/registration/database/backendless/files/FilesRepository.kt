@@ -2,6 +2,7 @@ package com.example.registration.database.backendless.files
 
 import android.util.Log
 import com.example.registration.model.directoryItem.ServerItem
+import com.example.registration.model.users.data.RenameFolderData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -93,4 +94,19 @@ class FilesRepository @Inject constructor(private val filesApi: FilesApi) {
             emit(Result.failure(e))
         }
     }
+
+    fun renameFolder(userToken: String, oldName: String, name: String): Flow<Result<String>> =
+        flow {
+            try {
+                val requestBody = mapOf(
+                    "oldPathName" to oldName,
+                    "newName" to name
+                )
+                val response = filesApi.renameFile(userToken, requestBody)
+                Log.e("Rename folder","response: $response")
+                emit(Result.success(response))
+            }  catch (e: Exception) {
+                emit(Result.failure(e))
+            }
+        }
 }

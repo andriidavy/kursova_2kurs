@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
 <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <TextView
         android:id="@+id/customer_profile_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/user_profile_text"
+        android:text="@string/data_update"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,13 +36,14 @@
         android:id="@+id/customer_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_id_text"
         app:layout_constraintStart_toEndOf="@id/customer_id_text"
         app:layout_constraintTop_toBottomOf="@id/customer_profile_text"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="0" />
 
     <TextView
@@ -59,17 +57,17 @@
         android:textColor="@color/black"
         android:text="@string/customer_name" />
 
-    <TextView
+    <EditText
         android:id="@+id/customer_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_name_text"
         app:layout_constraintStart_toEndOf="@id/customer_name_text"
         app:layout_constraintTop_toBottomOf="@id/customer_id_text"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="NAME" />
 
     <TextView
@@ -83,17 +81,18 @@
         android:textColor="@color/black"
         android:text="@string/customer_email" />
 
-    <TextView
+    <EditText
         android:id="@+id/customer_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_email_text"
         app:layout_constraintStart_toEndOf="@id/customer_email_text"
         app:layout_constraintTop_toBottomOf="@id/customer_name"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="EMAIL" />
 
     <TextView
@@ -107,17 +106,18 @@
         android:textColor="@color/black"
         android:text="@string/nationality" />
 
-    <TextView
+    <EditText
         android:id="@+id/customer_nationality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_nationality_text"
         app:layout_constraintStart_toEndOf="@id/customer_nationality_text"
         app:layout_constraintTop_toBottomOf="@id/customer_email"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="NATION" />
 
     <TextView
@@ -131,17 +131,18 @@
         android:textColor="@color/black"
         android:text="@string/age" />
 
-    <TextView
+    <EditText
         android:id="@+id/customer_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_age_text"
         app:layout_constraintStart_toEndOf="@id/customer_age_text"
         app:layout_constraintTop_toBottomOf="@id/customer_nationality"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="20" />
 
     <TextView
@@ -155,40 +156,49 @@
         android:textColor="@color/black"
         android:text="@string/gender" />
 
-    <TextView
-        android:id="@+id/customer_gender"
+    <RadioGroup
+        android:id="@+id/rgGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/customer_gender_text"
-        app:layout_constraintTop_toBottomOf="@id/customer_age"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
-        tools:text="WOMAN" />
+        app:layout_constraintTop_toTopOf="@id/customer_gender_text"
+        android:layout_marginStart="30dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Men" />
+
+        <RadioButton
+            android:id="@+id/radioButtonFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Woman"/>
+    </RadioGroup>
 
     <Button
-        android:id="@+id/button_logout"
+        android:id="@+id/button_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logout"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/save_update"
+        app:layout_constraintBottom_toTopOf="@id/tv_update_notification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="40dp"
+        android:layout_margin="10dp"
         />
 
-    <Button
-        android:id="@+id/button_change_date"
+    <TextView
+        android:id="@+id/tv_update_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/update_date"
-        app:layout_constraintBottom_toTopOf="@+id/button_logout"
+        android:text="@string/update_notification_text"
+        android:textColor="@color/black"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customer_gender" />
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="50dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

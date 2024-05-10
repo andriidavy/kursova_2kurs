@@ -37,15 +37,19 @@
 
     <TextView
         android:id="@+id/customer_id"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="false"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/customer_id_text"
         app:layout_constraintTop_toBottomOf="@id/customer_profile_text"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="0" />
 
     <TextView
@@ -61,15 +65,19 @@
 
     <TextView
         android:id="@+id/customer_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="false"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/customer_name_text"
         app:layout_constraintTop_toBottomOf="@id/customer_id_text"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="NAME" />
 
     <TextView
@@ -85,15 +93,19 @@
 
     <TextView
         android:id="@+id/customer_email"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="false"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/customer_email_text"
         app:layout_constraintTop_toBottomOf="@id/customer_name"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="EMAIL" />
 
     <TextView
@@ -109,15 +121,19 @@
 
     <TextView
         android:id="@+id/customer_nationality"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="false"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/customer_nationality_text"
         app:layout_constraintTop_toBottomOf="@id/customer_email"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="NATION" />
 
     <TextView
@@ -133,15 +149,19 @@
 
     <TextView
         android:id="@+id/customer_age"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="false"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/customer_age_text"
         app:layout_constraintTop_toBottomOf="@id/customer_nationality"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="20" />
 
     <TextView
@@ -157,15 +177,19 @@
 
     <TextView
         android:id="@+id/customer_gender"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="false"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/customer_gender_text"
         app:layout_constraintTop_toBottomOf="@id/customer_age"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="italic"
         tools:text="WOMAN" />
 
     <Button
@@ -188,6 +212,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customer_gender" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/customer_id"
+        tools:srcCompat="@drawable/baseline_upload_file_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

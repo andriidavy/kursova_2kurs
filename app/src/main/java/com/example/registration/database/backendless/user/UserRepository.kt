@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.registration.model.users.User
 import com.example.registration.model.users.User.Gender
 import com.example.registration.model.users.data.GuestUserDTO
+import com.example.registration.model.users.data.ImageDTO
 import com.example.registration.model.users.data.LoginRequest
 import com.example.registration.model.users.data.UserDTO
 import kotlinx.coroutines.flow.Flow
@@ -86,9 +87,19 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
 
     fun updateUser(userToken: String, updateRequest: UserDTO): Flow<Result<UserDTO>> = flow {
         try {
-            val updatedUser = userApi.updateUser(userToken,updateRequest)
+            val updatedUser = userApi.updateUser(userToken, updateRequest)
             Log.e("updateUser", "user: $updatedUser")
             emit(Result.success(updatedUser))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    fun updateUserProfileImage(userToken: String, imageDTO: ImageDTO): Flow<Result<ImageDTO>> = flow {
+        try {
+            val updatedImage = userApi.updateUserProfileImage(userToken, imageDTO)
+            Log.e("updateUser", "user: $updatedImage")
+            emit(Result.success(updatedImage))
         } catch (e: Exception) {
             emit(Result.failure(e))
         }

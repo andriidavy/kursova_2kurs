@@ -41,6 +41,20 @@ class FilesRepository @Inject constructor(private val filesApi: FilesApi) {
         }
     }
 
+    fun getAllFiles(
+        userToken: String,
+        userName: String
+    ): Flow<Result<List<ServerItem>>> = flow {
+        try {
+            val result = filesApi.getAllFiles(userToken, userName)
+            Log.e("FilesRepository", "Getting files successful: $result")
+            emit(Result.success(result))
+        } catch (e: Exception) {
+            Log.e("FilesRepository", "Getting files failed", e)
+            emit(Result.failure(e))
+        }
+    }
+
     fun downloadFile(fileUrl: String, userToken: String): Flow<Result<ResponseBody>> =
         flow {
             try {

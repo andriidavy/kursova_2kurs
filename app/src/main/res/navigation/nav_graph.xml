@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_userProfilePageFragment_to_profileEditFragment"
             app:destination="@id/profileEditFragment" />
+        <action
+            android:id="@+id/action_userProfilePageFragment_to_pickPhotoFragment"
+            app:destination="@id/pickPhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/userMainPageFragment"
@@ -83,5 +86,14 @@
         <action
             android:id="@+id/action_profileEditFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pickPhotoFragment"
+        android:name="com.example.registration.ui.user.profile.photo.PickPhotoFragment"
+        android:label="fragment_pick_photo"
+        tools:layout="@layout/fragment_pick_photo">
+        <action
+            android:id="@+id/action_pickPhotoFragment_to_userProfilePageFragment"
+            app:destination="@id/userProfilePageFragment" />
     </fragment>
 </navigation>

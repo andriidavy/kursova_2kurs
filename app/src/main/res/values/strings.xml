@@ -164,4 +164,5 @@
     <string name="save_update">Зберегти зміни</string>
     <string name="update_date">Змінити мої дані</string>
     <string name="update_notification_text">Після оновлення потрібно заново авторизуватись!</string>
+    <string name="choose_file">Обрати файл:</string>
 </resources>

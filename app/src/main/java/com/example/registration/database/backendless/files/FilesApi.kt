@@ -41,6 +41,13 @@ interface FilesApi {
         @Query("sub") recursive: Boolean = false
     ): List<ServerItem>
 
+    @GET("files/{userName}")
+    suspend fun getAllFiles(
+        @Header("user-token") userToken: String,
+        @Path("userName") userName: String,
+        @Query("sub") recursive: Boolean = true
+    ): List<ServerItem>
+
     @GET("https://backendlessappcontent.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/files/{path}")
     @Streaming
     suspend fun downloadFile(

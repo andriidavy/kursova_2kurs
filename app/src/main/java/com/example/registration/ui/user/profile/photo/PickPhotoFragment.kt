@@ -81,8 +81,8 @@ class PickPhotoFragment : Fragment() {
                     viewModel.updateUserProfileImage(imageDTO).collect { result ->
                         result.onSuccess { imageDTO ->
                             val resultImageUrl = imageDTO.profilePhotoUrl
-                            bundle.putString("imageUrl", resultImageUrl)0
-                            
+                            bundle.putString("imageUrl", resultImageUrl)
+
                             navController.navigate(
                                 R.id.action_pickPhotoFragment_to_userProfilePageFragment,
                                 bundle

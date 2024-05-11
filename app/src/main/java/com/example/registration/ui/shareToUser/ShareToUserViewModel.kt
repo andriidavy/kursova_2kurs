@@ -1,15 +1,12 @@
 package com.example.registration.ui.shareToUser
 
-import androidx.lifecycle.viewModelScope
 import com.example.registration.database.backendless.files.FilesRepository
 import com.example.registration.database.backendless.user.UserRepository
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
 import com.example.registration.model.users.data.GuestUserDTO
-import com.example.registration.model.users.data.UserDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 

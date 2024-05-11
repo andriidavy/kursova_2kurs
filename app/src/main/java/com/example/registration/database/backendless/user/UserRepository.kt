@@ -7,6 +7,7 @@ import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.ImageDTO
 import com.example.registration.model.users.data.LoginRequest
 import com.example.registration.model.users.data.UserDTO
+import com.example.registration.model.users.data.UserLocationDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -100,6 +101,16 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             val updatedImage = userApi.updateUserProfileImage(userToken, imageDTO)
             Log.e("updateUser", "user: $updatedImage")
             emit(Result.success(updatedImage))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    fun updateUserLocation(userToken: String, userLocationDTO: UserLocationDTO): Flow<Result<UserLocationDTO>> = flow {
+        try {
+            val updatedLocation = userApi.updateUserLocation(userToken, userLocationDTO)
+            Log.e("updateUser", "user: $updatedLocation")
+            emit(Result.success(updatedLocation))
         } catch (e: Exception) {
             emit(Result.failure(e))
         }

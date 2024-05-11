@@ -165,4 +165,17 @@
     <string name="update_date">Змінити мої дані</string>
     <string name="update_notification_text">Після оновлення потрібно заново авторизуватись!</string>
     <string name="choose_file">Обрати файл:</string>
+    <string name="tvMyLocation">Відслідковувати моє місце розташування</string>
+    <string name="add_place">Додати місце</string>
+    <string name="remove_place">Видалити місце</string>
+    <string name="search_place">Шукати на мапі</string>
+    <string name="add_my_location">Додати моє місцерозташування</string>
+    <string name="choose_on_map">Обрати на карті</string>
+    <string name="my_places">Мої місця</string>
+    <string name="et_place_desc">Введіть опис місця:</string>
+    <string name="tw_description">Опис:</string>
+    <string name="tv_location">Локація:</string>
+    <string name="update_photo">Оновити фото</string>
+    <string name="photo_url">(optional) URL:</string>
+    <string name="confirm">Підтвердити</string>
 </resources>

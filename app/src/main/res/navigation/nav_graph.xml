@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_userMainPageFragment_to_fileManageFragment"
             app:destination="@id/fileManageFragment" />
+        <action
+            android:id="@+id/action_userMainPageFragment_to_myPlacesFragment"
+            app:destination="@id/myPlacesFragment" />
     </fragment>
     <fragment
         android:id="@+id/fileManageFragment"
@@ -96,4 +99,16 @@
             android:id="@+id/action_pickPhotoFragment_to_userProfilePageFragment"
             app:destination="@id/userProfilePageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myPlacesFragment"
+        android:name="com.example.registration.ui.myPlaces.MyPlacesFragment"
+        android:label="MyPlacesFragment" >
+        <action
+            android:id="@+id/action_myPlacesFragment_to_addPlaceFragment"
+            app:destination="@id/addPlaceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPlaceFragment"
+        android:name="com.example.registration.ui.myPlaces.addPlace.AddPlaceFragment"
+        android:label="AddPlaceFragment" />
 </navigation>

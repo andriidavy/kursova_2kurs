@@ -5,6 +5,7 @@ import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.ImageDTO
 import com.example.registration.model.users.data.LoginRequest
 import com.example.registration.model.users.data.UserDTO
+import com.example.registration.model.users.data.UserLocationDTO
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -62,6 +63,13 @@ interface UserApi {
         @Header("user-token") userToken: String,
         @Body updateRequest: ImageDTO
     ): ImageDTO
+
+    @PUT("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Users")
+    @Headers("Content-Type: application/json")
+    suspend fun updateUserLocation(
+        @Header("user-token") userToken: String,
+        @Body updateRequest: UserLocationDTO
+    ): UserLocationDTO
 
     @GET("users/logout")
     suspend fun logoutUser(@Header("user-token") userToken: String)

@@ -1,10 +1,21 @@
 package com.example.registration.model.places
 
-import java.time.LocalDateTime
+import com.example.registration.model.users.data.LocationDTO
+import com.google.gson.annotations.SerializedName
 
-data class PlaceItem (
+data class PlaceItem(
+    @SerializedName("objectId")
+    val objectId: String,
+    @SerializedName("description")
     val description: String,
-    val created: LocalDateTime,
+    @SerializedName("created")
+    val created: Long,
+    @SerializedName("tags")
     val tags: String,
-    val imageUrl: String
-    )
+    @SerializedName("placePhotoUrl")
+    val placePhotoUrl: String,
+    @SerializedName("location")
+    val location: LocationDTO,
+    @SerializedName("createdByUserName")
+    val createdByUserName: String
+)

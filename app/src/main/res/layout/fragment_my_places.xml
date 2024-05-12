@@ -10,27 +10,30 @@
         android:id="@+id/bt_add_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_place"
         android:layout_margin="32dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/add_place"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/bt_remove_place"
+        android:id="@+id/bt_list_of_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/remove_place"
         android:layout_margin="32dp"
+        android:text="@string/list_of_places"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_add_place" />
 
     <Button
         android:id="@+id/bt_search_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/search_place"
         android:layout_margin="32dp"
+        android:text="@string/search_place"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_add_place" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_list_of_place" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -184,4 +184,5 @@
     <string name="add_image">Додати зображення</string>
     <string name="image_not_exists">Зображення не обрано</string>
     <string name="saved_places">Збережені місця:</string>
+    <string name="list_of_places">Список місць</string>
 </resources>

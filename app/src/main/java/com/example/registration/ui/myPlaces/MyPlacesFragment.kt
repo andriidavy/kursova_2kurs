@@ -33,9 +33,12 @@ class MyPlacesFragment : Fragment() {
         navController = findNavController()
     }
 
-    private fun setListeners() = with(binding){
+    private fun setListeners() = with(binding) {
         btAddPlace.setOnClickListener {
             navController.navigate(R.id.action_myPlacesFragment_to_addPlaceFragment)
+        }
+        btListOfPlace.setOnClickListener {
+            navController.navigate(R.id.action_myPlacesFragment_to_listOfPlacesFragment)
         }
     }
 

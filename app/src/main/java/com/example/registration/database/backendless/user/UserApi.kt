@@ -3,6 +3,7 @@ package com.example.registration.database.backendless.user
 import com.example.registration.model.users.User
 import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.ImageDTO
+import com.example.registration.model.users.data.ImageResponseDTO
 import com.example.registration.model.users.data.LoginRequest
 import com.example.registration.model.users.data.UserDTO
 import com.example.registration.model.users.data.UserLocationDTO
@@ -70,6 +71,12 @@ interface UserApi {
         @Header("user-token") userToken: String,
         @Body updateRequest: UserLocationDTO
     ): UserLocationDTO
+
+    @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Users")
+    suspend fun getUserImageByName(
+        @Query("where") where: String,
+        @Query("property") property: String
+    ): List<ImageResponseDTO>
 
     @GET("users/logout")
     suspend fun logoutUser(@Header("user-token") userToken: String)

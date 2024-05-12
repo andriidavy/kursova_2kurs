@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,12 +53,19 @@ class UserProfilePageFragment : Fragment() {
     private fun setupView() {
         navController = findNavController()
 
-        arguments?.getString("imageUrl")?.let { imageUrl ->
-            Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.baseline_upload_file_24) // Placeholder для случая, если изображение еще не загружено
-                .error(R.drawable.baseline_error_outline_24) // Изображение для случая, если произошла ошибка загрузки
-                .into(binding.imageView)
+        lifecycleScope.launch {
+            viewModel.getUserProfileImage().collect { result ->
+                result.onSuccess {response->
+                    Glide.with(requireActivity())
+                        .load(response[0].profilePhotoUrl)
+                        .placeholder(R.drawable.baseline_upload_file_24) // Placeholder для случая, если изображение еще не загружено
+                        .error(R.drawable.baseline_error_outline_24) // Изображение для случая, если произошла ошибка загрузки
+                        .into(binding.imageView)
+                }
+                result.onFailure {
+                    Log.e("ProfileImage","failure")
+                }
+            }
         }
     }
 
@@ -82,23 +90,6 @@ class UserProfilePageFragment : Fragment() {
             navController.navigate(R.id.action_userProfilePageFragment_to_pickPhotoFragment)
         }
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-//            val selectedImageUri: Uri? = data.data
-//            selectedImageUri?.let { uri ->
-//                val imageName = FileMappingObj.getFileName(uri, requireActivity())
-//                val imageFile = FileMappingObj.getFileFromUri(uri, requireActivity())
-//
-//                Glide.with(this)
-//                    .load(uri)
-//                    .placeholder(R.drawable.baseline_upload_file_24) // Placeholder для случая, если изображение еще не загружено
-//                    .error(R.drawable.baseline_error_outline_24) // Изображение для случая, если произошла ошибка загрузки
-//                    .into(binding.imageView)
-//            }
-//        }
-//    }
 
     private fun setObservers(user: UserDTO?) = with(binding) {
         lifecycleScope.launch {

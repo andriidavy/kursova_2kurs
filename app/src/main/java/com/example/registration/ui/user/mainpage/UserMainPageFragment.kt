@@ -52,9 +52,6 @@ class UserMainPageFragment : Fragment() {
         navController = findNavController()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
-
-        // Запросите разрешение на доступ к местоположению
-        requestLocationPermission()
     }
 
     private fun setListeners() = with(binding) {

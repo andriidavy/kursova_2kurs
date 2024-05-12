@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentAddPlaceBinding
+import com.example.registration.global.ToastObj
 import com.example.registration.model.places.AddingPlaceDTO
 import com.example.registration.model.users.data.LocationDTO
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class AddPlaceFragment : Fragment() {
     private lateinit var navController: NavController
     private val viewModel by viewModels<AddPlaceViewModel>()
     private lateinit var userLocation: LocationDTO
+    private lateinit var imageUrl: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +41,11 @@ class AddPlaceFragment : Fragment() {
 
     private fun setupViews() {
         navController = findNavController()
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+        savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) { url ->
+            imageUrl = url
+            binding.tvImageUrl.text = url
+        }
     }
 
     private fun setListeners() = with(binding) {
@@ -60,14 +67,23 @@ class AddPlaceFragment : Fragment() {
 
         btConfirmingNewPlace.setOnClickListener {
             val description = etPlaceDescription.text.toString()
+            val tags = etPlaceTags.text.toString()
             lifecycleScope.launch {
-                viewModel.addPlace(description, userLocation).collect { result ->
+                viewModel.addPlace(description, tags, userLocation, imageUrl).collect { result ->
                     result.onSuccess { addingPlaceDTO ->
                         Log.e("addPlace", "$addingPlaceDTO")
+                        ToastObj.longToastMake("Місце додано", context)
                     }
-                    result.onFailure { Log.e("addPlace", "failure") }
+                    result.onFailure {
+                        Log.e("addPlace", "failure")
+                        ToastObj.longToastMake("Помилка додавання місця", context)
+                    }
                 }
             }
+        }
+
+        btAddImage.setOnClickListener {
+            navController.navigate(R.id.action_addPlaceFragment_to_pickPhotoFragment)
         }
     }
 }

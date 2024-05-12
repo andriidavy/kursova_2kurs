@@ -106,9 +106,21 @@
         <action
             android:id="@+id/action_myPlacesFragment_to_addPlaceFragment"
             app:destination="@id/addPlaceFragment" />
+        <action
+            android:id="@+id/action_myPlacesFragment_to_listOfPlacesFragment"
+            app:destination="@id/listOfPlacesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPlaceFragment"
         android:name="com.example.registration.ui.myPlaces.addPlace.AddPlaceFragment"
-        android:label="AddPlaceFragment" />
+        android:label="AddPlaceFragment" >
+        <action
+            android:id="@+id/action_addPlaceFragment_to_pickPhotoFragment"
+            app:destination="@id/pickPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listOfPlacesFragment"
+        android:name="com.example.registration.ui.myPlaces.listOfPlaces.ListOfPlacesFragment"
+        android:label="fragment_list_of_places"
+        tools:layout="@layout/fragment_list_of_places" />
 </navigation>

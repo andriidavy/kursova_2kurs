@@ -18,8 +18,13 @@ class AddPlaceViewModel @Inject constructor(
     private val userToken: String = getUser()?.userToken ?: ""
     private val userName: String = getUser()?.name ?: ""
 
-    fun addPlace(description: String, place: LocationDTO): Flow<Result<AddingPlaceDTO>> {
-        val addingPlaceDTO = AddingPlaceDTO(description, place, userName)
+    fun addPlace(
+        description: String,
+        tags: String,
+        place: LocationDTO,
+        url: String
+    ): Flow<Result<AddingPlaceDTO>> {
+        val addingPlaceDTO = AddingPlaceDTO(description, tags, place, userName, url)
         return locationRepository.addPlace(userToken, addingPlaceDTO)
     }
 

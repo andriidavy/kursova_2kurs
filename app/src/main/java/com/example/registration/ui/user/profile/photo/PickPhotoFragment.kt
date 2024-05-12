@@ -81,12 +81,8 @@ class PickPhotoFragment : Fragment() {
                     viewModel.updateUserProfileImage(imageDTO).collect { result ->
                         result.onSuccess { imageDTO ->
                             val resultImageUrl = imageDTO.profilePhotoUrl
-                            bundle.putString("imageUrl", resultImageUrl)
-
-                            navController.navigate(
-                                R.id.action_pickPhotoFragment_to_userProfilePageFragment,
-                                bundle
-                            )
+                            navController.previousBackStackEntry?.savedStateHandle?.set("imageUrl", resultImageUrl)
+                            navController.popBackStack()
                         }
                         result.onFailure {
                             ToastObj.longToastMake("Зображення не завантажено!", context)

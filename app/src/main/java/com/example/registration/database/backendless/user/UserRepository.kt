@@ -5,6 +5,7 @@ import com.example.registration.model.users.User
 import com.example.registration.model.users.User.Gender
 import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.ImageDTO
+import com.example.registration.model.users.data.ImageResponseDTO
 import com.example.registration.model.users.data.LoginRequest
 import com.example.registration.model.users.data.UserDTO
 import com.example.registration.model.users.data.UserLocationDTO
@@ -81,6 +82,18 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             val getUser = userApi.getUserByName(whereClause, property)
             Log.e("getUser", "user: $getUser")
             emit(Result.success(getUser))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    fun getUserImageByName(userName: String): Flow<Result<List<ImageResponseDTO>>> = flow {
+        try {
+            val whereClause = "name = '$userName'"
+            val property = "profilePhotoUrl"
+            val getUserImage = userApi.getUserImageByName(whereClause, property)
+            Log.e("getUser", "user: $getUserImage")
+            emit(Result.success(getUserImage))
         } catch (e: Exception) {
             emit(Result.failure(e))
         }

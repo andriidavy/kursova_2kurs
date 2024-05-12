@@ -178,4 +178,10 @@
     <string name="update_photo">Оновити фото</string>
     <string name="photo_url">(optional) URL:</string>
     <string name="confirm">Підтвердити</string>
+    <string name="tags">Теги:</string>
+    <string name="ht_tags">Введіть теги:</string>
+    <string name="image">Зображення:</string>
+    <string name="add_image">Додати зображення</string>
+    <string name="image_not_exists">Зображення не обрано</string>
+    <string name="saved_places">Збережені місця:</string>
 </resources>

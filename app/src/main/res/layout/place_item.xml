@@ -115,11 +115,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:singleLine="false"
+        android:textColor="#0D47A1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_url_text"
         app:layout_constraintTop_toTopOf="@+id/image_url_text"
-        tools:text="0" />
+        tools:text="ghfghgfghh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

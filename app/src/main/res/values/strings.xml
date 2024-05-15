@@ -185,4 +185,10 @@
     <string name="image_not_exists">Зображення не обрано</string>
     <string name="saved_places">Збережені місця:</string>
     <string name="list_of_places">Список місць</string>
+    <string name="ht_place">Введіть місце:</string>
+    <string name="ht_category">Введіть категорію:</string>
+    <string name="et_search_query">Введіть пошуковий запит:</string>
+    <string name="bt_name">назва</string>
+    <string name="category">категорія</string>
+    <string name="distance">відстань</string>
 </resources>

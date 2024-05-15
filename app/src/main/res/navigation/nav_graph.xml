@@ -122,5 +122,13 @@
         android:id="@+id/listOfPlacesFragment"
         android:name="com.example.registration.ui.myPlaces.listOfPlaces.ListOfPlacesFragment"
         android:label="fragment_list_of_places"
-        tools:layout="@layout/fragment_list_of_places" />
+        tools:layout="@layout/fragment_list_of_places" >
+        <action
+            android:id="@+id/action_listOfPlacesFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.registration.ui.myPlaces.map.MapsFragment"
+        android:label="MapsFragment" />
 </navigation>

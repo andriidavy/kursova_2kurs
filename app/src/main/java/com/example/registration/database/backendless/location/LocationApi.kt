@@ -29,6 +29,11 @@ interface LocationApi {
     @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Place")
     suspend fun getAllPlaces(): List<PlaceItem>
 
+    @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Place'")
+    suspend fun getPlacesBySearchLine(
+        @Query("where") where: String
+    ): List<PlaceItem>
+
     @DELETE("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Place/{idPlace}")
     suspend fun deletePlace(
         @Header("user-token") userToken: String,

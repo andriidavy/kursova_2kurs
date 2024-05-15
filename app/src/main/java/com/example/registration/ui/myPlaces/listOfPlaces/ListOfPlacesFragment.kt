@@ -1,5 +1,7 @@
 package com.example.registration.ui.myPlaces.listOfPlaces
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
 import com.example.registration.adapter.PlacesListAdapter
-import com.example.registration.adapter.ServerFilesListAdapter
 import com.example.registration.databinding.FragmentListOfPlacesBinding
 import com.example.registration.global.ToastObj
-import com.example.registration.model.directoryItem.ServerItem
 import com.example.registration.model.places.PlaceItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,13 +38,15 @@ class ListOfPlacesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        setListeners()
     }
 
     private fun setupViews() = with(binding) {
         adapter = PlacesListAdapter(
             emptyList(),
             itemRemovedClick(),
-            itemClick()
+            itemClick(),
+            itemImageClick()
         )
         rvMyPlaces.adapter = adapter
         rvMyPlaces.layoutManager = LinearLayoutManager(activity)
@@ -51,9 +54,84 @@ class ListOfPlacesFragment : Fragment() {
         placesListUpdate()
     }
 
+    private fun setListeners() = with(binding) {
+        btSearch.setOnClickListener {
+            val searchLine = etSearch.text.toString()
+            val checkedId = rgSearchType.checkedRadioButtonId
+
+            when (checkedId) {
+                R.id.rb_search_by_desc -> {
+                    if (searchLine.isBlank()) {
+                        placesListUpdate()
+                    } else {
+                        placesListByDescription(searchLine)
+                    }
+                }
+
+                R.id.rb_search_by_tag -> {
+                    if (searchLine.isBlank()) {
+                        placesListUpdate()
+                    } else {
+                        placesListByTag(searchLine)
+                    }
+                }
+
+                R.id.rb_search_by_distance -> {
+                    if (searchLine.isBlank()) {
+                        placesListUpdate()
+                    } else {
+                        placesListByDistance(searchLine)
+                    }
+                }
+            }
+        }
+    }
+
     private fun placesListUpdate() {
         lifecycleScope.launch {
             viewModel.getAllPlaces().collect { result ->
+                result.onSuccess { listOfPlaces ->
+                    placesList = listOfPlaces
+                    adapter.updateCart(placesList)
+                }
+                result.onFailure {
+                    ToastObj.longToastMake("Помилка оновлення списку місць", context)
+                }
+            }
+        }
+    }
+
+    private fun placesListByDescription(searchLine: String) {
+        lifecycleScope.launch {
+            viewModel.getPlacesByDescription(searchLine).collect { result ->
+                result.onSuccess { listOfPlaces ->
+                    placesList = listOfPlaces
+                    adapter.updateCart(placesList)
+                }
+                result.onFailure {
+                    ToastObj.longToastMake("Помилка оновлення списку місць", context)
+                }
+            }
+        }
+    }
+
+    private fun placesListByTag(searchLine: String) {
+        lifecycleScope.launch {
+            viewModel.getPlacesByTag(searchLine).collect { result ->
+                result.onSuccess { listOfPlaces ->
+                    placesList = listOfPlaces
+                    adapter.updateCart(placesList)
+                }
+                result.onFailure {
+                    ToastObj.longToastMake("Помилка оновлення списку місць", context)
+                }
+            }
+        }
+    }
+
+    private fun placesListByDistance(searchLine: String) {
+        lifecycleScope.launch {
+            viewModel.getPlacesByDistance(searchLine).collect { result ->
                 result.onSuccess { listOfPlaces ->
                     placesList = listOfPlaces
                     adapter.updateCart(placesList)
@@ -86,17 +164,20 @@ class ListOfPlacesFragment : Fragment() {
     private fun itemClick(): (Int) -> Unit = with(binding) {
         return { position ->
             ToastObj.shortToastMake("position: $position", context)
-//            placesList.getOrNull(position)?.name?.let { name ->
-//                val newPath = if (pathToFolder.isNotEmpty()) {
-//                    "$pathToFolder/$name"
-//                } else {
-//                    name
-//                }
-//                etWayToFolder.setText(newPath)
-//                refreshPath()
-//                itemListUpdate(pathToFolder)
-//            }
-//        }
+            placesList.getOrNull(position)?.let { item ->
+                val bundle = Bundle()
+                bundle.putSerializable("place", item) // replace here
+                navController.navigate(R.id.action_listOfPlacesFragment_to_mapsFragment, bundle)
+            }
+        }
+    }
+
+    private fun itemImageClick(): (Int) -> Unit = with(binding) {
+        return { position ->
+            placesList.getOrNull(position)?.placePhotoUrl?.let { photoUrl ->
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(photoUrl))
+                startActivity(intent)
+            }
         }
     }
 }

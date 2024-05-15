@@ -6,8 +6,12 @@ import com.example.registration.model.places.PlaceItem
 import com.example.registration.model.users.data.UserLocationDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.sql.Timestamp
 import javax.inject.Inject
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 class LocationRepository @Inject constructor(private val locationApi: LocationApi) {
     fun addPlace(userToken: String, addingPlaceDTO: AddingPlaceDTO): Flow<Result<AddingPlaceDTO>> =
@@ -51,5 +55,60 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
         } catch (e: Exception) {
             emit(Result.failure(e))
         }
+    }
+
+    fun getPlacesByDescription(searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
+        try {
+            val whereClause = "description %20LIKE%20 '$searchLine'"
+            val getMyLocation = locationApi.getPlacesBySearchLine(whereClause)
+            Log.e("getLocations", "locations: $getMyLocation")
+            emit(Result.success(getMyLocation))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
+    fun getPlacesByTag(searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
+        try {
+            val whereClause = "tags %20LIKE%20 '$searchLine'"
+            val getMyLocation = locationApi.getPlacesBySearchLine(whereClause)
+            Log.e("getLocations", "locations: $getMyLocation")
+            emit(Result.success(getMyLocation))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    fun getPlacesByDistance(userName: String,searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
+        try {
+            val whereClause = "name = '$userName'"
+            val requiredDistance = searchLine.toDouble()
+            val myLocation = locationApi.getMyLocation(whereClause)
+            val myLatitude = myLocation[0].location.coordinates[1]
+            val myLongitude = myLocation[0].location.coordinates[0]
+            val allPlaces = locationApi.getAllPlaces()
+            val selectedPlaces = allPlaces.filter {place->
+                val placeLatitude = place.location.coordinates[1]
+                val placeLongitude = place.location.coordinates[0]
+                val distanceBetween = haversineDistance(myLatitude, myLongitude, placeLatitude, placeLongitude)
+                Log.e("distanceBetween", "distance between ${place.description}: $distanceBetween")
+                distanceBetween < requiredDistance
+            }
+            Log.e("getLocations", "locations: $selectedPlaces")
+            emit(Result.success(selectedPlaces))
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    private fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val R = 6371.0 // Радиус Земли в километрах
+
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+
+        val a = sin(dLat / 2).pow(2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(dLon / 2).pow(2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        return R * c
     }
 }

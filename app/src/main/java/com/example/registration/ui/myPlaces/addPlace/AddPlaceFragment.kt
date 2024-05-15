@@ -24,7 +24,7 @@ class AddPlaceFragment : Fragment() {
     private lateinit var navController: NavController
     private val viewModel by viewModels<AddPlaceViewModel>()
     private lateinit var userLocation: LocationDTO
-    private lateinit var imageUrl: String
+    private var changeCheck: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,8 +43,8 @@ class AddPlaceFragment : Fragment() {
         navController = findNavController()
         val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
         savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) { url ->
-            imageUrl = url
             binding.tvImageUrl.text = url
+            changeCheck = true
         }
     }
 
@@ -68,6 +68,10 @@ class AddPlaceFragment : Fragment() {
         btConfirmingNewPlace.setOnClickListener {
             val description = etPlaceDescription.text.toString()
             val tags = etPlaceTags.text.toString()
+            var imageUrl = ""
+            if (changeCheck) {
+                imageUrl = tvImageUrl.text.toString()
+            }
             lifecycleScope.launch {
                 viewModel.addPlace(description, tags, userLocation, imageUrl).collect { result ->
                     result.onSuccess { addingPlaceDTO ->

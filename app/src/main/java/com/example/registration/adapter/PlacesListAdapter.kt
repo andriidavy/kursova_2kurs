@@ -11,6 +11,7 @@ open class PlacesListAdapter(
     private var placesItemList: List<PlaceItem>,
     private val itemRemovedClick: (Int) -> Unit,
     private val itemClick: (Int) -> Unit,
+    private val itemImageClick: (Int) -> Unit
 ) : RecyclerView.Adapter<PlacesListAdapter.ViewHolder>() {
 
     class ViewHolder(var view: PlaceItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -40,6 +41,10 @@ open class PlacesListAdapter(
 
             root.setOnClickListener {
                 itemClick.invoke(position)
+            }
+
+            imageUrl.setOnClickListener {
+                itemImageClick.invoke(position)
             }
         }
     }

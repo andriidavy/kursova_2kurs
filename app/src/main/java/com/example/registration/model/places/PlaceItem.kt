@@ -18,5 +18,6 @@ data class PlaceItem(
     @SerializedName("location")
     val location: LocationDTO,
     @SerializedName("createdByUserName")
-    val createdByUserName: String
+    val createdByUserName: String,
+    var distanceToMe: Double
 ) : Serializable

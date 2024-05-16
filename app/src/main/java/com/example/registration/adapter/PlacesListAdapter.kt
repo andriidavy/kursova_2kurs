@@ -34,6 +34,8 @@ open class PlacesListAdapter(
             tags.text = placesItemList[position].tags
             imageUrl.text = placesItemList[position].placePhotoUrl
             createdOn.text = placesItemList[position].created.toString()
+            userName.text = placesItemList[position].createdByUserName
+            distance.text = placesItemList[position].distanceToMe.toString()
 
             buttonDeleteItem.setOnClickListener {
                 itemRemovedClick.invoke(position)

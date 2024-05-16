@@ -191,4 +191,7 @@
     <string name="bt_name">назва</string>
     <string name="category">категорія</string>
     <string name="distance">відстань</string>
+    <string name="user">Користувач:</string>
+    <string name="distance_to_me">Відстань від мене:</string>
+    <string name="km">км</string>
 </resources>

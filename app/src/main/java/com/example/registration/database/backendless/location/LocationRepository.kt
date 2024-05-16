@@ -67,6 +67,7 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
             emit(Result.failure(e))
         }
     }
+
     fun getPlacesByTag(searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
         try {
             val whereClause = "tags %20LIKE%20 '$searchLine'"
@@ -78,26 +79,52 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
         }
     }
 
-    fun getPlacesByDistance(userName: String,searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
-        try {
-            val whereClause = "name = '$userName'"
-            val requiredDistance = searchLine.toDouble()
-            val myLocation = locationApi.getMyLocation(whereClause)
-            val myLatitude = myLocation[0].location.coordinates[1]
-            val myLongitude = myLocation[0].location.coordinates[0]
-            val allPlaces = locationApi.getAllPlaces()
-            val selectedPlaces = allPlaces.filter {place->
-                val placeLatitude = place.location.coordinates[1]
-                val placeLongitude = place.location.coordinates[0]
-                val distanceBetween = haversineDistance(myLatitude, myLongitude, placeLatitude, placeLongitude)
-                Log.e("distanceBetween", "distance between ${place.description}: $distanceBetween")
-                distanceBetween < requiredDistance
+    fun getPlacesByDistance(userName: String, searchLine: String): Flow<Result<List<PlaceItem>>> =
+        flow {
+            try {
+                val whereClause = "name = '$userName'"
+                val requiredDistance = searchLine.toDoubleOrNull()
+                    ?: throw IllegalArgumentException("Invalid distance value")
+                val myLocation = locationApi.getMyLocation(whereClause).firstOrNull()
+                    ?: throw IllegalStateException("Unable to retrieve user location")
+
+                val myLatitude = myLocation.location.coordinates[1]
+                val myLongitude = myLocation.location.coordinates[0]
+                val allPlaces = locationApi.getAllPlaces()
+
+                val selectedPlaces = allPlaces
+                    .filter { place ->
+                        val placeLatitude = place.location.coordinates[1]
+                        val placeLongitude = place.location.coordinates[0]
+                        val distanceBetween = haversineDistance(
+                            myLatitude,
+                            myLongitude,
+                            placeLatitude,
+                            placeLongitude
+                        )
+                        distanceBetween < requiredDistance
+                    }
+
+                selectedPlaces.map { place ->
+                    val placeLatitude = place.location.coordinates[1]
+                    val placeLongitude = place.location.coordinates[0]
+                    val distanceBetween =
+                        haversineDistance(myLatitude, myLongitude, placeLatitude, placeLongitude)
+                    place.distanceToMe = roundToDecimals(distanceBetween, 2)
+
+                }
+
+                Log.d("getLocations", "locations: $selectedPlaces")
+                emit(Result.success(selectedPlaces))
+            } catch (e: Exception) {
+                Log.e("getPlacesByDistance", "Error: ${e.message}", e)
+                emit(Result.failure(e))
             }
-            Log.e("getLocations", "locations: $selectedPlaces")
-            emit(Result.success(selectedPlaces))
-        } catch (e: Exception) {
-            emit(Result.failure(e))
         }
+
+    private fun roundToDecimals(number: Double, numDecimalPlaces: Int): Double {
+        val factor = 10.0.pow(numDecimalPlaces)
+        return kotlin.math.round(number * factor) / factor
     }
 
     private fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
@@ -106,7 +133,10 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
 
-        val a = sin(dLat / 2).pow(2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(dLon / 2).pow(2)
+        val a =
+            sin(dLat / 2).pow(2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(dLon / 2).pow(
+                2
+            )
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
         return R * c

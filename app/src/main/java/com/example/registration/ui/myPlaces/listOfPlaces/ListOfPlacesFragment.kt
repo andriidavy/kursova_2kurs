@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.PlacesListAdapter
 import com.example.registration.databinding.FragmentListOfPlacesBinding
+import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.global.ToastObj
 import com.example.registration.model.places.PlaceItem
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,7 @@ class ListOfPlacesFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var placesList: List<PlaceItem>
     private val viewModel by viewModels<ListOfPlacesViewModel>()
+    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,8 +47,11 @@ class ListOfPlacesFragment : Fragment() {
         adapter = PlacesListAdapter(
             emptyList(),
             itemRemovedClick(),
+            itemLikeClick(),
+            itemCancelLikeClick(),
             itemClick(),
-            itemImageClick()
+            itemImageClick(),
+            dataStoreViewModel.getUser()?.name ?: ""
         )
         rvMyPlaces.adapter = adapter
         rvMyPlaces.layoutManager = LinearLayoutManager(activity)
@@ -138,6 +143,47 @@ class ListOfPlacesFragment : Fragment() {
                 }
                 result.onFailure {
                     ToastObj.longToastMake("Помилка оновлення списку місць", context)
+                }
+            }
+        }
+    }
+
+    private fun itemLikeClick(): (Int) -> Unit {
+        return { position ->
+            placesList.getOrNull(position)?.objectId?.let { id ->
+                lifecycleScope.launch {
+                    viewModel.addLikeToPlace(id).collect { result ->
+                        result.onSuccess { ToastObj.shortToastMake("Додано в улюблені", context) }
+                        result.onFailure {
+                            ToastObj.shortToastMake(
+                                "Помилка додання в улюблені",
+                                context
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun itemCancelLikeClick(): (Int) -> Unit {
+        return { position ->
+            placesList.getOrNull(position)?.likeId?.let { id ->
+                lifecycleScope.launch {
+                    viewModel.deleteLikeForPlace(id).collect { result ->
+                        result.onSuccess {
+                            ToastObj.shortToastMake(
+                                "Видалено з улюблених",
+                                context
+                            )
+                        }
+                        result.onFailure {
+                            ToastObj.shortToastMake(
+                                "Помилка видалення з улюблених",
+                                context
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -8,3 +8,4 @@ data class LocationDTO(
     @SerializedName("coordinates")
     val coordinates: List<Double>
 )
+

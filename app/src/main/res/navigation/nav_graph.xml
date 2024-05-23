@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_userMainPageFragment_to_myPlacesFragment"
             app:destination="@id/myPlacesFragment" />
+        <action
+            android:id="@+id/action_userMainPageFragment_to_myFriendsFragment"
+            app:destination="@id/myFriendsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fileManageFragment"
@@ -131,4 +134,8 @@
         android:id="@+id/mapsFragment"
         android:name="com.example.registration.ui.myPlaces.map.MapsFragment"
         android:label="MapsFragment" />
+    <fragment
+        android:id="@+id/myFriendsFragment"
+        android:name="com.example.registration.ui.myFriends.MyFriendsFragment"
+        android:label="MyFriendsFragment" />
 </navigation>

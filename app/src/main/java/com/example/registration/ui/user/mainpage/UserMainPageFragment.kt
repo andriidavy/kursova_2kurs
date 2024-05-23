@@ -79,6 +79,10 @@ class UserMainPageFragment : Fragment() {
             btMyPlaces.setOnClickListener {
                 navigate(R.id.action_userMainPageFragment_to_myPlacesFragment)
             }
+
+            btMyFriends.setOnClickListener {
+                navigate(R.id.action_userMainPageFragment_to_myFriendsFragment)
+            }
         }
     }
 

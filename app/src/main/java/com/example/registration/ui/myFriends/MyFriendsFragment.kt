@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
 import com.example.registration.adapter.AcceptedFriendsAdapter
-import com.example.registration.adapter.PlacesListAdapter
 import com.example.registration.databinding.FragmentMyFriendsBinding
 import com.example.registration.global.ToastObj
 import com.example.registration.model.friends.FriendItem
@@ -48,16 +48,16 @@ class MyFriendsFragment : Fragment() {
         rvMyPlaces.adapter = adapter
         rvMyPlaces.layoutManager = LinearLayoutManager(activity)
         navController = findNavController()
-        placesListUpdate()
+        friendsListUpdate()
     }
 
     private fun setListeners() = with(binding) {
         btSearch.setOnClickListener {
-            placesListUpdate()
+            friendsListUpdate()
         }
     }
 
-    private fun placesListUpdate() {
+    private fun friendsListUpdate() {
         val searchDistance = binding.etSearch.text.toString()
         lifecycleScope.launch {
             viewModel.getFriendsList(searchDistance).collect { result ->
@@ -66,7 +66,7 @@ class MyFriendsFragment : Fragment() {
                     adapter.updateCart(friendsList)
                 }
                 result.onFailure {
-                    ToastObj.longToastMake("Помилка оновлення списку друзів", context)
+                    ToastObj.longToastMake("Список порожній", context)
                 }
             }
         }
@@ -74,16 +74,27 @@ class MyFriendsFragment : Fragment() {
 
     private fun itemRemovedClick(): (Int) -> Unit {
         return { position ->
-            friendsList.getOrNull(position)?.objectId?.let {
-
+            friendsList.getOrNull(position)?.objectId?.let { friendsId ->
+                lifecycleScope.launch {
+                    viewModel.deleteFriend(friendsId).collect { result ->
+                        result.onSuccess { ToastObj.shortToastMake("Видалено!", context) }
+                        result.onFailure { ToastObj.shortToastMake("Помилка!", context) }
+                    }
+                }
+                friendsListUpdate()
             }
         }
     }
 
     private fun itemLocationClick(): (Int) -> Unit {
         return { position ->
-            friendsList.getOrNull(position)?.location?.let {
-
+            friendsList.getOrNull(position)?.let { item ->
+                val location = item.location
+                val title = item.name
+                val bundle = Bundle()
+                bundle.putSerializable("location", location)
+                bundle.putString("title", title)
+                navController.navigate(R.id.action_myFriendsFragment_to_mapsFragment, bundle)
             }
         }
     }

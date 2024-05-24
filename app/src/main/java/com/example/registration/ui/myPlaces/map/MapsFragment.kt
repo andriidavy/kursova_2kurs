@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.registration.R
 import com.example.registration.databinding.FragmentMapsBinding
 import com.example.registration.model.places.PlaceItem
+import com.example.registration.model.users.data.LocationDTO
 import dagger.hilt.android.AndroidEntryPoint
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -38,12 +39,13 @@ class MapsFragment : Fragment() {
         mapView.controller.setZoom(15.0)
 
         // Adding marker to the map
-        val placeItem = arguments?.getSerializable("place") as PlaceItem
-        val location = GeoPoint(placeItem.location.coordinates[1], placeItem.location.coordinates[0])
+        val locationArg = arguments?.getSerializable("location") as LocationDTO
+        val markerTitleArg = arguments?.getString("title") as String
+        val location = GeoPoint(locationArg.coordinates[1], locationArg.coordinates[0])
         val marker = Marker(mapView)
         marker.position = location
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker.title = placeItem.description
+        marker.title = markerTitleArg
         mapView.overlays.add(marker)
         mapView.controller.setCenter(location)
 

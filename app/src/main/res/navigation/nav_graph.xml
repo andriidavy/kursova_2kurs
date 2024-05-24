@@ -137,5 +137,9 @@
     <fragment
         android:id="@+id/myFriendsFragment"
         android:name="com.example.registration.ui.myFriends.MyFriendsFragment"
-        android:label="MyFriendsFragment" />
+        android:label="MyFriendsFragment" >
+        <action
+            android:id="@+id/action_myFriendsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
 </navigation>

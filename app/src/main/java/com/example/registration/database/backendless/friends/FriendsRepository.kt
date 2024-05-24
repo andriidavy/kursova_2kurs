@@ -10,14 +10,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FriendsRepository @Inject constructor(private val friendsApi: FriendsApi, private val locationApi: LocationApi) {
+class FriendsRepository @Inject constructor(
+    private val friendsApi: FriendsApi,
+    private val locationApi: LocationApi
+) {
     fun getFriendsList(
         myUserId: String,
         searchDistance: String
     ): Flow<Result<List<FriendItem>>> = flow {
         try {
             // Step 1: Fetch the list of accepted friends
-            val getFriendsWhereClause = "inviterId = '$myUserId' AND status ='ACCEPTED'"
+            val getFriendsWhereClause =
+                "(inviterId = '$myUserId' OR invitedId = '$myUserId') AND status = 'ACCEPTED'"
             val friendsList = friendsApi.getAcceptedFriendsList(getFriendsWhereClause)
             Log.d("getFriendsList", "Fetched friends list: $friendsList")
 
@@ -30,15 +34,19 @@ class FriendsRepository @Inject constructor(private val friendsApi: FriendsApi, 
             Log.d("getFriendsList", "User location: ($myLatitude, $myLongitude)")
 
             // Step 3: Fetch friends' detailed info
-            val invitedIds = friendsList.map { it.invitedId }
-            val whereClauseForInfo = "objectId IN (${invitedIds.joinToString(",") { "'$it'" }})"
+            val friendIds = friendsList.map {
+                if (it.inviterId == myUserId) it.invitedId else it.inviterId
+            }
+            val whereClauseForInfo = "objectId IN (${friendIds.joinToString(",") { "'$it'" }})"
             val friendsInfoList = friendsApi.getAcceptedFriendsListInfo(whereClauseForInfo)
             val friendsInfoMap = friendsInfoList.associateBy { it.objectId }
             Log.d("getFriendsList", "Friends detailed info: $friendsInfoList")
 
             // Step 4: Update friends list with detailed info
             val updatedFriendsList = friendsList.map { friendItem ->
-                val friendInfo = friendsInfoMap[friendItem.invitedId]
+                val friendId =
+                    if (friendItem.inviterId == myUserId) friendItem.invitedId else friendItem.inviterId
+                val friendInfo = friendsInfoMap[friendId]
                 friendItem.apply {
                     name = friendInfo?.name ?: ""
                     email = friendInfo?.email ?: ""
@@ -95,5 +103,16 @@ class FriendsRepository @Inject constructor(private val friendsApi: FriendsApi, 
             emit(Result.failure(e))
         }
     }
+
+    fun deleteFriend(userToken: String, friendsId: String): Flow<Result<Unit>> =
+        flow {
+            try {
+                friendsApi.deleteFriend(userToken, friendsId)
+                Log.e("deleteFriend", "friend is deleted")
+                emit(Result.success(Unit))
+            } catch (e: Exception) {
+                emit(Result.failure(e))
+            }
+        }
 }
 

@@ -211,8 +211,11 @@ class ListOfPlacesFragment : Fragment() {
         return { position ->
             ToastObj.shortToastMake("position: $position", context)
             placesList.getOrNull(position)?.let { item ->
+                val location = item.location
+                val title = item.description
                 val bundle = Bundle()
-                bundle.putSerializable("place", item) // replace here
+                bundle.putSerializable("location", location)
+                bundle.putString("title", title)
                 navController.navigate(R.id.action_listOfPlacesFragment_to_mapsFragment, bundle)
             }
         }

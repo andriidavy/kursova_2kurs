@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class FriendItem(
     @SerializedName("objectId")
     val objectId: String,
+    @SerializedName("inviterId")
+    val inviterId: String,
     @SerializedName("invitedId")
     val invitedId: String,
     var name: String,

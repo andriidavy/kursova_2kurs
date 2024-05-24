@@ -5,6 +5,8 @@ import com.example.registration.database.backendless.location.LocationApi
 import com.example.registration.global.LocationObj.haversineDistance
 import com.example.registration.global.LocationObj.roundToDecimals
 import com.example.registration.model.friends.FriendItem
+import com.example.registration.model.friends.SearchFriendItem
+import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.LocationDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -100,6 +102,17 @@ class FriendsRepository @Inject constructor(
             }
         } catch (e: Exception) {
             Log.e("getFriendsList", "Failed to get friends list", e)
+            emit(Result.failure(e))
+        }
+    }
+
+    fun getFriendByName(userName: String): Flow<Result<List<SearchFriendItem>>> = flow {
+        try {
+            val whereClause = "name = '$userName'"
+            val getUser = friendsApi.getFriendByName(whereClause)
+            Log.e("getUser", "user: $getUser")
+            emit(Result.success(getUser))
+        } catch (e: Exception) {
             emit(Result.failure(e))
         }
     }

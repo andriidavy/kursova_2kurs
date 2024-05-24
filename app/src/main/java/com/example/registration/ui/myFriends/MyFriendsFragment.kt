@@ -55,6 +55,9 @@ class MyFriendsFragment : Fragment() {
         btSearch.setOnClickListener {
             friendsListUpdate()
         }
+        btAddFriends.setOnClickListener {
+            navController.navigate(R.id.action_myFriendsFragment_to_inviteFriendFragment)
+        }
     }
 
     private fun friendsListUpdate() {

@@ -198,4 +198,7 @@
     <string name="add_friends">Додати друзів</string>
     <string name="invitation_to_me">Заявки в друзі</string>
     <string name="myFriends">Мої друзі</string>
+    <string name="search_friends">Пошук друзів</string>
+    <string name="add_friend">Додати друга</string>
+    <string name="invite_was_sent">Заявку надіслано</string>
 </resources>

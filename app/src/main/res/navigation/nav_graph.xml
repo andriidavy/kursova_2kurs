@@ -141,5 +141,12 @@
         <action
             android:id="@+id/action_myFriendsFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+        <action
+            android:id="@+id/action_myFriendsFragment_to_inviteFriendFragment"
+            app:destination="@id/inviteFriendFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/inviteFriendFragment"
+        android:name="com.example.registration.ui.myFriends.inviteFriend.InviteFriendFragment"
+        android:label="InviteFriendFragment" />
 </navigation>

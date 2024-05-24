@@ -36,7 +36,7 @@ class MyFriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-
+        setListeners()
     }
 
     private fun setupViews() = with(binding) {
@@ -51,9 +51,16 @@ class MyFriendsFragment : Fragment() {
         placesListUpdate()
     }
 
+    private fun setListeners() = with(binding) {
+        btSearch.setOnClickListener {
+            placesListUpdate()
+        }
+    }
+
     private fun placesListUpdate() {
+        val searchDistance = binding.etSearch.text.toString()
         lifecycleScope.launch {
-            viewModel.getFriendsList().collect { result ->
+            viewModel.getFriendsList(searchDistance).collect { result ->
                 result.onSuccess { listOfFriends ->
                     friendsList = listOfFriends
                     adapter.updateCart(friendsList)

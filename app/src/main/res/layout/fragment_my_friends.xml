@@ -10,7 +10,7 @@
         android:id="@+id/tv_places"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/saved_places"
+        android:text="@string/myFriends"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_margin="32dp"
@@ -24,27 +24,50 @@
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_invite_to_me"
+        app:layout_constraintTop_toBottomOf="@+id/et_search"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/bt_my_invite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/add_friends"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_places" />
+
 
     <Button
         android:id="@+id/bt_invite_to_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/invitation_to_me"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_places" />
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:ems="14"
+        android:hint="@string/et_search_query"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_my_invite" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_invite_to_me" />
+
+    <Button
+        android:id="@+id/bt_search"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/baseline_search_24"
+        app:layout_constraintStart_toEndOf="@+id/et_search"
+        app:layout_constraintTop_toBottomOf="@+id/bt_invite_to_me" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

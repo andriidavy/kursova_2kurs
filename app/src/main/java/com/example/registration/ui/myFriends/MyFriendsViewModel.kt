@@ -15,7 +15,7 @@ class MyFriendsViewModel @Inject constructor(
 ) : DataStoreViewModel(datastoreRepository) {
     private val userId: String = getUser()?.objectId ?: ""
 
-    fun getFriendsList(): Flow<Result<List<FriendItem>>> {
-        return friendsRepository.getFriendsList(userId)
+    fun getFriendsList(searchDistance: String): Flow<Result<List<FriendItem>>> {
+        return friendsRepository.getFriendsList(userId, searchDistance)
     }
 }

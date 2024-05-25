@@ -59,16 +59,21 @@ class InviteFriendFragment : Fragment() {
 
     private fun friendsListUpdate() {
         val searchLine = binding.etSearch.text.toString()
-        val userId = dataStoreViewModel.getUser()?.objectId?: ""
+        val userId = dataStoreViewModel.getUser()?.objectId ?: ""
+        val userName = dataStoreViewModel.getUser()?.name ?: ""
         lifecycleScope.launch {
-            viewModel.getFriendByName(searchLine, userId).collect { result ->
-                result.onSuccess { listOfFriends ->
-                    friendsList = listOfFriends
-                    adapter.updateCart(friendsList)
+            if (searchLine != userName) {
+                viewModel.getFriendByName(searchLine, userId).collect { result ->
+                    result.onSuccess { listOfFriends ->
+                        friendsList = listOfFriends
+                        adapter.updateCart(friendsList)
+                    }
+                    result.onFailure {
+                        ToastObj.longToastMake("Список порожній", context)
+                    }
                 }
-                result.onFailure {
-                    ToastObj.longToastMake("Список порожній", context)
-                }
+            } else {
+                ToastObj.shortToastMake("Це ваше ім'я користувача!", context)
             }
         }
     }

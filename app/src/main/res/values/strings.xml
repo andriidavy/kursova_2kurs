@@ -201,4 +201,6 @@
     <string name="search_friends">Пошук друзів</string>
     <string name="add_friend">Додати друга</string>
     <string name="invite_was_sent">Заявку надіслано</string>
+    <string name="accept_query">Прийняти запит</string>
+    <string name="reject_query">Відхилити запит</string>
 </resources>

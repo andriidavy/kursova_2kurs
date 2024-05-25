@@ -1,67 +1,62 @@
-package com.example.registration.ui.myFriends.inviteFriend
+package com.example.registration.ui.myFriends.inviteToMe
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.registration.R
+import com.example.registration.adapter.InviteToMeAdapter
 import com.example.registration.adapter.SearchingFriendsAdapter
 import com.example.registration.databinding.FragmentInviteFriendBinding
-import com.example.registration.databinding.FragmentMyFriendsBinding
-import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.databinding.FragmentInviteToMeBinding
 import com.example.registration.global.ToastObj
+import com.example.registration.model.friends.FriendItem
 import com.example.registration.model.friends.SearchFriendItem
+import com.example.registration.ui.myFriends.inviteFriend.InviteFriendViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class InviteFriendFragment : Fragment() {
-    private lateinit var binding: FragmentInviteFriendBinding
+class InviteToMeFragment : Fragment() {
+    private lateinit var binding: FragmentInviteToMeBinding
     private lateinit var navController: NavController
-    private lateinit var adapter: SearchingFriendsAdapter
-    private lateinit var friendsList: List<SearchFriendItem>
-    private val viewModel by viewModels<InviteFriendViewModel>()
-    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
+    private lateinit var adapter: InviteToMeAdapter
+    private lateinit var friendsList: List<FriendItem>
+    private val viewModel by viewModels<InviteToMeViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentInviteFriendBinding.inflate(inflater)
+        binding = FragmentInviteToMeBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        setListeners()
     }
 
     private fun setupViews() = with(binding) {
-        adapter = SearchingFriendsAdapter(
+        adapter = InviteToMeAdapter(
             emptyList(),
-            itemAddClick()
+            itemAcceptClick(),
+            itemRejectClick()
         )
         rvMyFriends.adapter = adapter
         rvMyFriends.layoutManager = LinearLayoutManager(activity)
         navController = findNavController()
-    }
-
-    private fun setListeners() = with(binding) {
-        btSearch.setOnClickListener {
-            friendsListUpdate()
-        }
+        friendsListUpdate()
     }
 
     private fun friendsListUpdate() {
-        val searchLine = binding.etSearch.text.toString()
-        val userId = dataStoreViewModel.getUser()?.objectId?: ""
         lifecycleScope.launch {
-            viewModel.getFriendByName(searchLine, userId).collect { result ->
+            viewModel.getInviteToMe().collect { result ->
                 result.onSuccess { listOfFriends ->
                     friendsList = listOfFriends
                     adapter.updateCart(friendsList)
@@ -73,13 +68,13 @@ class InviteFriendFragment : Fragment() {
         }
     }
 
-    private fun itemAddClick(): (Int) -> Unit {
+    private fun itemAcceptClick(): (Int) -> Unit {
         return { position ->
-            friendsList.getOrNull(position)?.objectId?.let { invitedId ->
+            friendsList.getOrNull(position)?.objectId?.let { friendId ->
                 lifecycleScope.launch {
-                    viewModel.addingFriend(invitedId).collect { result ->
+                    viewModel.acceptInvite(friendId).collect { result ->
                         result.onSuccess {
-                            ToastObj.shortToastMake("Запрошення відправлено!", context)
+                            ToastObj.shortToastMake("Запрошення прийнято!", context)
                             friendsListUpdate()
                         }
                         result.onFailure {
@@ -91,4 +86,21 @@ class InviteFriendFragment : Fragment() {
         }
     }
 
+    private fun itemRejectClick(): (Int) -> Unit {
+        return { position ->
+            friendsList.getOrNull(position)?.objectId?.let { friendId ->
+                lifecycleScope.launch {
+                    viewModel.rejectInvite(friendId).collect { result ->
+                        result.onSuccess {
+                            ToastObj.shortToastMake("Запрошення відхилено!", context)
+                            friendsListUpdate()
+                        }
+                        result.onFailure {
+                            ToastObj.shortToastMake("Помилка!", context)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

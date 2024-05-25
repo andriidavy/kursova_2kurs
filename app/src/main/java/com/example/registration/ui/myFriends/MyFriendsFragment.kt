@@ -58,6 +58,9 @@ class MyFriendsFragment : Fragment() {
         btAddFriends.setOnClickListener {
             navController.navigate(R.id.action_myFriendsFragment_to_inviteFriendFragment)
         }
+        btInviteToMe.setOnClickListener {
+            navController.navigate(R.id.action_myFriendsFragment_to_inviteToMeFragment)
+        }
     }
 
     private fun friendsListUpdate() {
@@ -80,7 +83,10 @@ class MyFriendsFragment : Fragment() {
             friendsList.getOrNull(position)?.objectId?.let { friendsId ->
                 lifecycleScope.launch {
                     viewModel.deleteFriend(friendsId).collect { result ->
-                        result.onSuccess { ToastObj.shortToastMake("Видалено!", context) }
+                        result.onSuccess {
+                            ToastObj.shortToastMake("Видалено!", context)
+                            friendsListUpdate()
+                        }
                         result.onFailure { ToastObj.shortToastMake("Помилка!", context) }
                     }
                 }

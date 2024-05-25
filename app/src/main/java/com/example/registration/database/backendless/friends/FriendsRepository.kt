@@ -4,9 +4,11 @@ import android.util.Log
 import com.example.registration.database.backendless.location.LocationApi
 import com.example.registration.global.LocationObj.haversineDistance
 import com.example.registration.global.LocationObj.roundToDecimals
+import com.example.registration.model.friends.AcceptFriendDTO
+import com.example.registration.model.friends.AddingFriendDTO
+import com.example.registration.model.friends.CheckingFriendDTO
 import com.example.registration.model.friends.FriendItem
 import com.example.registration.model.friends.SearchFriendItem
-import com.example.registration.model.users.data.GuestUserDTO
 import com.example.registration.model.users.data.LocationDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -106,16 +108,73 @@ class FriendsRepository @Inject constructor(
         }
     }
 
-    fun getFriendByName(userName: String): Flow<Result<List<SearchFriendItem>>> = flow {
+    fun getInviteToMeList(
+        myUserId: String
+    ): Flow<Result<List<FriendItem>>> = flow {
         try {
-            val whereClause = "name = '$userName'"
-            val getUser = friendsApi.getFriendByName(whereClause)
-            Log.e("getUser", "user: $getUser")
-            emit(Result.success(getUser))
+            val getFriendsWhereClause =
+                "(invitedId = '$myUserId') AND status = 'INVITE'"
+            val friendsList = friendsApi.getInviteToMe(getFriendsWhereClause)
+            Log.d("getFriendsList", "Fetched friends list: $friendsList")
+
+            val friendIds = friendsList.map {
+                it.inviterId
+            }
+            val whereClauseForInfo = "objectId IN (${friendIds.joinToString(",") { "'$it'" }})"
+            val friendsInfoList = friendsApi.getInviteToMeInfo(whereClauseForInfo)
+            val friendsInfoMap = friendsInfoList.associateBy { it.objectId }
+            Log.d("getFriendsList", "Friends detailed info: $friendsInfoList")
+
+            val updatedFriendsList = friendsList.map { friendItem ->
+                val friendId =
+                    if (friendItem.inviterId == myUserId) friendItem.invitedId else friendItem.inviterId
+                val friendInfo = friendsInfoMap[friendId]
+                friendItem.apply {
+                    name = friendInfo?.name ?: ""
+                    email = friendInfo?.email ?: ""
+                    location = friendInfo?.location ?: LocationDTO("Point", listOf(0.0, 0.0))
+                }
+            }
+            emit(Result.success(updatedFriendsList))
         } catch (e: Exception) {
+            Log.e("getFriendsList", "Failed to get friends list", e)
             emit(Result.failure(e))
         }
     }
+
+    fun getFriendByName(userName: String, userId: String): Flow<Result<List<SearchFriendItem>>> =
+        flow {
+            try {
+                val whereClause = "name = '$userName'"
+                val getUser:List<SearchFriendItem> = friendsApi.getFriendByName(whereClause)
+                Log.d("friendsList", "$getUser")
+                getUser.forEach { friend ->
+                    val whereInfoClause = "(inviterId = '$userId' AND invitedId = '${friend.objectId}') OR (inviterId = '${friend.objectId}' AND invitedId = '$userId')"
+                    val isExist: List<CheckingFriendDTO> = friendsApi.checkExists(whereInfoClause)
+                    Log.d("isExist", "$isExist")
+                    // Update the isInvited property
+                    friend.isInvited = isExist.isNotEmpty()
+                }
+                Log.d("getUser", "user: $getUser")
+                emit(Result.success(getUser))
+            } catch (e: Exception) {
+                emit(Result.failure(e))
+            }
+        }
+
+    fun addFriend(
+        userToken: String,
+        addingFriendDTO: AddingFriendDTO
+    ): Flow<Result<AddingFriendDTO>> =
+        flow {
+            try {
+                val addedFriend = friendsApi.addFriend(userToken, addingFriendDTO)
+                Log.e("updateFriends", "friend: $addedFriend")
+                emit(Result.success(addedFriend))
+            } catch (e: Exception) {
+                emit(Result.failure(e))
+            }
+        }
 
     fun deleteFriend(userToken: String, friendsId: String): Flow<Result<Unit>> =
         flow {
@@ -127,5 +186,16 @@ class FriendsRepository @Inject constructor(
                 emit(Result.failure(e))
             }
         }
+
+    fun acceptInvite(
+        userToken: String,
+        acceptFriendDTO: AcceptFriendDTO
+    ): Flow<Result<AcceptFriendDTO>> = flow {
+        try {
+            friendsApi.acceptInvite(userToken, acceptFriendDTO)
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
 }
 

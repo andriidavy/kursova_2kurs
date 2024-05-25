@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.registration.databinding.ChooseFileItemBinding
 import com.example.registration.model.directoryItem.ServerItem
 
-class ChooseFileAdapter(
+open class ChooseFileAdapter(
     private var serverItemList: List<ServerItem>,
     private val itemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ChooseFileAdapter.ViewHolder>() {

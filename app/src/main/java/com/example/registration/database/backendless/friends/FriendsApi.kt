@@ -1,12 +1,19 @@
 package com.example.registration.database.backendless.friends
 
+import com.example.registration.model.friends.AcceptFriendDTO
+import com.example.registration.model.friends.AddingFriendDTO
+import com.example.registration.model.friends.CheckingFriendDTO
 import com.example.registration.model.friends.FriendItem
 import com.example.registration.model.friends.FriendsDTO
 import com.example.registration.model.friends.SearchFriendItem
-import com.example.registration.model.users.data.GuestUserDTO
+import com.example.registration.model.users.data.UserDTO
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -15,10 +22,19 @@ interface FriendsApi {
     suspend fun getAcceptedFriendsList(
         @Query("where") where: String
     ): List<FriendItem>
+
     @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Users")
     suspend fun getAcceptedFriendsListInfo(
         @Query("where") where: String
     ): List<FriendsDTO>
+
+    @POST("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Friends")
+    @Headers("Content-Type: application/json")
+    suspend fun addFriend(
+        @Header("user-token") userToken: String,
+        @Body friend: AddingFriendDTO
+    ): AddingFriendDTO
+
     @DELETE("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Friends/{idFriends}")
     suspend fun deleteFriend(
         @Header("user-token") userToken: String,
@@ -30,4 +46,25 @@ interface FriendsApi {
         @Query("where") where: String
     ): List<SearchFriendItem>
 
+    @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Friends")
+    suspend fun checkExists(
+        @Query("where") where: String
+    ): List<CheckingFriendDTO>
+
+    @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Friends")
+    suspend fun getInviteToMe(
+        @Query("where") where: String
+    ): List<FriendItem>
+
+    @GET("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Users")
+    suspend fun getInviteToMeInfo(
+        @Query("where") where: String
+    ): List<FriendsDTO>
+
+    @PUT("https://api.backendless.com/FF1A5A1D-9D50-49DE-FF52-3A572F090300/2240799C-8598-4FE5-A987-E63812C61590/data/Friends")
+    @Headers("Content-Type: application/json")
+    suspend fun acceptInvite(
+        @Header("user-token") userToken: String,
+        @Body updateRequest: AcceptFriendDTO
+    ): AcceptFriendDTO
 }

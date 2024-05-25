@@ -8,5 +8,6 @@ data class SearchFriendItem(
     @SerializedName("name")
     val name: String,
     @SerializedName("email")
-    val email: String
+    val email: String,
+    var isInvited: Boolean
 )

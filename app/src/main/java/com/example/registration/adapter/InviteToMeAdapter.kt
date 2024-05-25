@@ -4,22 +4,22 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.registration.R
-import com.example.registration.databinding.SearchingFriendItemBinding
+import com.example.registration.databinding.InviteToMeItemBinding
 import com.example.registration.model.friends.FriendItem
 import com.example.registration.model.friends.SearchFriendItem
 
-open class SearchingFriendsAdapter(
-    private var friendItemList: List<SearchFriendItem>,
-    private val itemAddClick: (Int) -> Unit
-) : RecyclerView.Adapter<SearchingFriendsAdapter.ViewHolder>() {
+open class InviteToMeAdapter(
+    private var friendItemList: List<FriendItem>,
+    private val itemAcceptClick: (Int) -> Unit,
+    private val itemRejectClick: (Int) -> Unit
+) : RecyclerView.Adapter<InviteToMeAdapter.ViewHolder>() {
 
-    class ViewHolder(var view: SearchingFriendItemBinding) : RecyclerView.ViewHolder(view.root)
+    class ViewHolder(var view: InviteToMeItemBinding) : RecyclerView.ViewHolder(view.root)
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            SearchingFriendItemBinding.inflate(
+            InviteToMeItemBinding.inflate(
                 LayoutInflater.from(viewGroup.context),
                 viewGroup,
                 false
@@ -32,15 +32,11 @@ open class SearchingFriendsAdapter(
         viewHolder.view.apply {
             name.text = friendItemList[position].name
             email.text = friendItemList[position].email
-            if (friendItemList[position].isInvited) {
-                btSendInviteItem.text = "запрошено"
-                btSendInviteItem.isClickable = false
-            } else {
-                btSendInviteItem.isClickable = true
-                btSendInviteItem.text = "додати друга"
-                btSendInviteItem.setOnClickListener {
-                    itemAddClick.invoke(position)
-                }
+            btAcceptInviteItem.setOnClickListener {
+                itemAcceptClick.invoke(position)
+            }
+            btRejectInviteItem.setOnClickListener {
+                itemRejectClick.invoke(position)
             }
         }
     }
@@ -49,7 +45,7 @@ open class SearchingFriendsAdapter(
     override fun getItemCount() = friendItemList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateCart(newList: List<SearchFriendItem>) {
+    fun updateCart(newList: List<FriendItem>) {
         friendItemList = newList
         notifyDataSetChanged()
     }

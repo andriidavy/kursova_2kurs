@@ -144,9 +144,16 @@
         <action
             android:id="@+id/action_myFriendsFragment_to_inviteFriendFragment"
             app:destination="@id/inviteFriendFragment" />
+        <action
+            android:id="@+id/action_myFriendsFragment_to_inviteToMeFragment"
+            app:destination="@id/inviteToMeFragment" />
     </fragment>
     <fragment
         android:id="@+id/inviteFriendFragment"
         android:name="com.example.registration.ui.myFriends.inviteFriend.InviteFriendFragment"
         android:label="InviteFriendFragment" />
+    <fragment
+        android:id="@+id/inviteToMeFragment"
+        android:name="com.example.registration.ui.myFriends.inviteToMe.InviteToMeFragment"
+        android:label="InviteToMeFragment" />
 </navigation>

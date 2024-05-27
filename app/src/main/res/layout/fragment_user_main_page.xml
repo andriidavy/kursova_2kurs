@@ -42,7 +42,7 @@
 
     <Button
         android:id="@+id/bt_my_places"
-        android:layout_width="wrap_content"
+        android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:text="@string/my_places"
@@ -52,7 +52,7 @@
 
     <Button
         android:id="@+id/bt_my_friends"
-        android:layout_width="wrap_content"
+        android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:text="@string/my_friends"
         android:layout_margin="32dp"
@@ -70,6 +70,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_my_friends" />
 
+    <Button
+        android:id="@+id/bt_to_developer"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="@string/to_developer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_to_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

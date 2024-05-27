@@ -203,4 +203,10 @@
     <string name="invite_was_sent">Заявку надіслано</string>
     <string name="accept_query">Прийняти запит</string>
     <string name="reject_query">Відхилити запит</string>
+    <string name="to_developer">Розробнику</string>
+    <string name="mistake_text">помилка</string>
+    <string name="advice_text">порада</string>
+    <string name="to_developers">До розробників</string>
+    <string name="subject_text">Тема:</string>
+    <string name="text">Текст:</string>
 </resources>

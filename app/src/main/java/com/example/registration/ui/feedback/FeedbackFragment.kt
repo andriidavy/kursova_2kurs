@@ -20,6 +20,7 @@ class FeedbackFragment : Fragment() {
     private lateinit var binding: FragmentFeedbackBinding
     private lateinit var navController: NavController
     private val viewModel by viewModels<FeedbackViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,7 +70,6 @@ class FeedbackFragment : Fragment() {
                     }
                 }
             }
-
         }
     }
 }

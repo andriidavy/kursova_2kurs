@@ -13,15 +13,15 @@ import javax.inject.Inject
 class FeedbackViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
     datastoreRepository: DatastoreRepo
-) :
-    DataStoreViewModel(datastoreRepository) {
-    private val userToken: String = getUser()?.userToken ?: ""
-        fun sendEmail(subject: String, message: String): Flow<Result<Unit>> {
-            val emailRequest = EmailRequest(
-                subject= subject,
-                bodyParts = PartsOfBody(textMessage = message),
-                to = listOf("dav1dcrpt09@gmail.com")
-            )
-            return notificationRepository.sendEmail(userToken, emailRequest)
-        }
+) : DataStoreViewModel(datastoreRepository) {
+
+    fun sendEmail(subject: String, message: String): Flow<Result<Unit>> {
+        val emailRequest = EmailRequest(
+            subject = subject,
+            bodyParts = PartsOfBody(textMessage = message),
+            to = listOf("dav1dcrpt09@gmail.com")
+        )
+        val userToken = getUser()?.userToken
+        return notificationRepository.sendEmail(userToken, emailRequest)
+    }
 }

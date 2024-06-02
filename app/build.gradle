@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -95,14 +96,27 @@ dependencies {
     //Data store
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
-    implementation 'com.backendless:backendless:6.3.6'
+    implementation group: 'com.backendless', name: 'backendless', version: '6.3.6'
+
+    // required for real-time database and real-time messaging
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation 'com.google.android.gms:play-services-location:21.2.0'
-    implementation 'org.osmdroid:osmdroid-android:6.1.10'
+    implementation 'org.osmdroid:osmdroid-android:6.1.18'
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-inappmessaging-display")
+    implementation("com.google.firebase:firebase-inappmessaging")
+
 }
 
 kapt {

@@ -1,7 +1,7 @@
 package com.example.registration.database.backendless.location
 
 import android.util.Log
-import com.example.registration.global.LocationObj
+import com.example.registration.database.backendless.logging.LoggingRepository
 import com.example.registration.global.LocationObj.haversineDistance
 import com.example.registration.global.LocationObj.roundToDecimals
 import com.example.registration.model.places.AddingPlaceDTO
@@ -11,13 +11,8 @@ import com.example.registration.model.users.data.UserLocationDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
-class LocationRepository @Inject constructor(private val locationApi: LocationApi) {
+class LocationRepository @Inject constructor(private val locationApi: LocationApi, private val loggingRepository: LoggingRepository) {
     fun addPlace(userToken: String, addingPlaceDTO: AddingPlaceDTO): Flow<Result<AddingPlaceDTO>> =
         flow {
             try {
@@ -25,6 +20,13 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
                 Log.e("updateUser", "user: $addedPlace")
                 emit(Result.success(addedPlace))
             } catch (e: Exception) {
+                loggingRepository.logMessageToBackendless(
+                    logLevel = "ERROR",
+                    logger = "LocationRepository",
+                    timestamp = System.currentTimeMillis(),
+                    message = "Adding location failed for location: ${addingPlaceDTO.description}",
+                    exception = e.toString()
+                )
                 emit(Result.failure(e))
             }
         }

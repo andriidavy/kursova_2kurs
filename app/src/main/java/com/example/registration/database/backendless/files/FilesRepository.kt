@@ -1,6 +1,7 @@
 package com.example.registration.database.backendless.files
 
 import android.util.Log
+import com.example.registration.database.backendless.logging.LoggingRepository
 import com.example.registration.model.directoryItem.ServerItem
 import com.example.registration.model.users.data.RenameFolderData
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ import java.io.FileOutputStream
 import java.net.URLEncoder
 import javax.inject.Inject
 
-class FilesRepository @Inject constructor(private val filesApi: FilesApi) {
+class FilesRepository @Inject constructor(private val filesApi: FilesApi, private val loggingRepository: LoggingRepository) {
     suspend fun createFolder(userName: String, filePath: String, newFolderName: String) {
         filesApi.createFolder(userName, filePath, newFolderName)
     }
@@ -85,6 +86,13 @@ class FilesRepository @Inject constructor(private val filesApi: FilesApi) {
                 emit(Result.failure(Exception("File upload failed: ${response.message()}")))
             }
         } catch (e: Exception) {
+            loggingRepository.logMessageToBackendless(
+                logLevel = "ERROR",
+                logger = "FilesRepository",
+                timestamp = System.currentTimeMillis(),
+                message = "Upload file failed for file $fileName",
+                exception = e.toString()
+            )
             emit(Result.failure(e))
         }
     }

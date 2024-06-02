@@ -2,13 +2,11 @@ package com.example.registration.ui.myPlaces.map
 
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.registration.R
+import androidx.fragment.app.Fragment
 import com.example.registration.databinding.FragmentMapsBinding
-import com.example.registration.model.places.PlaceItem
 import com.example.registration.model.users.data.LocationDTO
 import dagger.hilt.android.AndroidEntryPoint
 import org.osmdroid.config.Configuration

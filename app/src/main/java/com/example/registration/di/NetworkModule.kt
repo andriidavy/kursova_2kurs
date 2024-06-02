@@ -3,6 +3,7 @@ package com.example.registration.di
 import com.example.registration.database.backendless.files.FilesApi
 import com.example.registration.database.backendless.friends.FriendsApi
 import com.example.registration.database.backendless.location.LocationApi
+import com.example.registration.database.backendless.logging.LoggingApi
 import com.example.registration.database.backendless.notification.NotificationApi
 import com.example.registration.database.backendless.user.UserApi
 import com.google.gson.Gson
@@ -50,4 +51,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideNotificationApi(retrofit: Retrofit): NotificationApi = retrofit.create(NotificationApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideLoggingApi(retrofit: Retrofit): LoggingApi = retrofit.create(LoggingApi::class.java)
 }

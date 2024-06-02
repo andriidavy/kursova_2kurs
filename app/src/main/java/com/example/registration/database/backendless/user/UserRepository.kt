@@ -1,6 +1,7 @@
 package com.example.registration.database.backendless.user
 
 import android.util.Log
+import com.example.registration.database.backendless.logging.LoggingRepository
 import com.example.registration.model.users.User
 import com.example.registration.model.users.User.Gender
 import com.example.registration.model.users.data.GuestUserDTO
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(private val userApi: UserApi) {
+class UserRepository @Inject constructor(private val userApi: UserApi, private val loggingRepository: LoggingRepository) {
     fun registerUser(
         name: String,
         email: String,
@@ -41,6 +42,13 @@ class UserRepository @Inject constructor(private val userApi: UserApi) {
             emit(Result.success(loginResponse))
         } catch (e: Exception) {
             Log.e("UserRepository", "Login failed", e)
+            loggingRepository.logMessageToBackendless(
+                logLevel = "ERROR",
+                logger = "UserRepository",
+                timestamp = System.currentTimeMillis(),
+                message = "Login failed for user $email",
+                exception = e.toString()
+            )
             emit(Result.failure(e))
         }
     }

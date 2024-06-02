@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.math.max
 
 @HiltViewModel
 class CustomerProductsListViewModel @Inject constructor(
@@ -29,6 +30,16 @@ class CustomerProductsListViewModel @Inject constructor(
     val maxPrice: StateFlow<Double>
         get() = _maxPrice
 
+    private val _currentPage = MutableStateFlow(0)
+    val currentPage: StateFlow<Int> get() = _currentPage
+
+    private val pageSize = 10
+
+    private var lastSearchStr = ""
+    private var lastChooseType = 0
+    private var lastMinPrice = 0.0
+    private var lastMaxPrice = 0.0
+
     init {
         viewModelScope.launch {
             delay(100)
@@ -38,10 +49,9 @@ class CustomerProductsListViewModel @Inject constructor(
         }
     }
 
-    private val _currentPage = MutableStateFlow(0)
-    val currentPage: StateFlow<Int> get() = _currentPage
-
-    private val pageSize = 10
+    fun isLastProductsList(): Boolean {
+        return _productsArray.value.size < pageSize
+    }
 
     fun getAllProductsPage(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,7 +66,9 @@ class CustomerProductsListViewModel @Inject constructor(
     }
 
     fun loadNextPage() {
-        getAllProductsPage(_currentPage.value + 1)
+        if (!isLastProductsList()) {
+            getAllProductsPage(_currentPage.value + 1)
+        }
     }
 
     fun loadPreviousPage() {
@@ -64,44 +76,99 @@ class CustomerProductsListViewModel @Inject constructor(
         getAllProductsPage(previousPage)
     }
 
-    fun getProductsBySearch(searchStr: String, chooseType: Int) {
+    fun getProductsBySearch(searchStr: String, chooseType: Int, page: Int) {
+        lastSearchStr = searchStr
+        lastChooseType = chooseType
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.searchProduct(searchStr, chooseType)
+            val result = customerRepository.searchProduct(searchStr, chooseType, page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _productsArray.value = it
+                    _currentPage.value = page
                 }
             }
         }
     }
 
-    fun getProductsBySearchWithPriceRange(searchStr: String, chooseType: Int, minPrice: Double, maxPrice: Double) {
+    fun loadNextPageBySearch() {
+        if (!isLastProductsList()) {
+            getProductsBySearch(lastSearchStr, lastChooseType, _currentPage.value + 1)
+        }
+    }
+
+    fun loadPreviousPageBySearch() {
+        val previousPage = if (_currentPage.value > 0) _currentPage.value - 1 else 0
+        getProductsBySearch(lastSearchStr, lastChooseType, previousPage)
+    }
+
+    fun getProductsBySearchWithPriceRange(
+        searchStr: String,
+        chooseType: Int,
+        minPrice: Double,
+        maxPrice: Double,
+        page: Int
+    ) {
+        lastSearchStr = searchStr
+        lastChooseType = chooseType
+        lastMinPrice = minPrice
+        lastMaxPrice = maxPrice
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.searchProductWithPriceRange(searchStr, chooseType, minPrice, maxPrice)
+            val result = customerRepository.searchProductWithPriceRange(
+                searchStr,
+                chooseType,
+                minPrice,
+                maxPrice,
+                page,
+                pageSize
+            )
             withContext(Dispatchers.Main) {
                 result.collect {
                     _productsArray.value = it
+                    _currentPage.value = page
                 }
             }
         }
     }
 
-    private fun getMinPrice(){
+    fun loadNextPageBySearchWithPrice() {
+        if (!isLastProductsList()) {
+            getProductsBySearchWithPriceRange(
+                lastSearchStr,
+                lastChooseType,
+                lastMinPrice,
+                lastMaxPrice,
+                _currentPage.value + 1
+            )
+        }
+    }
+
+    fun loadPreviousPageBySearchWithPrice() {
+        val previousPage = if (_currentPage.value > 0) _currentPage.value - 1 else 0
+        getProductsBySearchWithPriceRange(
+            lastSearchStr,
+            lastChooseType,
+            lastMinPrice,
+            lastMaxPrice,
+            previousPage
+        )
+    }
+
+    private fun getMinPrice() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getMinProductPrice()
-            withContext(Dispatchers.Main){
-                result.collect{
+            withContext(Dispatchers.Main) {
+                result.collect {
                     _minPrice.value = it
                 }
             }
         }
     }
 
-    private fun getMaxPrice(){
+    private fun getMaxPrice() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.getMaxProductPrice()
-            withContext(Dispatchers.Main){
-                result.collect{
+            withContext(Dispatchers.Main) {
+                result.collect {
                     _maxPrice.value = it
                 }
             }

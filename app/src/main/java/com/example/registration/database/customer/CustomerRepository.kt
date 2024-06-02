@@ -55,17 +55,19 @@ class CustomerRepository @Inject constructor(
         emit(customerApi.getProductsAllPage(page, size))
     }
 
-    fun searchProduct(searchStr: String, chooseType: Int): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.searchProduct(searchStr, chooseType))
+    fun searchProduct(searchStr: String, chooseType: Int, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.searchProduct(searchStr, chooseType, page, size))
     }
 
     fun searchProductWithPriceRange(
         searchStr: String,
         chooseType: Int,
         minPrice: Double,
-        maxPrice: Double
+        maxPrice: Double,
+        page: Int,
+        size: Int
     ): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.searchProductWithPriceRange(searchStr, chooseType, minPrice, maxPrice))
+        emit(customerApi.searchProductWithPriceRange(searchStr, chooseType, minPrice, maxPrice, page, size))
     }
 
     fun getMinProductPrice(): Flow<Double> = flow {

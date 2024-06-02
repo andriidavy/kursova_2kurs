@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,6 +22,7 @@ import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentCustomerProductsListBinding
 import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,6 +33,8 @@ class CustomerProductsListFragment : Fragment() {
     private val viewModel by viewModels<CustomerProductsListViewModel>()
     private var num: Int = -1
     private var isChecked: Boolean = false
+    private var actualSearchStr: String = ""
+    private var actualPage: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,7 +103,8 @@ class CustomerProductsListFragment : Fragment() {
                 }
                 launch {
                     viewModel.currentPage.collect { page ->
-                        updatePageInfo(page)
+                        actualPage = page
+                        updatePageInfo(actualPage)
                     }
                 }
             }
@@ -120,9 +125,10 @@ class CustomerProductsListFragment : Fragment() {
         }
 
         buttonSearch.setOnClickListener {
-            val searchStr = etSearchField.text.toString()
-            if (searchStr.isBlank()) {
+            actualSearchStr = etSearchField.text.toString()
+            if (actualSearchStr.isBlank()) {
                 viewModel.getAllProductsPage(0)
+                updatePageInfo(actualPage)
                 return@setOnClickListener
             }
             if (isChecked) {
@@ -131,25 +137,63 @@ class CustomerProductsListFragment : Fragment() {
                 val maxPrice: Double =
                     etMaxRange.text.toString().toDoubleOrNull() ?: viewModel.maxPrice.value
 
-                viewModel.getProductsBySearchWithPriceRange(searchStr, num, minPrice, maxPrice)
+                viewModel.getProductsBySearchWithPriceRange(
+                    actualSearchStr,
+                    num,
+                    minPrice,
+                    maxPrice,
+                    0
+                )
+                updatePageInfo(actualPage)
             } else {
-                viewModel.getProductsBySearch(searchStr, num)
+                viewModel.getProductsBySearch(actualSearchStr, num, 0)
+                updatePageInfo(actualPage)
             }
         }
 
         btNext.setOnClickListener {
-            viewModel.loadNextPage()
+            if (actualSearchStr.isBlank()) {
+                if (viewModel.isLastProductsList()) {
+                    ToastObj.longToastMake("Остання сторінка", context)
+                } else {
+                    viewModel.loadNextPage()
+                }
+                return@setOnClickListener
+            }
+            if (isChecked) {
+                if (viewModel.isLastProductsList()) {
+                    ToastObj.longToastMake("Остання сторінка", context)
+                } else {
+                    viewModel.loadNextPageBySearchWithPrice()
+                }
+            } else {
+                if (viewModel.isLastProductsList()) {
+                    ToastObj.longToastMake("Остання сторінка", context)
+                } else {
+                    viewModel.loadNextPageBySearch()
+                }
+            }
         }
-
         btPrevious.setOnClickListener {
-            viewModel.loadPreviousPage()
+            if (actualSearchStr.isBlank()) {
+                viewModel.loadPreviousPage()
+                return@setOnClickListener
+            }
+            if (isChecked) {
+                viewModel.loadPreviousPageBySearchWithPrice()
+            } else {
+                viewModel.loadPreviousPageBySearch()
+            }
         }
     }
 
     private fun updatePageInfo(page: Int) = with(binding) {
         val from = page * 10 + 1
-        val to = from + 9
-        tvPageInfo.text = "з $from по $to"
+        lifecycleScope.launch {
+            delay(500)
+            val to = from + viewModel.productsArray.value.size - 1
+            tvPageInfo.text = "з $from по $to"
+        }
     }
 
     private fun itemClicked(): (Int) -> Unit {

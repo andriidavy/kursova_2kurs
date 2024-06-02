@@ -41,7 +41,9 @@ interface CustomerApi {
     @GET("/customer/product/search")
     suspend fun searchProduct(
         @Query("searchStr") searchStr: String,
-        @Query("chooseType") chooseType: Int
+        @Query("chooseType") chooseType: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): List<ProductDTO>
 
     @GET("/customer/product/search-with-price-range")
@@ -49,7 +51,9 @@ interface CustomerApi {
         @Query("searchStr") searchStr: String,
         @Query("chooseType") chooseType: Int,
         @Query("minPrice") minPrice: Double,
-        @Query("maxPrice") maxPrice: Double
+        @Query("maxPrice") maxPrice: Double,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): List<ProductDTO>
 
     @GET("/customer/product/get-min-price")

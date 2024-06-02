@@ -2,12 +2,14 @@ package com.example.registration.ui.customer.productsList
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -41,6 +43,7 @@ class CustomerProductsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCustomerProductsListBinding.inflate(inflater)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -49,6 +52,23 @@ class CustomerProductsListFragment : Fragment() {
         setupViews()
         setObservers()
         setListeners()
+    }
+
+    // Inflate the menu for this fragment
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_customer_products_list, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    // Handle the cart button click
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_cart -> {
+                    navController.navigate(R.id.action_customerProductsListFragment_to_customerCartPageFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupViews() = with(binding) {

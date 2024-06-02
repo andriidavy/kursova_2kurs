@@ -383,6 +383,9 @@
         <action
             android:id="@+id/action_customerProductsListFragment_to_productItemFragment"
             app:destination="@id/productItemFragment" />
+        <action
+            android:id="@+id/action_customerProductsListFragment_to_customerCartPageFragment"
+            app:destination="@id/customerCartPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/staffFragment"

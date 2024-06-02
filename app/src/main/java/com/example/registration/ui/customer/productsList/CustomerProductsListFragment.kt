@@ -92,8 +92,15 @@ class CustomerProductsListFragment : Fragment() {
     private fun setObservers() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.productsArray.collect { products ->
-                    adapter.updateProducts(products)
+                launch {
+                    viewModel.productsArray.collect { products ->
+                        adapter.updateProducts(products)
+                    }
+                }
+                launch {
+                    viewModel.currentPage.collect { page ->
+                        updatePageInfo(page)
+                    }
                 }
             }
         }
@@ -115,7 +122,7 @@ class CustomerProductsListFragment : Fragment() {
         buttonSearch.setOnClickListener {
             val searchStr = etSearchField.text.toString()
             if (searchStr.isBlank()) {
-                viewModel.getAllProducts()
+                viewModel.getAllProductsPage(0)
                 return@setOnClickListener
             }
             if (isChecked) {
@@ -129,6 +136,20 @@ class CustomerProductsListFragment : Fragment() {
                 viewModel.getProductsBySearch(searchStr, num)
             }
         }
+
+        btNext.setOnClickListener {
+            viewModel.loadNextPage()
+        }
+
+        btPrevious.setOnClickListener {
+            viewModel.loadPreviousPage()
+        }
+    }
+
+    private fun updatePageInfo(page: Int) = with(binding) {
+        val from = page * 10 + 1
+        val to = from + 9
+        tvPageInfo.text = "з $from по $to"
     }
 
     private fun itemClicked(): (Int) -> Unit {

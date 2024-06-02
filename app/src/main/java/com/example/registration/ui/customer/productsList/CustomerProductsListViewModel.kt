@@ -6,6 +6,7 @@ import com.example.registration.model.product.ProductDTO
 import com.example.registration.database.customer.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,20 +30,38 @@ class CustomerProductsListViewModel @Inject constructor(
         get() = _maxPrice
 
     init {
-        getAllProducts()
-        getMinPrice()
-        getMaxPrice()
+        viewModelScope.launch {
+            delay(100)
+            getMinPrice()
+            getMaxPrice()
+            getAllProductsPage(0)
+        }
     }
 
-    fun getAllProducts() {
+    private val _currentPage = MutableStateFlow(0)
+    val currentPage: StateFlow<Int> get() = _currentPage
+
+    private val pageSize = 10
+
+    fun getAllProductsPage(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getProducts()
+            val result = customerRepository.getProductsPage(page, pageSize)
             withContext(Dispatchers.Main) {
-                result.collect {
-                    _productsArray.value = it
+                result.collect { pageResult ->
+                    _productsArray.value = pageResult
+                    _currentPage.value = page
                 }
             }
         }
+    }
+
+    fun loadNextPage() {
+        getAllProductsPage(_currentPage.value + 1)
+    }
+
+    fun loadPreviousPage() {
+        val previousPage = if (_currentPage.value > 0) _currentPage.value - 1 else 0
+        getAllProductsPage(previousPage)
     }
 
     fun getProductsBySearch(searchStr: String, chooseType: Int) {

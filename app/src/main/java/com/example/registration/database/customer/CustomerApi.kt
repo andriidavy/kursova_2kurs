@@ -32,6 +32,12 @@ interface CustomerApi {
     @GET("/customer/product/get-all")
     suspend fun getProductsAll(): List<ProductDTO>
 
+    @GET("/customer/product/get-page")
+    suspend fun getProductsAllPage(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): List<ProductDTO>
+
     @GET("/customer/product/search")
     suspend fun searchProduct(
         @Query("searchStr") searchStr: String,

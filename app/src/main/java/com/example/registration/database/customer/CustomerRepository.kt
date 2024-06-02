@@ -51,6 +51,10 @@ class CustomerRepository @Inject constructor(
         emit(customerApi.getProductsAll())
     }
 
+    fun getProductsPage(page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.getProductsAllPage(page, size))
+    }
+
     fun searchProduct(searchStr: String, chooseType: Int): Flow<List<ProductDTO>> = flow {
         emit(customerApi.searchProduct(searchStr, chooseType))
     }

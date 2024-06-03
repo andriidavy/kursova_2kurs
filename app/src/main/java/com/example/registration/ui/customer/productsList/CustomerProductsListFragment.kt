@@ -38,7 +38,6 @@ class CustomerProductsListFragment : Fragment() {
     private var num: Int = -1
     private var isChecked: Boolean = false
     private var actualSearchStr: String = ""
-    private var actualPage: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +57,7 @@ class CustomerProductsListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-            viewModel.getCartCount()
+        viewModel.getCartCount()
     }
 
     // Inflate the menu for this fragment
@@ -144,6 +143,8 @@ class CustomerProductsListFragment : Fragment() {
                 }
             }
         }
+
+        updatePageInfo(viewModel.currentPage)
     }
 
     private fun setObservers() {
@@ -153,12 +154,6 @@ class CustomerProductsListFragment : Fragment() {
                 launch {
                     viewModel.productsArray.collect { products ->
                         adapter.updateProducts(products)
-                    }
-                }
-                launch {
-                    viewModel.currentPage.collect { page ->
-                        actualPage = page
-                        updatePageInfo(actualPage)
                     }
                 }
             }
@@ -182,7 +177,8 @@ class CustomerProductsListFragment : Fragment() {
             actualSearchStr = etSearchField.text.toString()
             if (actualSearchStr.isBlank()) {
                 viewModel.getAllProductsPage(0)
-                updatePageInfo(actualPage)
+                viewModel.currentPage = 0
+                updatePageInfo(viewModel.currentPage)
                 return@setOnClickListener
             }
             if (isChecked) {
@@ -198,10 +194,12 @@ class CustomerProductsListFragment : Fragment() {
                     maxPrice,
                     0
                 )
-                updatePageInfo(actualPage)
+                viewModel.currentPage = 0
+                updatePageInfo(viewModel.currentPage)
             } else {
                 viewModel.getProductsBySearch(actualSearchStr, num, 0)
-                updatePageInfo(actualPage)
+                viewModel.currentPage = 0
+                updatePageInfo(viewModel.currentPage)
             }
         }
 
@@ -211,7 +209,7 @@ class CustomerProductsListFragment : Fragment() {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPage()
-                    updatePageInfo(actualPage)
+                    updatePageInfo(viewModel.currentPage)
                 }
                 return@setOnClickListener
             }
@@ -220,29 +218,29 @@ class CustomerProductsListFragment : Fragment() {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPageBySearchWithPrice()
-                    updatePageInfo(actualPage)
+                    updatePageInfo(viewModel.currentPage)
                 }
             } else {
                 if (viewModel.isLastProductsList()) {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPageBySearch()
-                    updatePageInfo(actualPage)
+                    updatePageInfo(viewModel.currentPage)
                 }
             }
         }
         btPrevious.setOnClickListener {
             if (actualSearchStr.isBlank()) {
                 viewModel.loadPreviousPage()
-                updatePageInfo(actualPage)
+                updatePageInfo(viewModel.currentPage)
                 return@setOnClickListener
             }
             if (isChecked) {
                 viewModel.loadPreviousPageBySearchWithPrice()
-                updatePageInfo(actualPage)
+                updatePageInfo(viewModel.currentPage)
             } else {
                 viewModel.loadPreviousPageBySearch()
-                updatePageInfo(actualPage)
+                updatePageInfo(viewModel.currentPage)
             }
         }
     }
@@ -255,6 +253,7 @@ class CustomerProductsListFragment : Fragment() {
             tvPageInfo.text = "з $from по $to"
         }
     }
+
 
     private fun itemClicked(): (Int) -> Unit {
         return { position ->

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentAddEmployeeBinding
 import com.example.registration.global.ToastObj
@@ -35,33 +36,74 @@ class AddEmployeeFragment : Fragment() {
             val email: String = etEmail.text.toString().trim()
             val password: String = etPassword.text.toString().trim()
             val repPassword: String = etRepPassword.text.toString().trim()
-            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
+
+            var isValid = true
+
+            if (name.isBlank()) {
+                etName.error = getString(R.string.name_required)
+                isValid = false
+            } else {
+                etName.error = null
+            }
+
+            if (surname.isBlank()) {
+                etSurname.error = getString(R.string.surname_required)
+                isValid = false
+            } else {
+                etSurname.error = null
+            }
+
+            if (email.isBlank()) {
+                etEmail.error = getString(R.string.email_required)
+                isValid = false
+            } else if (!isValidEmail(email)) {
+                etEmail.error = getString(R.string.invalid_email)
+                isValid = false
+            } else {
+                etEmail.error = null
+            }
+
+            if (password.isBlank()) {
+                etPassword.error = getString(R.string.password_required)
+                isValid = false
+            } else {
+                etPassword.error = null
+            }
+
+            if (repPassword.isBlank()) {
+                etRepPassword.error = getString(R.string.password_required)
+                isValid = false
+            } else if (password != repPassword) {
+                etRepPassword.error = getString(R.string.passwords_do_not_match)
+                isValid = false
+            } else {
+                etRepPassword.error = null
+            }
+
+            if (isValid) {
                 lifecycleScope.launch {
                     viewModel.addEmployee(name, surname, email, password, repPassword)
-                        .collect { result ->
-                            result.onSuccess { userId ->
-                                ToastObj.shortToastMake(
+                        .collect { insertResult ->
+                            insertResult.onSuccess { userId ->
+                                findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                                ToastObj.longToastMake(
                                     getString(R.string.success_reg_message, userId),
                                     context
                                 )
-
-                                etName.text.clear()
-                                etSurname.text.clear()
-                                etEmail.text.clear()
-                                etPassword.text.clear()
-                                etRepPassword.text.clear()
                             }
-                            result.onFailure {
-                                ToastObj.shortToastMake(
+                            insertResult.onFailure {
+                                ToastObj.longToastMake(
                                     getString(R.string.invalid_reg_message),
                                     context
                                 )
                             }
                         }
                 }
-            } else {
-                ToastObj.shortToastMake(getString(R.string.null_check), context)
             }
         }
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

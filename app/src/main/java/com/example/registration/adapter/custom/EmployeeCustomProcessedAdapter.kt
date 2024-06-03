@@ -39,7 +39,7 @@ class EmployeeCustomProcessedAdapter(
             idForCustom.text = customDTOList[position].customId.toString()
             statusForCustom.text = customDTOList[position].status
             departForCustom.text = customDTOList[position].department
-            
+
             buttonSendCustom.setOnClickListener {
                 onSendClick.invoke(customDTOList[position].customId)
             }

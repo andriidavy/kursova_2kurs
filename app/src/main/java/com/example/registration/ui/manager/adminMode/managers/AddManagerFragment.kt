@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentAddManagerBinding
 import com.example.registration.global.ToastObj
@@ -40,31 +41,73 @@ class AddManagerFragment : Fragment() {
             val password: String = etPassword.text.toString().trim()
             val repPassword: String = etRepPassword.text.toString().trim()
 
-            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
-                lifecycleScope.launch {
-                    viewModel.addManager(name, surname, email, password, repPassword).collect { result ->
-                        result.onSuccess { userId ->
-                            ToastObj.longToastMake(
-                                getString(
-                                    R.string.success_reg_message,
-                                    userId
-                                ), context
-                            )
+            var isValid = true
 
-                            etName.text.clear()
-                            etSurname.text.clear()
-                            etEmail.text.clear()
-                            etPassword.text.clear()
-                        }
-                        result.onFailure {
-                            ToastObj.shortToastMake("Менеджер з таким email вже існує!", context)
-                        }
-                    }
-
-                }
+            if (name.isBlank()) {
+                etName.error = getString(R.string.name_required)
+                isValid = false
             } else {
-                ToastObj.shortToastMake("Всі поля мають бути заповнені!", context)
+                etName.error = null
+            }
+
+            if (surname.isBlank()) {
+                etSurname.error = getString(R.string.surname_required)
+                isValid = false
+            } else {
+                etSurname.error = null
+            }
+
+            if (email.isBlank()) {
+                etEmail.error = getString(R.string.email_required)
+                isValid = false
+            } else if (!isValidEmail(email)) {
+                etEmail.error = getString(R.string.invalid_email)
+                isValid = false
+            } else {
+                etEmail.error = null
+            }
+
+            if (password.isBlank()) {
+                etPassword.error = getString(R.string.password_required)
+                isValid = false
+            } else {
+                etPassword.error = null
+            }
+
+            if (repPassword.isBlank()) {
+                etRepPassword.error = getString(R.string.password_required)
+                isValid = false
+            } else if (password != repPassword) {
+                etRepPassword.error = getString(R.string.passwords_do_not_match)
+                isValid = false
+            } else {
+                etRepPassword.error = null
+            }
+
+            if (isValid) {
+                lifecycleScope.launch {
+                    viewModel.addManager(name, surname, email, password, repPassword)
+                        .collect { insertResult ->
+                            insertResult.onSuccess { userId ->
+                                findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                                ToastObj.longToastMake(
+                                    getString(R.string.success_reg_message, userId),
+                                    context
+                                )
+                            }
+                            insertResult.onFailure {
+                                ToastObj.longToastMake(
+                                    getString(R.string.invalid_reg_message),
+                                    context
+                                )
+                            }
+                        }
+                }
             }
         }
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

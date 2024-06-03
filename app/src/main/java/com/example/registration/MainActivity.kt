@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.registrationFragment -> supportActionBar?.title = "Реєстрація нового покупця"
                 R.id.loginFragment -> supportActionBar?.title = "Сторінка авторизації"
                 R.id.customerMainPageFragment -> supportActionBar?.title = "Головна сторінка покупця"
+                R.id.customerProductsListFragment -> supportActionBar?.title = "Асортимент"
                 R.id.customerCartPageFragment -> supportActionBar?.title = "Моя корзина"
                 R.id.customerCustomPageFragment -> supportActionBar?.title = "Мої замовлення"
                 R.id.customerProfilePageFragment -> supportActionBar?.title = "Мій профіль"

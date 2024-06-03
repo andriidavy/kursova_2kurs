@@ -1,9 +1,10 @@
 package com.example.registration.ui.customer.productsList
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.model.product.ProductDTO
 import com.example.registration.database.customer.CustomerRepository
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
+import com.example.registration.model.product.ProductDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -12,15 +13,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.math.max
 
 @HiltViewModel
 class CustomerProductsListViewModel @Inject constructor(
-    private val customerRepository: CustomerRepository
-) : ViewModel() {
+    private val customerRepository: CustomerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
     private val _productsArray = MutableStateFlow<List<ProductDTO>>(emptyList())
     val productsArray: StateFlow<List<ProductDTO>>
         get() = _productsArray
+
+    private val _cartCount = MutableStateFlow(0)
+    val cartCount: StateFlow<Int>
+        get() = _cartCount
 
     private val _minPrice = MutableStateFlow(0.0)
     val minPrice: StateFlow<Double>
@@ -40,17 +44,31 @@ class CustomerProductsListViewModel @Inject constructor(
     private var lastMinPrice = 0.0
     private var lastMaxPrice = 0.0
 
+    private val customerId = getUserId()
+
     init {
         viewModelScope.launch {
             delay(100)
             getMinPrice()
             getMaxPrice()
+            getCartCount()
             getAllProductsPage(0)
         }
     }
 
     fun isLastProductsList(): Boolean {
         return _productsArray.value.size < pageSize
+    }
+
+    fun getCartCount() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = customerRepository.getCartProducts(customerId)
+            withContext(Dispatchers.Main) {
+                result.collect { list ->
+                    _cartCount.value = list.size
+                }
+            }
+        }
     }
 
     fun getAllProductsPage(page: Int) {

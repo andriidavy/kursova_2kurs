@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -54,9 +56,39 @@ class CustomerProductsListFragment : Fragment() {
         setListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+            viewModel.getCartCount()
+    }
+
     // Inflate the menu for this fragment
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_customer_products_list, menu)
+        val menuItem = menu.findItem(R.id.action_cart)
+        val actionView = menuItem.actionView
+
+        val cartBadge = actionView?.findViewById<TextView>(R.id.cart_badge)
+
+        lifecycleScope.launch {
+            viewModel.cartCount.collect { count ->
+                if (count > 0) {
+                    if (cartBadge != null) {
+                        cartBadge.visibility = View.VISIBLE
+                    }
+                    if (cartBadge != null) {
+                        cartBadge.text = count.toString()
+                    }
+                } else {
+                    if (cartBadge != null) {
+                        cartBadge.visibility = View.GONE
+                    }
+                }
+            }
+        }
+
+        actionView?.setOnClickListener {
+            onOptionsItemSelected(menuItem)
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -64,9 +96,10 @@ class CustomerProductsListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_cart -> {
-                    navController.navigate(R.id.action_customerProductsListFragment_to_customerCartPageFragment)
+                navController.navigate(R.id.action_customerProductsListFragment_to_customerCartPageFragment)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -116,6 +149,7 @@ class CustomerProductsListFragment : Fragment() {
     private fun setObservers() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
                 launch {
                     viewModel.productsArray.collect { products ->
                         adapter.updateProducts(products)
@@ -177,6 +211,7 @@ class CustomerProductsListFragment : Fragment() {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPage()
+                    updatePageInfo(actualPage)
                 }
                 return@setOnClickListener
             }
@@ -185,24 +220,29 @@ class CustomerProductsListFragment : Fragment() {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPageBySearchWithPrice()
+                    updatePageInfo(actualPage)
                 }
             } else {
                 if (viewModel.isLastProductsList()) {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPageBySearch()
+                    updatePageInfo(actualPage)
                 }
             }
         }
         btPrevious.setOnClickListener {
             if (actualSearchStr.isBlank()) {
                 viewModel.loadPreviousPage()
+                updatePageInfo(actualPage)
                 return@setOnClickListener
             }
             if (isChecked) {
                 viewModel.loadPreviousPageBySearchWithPrice()
+                updatePageInfo(actualPage)
             } else {
                 viewModel.loadPreviousPageBySearch()
+                updatePageInfo(actualPage)
             }
         }
     }

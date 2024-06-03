@@ -137,5 +137,7 @@
     <string name="prev10">Попередні 10</string>
     <string name="from_to">з 0 по 0</string>
     <string name="next10">Наступні 10</string>
+    <string name="invalid_email">Введений email не валідний!</string>
+    <string name="passwords_do_not_match">Паролі не співпадають!</string>
 
 </resources>

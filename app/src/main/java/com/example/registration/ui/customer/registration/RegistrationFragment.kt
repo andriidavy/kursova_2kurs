@@ -34,25 +34,65 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-
         buttonReg.setOnClickListener {
             val name: String = etName.text.toString().trim()
             val surname: String = etSurname.text.toString().trim()
             val email: String = etEmail.text.toString().trim()
             val password: String = etPassword.text.toString().trim()
             val repPassword: String = etRepPassword.text.toString().trim()
-            if (name.isNotBlank() && surname.isNotBlank() && email.isNotBlank() && password.isNotBlank() && repPassword.isNotBlank()) {
+
+            var isValid = true
+
+            if (name.isBlank()) {
+                etName.error = getString(R.string.name_required)
+                isValid = false
+            } else {
+                etName.error = null
+            }
+
+            if (surname.isBlank()) {
+                etSurname.error = getString(R.string.surname_required)
+                isValid = false
+            } else {
+                etSurname.error = null
+            }
+
+            if (email.isBlank()) {
+                etEmail.error = getString(R.string.email_required)
+                isValid = false
+            } else if (!isValidEmail(email)) {
+                etEmail.error = getString(R.string.invalid_email)
+                isValid = false
+            } else {
+                etEmail.error = null
+            }
+
+            if (password.isBlank()) {
+                etPassword.error = getString(R.string.password_required)
+                isValid = false
+            } else {
+                etPassword.error = null
+            }
+
+            if (repPassword.isBlank()) {
+                etRepPassword.error = getString(R.string.password_required)
+                isValid = false
+            } else if (password != repPassword) {
+                etRepPassword.error = getString(R.string.passwords_do_not_match)
+                isValid = false
+            } else {
+                etRepPassword.error = null
+            }
+
+            if (isValid) {
                 lifecycleScope.launch {
                     viewModel.insertCustomer(name, surname, email, password, repPassword)
                         .collect { insertResult ->
                             insertResult.onSuccess { userId ->
                                 findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
-
                                 ToastObj.longToastMake(
-                                    getString(
-                                        R.string.success_reg_message,
-                                        userId
-                                    ), context
+                                    getString(R.string.success_reg_message, userId),
+                                    context
                                 )
                             }
                             insertResult.onFailure {
@@ -63,14 +103,11 @@ class RegistrationFragment : Fragment() {
                             }
                         }
                 }
-            } else {
-                etName.error = if (name.isBlank()) getString(R.string.name_required) else null
-                etSurname.error =
-                    if (surname.isBlank()) getString(R.string.surname_required) else null
-                etEmail.error = if (email.isBlank()) getString(R.string.email_required) else null
-                etPassword.error =
-                    if (password.isBlank()) getString(R.string.password_required) else null
             }
         }
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

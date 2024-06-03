@@ -120,6 +120,8 @@
             android:id="@+id/btPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="12sp"
             android:text="@string/prev10" />
 
         <TextView
@@ -128,13 +130,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:text="@string/from_to" />
 
         <Button
             android:id="@+id/btNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textSize="12sp"
             android:text="@string/next10" />
 
     </LinearLayout>

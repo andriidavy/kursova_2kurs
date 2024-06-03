@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
         navController = findNavController()
 
         //set Spinner
-        val users = arrayOf("Customer", "Employee", "Manager")
+        val users = arrayOf("Покупець", "Робітник", "Менеджер")
         val spinner = spinnerChooseUserType
         val arrayAdapter =
             activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, users) }

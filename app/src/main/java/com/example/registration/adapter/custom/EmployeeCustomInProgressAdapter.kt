@@ -39,6 +39,8 @@ class EmployeeCustomInProgressAdapter(
         viewHolder.view.apply {
             idForCustom.text = customDTOList[position].customId.toString()
             statusForCustom.text = customDTOList[position].status
+            departForCustom.text = customDTOList[position].department
+
             if (statusForCustom.text == "WAITING_RESPONSE") {
                 buttonCreateReport.visibility = View.GONE
             }

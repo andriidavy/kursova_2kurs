@@ -22,6 +22,11 @@ class ManagerReportsInWaitingViewModel @Inject constructor(
     private val _reportInWaitingArray = MutableStateFlow<List<ReportDTO>>(emptyList())
     val reportInWaitingArray: StateFlow<List<ReportDTO>>
         get() = _reportInWaitingArray
+
+    private val _filteredReportArray = MutableStateFlow<List<ReportDTO>>(emptyList())
+    val filteredReportArray: StateFlow<List<ReportDTO>>
+        get() = _filteredReportArray
+
     private val managerId = getUserId()
 
     init {
@@ -34,8 +39,18 @@ class ManagerReportsInWaitingViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 result.collect {
                     _reportInWaitingArray.value = it
+                    _filteredReportArray.value = it
                 }
             }
+        }
+    }
+
+    fun filterReportsByReportId(query: String) {
+        viewModelScope.launch {
+            val filteredReports = _reportInWaitingArray.value.filter {
+                it.reportId.toString().startsWith(query)
+            }
+            _filteredReportArray.value = filteredReports
         }
     }
 }

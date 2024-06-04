@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -42,16 +43,21 @@ class ManagerReportsInWaitingFragment : Fragment() {
 
     private fun setViews() = with(binding) {
         adapter = ReportAdapter(emptyList(), onItemClick())
-        managerReportsInWaitingRecyclerView.adapter = adapter
-        managerReportsInWaitingRecyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
+
+        etSearch.doOnTextChanged { text, _, _, _ ->
+            viewModel.filterReportsByReportId(text.toString())
+
+        }
     }
 
     private fun setObservers() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.reportInWaitingArray.collect { reports ->
+                viewModel.filteredReportArray.collect { reports ->
                     adapter.updateReports(reports)
                 }
             }

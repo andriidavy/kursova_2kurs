@@ -111,7 +111,7 @@ class CustomerProductsListFragment : Fragment() {
         navController = findNavController()
 
         //set Spinner
-        val types = arrayOf("Звичайний", "Суміжний", "Розширений")
+        val types = arrayOf("Звичайний", "Розширений")
         val spinner = spinnerChooseSearchType
         val arrayAdapter =
             activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, types) }

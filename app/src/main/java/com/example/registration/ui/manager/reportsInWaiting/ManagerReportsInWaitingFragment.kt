@@ -14,16 +14,18 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
+import com.example.registration.adapter.report.ManagerReportAdapter
 import com.example.registration.adapter.report.ReportAdapter
 import com.example.registration.databinding.FragmentManagerReportsInWaitingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ManagerReportsInWaitingFragment : Fragment() {
 
     private lateinit var binding: FragmentManagerReportsInWaitingBinding
-    private lateinit var adapter: ReportAdapter
+    private lateinit var adapter: ManagerReportAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<ManagerReportsInWaitingViewModel>()
 
@@ -39,28 +41,46 @@ class ManagerReportsInWaitingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setViews()
         setObservers()
+        setListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            delay(300)
+            viewModel.getAllInWaitingReports()
+            delay(300)
+            val etSearchLine = binding.etSearch.text.toString()
+            viewModel.filterReportsByReportId(etSearchLine)
+        }
     }
 
     private fun setViews() = with(binding) {
-        adapter = ReportAdapter(emptyList(), onItemClick())
+        adapter = ManagerReportAdapter(emptyList(), onItemClick())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         navController = findNavController()
 
-        etSearch.doOnTextChanged { text, _, _, _ ->
-            viewModel.filterReportsByReportId(text.toString())
-
-        }
+//        etSearch.doOnTextChanged { text, _, _, _ ->
+//            viewModel.filterReportsByReportId(text.toString())
+//        }
     }
 
     private fun setObservers() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.filteredReportArray.collect { reports ->
-                    adapter.updateReports(reports)
+                    adapter.updateReports(reports, viewModel.filteredReportIndexes.value)
                 }
             }
+        }
+    }
+
+    private fun setListeners() = with(binding){
+        buttonSearchProduct.setOnClickListener {
+            val etSearchLine = etSearch.text.toString()
+            viewModel.filterReportsByReportId(etSearchLine)
         }
     }
 

@@ -45,6 +45,16 @@ class AllProductListFragment : Fragment() {
         setListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            delay(300)
+            viewModel.getAllProductsPage(0)
+            viewModel.currentPage = 0
+            updatePageInfo(viewModel.currentPage)
+        }
+    }
+
     private fun setViews() = with(binding) {
         adapter = ProductAdapter(emptyList(), onItemClick())
         allProductListRecyclerView.adapter = adapter

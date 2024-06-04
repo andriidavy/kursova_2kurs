@@ -7,6 +7,7 @@ import com.example.registration.datastore.DatastoreRepo
 import com.example.registration.model.report.ReportDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -27,19 +28,27 @@ class ManagerReportsInWaitingViewModel @Inject constructor(
     val filteredReportArray: StateFlow<List<ReportDTO>>
         get() = _filteredReportArray
 
+    private val _filteredReportIndexes = MutableStateFlow<List<Int>>(emptyList())
+    val filteredReportIndexes: StateFlow<List<Int>>
+        get() = _filteredReportIndexes
+
     private val managerId = getUserId()
 
     init {
         getAllInWaitingReports()
     }
 
-    private fun getAllInWaitingReports() {
+    fun getAllInWaitingReports() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllWaiting(managerId)
             withContext(Dispatchers.Main) {
                 result.collect {
+                    delay(100)
                     _reportInWaitingArray.value = it
+                    delay(100)
                     _filteredReportArray.value = it
+                    delay(100)
+                    _filteredReportIndexes.value = it.indices.toList()
                 }
             }
         }
@@ -50,7 +59,13 @@ class ManagerReportsInWaitingViewModel @Inject constructor(
             val filteredReports = _reportInWaitingArray.value.filter {
                 it.reportId.toString().startsWith(query)
             }
+            val filteredIndexes = _reportInWaitingArray.value
+                .mapIndexedNotNull { index, report ->
+                    if (report.reportId.toString().startsWith(query)) index else null
+                }
+
             _filteredReportArray.value = filteredReports
+            _filteredReportIndexes.value = filteredIndexes
         }
     }
 }

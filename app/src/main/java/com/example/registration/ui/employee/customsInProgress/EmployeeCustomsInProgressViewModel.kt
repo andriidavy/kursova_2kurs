@@ -28,7 +28,7 @@ class EmployeeCustomsInProgressViewModel @Inject constructor(
         getInProgressCustomsForEmployee()
     }
 
-    private fun getInProgressCustomsForEmployee() {
+    fun getInProgressCustomsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = employeeRepository.getProcessingCustomsForEmployee(employeeId)
             withContext(Dispatchers.Main) {

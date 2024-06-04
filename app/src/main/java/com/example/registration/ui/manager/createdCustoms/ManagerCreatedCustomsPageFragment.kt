@@ -17,6 +17,7 @@ import com.example.registration.adapter.custom.ManagerCreatedCustomAdapter
 import com.example.registration.databinding.FragmentManagerCreatedCustomsPageBinding
 import com.example.registration.model.custom.CustomProductDTO
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -38,6 +39,14 @@ class ManagerCreatedCustomsPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViews()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            delay(300)
+            viewModel.getCreatedCustomsForManager()
+        }
     }
 
     private fun setViews() {

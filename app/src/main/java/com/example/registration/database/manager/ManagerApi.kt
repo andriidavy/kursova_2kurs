@@ -46,7 +46,10 @@ interface ManagerApi {
     suspend fun getAllWaiting(@Query("managerId") managerId: Int): List<ReportDTO>
 
     @GET("/manager/custom/get-all")
-    suspend fun getAllCustoms(): List<CustomDTO>
+    suspend fun getAllCustoms(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): List<CustomDTO>
 
     @GET("/manager/employee/profile/get-all")
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
@@ -67,7 +70,10 @@ interface ManagerApi {
     suspend fun getStaff(): List<StaffDTO>
 
     @GET("/manager/product/get-all")
-    suspend fun getAllProducts(): List<ProductDTO>
+    suspend fun getAllProducts(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): List<ProductDTO>
 
     @GET("/manager/search-product-by-id")
     suspend fun searchProductById(@Query("productId") productId: Int): ProductDTO

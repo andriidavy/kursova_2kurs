@@ -17,6 +17,7 @@ import com.example.registration.adapter.custom.EmployeeCustomInProgressAdapter
 import com.example.registration.databinding.FragmentEmployeeCustomInProgressBinding
 import com.example.registration.model.custom.CustomProductDTO
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -39,6 +40,14 @@ class EmployeeCustomsInProgressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setViews()
         setObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            delay(300)
+            viewModel.getInProgressCustomsForEmployee()
+        }
     }
 
     private fun setViews() = with(binding) {

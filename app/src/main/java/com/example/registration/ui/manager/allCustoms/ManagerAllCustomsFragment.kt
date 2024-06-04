@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,7 +20,6 @@ import com.example.registration.global.ToastObj
 import com.example.registration.model.custom.CustomProductDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,7 +29,7 @@ class ManagerAllCustomsFragment : Fragment() {
     private lateinit var adapter: ManagerAllCustomAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<ManagerAllCustomsPageViewModel>()
-    private val searchStr = MutableStateFlow(0)
+    private var searchStr = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,9 +53,19 @@ class ManagerAllCustomsFragment : Fragment() {
 
         navController = findNavController()
         etSearchCustomField.doOnTextChanged { text, _, _, _ ->
-            if (text.toString().isNotBlank()) searchStr.value =
-                text.toString().toInt() else searchStr.value = 0
+            if (text.toString().isNotBlank()) {
+                searchStr = text.toString().toInt()
+                tvPageInfo.visibility = View.GONE
+                btNext.visibility = View.GONE
+                btPrevious.visibility = View.GONE
+            } else {
+                searchStr = 0
+                tvPageInfo.visibility = View.VISIBLE
+                btNext.visibility = View.VISIBLE
+                btPrevious.visibility = View.VISIBLE
+            }
         }
+        updatePageInfo(viewModel.currentPage)
     }
 
     private fun setObservers() {
@@ -72,18 +80,38 @@ class ManagerAllCustomsFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonSearch.setOnClickListener {
-            val searchId: Int = searchStr.value
-            if (searchId <= 0) viewModel.getAllCustomsForManager() else viewModel.searchCustomById(
+            val searchId: Int = searchStr
+            if (searchId <= 0) viewModel.getAllCustomsPage(0) else viewModel.searchCustomById(
                 searchId
             )
-            lifecycleScope.launch {
-                delay(2000)
-                if (viewModel.customAllArray.value.isEmpty()) {
-                    ToastObj.longToastMake(
-                        getString(R.string.custom_not_found), context
-                    )
+            viewModel.currentPage = 0
+            updatePageInfo(viewModel.currentPage)
+        }
+
+        btNext.setOnClickListener {
+            if (searchStr == 0) {
+                if (viewModel.isLastPage()) {
+                    ToastObj.longToastMake("Остання сторінка", context)
+                } else {
+                    viewModel.loadNextPage()
+                    updatePageInfo(viewModel.currentPage)
                 }
             }
+        }
+        btPrevious.setOnClickListener {
+            if (searchStr == 0) {
+                viewModel.loadPreviousPage()
+                updatePageInfo(viewModel.currentPage)
+            }
+        }
+    }
+
+    private fun updatePageInfo(page: Int) = with(binding) {
+        val from = page * 10 + 1
+        lifecycleScope.launch {
+            delay(600)
+            val to = from + viewModel.customAllArray.value.size - 1
+            tvPageInfo.text = "з $from по $to"
         }
     }
 

@@ -28,7 +28,7 @@ class ManagerCreatedCustomsPageViewModel @Inject constructor(
         getCreatedCustomsForManager()
     }
 
-    private fun getCreatedCustomsForManager() {
+    fun getCreatedCustomsForManager() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllCustomsWithoutEmployee(managerId)
             withContext(Dispatchers.Main) {

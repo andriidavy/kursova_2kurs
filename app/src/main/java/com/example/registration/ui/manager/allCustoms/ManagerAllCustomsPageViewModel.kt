@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.database.manager.ManagerRepository
-import com.example.registration.global.ToastObj
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.DEFAULT_CONCURRENCY
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,18 +21,48 @@ class ManagerAllCustomsPageViewModel @Inject constructor(private val managerRepo
     val customAllArray: StateFlow<List<CustomDTO>>
         get() = _customAllArray
 
+    var currentPage = 0
+
+    private val pageSize = 10
+
     init {
-        getAllCustomsForManager()
+        viewModelScope.launch {
+            delay(200)
+            getAllCustomsPage(0)
+        }
     }
 
-    fun getAllCustomsForManager() {
+    fun isLastPage(): Boolean {
+        return _customAllArray.value.size < pageSize
+    }
+
+    fun getAllCustomsPage(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllCustoms()
+            val result = managerRepository.getAllCustoms(page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customAllArray.value = it
                 }
             }
+        }
+    }
+
+    fun loadNextPage() {
+        if (!isLastPage()) {
+            currentPage += 1
+            viewModelScope.launch {
+                delay(100)
+                getAllCustomsPage(currentPage)
+
+            }
+        }
+    }
+
+    fun loadPreviousPage() {
+        if (currentPage > 0) currentPage -= 1 else 0
+        viewModelScope.launch {
+            delay(100)
+            getAllCustomsPage(currentPage)
         }
     }
 

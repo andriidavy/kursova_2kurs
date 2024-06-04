@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.employeeProfilePageFragment -> supportActionBar?.title = "Мій профіль"
                 R.id.customInProgressProductDetailFragment -> supportActionBar?.title = "Деталі замовлення"
                 R.id.customProcessedProductDetailFragment -> supportActionBar?.title = "Деталі замовлення"
+                R.id.creatingReportForCustomFragment -> supportActionBar?.title = "Створення замовлення"
                 
                 R.id.managerMainPageFragment -> supportActionBar?.title = "Головна сторінка менеджера"
                 R.id.managerCreatedCustomsPageFragment -> supportActionBar?.title = "Нові замовлення"

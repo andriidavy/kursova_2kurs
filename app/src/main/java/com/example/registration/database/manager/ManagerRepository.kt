@@ -60,12 +60,12 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun getAllCustoms(): Flow<List<CustomDTO>> = flow {
-        emit(managerApi.getAllCustoms())
+    fun getAllCustoms(page: Int, size: Int): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCustoms(page, size))
     }
 
-    fun getAllProducts(): Flow<List<ProductDTO>> = flow {
-        emit(managerApi.getAllProducts())
+    fun getAllProducts(page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(managerApi.getAllProducts(page, size))
     }
 
     fun searchProductById(productId: Int): Flow<Result<ProductDTO>> = flow {

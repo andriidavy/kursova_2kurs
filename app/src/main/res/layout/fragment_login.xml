@@ -88,7 +88,9 @@
             android:text="Зареєструвати девайс"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textHaveNotRegistration" />
+            app:layout_constraintTop_toBottomOf="@+id/textHaveNotRegistration"
+            android:visibility="invisible"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

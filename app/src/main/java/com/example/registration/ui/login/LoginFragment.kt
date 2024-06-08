@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.backendless.Backendless
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
 import com.example.registration.datastore.DataStoreViewModel

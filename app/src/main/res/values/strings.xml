@@ -102,7 +102,7 @@
     <string name="success_log">Вхід виконано успішно!</string>
     <string name="invalid_log">Невірний логін чи пароль!</string>
     <string name="success_add_to_cart">Товар додано до корзини</string>
-    <string name="error_add_to_cart">Помилка: %1$s</string>
+    <string name="error_add_to_cart">Вказаної кількості товару немає на складі! </string>
     <string name="error_info_product">Помилка інформації про продукт</string>
     <string name="product_removed_form_cart">Товар видалено з корзини</string>
     <string name="cart_cleaned">Корзину очищено</string>

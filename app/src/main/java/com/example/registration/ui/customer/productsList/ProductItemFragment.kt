@@ -62,8 +62,7 @@ class ProductItemFragment : Fragment() {
                     result.onFailure {
                         ToastObj.shortToastMake(
                             getString(
-                                R.string.error_add_to_cart,
-                                it
+                                R.string.error_add_to_cart
                             ), context
                         )
                     }

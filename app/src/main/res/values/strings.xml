@@ -94,7 +94,7 @@
     <string name="product_сatalog">Каталог товарів</string>
     <string name="depart_registration">Додати відділ</string>
     <string name="success_reg_message">Реєстрація пройшла успішно! Ваш ID користувача: %1$s</string>
-    <string name="invalid_reg_message">Помилка реєстрації: %1$s</string>
+    <string name="invalid_reg_message">Користувач з таким логіном вже існує!</string>
     <string name="name_required">Ім\'я обов\'язкове!</string>
     <string name="surname_required">Прізвище обов\'язкове!</string>
     <string name="email_required">Email обов\'язковий!</string>

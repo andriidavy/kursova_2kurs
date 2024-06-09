@@ -70,7 +70,7 @@ class UploadToServerFragment : Fragment() {
             lifecycleScope.launch {
                 viewModel.uploadFile(fileFromDevice, path, fileName).collect { result ->
                     result.onSuccess { finishUrl ->
-                        ToastObj.longToastMake("Файл завантажено: $finishUrl", context)
+                        ToastObj.longToastMake("Файл завантажено", context)
                     }
                     result.onFailure { ToastObj.longToastMake("Файл не завантажено", context) }
                 }

@@ -20,6 +20,7 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
                 Log.e("updateUser", "user: $addedPlace")
                 emit(Result.success(addedPlace))
             } catch (e: Exception) {
+                //логування помилки додавання нової геопозиції користувача
                 loggingRepository.logMessageToBackendless(
                     logLevel = "ERROR",
                     logger = "LocationRepository",
@@ -107,7 +108,7 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
 
     fun getPlacesByDescription(searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
         try {
-            val whereClause = "description %20LIKE%20 '$searchLine'"
+            val whereClause = "description = '$searchLine'"
             val placeItemList = locationApi.getPlacesBySearchLine(whereClause)
             Log.e("getLocations", "locations: $placeItemList")
             emit(Result.success(placeItemList))
@@ -118,7 +119,7 @@ class LocationRepository @Inject constructor(private val locationApi: LocationAp
 
     fun getPlacesByTag(searchLine: String): Flow<Result<List<PlaceItem>>> = flow {
         try {
-            val whereClause = "tags %20LIKE%20 '$searchLine'"
+            val whereClause = "tags = '$searchLine'"
             val placeItemList = locationApi.getPlacesBySearchLine(whereClause)
             Log.e("getLocations", "locations: $placeItemList")
             emit(Result.success(placeItemList))

@@ -101,7 +101,7 @@ class RegistrationFragment : Fragment() {
                         }
                         insertResult.onFailure {
                             ToastObj.longToastMake(
-                                getString(R.string.invalid_reg_message, it.message),
+                                getString(R.string.invalid_reg_message),
                                 context
                             )
                         }

@@ -86,6 +86,7 @@ class FilesRepository @Inject constructor(private val filesApi: FilesApi, privat
                 emit(Result.failure(Exception("File upload failed: ${response.message()}")))
             }
         } catch (e: Exception) {
+            // логування помилки додавання нового файлу на сервер
             loggingRepository.logMessageToBackendless(
                 logLevel = "ERROR",
                 logger = "FilesRepository",

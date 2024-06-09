@@ -42,6 +42,7 @@ class UserRepository @Inject constructor(private val userApi: UserApi, private v
             emit(Result.success(loginResponse))
         } catch (e: Exception) {
             Log.e("UserRepository", "Login failed", e)
+            //логування помилки авторизації на сервері
             loggingRepository.logMessageToBackendless(
                 logLevel = "ERROR",
                 logger = "UserRepository",

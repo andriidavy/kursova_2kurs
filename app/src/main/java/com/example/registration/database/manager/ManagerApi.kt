@@ -98,6 +98,15 @@ interface ManagerApi {
         @Query("description") description: String
     ): Int
 
+    @POST("/manager/update-product")
+    suspend fun updateProduct(
+        @Query("productId") productId: Int,
+        @Query("productName") productName: String,
+        @Query("description") description: String,
+        @Query("quantity") quantity: Int,
+        @Query("price") price: Double,
+    )
+
     @GET("/manager/is-product-exist")
     suspend fun isProductExists(@Query("productName") productName: String): Boolean
 

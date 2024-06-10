@@ -17,6 +17,8 @@ import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentAllProductListBinding
 import com.example.registration.global.ToastObj
+import com.example.registration.model.custom.CustomProductDTO
+import com.example.registration.model.product.ProductDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -128,7 +130,13 @@ class AllProductListFragment : Fragment() {
 
     private fun onItemClick(): (Int) -> Unit {
         return { position ->
-            ToastObj.shortToastMake("Clicked on item $position", context)
+            val bundle = Bundle()
+            val product: ProductDTO = viewModel.productDTOArray.value[position]
+            bundle.putParcelable("updProduct", product)
+            navController.navigate(
+                R.id.action_allProductListFragment_to_updateProductFragment,
+                bundle
+            )
         }
     }
 }

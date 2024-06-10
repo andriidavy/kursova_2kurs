@@ -156,6 +156,23 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
+    fun updateProduct(
+        productId: Int,
+        productName: String,
+        description: String,
+        quantity: Int,
+        price: Double
+    ): Flow<Result<Unit>> = flow {
+        emit(
+            try {
+                val result = managerApi.updateProduct(productId, productName, description, quantity, price)
+                Result.success(result)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
+    }
+
     fun isProductExists(productName: String): Flow<Result<Boolean>> = flow {
         emit(
             try {

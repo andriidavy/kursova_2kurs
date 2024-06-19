@@ -17,7 +17,6 @@ import com.example.registration.R
 import com.example.registration.adapter.ProductAdapter
 import com.example.registration.databinding.FragmentAllProductListBinding
 import com.example.registration.global.ToastObj
-import com.example.registration.model.custom.CustomProductDTO
 import com.example.registration.model.product.ProductDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -30,7 +29,7 @@ class AllProductListFragment : Fragment() {
     private lateinit var adapter: ProductAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<AllProductListViewModel>()
-    private var searchStr = 0
+    private var searchStr = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,15 +64,9 @@ class AllProductListFragment : Fragment() {
         navController = findNavController()
         etSearchProductField.doOnTextChanged { text, _, _, _ ->
             if (text.toString().isNotBlank()) {
-                searchStr = text.toString().toInt()
-                tvPageInfo.visibility = View.GONE
-                btNext.visibility = View.GONE
-                btPrevious.visibility = View.GONE
+                searchStr = text.toString()
             } else {
-                searchStr = 0
-                tvPageInfo.visibility = View.VISIBLE
-                btNext.visibility = View.VISIBLE
-                btPrevious.visibility = View.VISIBLE
+                searchStr = ""
             }
         }
         updatePageInfo(viewModel.currentPage)
@@ -95,25 +88,35 @@ class AllProductListFragment : Fragment() {
         }
 
         buttonSearchProduct.setOnClickListener {
-            val searchId: Int = searchStr
-            if (searchId <= 0) viewModel.getAllProductsPage(0) else viewModel.searchProductById(searchId)
+            val searchStr: String = searchStr
+            if (searchStr.isBlank()) viewModel.getAllProductsPage(0) else viewModel.getProductsBySearch(searchStr, 0, 0)
             viewModel.currentPage = 0
             updatePageInfo(viewModel.currentPage)
         }
 
         btNext.setOnClickListener {
-            if (searchStr == 0) {
+            if (searchStr.isBlank()) {
                 if (viewModel.isLastPage()) {
                     ToastObj.longToastMake("Остання сторінка", context)
                 } else {
                     viewModel.loadNextPage()
                     updatePageInfo(viewModel.currentPage)
                 }
+            } else {
+                if (viewModel.isLastPage()) {
+                    ToastObj.longToastMake("Остання сторінка", context)
+                } else {
+                    viewModel.loadNextPageBySearch()
+                    updatePageInfo(viewModel.currentPage)
+                }
             }
         }
         btPrevious.setOnClickListener {
-            if (searchStr == 0) {
+            if (searchStr.isBlank()) {
                 viewModel.loadPreviousPage()
+                updatePageInfo(viewModel.currentPage)
+            }else {
+                viewModel.loadPreviousPageBySearch()
                 updatePageInfo(viewModel.currentPage)
             }
         }

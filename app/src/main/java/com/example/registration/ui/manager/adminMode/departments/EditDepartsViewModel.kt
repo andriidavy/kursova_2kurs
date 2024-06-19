@@ -25,7 +25,7 @@ class EditDepartsViewModel @Inject constructor(private val managerRepository: Ma
         getAllDepartments()
     }
 
-    private fun getAllDepartments() {
+    fun getAllDepartments() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllDepartments()
             withContext(Dispatchers.Main) {

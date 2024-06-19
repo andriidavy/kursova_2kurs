@@ -29,8 +29,8 @@ class EditManagerViewModel @Inject constructor(private val managerRepository: Ma
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllManagersProfileDTO()
             withContext(Dispatchers.Main) {
-                result.collect {
-                    _managerAllArray.value = it
+                result.collect {resultList->
+                    _managerAllArray.value = resultList.sortedByDescending { it.id }
                 }
             }
         }

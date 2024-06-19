@@ -43,6 +43,11 @@ class EditDepartsFragment : Fragment() {
         setObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllDepartments()
+    }
+
     private fun setViews() = with(binding){
         adapter = AllDepartmentAdapter(emptyList(), onItemClick())
         editDepartsRecyclerView.adapter = adapter

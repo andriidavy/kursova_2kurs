@@ -41,6 +41,11 @@ class ManageEmployeeFragment : Fragment() {
         setListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllEmployeesProfile()
+    }
+
     private fun setViews() = with(binding) {
         adapter = ManageEmployeeAdapter(emptyList(), onRemoveEmployeeClick())
         manageEmployeesListRecyclerView.adapter = adapter

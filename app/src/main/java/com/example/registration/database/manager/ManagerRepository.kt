@@ -68,16 +68,16 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.getAllProducts(page, size))
     }
 
-    fun searchProductById(productId: Int): Flow<Result<ProductDTO>> = flow {
-        emit(
-            try {
-                val result = managerApi.searchProductById(productId)
-                Result.success(result)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        )
-    }
+//    fun searchProductByName(productName: String): Flow<Result<ProductDTO>> = flow {
+//        emit(
+//            try {
+//                val result = managerApi.searchProductByName(productName)
+//                Result.success(result)
+//            } catch (e: Exception) {
+//                Result.failure(e)
+//            }
+//        )
+//    }
 
     fun getAllCustomsWithoutEmployee(managerId: Int): Flow<List<CustomDTO>> = flow {
         emit(managerApi.getAllCustomsWithoutEmployee(managerId))

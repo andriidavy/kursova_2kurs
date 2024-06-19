@@ -64,6 +64,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.managerDepartDetailFragment -> supportActionBar?.title = "Призначені відділи"
                 R.id.editDepartsFragment -> supportActionBar?.title = "Список відділів доставки"
                 R.id.addDepartFragment -> supportActionBar?.title = "Додати відділ доставки"
+
+                R.id.updateProductFragment -> supportActionBar?.title ="Оновити продукт"
+                R.id.staffFragment -> supportActionBar?.title = "Список персоналу"
             }
         }
     }

@@ -42,6 +42,11 @@ class EditManagerFragment : Fragment() {
         setObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllManagersProfileDTO()
+    }
+
     private fun setViews() = with(binding) {
         adapter = ManageManagerAdapter(emptyList(), onItemClick(), onRemoveManagerClick())
         editManagerRecyclerView.adapter = adapter

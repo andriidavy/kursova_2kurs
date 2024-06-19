@@ -24,12 +24,12 @@ class ManageEmployeeViewModel @Inject constructor(private val managerRepository:
         getAllEmployeesProfile()
     }
 
-    private fun getAllEmployeesProfile() {
+    fun getAllEmployeesProfile() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllEmployeesProfile()
             withContext(Dispatchers.Main) {
-                result.collect {
-                    _employeeDTOArray.value = it
+                result.collect { resultList ->
+                    _employeeDTOArray.value = resultList.sortedByDescending { it.id }
                 }
             }
         }

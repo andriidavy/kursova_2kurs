@@ -75,8 +75,8 @@ interface ManagerApi {
         @Query("size") size: Int
     ): List<ProductDTO>
 
-    @GET("/manager/search-product-by-id")
-    suspend fun searchProductById(@Query("productId") productId: Int): ProductDTO
+    @GET("/manager/search-product-by-name")
+    suspend fun searchProductByName(@Query("productName") productName: String): List<ProductDTO>
 
     @POST("/manager/custom/assign-employee")
     suspend fun assignEmployeeToCustom(
@@ -122,7 +122,7 @@ interface ManagerApi {
     @GET("/manager/department/get-departments-non-for-manager")
     suspend fun getDepartmentsWithoutManager(@Query("managerId") managerId: Int): List<DepartmentDTO>
 
-    @POST("/manager/department/remove-department-from-manager")
+    @DELETE("/manager/department/remove-department-from-manager")
     suspend fun removeDepartmentFromManager(
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int

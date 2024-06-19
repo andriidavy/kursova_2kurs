@@ -85,7 +85,11 @@ class AddEmployeeFragment : Fragment() {
                     viewModel.addEmployee(name, surname, email, password, repPassword)
                         .collect { insertResult ->
                             insertResult.onSuccess { userId ->
-                                findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                                etName.text.clear()
+                                etSurname.text.clear()
+                                etEmail.text.clear()
+                                etPassword.text.clear()
+                                etRepPassword.text.clear()
                                 ToastObj.longToastMake(
                                     getString(R.string.success_reg_message, userId),
                                     context

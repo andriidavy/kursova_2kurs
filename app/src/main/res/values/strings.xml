@@ -99,7 +99,7 @@
     <string name="surname_required">Прізвище обов\'язкове!</string>
     <string name="email_required">Email обов\'язковий!</string>
     <string name="password_required">Пароль обов\'язковий!</string>
-    <string name="success_log">Вхід виконано успішно!</string>
+    <string name="success_log">Вхід виконано успішно! ID: %1$d</string>
     <string name="invalid_log">Невірний логін чи пароль!</string>
     <string name="success_add_to_cart">Товар додано до корзини</string>
     <string name="error_add_to_cart">Вказаної кількості товару немає на складі! </string>

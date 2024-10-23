@@ -86,15 +86,15 @@ class LoginFragment : Fragment() {
                 viewModel.login(email, password, num)?.collect { loginResult ->
                     loginResult.onSuccess { userId ->
                         when (num) {
-                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+//                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+//                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
+//                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
                         }
 
                         // установка ID користувача при вході
                         dataStoreViewModel.storeUserId(userId)
 
-                        ToastObj.longToastMake(getString(R.string.success_log), context)
+                        ToastObj.longToastMake(getString(R.string.success_log, userId), context)
                     }
                     loginResult.onFailure {
                         ToastObj.shortToastMake(getString(R.string.invalid_log), context)

@@ -11,12 +11,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.registration.R
 import com.example.registration.databinding.FragmentLoginBinding
 import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.global.JwtDecode
 import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Date
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -84,14 +90,25 @@ class LoginFragment : Fragment() {
 
             lifecycleScope.launch {
                 viewModel.login(email, password, num)?.collect { loginResult ->
-                    loginResult.onSuccess { userId ->
+                    loginResult.onSuccess { token ->
                         when (num) {
-//                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
-//                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
-//                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
+                            0 -> navController.navigate(R.id.action_loginFragment_to_customerMainPageFragment)
+                            1 -> navController.navigate(R.id.action_loginFragment_to_employeeMainPageFragment)
+                            2 -> navController.navigate(R.id.action_loginFragment_to_managerMainPageFragment)
                         }
 
-                        // установка ID користувача при вході
+                        // установка токена користувача при вході
+
+                        val loginResponse = JwtDecode.decodeJwtToken(token)
+                        val userId = loginResponse.id
+                        val tokenExpiration = loginResponse.expiration
+
+                        dataStoreViewModel.startTokenExpirationTimer(tokenExpiration) {
+                            dataStoreViewModel.clearAllPreferences()
+                            navController.navigate(R.id.action_global_loginFragment)
+                        }
+
+                        dataStoreViewModel.storeUserToken(token)
                         dataStoreViewModel.storeUserId(userId)
 
                         ToastObj.longToastMake(getString(R.string.success_log, userId), context)

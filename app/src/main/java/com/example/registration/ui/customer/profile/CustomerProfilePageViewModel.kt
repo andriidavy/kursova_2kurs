@@ -22,6 +22,7 @@ class CustomerProfilePageViewModel @Inject constructor(
     val customer: StateFlow<CustomerProfileDTO>
         get() = _customer
     private val customerId = getUserId()
+    private val token = getUserToken()
 
     init {
         getCustomerProfileById()
@@ -29,7 +30,7 @@ class CustomerProfilePageViewModel @Inject constructor(
 
     private fun getCustomerProfileById() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getCustomerProfileById(customerId)
+            val result = customerRepository.getCustomerProfileById("Bearer $token", customerId)
 
             withContext(Dispatchers.Main) {
                 _customer.value = result

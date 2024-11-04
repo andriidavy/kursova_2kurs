@@ -1,5 +1,6 @@
 package com.example.registration.database.customer
 
+import com.example.registration.global.LoginResponse
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
@@ -32,7 +33,7 @@ class CustomerRepository @Inject constructor(
         )
     }
 
-    fun loginCustomer(email: String, password: String): Flow<Result<Int>> = flow {
+    fun loginCustomer(email: String, password: String): Flow<Result<String>> = flow {
         emit(
             try {
                 val customer = customerApi.loginCustomer(email, password)
@@ -43,8 +44,8 @@ class CustomerRepository @Inject constructor(
         )
     }
 
-    suspend fun getCustomerProfileById(customerId: Int): CustomerProfileDTO {
-        return customerApi.getCustomerProfileById(customerId)
+    suspend fun getCustomerProfileById(token: String, customerId: Int): CustomerProfileDTO {
+        return customerApi.getCustomerProfileById(token, customerId)
     }
 
     fun getProducts(): Flow<List<ProductDTO>> = flow {

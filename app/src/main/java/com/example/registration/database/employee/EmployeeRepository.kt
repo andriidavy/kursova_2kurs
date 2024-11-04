@@ -1,5 +1,6 @@
 package com.example.registration.database.employee
 
+import com.example.registration.global.LoginResponse
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.EmployeeProfileDTO
@@ -9,7 +10,7 @@ import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeApi) {
 
-    fun loginEmployee(email: String, password: String): Flow<Result<Int>> = flow {
+    fun loginEmployee(email: String, password: String): Flow<Result<String>> = flow {
         emit(
             try {
                 val employee = employeeApi.loginEmployee(email, password)

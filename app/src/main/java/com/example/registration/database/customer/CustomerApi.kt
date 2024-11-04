@@ -1,5 +1,6 @@
 package com.example.registration.database.customer
 
+import com.example.registration.global.LoginResponse
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
@@ -7,6 +8,7 @@ import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.users.CustomerProfileDTO
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -15,10 +17,13 @@ interface CustomerApi {
     suspend fun loginCustomer(
         @Query("email") email: String,
         @Query("password") password: String
-    ): Int
+    ): String
 
     @GET("/customer/get-customer-by-id")
-    suspend fun getCustomerProfileById(@Query("customerId") customerId: Int): CustomerProfileDTO
+    suspend fun getCustomerProfileById(
+        @Header("Authorization") token: String,
+        @Query("customerId") customerId: Int
+    ): CustomerProfileDTO
 
     @POST("/customer/insert")
     suspend fun insertCustomer(

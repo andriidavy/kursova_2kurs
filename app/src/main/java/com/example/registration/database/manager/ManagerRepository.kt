@@ -1,5 +1,6 @@
 package com.example.registration.database.manager
 
+import com.example.registration.global.LoginResponse
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.ProductDTO
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
 
-    fun loginManager(email: String, password: String): Flow<Result<Int>> = flow {
+    fun loginManager(email: String, password: String): Flow<Result<String>> = flow {
         emit(
             try {
                 val manager = managerApi.loginManager(email, password)

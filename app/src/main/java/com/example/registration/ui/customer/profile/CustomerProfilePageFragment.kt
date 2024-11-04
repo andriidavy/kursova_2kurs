@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.registration.R
 import com.example.registration.databinding.FragmentCustomerProfileBinding
+import com.example.registration.datastore.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,7 @@ class CustomerProfilePageFragment : Fragment() {
     private lateinit var binding: FragmentCustomerProfileBinding
     private lateinit var navController: NavController
     private val viewModel by viewModels<CustomerProfilePageViewModel>()
+    private val dataStoreViewModel by viewModels<DataStoreViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,9 @@ class CustomerProfilePageFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         buttonLogout.setOnClickListener {
+            lifecycleScope.launch {
+                dataStoreViewModel.clearAllPreferences()
+            }
             navController.navigate(R.id.action_customerProfilePageFragment_to_loginFragment)
         }
     }

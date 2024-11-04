@@ -403,4 +403,7 @@
             android:id="@+id/action_updateProductFragment_to_allProductListFragment"
             app:destination="@id/allProductListFragment" />
     </fragment>
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment" />
 </navigation>

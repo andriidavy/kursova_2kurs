@@ -1,5 +1,6 @@
 package com.example.registration.database.manager
 
+import com.example.registration.global.LoginResponse
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.ProductDTO
@@ -17,7 +18,7 @@ interface ManagerApi {
     suspend fun loginManager(
         @Query("email") email: String,
         @Query("password") password: String
-    ): Int
+    ): String
 
     @POST("/manager/insert")
     suspend fun insertManager(

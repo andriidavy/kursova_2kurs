@@ -14,13 +14,13 @@ interface ManagerApi {
     @GET("/manager/profile/get-all")
     suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
 
-    @GET("/manager/login")
+    @GET("/auth/manager/login")
     suspend fun loginManager(
         @Query("email") email: String,
         @Query("password") password: String
     ): String
 
-    @POST("/manager/insert")
+    @POST("/auth/manager/insert")
     suspend fun insertManager(
         @Query("name") name: String,
         @Query("surname") surname: String,
@@ -30,11 +30,11 @@ interface ManagerApi {
     ): Int
 
 
-    @DELETE("/manager/delete-manager-by-id")
+    @DELETE("/auth/manager/delete-manager-by-id")
     suspend fun deleteManagerById(@Query("managerId") managerId: Int)
 
 
-    @GET("/manager/get-manager-by-id")
+    @GET("/auth/manager/get-manager-by-id")
     suspend fun getManagerProfile(@Query("managerId") managerId: Int): ManagerProfileDTO
 
     @GET("/manager/get-customs-without-employee")
@@ -55,7 +55,7 @@ interface ManagerApi {
     @GET("/manager/employee/profile/get-all")
     suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
 
-    @POST("/manager/employee/insert")
+    @POST("/auth/manager/employee/insert")
     suspend fun insertEmployee(
         @Query("name") name: String,
         @Query("surname") surname: String,
@@ -64,10 +64,10 @@ interface ManagerApi {
         @Query("repPassword") repPassword: String
     ): Int
 
-    @DELETE("/manager/employee/delete-employee-by-id")
+    @DELETE("/auth/manager/employee/delete-employee-by-id")
     suspend fun deleteEmployeeById(@Query("employeeId") employeeId: Int)
 
-    @GET("/manager/get-staff")
+    @GET("/auth/manager/get-staff")
     suspend fun getStaff(): List<StaffDTO>
 
     @GET("/manager/product/get-all")

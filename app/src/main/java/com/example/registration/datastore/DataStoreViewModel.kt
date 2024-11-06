@@ -40,7 +40,7 @@ open class DataStoreViewModel @Inject constructor(
 
     // Запуск таймера для моніторингу закінчення токена
     fun startTokenExpirationTimer(expirationDate: Date, onTokenExpired: () -> Unit) {
-        val currentTime = System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)
+        val currentTime = System.currentTimeMillis()
         val expirationTime = expirationDate.time
         val remainingTime = expirationTime - currentTime
 

@@ -13,19 +13,19 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface CustomerApi {
-    @GET("/customer/login")
+    @GET("/auth/customer/login")
     suspend fun loginCustomer(
         @Query("email") email: String,
         @Query("password") password: String
     ): String
 
-    @GET("/customer/get-customer-by-id")
+    @GET("/auth/customer/get-customer-by-id")
     suspend fun getCustomerProfileById(
         @Header("Authorization") token: String,
         @Query("customerId") customerId: Int
     ): CustomerProfileDTO
 
-    @POST("/customer/insert")
+    @POST("/auth/customer/insert")
     suspend fun insertCustomer(
         @Query("name") name: String,
         @Query("surname") surname: String,

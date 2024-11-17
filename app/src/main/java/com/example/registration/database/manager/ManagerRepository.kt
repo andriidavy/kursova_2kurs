@@ -25,15 +25,16 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun getAllManagersProfileDTO(): Flow<List<ManagerProfileDTO>> = flow {
-        emit(managerApi.getAllManagersProfileDTO())
+    fun getAllManagersProfileDTO(token: String): Flow<List<ManagerProfileDTO>> = flow {
+        emit(managerApi.getAllManagersProfileDTO(token))
     }
 
-    fun getManagerProfile(managerId: Int): Flow<ManagerProfileDTO> = flow {
-        emit(managerApi.getManagerProfile(managerId))
+    fun getManagerProfile(token: String, managerId: Int): Flow<ManagerProfileDTO> = flow {
+        emit(managerApi.getManagerProfile(token, managerId))
     }
 
     fun insertManager(
+        token: String,
         name: String,
         surname: String,
         email: String,
@@ -42,7 +43,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
     ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val manager = managerApi.insertManager(name, surname, email, password, repPassword)
+                val manager = managerApi.insertManager(token, name, surname, email, password, repPassword)
                 Result.success(manager)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -50,10 +51,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun deleteManagerById(managerId: Int): Flow<Result<Unit>> = flow {
+    fun deleteManagerById(token: String, managerId: Int): Flow<Result<Unit>> = flow {
         emit(
             try {
-                val result = managerApi.deleteManagerById(managerId)
+                val result = managerApi.deleteManagerById(token, managerId)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -61,24 +62,17 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun getAllCustoms(page: Int, size: Int): Flow<List<CustomDTO>> = flow {
-        emit(managerApi.getAllCustoms(page, size))
+    fun getAllCustoms(token: String, page: Int, size: Int): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCustoms(token, page, size))
     }
 
-    fun getAllProducts(page: Int, size: Int): Flow<List<ProductDTO>> = flow {
-        emit(managerApi.getAllProducts(page, size))
+    fun getAllProducts(token: String, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(managerApi.getAllProducts(token, page, size))
     }
 
-//    fun searchProductByName(productName: String): Flow<Result<ProductDTO>> = flow {
-//        emit(
-//            try {
-//                val result = managerApi.searchProductByName(productName)
-//                Result.success(result)
-//            } catch (e: Exception) {
-//                Result.failure(e)
-//            }
-//        )
-//    }
+    fun searchProduct(token: String, searchStr: String, chooseType: Int, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(managerApi.searchProduct(token, searchStr, chooseType, page, size))
+    }
 
     fun getAllCustomsWithoutEmployee(managerId: Int): Flow<List<CustomDTO>> = flow {
         emit(managerApi.getAllCustomsWithoutEmployee(managerId))
@@ -99,11 +93,12 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.getAllWaiting(managerId))
     }
 
-    fun getAllEmployeesProfile(): Flow<List<EmployeeProfileDTO>> = flow {
-        emit(managerApi.getAllEmployeesProfile())
+    fun getAllEmployeesProfile(token: String): Flow<List<EmployeeProfileDTO>> = flow {
+        emit(managerApi.getAllEmployeesProfile(token))
     }
 
     fun insertEmployee(
+        token: String,
         name: String,
         surname: String,
         email: String,
@@ -113,7 +108,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(
             try {
                 val employee =
-                    managerApi.insertEmployee(name, surname, email, password, repPassword)
+                    managerApi.insertEmployee(token, name, surname, email, password, repPassword)
                 Result.success(employee)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -121,16 +116,16 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    suspend fun deleteEmployeeById(employeeId: Int) {
-        return managerApi.deleteEmployeeById(employeeId)
+    suspend fun deleteEmployeeById(token: String, employeeId: Int) {
+        return managerApi.deleteEmployeeById(token, employeeId)
     }
 
     suspend fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
         managerApi.assignEmployeeToCustom(customId, employeeId)
     }
 
-    fun getStaff(): Flow<List<StaffDTO>> = flow {
-        emit(managerApi.getStaff())
+    fun getStaff(token: String): Flow<List<StaffDTO>> = flow {
+        emit(managerApi.getStaff(token))
     }
 
     suspend fun setReportAccepted(reportId: Int) {
@@ -142,6 +137,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
     }
 
     fun provideProduct(
+        token: String,
         productName: String,
         quantity: Int,
         price: Double,
@@ -149,7 +145,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
     ): Flow<Result<Int>> = flow {
         emit(
             try {
-                val result = managerApi.provideProduct(productName, quantity, price, description)
+                val result = managerApi.provideProduct(token, productName, quantity, price, description)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -158,6 +154,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
     }
 
     fun updateProduct(
+        token: String,
         productId: Int,
         productName: String,
         description: String,
@@ -166,7 +163,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
     ): Flow<Result<Unit>> = flow {
         emit(
             try {
-                val result = managerApi.updateProduct(productId, productName, description, quantity, price)
+                val result = managerApi.updateProduct(token, productId, productName, description, quantity, price)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -174,10 +171,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun isProductExists(productName: String): Flow<Result<Boolean>> = flow {
+    fun isProductExists(token: String, productName: String): Flow<Result<Boolean>> = flow {
         emit(
             try {
-                val result = managerApi.isProductExists(productName)
+                val result = managerApi.isProductExists(token, productName)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -185,10 +182,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun saveDepartment(departmentName: String): Flow<Result<Unit>> = flow {
+    fun saveDepartment(token: String, departmentName: String): Flow<Result<Unit>> = flow {
         emit(
             try {
-                val result = managerApi.saveDepartment(departmentName)
+                val result = managerApi.saveDepartment(token, departmentName)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -196,23 +193,23 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun getAllDepartments(): Flow<List<DepartmentDTO>> = flow {
-        emit(managerApi.getAllDepartments())
+    fun getAllDepartments(token: String): Flow<List<DepartmentDTO>> = flow {
+        emit(managerApi.getAllDepartments(token))
     }
 
-    fun getAllDepartmentsForManager(managerId: Int): Flow<List<DepartmentDTO>> = flow {
-        emit(managerApi.getAllDepartmentsForManager(managerId))
+    fun getAllDepartmentsForManager(token: String, managerId: Int): Flow<List<DepartmentDTO>> = flow {
+        emit(managerApi.getAllDepartmentsForManager(token, managerId))
     }
 
-    fun getDepartmentsWithoutManager(managerId: Int): Flow<List<DepartmentDTO>> = flow {
-        emit(managerApi.getDepartmentsWithoutManager(managerId))
+    fun getDepartmentsWithoutManager(token: String, managerId: Int): Flow<List<DepartmentDTO>> = flow {
+        emit(managerApi.getDepartmentsWithoutManager(token, managerId))
     }
 
-    fun assignDepartmentToManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> =
+    fun assignDepartmentToManager(token: String, managerId: Int, departmentId: Int): Flow<Result<Unit>> =
         flow {
             emit(
                 try {
-                    val result = managerApi.assignDepartmentToManager(managerId, departmentId)
+                    val result = managerApi.assignDepartmentToManager(token, managerId, departmentId)
                     Result.success(result)
                 } catch (e: Exception) {
                     Result.failure(e)
@@ -220,10 +217,10 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
             )
         }
 
-    fun removeDepartmentFromManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> = flow {
+    fun removeDepartmentFromManager(token: String, managerId: Int, departmentId: Int): Flow<Result<Unit>> = flow {
         emit(
             try {
-                val result = managerApi.removeDepartmentFromManager(managerId, departmentId)
+                val result = managerApi.removeDepartmentFromManager(token, managerId, departmentId)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)

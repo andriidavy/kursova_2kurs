@@ -3,6 +3,8 @@ package com.example.registration.ui.manager.personManagement
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
 import com.example.registration.model.users.EmployeeProfileDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +15,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ManageEmployeeViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
-    ViewModel() {
+class ManageEmployeeViewModel @Inject constructor(
+    private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
+
+    private val token = "Bearer ${getUserToken()}"
 
     private val _employeeDTOArray = MutableStateFlow<List<EmployeeProfileDTO>>(emptyList())
     val employeeDTOArray: StateFlow<List<EmployeeProfileDTO>>
@@ -26,7 +31,7 @@ class ManageEmployeeViewModel @Inject constructor(private val managerRepository:
 
     fun getAllEmployeesProfile() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllEmployeesProfile()
+            val result = managerRepository.getAllEmployeesProfile(token)
             withContext(Dispatchers.Main) {
                 result.collect { resultList ->
                     _employeeDTOArray.value = resultList.sortedByDescending { it.id }
@@ -37,7 +42,7 @@ class ManageEmployeeViewModel @Inject constructor(private val managerRepository:
 
     fun deleteEmployeeById(employeeId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            managerRepository.deleteEmployeeById(employeeId)
+            managerRepository.deleteEmployeeById(token, employeeId)
             withContext(Dispatchers.Main) {
                 getAllEmployeesProfile()
             }

@@ -18,6 +18,7 @@ class ManagerProfilePageViewModel @Inject constructor(
     private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
 ) : DataStoreViewModel(datastoreRepository) {
 
+    private val token = "Bearer ${getUserToken()}"
     private val _managerProfileDTO = MutableStateFlow(ManagerProfileDTO())
     val managerProfileDTO: StateFlow<ManagerProfileDTO>
         get() = _managerProfileDTO
@@ -29,7 +30,7 @@ class ManagerProfilePageViewModel @Inject constructor(
 
     private fun getManagerProfileById() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getManagerProfile(managerId)
+            val result = managerRepository.getManagerProfile(token, managerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _managerProfileDTO.value = it

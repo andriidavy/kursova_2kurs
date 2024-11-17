@@ -16,9 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllDepartViewModel @Inject constructor(
-    private val managerRepository: ManagerRepository,
-    datastoreRepository: DatastoreRepo
+    private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
 ) : DataStoreViewModel(datastoreRepository) {
+
+    private val token = "Bearer ${getUserToken()}"
 
     private val _departNonForManagerArray = MutableStateFlow<List<DepartmentDTO>>(emptyList())
     val departNonForManagerArray: StateFlow<List<DepartmentDTO>>
@@ -27,7 +28,7 @@ class AllDepartViewModel @Inject constructor(
 
     fun getDepartmentsWithoutManager(managerId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getDepartmentsWithoutManager(managerId)
+            val result = managerRepository.getDepartmentsWithoutManager(token, managerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _departNonForManagerArray.value = it
@@ -37,6 +38,6 @@ class AllDepartViewModel @Inject constructor(
     }
 
     fun assignDepartmentToManager(managerId: Int, departmentId: Int): Flow<Result<Unit>> {
-        return managerRepository.assignDepartmentToManager(managerId, departmentId)
+        return managerRepository.assignDepartmentToManager(token, managerId, departmentId)
     }
 }

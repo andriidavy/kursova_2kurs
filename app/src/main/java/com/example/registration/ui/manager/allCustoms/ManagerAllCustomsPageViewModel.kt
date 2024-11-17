@@ -1,9 +1,10 @@
 package com.example.registration.ui.manager.allCustoms
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.model.custom.CustomDTO
 import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
+import com.example.registration.model.custom.CustomDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -14,9 +15,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ManagerAllCustomsPageViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
-    ViewModel() {
+class ManagerAllCustomsPageViewModel @Inject constructor(
+    private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
 
+    private val token = "Bearer ${getUserToken()}"
     private val _customAllArray = MutableStateFlow<List<CustomDTO>>(emptyList())
     val customAllArray: StateFlow<List<CustomDTO>>
         get() = _customAllArray
@@ -38,7 +41,7 @@ class ManagerAllCustomsPageViewModel @Inject constructor(private val managerRepo
 
     fun getAllCustomsPage(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllCustoms(page, pageSize)
+            val result = managerRepository.getAllCustoms(token, page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customAllArray.value = it

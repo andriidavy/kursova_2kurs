@@ -1,8 +1,9 @@
 package com.example.registration.ui.manager.adminMode.managers
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
 import com.example.registration.model.users.ManagerProfileDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,9 +15,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class EditManagerViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
-    ViewModel() {
+class EditManagerViewModel @Inject constructor(
+    private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
 
+    private val token = "Bearer ${getUserToken()}"
     private val _managerAllArray = MutableStateFlow<List<ManagerProfileDTO>>(emptyList())
     val managerAllArray: StateFlow<List<ManagerProfileDTO>>
         get() = _managerAllArray
@@ -27,9 +30,9 @@ class EditManagerViewModel @Inject constructor(private val managerRepository: Ma
 
     fun getAllManagersProfileDTO() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllManagersProfileDTO()
+            val result = managerRepository.getAllManagersProfileDTO(token)
             withContext(Dispatchers.Main) {
-                result.collect {resultList->
+                result.collect { resultList ->
                     _managerAllArray.value = resultList.sortedByDescending { it.id }
                 }
             }
@@ -37,6 +40,6 @@ class EditManagerViewModel @Inject constructor(private val managerRepository: Ma
     }
 
     fun deleteManagerById(managerId: Int): Flow<Result<Unit>> {
-        return managerRepository.deleteManagerById(managerId)
+        return managerRepository.deleteManagerById(token, managerId)
     }
 }

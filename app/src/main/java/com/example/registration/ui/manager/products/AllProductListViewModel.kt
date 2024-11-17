@@ -1,10 +1,11 @@
 package com.example.registration.ui.manager.products
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.database.customer.CustomerRepository
-import com.example.registration.model.product.ProductDTO
 import com.example.registration.database.manager.ManagerRepository
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
+import com.example.registration.model.product.ProductDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,10 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AllProductListViewModel @Inject constructor(
     private val managerRepository: ManagerRepository,
-    private val customerRepository: CustomerRepository
-) :
-    ViewModel() {
+    private val customerRepository: CustomerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
 
+    private val token = "Bearer ${getUserToken()}"
     private val _productDTOArray = MutableStateFlow<List<ProductDTO>>(emptyList())
     val productDTOArray: StateFlow<List<ProductDTO>>
         get() = _productDTOArray
@@ -44,7 +45,7 @@ class AllProductListViewModel @Inject constructor(
 
     fun getAllProductsPage(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllProducts(page, pageSize)
+            val result = managerRepository.getAllProducts(token, page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _productDTOArray.value = it
@@ -90,27 +91,10 @@ class AllProductListViewModel @Inject constructor(
         }
     }
 
-
-//    fun searchProductByName(productName: String, page: Int) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val result = customerRepository.searchProduct(productName, 0, page, 10)
-//            withContext(Dispatchers.Main) {
-//                result.collect { result ->
-//                    result.onSuccess { product ->
-//                        _productDTOArray.value = listOf(product)
-//                    }
-//                    result.onFailure {
-//                        _productDTOArray.value = emptyList()
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     fun getProductsBySearch(searchStr: String, chooseType: Int, page: Int) {
         lastSearchStr = searchStr
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.searchProduct(searchStr, chooseType, page, pageSize)
+            val result = managerRepository.searchProduct(token, searchStr, chooseType, page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect {pageResult->
                     _productDTOArray.value = pageResult

@@ -1,9 +1,9 @@
 package com.example.registration.ui.manager.adminMode.staff
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.registration.database.manager.ManagerRepository
-import com.example.registration.model.department.DepartmentDTO
+import com.example.registration.datastore.DataStoreViewModel
+import com.example.registration.datastore.DatastoreRepo
 import com.example.registration.model.users.StaffDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +14,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class StaffViewModel @Inject constructor(private val managerRepository: ManagerRepository) :
-    ViewModel() {
+class StaffViewModel @Inject constructor(
+    private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
+) : DataStoreViewModel(datastoreRepository) {
+
+    private val token = "Bearer ${getUserToken()}"
 
     private val _staffArray = MutableStateFlow<List<StaffDTO>>(emptyList())
     val staffArray: StateFlow<List<StaffDTO>>
@@ -27,7 +30,7 @@ class StaffViewModel @Inject constructor(private val managerRepository: ManagerR
 
     private fun getStaff() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getStaff()
+            val result = managerRepository.getStaff(token)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _staffArray.value = it

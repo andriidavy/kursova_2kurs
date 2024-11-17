@@ -11,8 +11,8 @@ import com.example.registration.model.users.StaffDTO
 import retrofit2.http.*
 
 interface ManagerApi {
-    @GET("/manager/profile/get-all")
-    suspend fun getAllManagersProfileDTO(): List<ManagerProfileDTO>
+    @GET("/auth/manager/profile/get-all")
+    suspend fun getAllManagersProfileDTO(@Header("Authorization") token: String): List<ManagerProfileDTO>
 
     @GET("/auth/manager/login")
     suspend fun loginManager(
@@ -22,6 +22,7 @@ interface ManagerApi {
 
     @POST("/auth/manager/insert")
     suspend fun insertManager(
+        @Header("Authorization") token: String,
         @Query("name") name: String,
         @Query("surname") surname: String,
         @Query("email") email: String,
@@ -31,11 +32,17 @@ interface ManagerApi {
 
 
     @DELETE("/auth/manager/delete-manager-by-id")
-    suspend fun deleteManagerById(@Query("managerId") managerId: Int)
+    suspend fun deleteManagerById(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int
+    )
 
 
     @GET("/auth/manager/get-manager-by-id")
-    suspend fun getManagerProfile(@Query("managerId") managerId: Int): ManagerProfileDTO
+    suspend fun getManagerProfile(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int
+    ): ManagerProfileDTO
 
     @GET("/manager/get-customs-without-employee")
     suspend fun getAllCustomsWithoutEmployee(@Query("managerId") managerId: Int): List<CustomDTO>
@@ -48,15 +55,18 @@ interface ManagerApi {
 
     @GET("/manager/custom/get-all")
     suspend fun getAllCustoms(
+        @Header("Authorization") token: String,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): List<CustomDTO>
 
-    @GET("/manager/employee/profile/get-all")
-    suspend fun getAllEmployeesProfile(): List<EmployeeProfileDTO>
+
+    @GET("/auth/manager/employee/profile/get-all")
+    suspend fun getAllEmployeesProfile(@Header("Authorization") token: String): List<EmployeeProfileDTO>
 
     @POST("/auth/manager/employee/insert")
     suspend fun insertEmployee(
+        @Header("Authorization") token: String,
         @Query("name") name: String,
         @Query("surname") surname: String,
         @Query("email") email: String,
@@ -65,19 +75,35 @@ interface ManagerApi {
     ): Int
 
     @DELETE("/auth/manager/employee/delete-employee-by-id")
-    suspend fun deleteEmployeeById(@Query("employeeId") employeeId: Int)
+    suspend fun deleteEmployeeById(
+        @Header("Authorization") token: String,
+        @Query("employeeId") employeeId: Int
+    )
 
     @GET("/auth/manager/get-staff")
-    suspend fun getStaff(): List<StaffDTO>
+    suspend fun getStaff(@Header("Authorization") token: String): List<StaffDTO>
 
-    @GET("/manager/product/get-all")
+    @GET("/warehouse/manager/product/get-all")
     suspend fun getAllProducts(
+        @Header("Authorization") token: String,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): List<ProductDTO>
 
-    @GET("/manager/search-product-by-name")
-    suspend fun searchProductByName(@Query("productName") productName: String): List<ProductDTO>
+    @GET("/warehouse/manager/product/search")
+    suspend fun searchProduct(
+        @Header("Authorization") token: String,
+        @Query("searchStr") searchStr: String,
+        @Query("chooseType") chooseType: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): List<ProductDTO>
+
+    @GET("/warehouse/manager/search-product-by-name")
+    suspend fun searchProductByName(
+        @Header("Authorization") token: String,
+        @Query("productName") productName: String
+    ): List<ProductDTO>
 
     @POST("/manager/custom/assign-employee")
     suspend fun assignEmployeeToCustom(
@@ -91,16 +117,18 @@ interface ManagerApi {
     @POST("/manager/custom/report/reject")
     suspend fun setReportRejected(@Query("reportId") reportId: Int)
 
-    @POST("/manager/provide-product")
+    @POST("/warehouse/manager/provide-product")
     suspend fun provideProduct(
+        @Header("Authorization") token: String,
         @Query("productName") productName: String,
         @Query("quantity") quantity: Int,
         @Query("price") price: Double,
         @Query("description") description: String
     ): Int
 
-    @POST("/manager/update-product")
+    @POST("/warehouse/manager/update-product")
     suspend fun updateProduct(
+        @Header("Authorization") token: String,
         @Query("productId") productId: Int,
         @Query("productName") productName: String,
         @Query("description") description: String,
@@ -108,29 +136,43 @@ interface ManagerApi {
         @Query("price") price: Double,
     )
 
-    @GET("/manager/is-product-exist")
-    suspend fun isProductExists(@Query("productName") productName: String): Boolean
+    @GET("/warehouse/manager/is-product-exist")
+    suspend fun isProductExists(
+        @Header("Authorization") token: String,
+        @Query("productName") productName: String
+    ): Boolean
 
-    @POST("/manager/department/save")
-    suspend fun saveDepartment(@Query("departmentName") departmentName: String)
+    @POST("/warehouse/manager/department/save")
+    suspend fun saveDepartment(
+        @Header("Authorization") token: String,
+        @Query("departmentName") departmentName: String
+    )
 
-    @GET("/manager/department/get-all")
-    suspend fun getAllDepartments(): List<DepartmentDTO>
+    @GET("/warehouse/manager/department/get-all")
+    suspend fun getAllDepartments(@Header("Authorization") token: String): List<DepartmentDTO>
 
-    @GET("/manager/department/get-departments-for-manager")
-    suspend fun getAllDepartmentsForManager(@Query("managerId") managerId: Int): List<DepartmentDTO>
+    @GET("/warehouse/manager/department/get-departments-for-manager")
+    suspend fun getAllDepartmentsForManager(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int
+    ): List<DepartmentDTO>
 
-    @GET("/manager/department/get-departments-non-for-manager")
-    suspend fun getDepartmentsWithoutManager(@Query("managerId") managerId: Int): List<DepartmentDTO>
+    @GET("/warehouse/manager/department/get-departments-non-for-manager")
+    suspend fun getDepartmentsWithoutManager(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int
+    ): List<DepartmentDTO>
 
-    @DELETE("/manager/department/remove-department-from-manager")
+    @DELETE("/warehouse/manager/department/remove-department-from-manager")
     suspend fun removeDepartmentFromManager(
+        @Header("Authorization") token: String,
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int
     )
 
-    @POST("/manager/department/assign-department-to-manager")
+    @POST("/warehouse/manager/department/assign-department-to-manager")
     suspend fun assignDepartmentToManager(
+        @Header("Authorization") token: String,
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int
     )

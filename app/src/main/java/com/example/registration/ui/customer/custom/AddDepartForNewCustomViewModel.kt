@@ -24,6 +24,7 @@ class AddDepartForNewCustomViewModel @Inject constructor(
     val departDTOArray: StateFlow<List<DepartmentDTO>>
         get() = _departDTOArray
     private val customerId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
         init {
             getAllDepartments()
@@ -31,7 +32,7 @@ class AddDepartForNewCustomViewModel @Inject constructor(
 
     private fun getAllDepartments() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getAllDepartments()
+            val result = customerRepository.getAllDepartments(token)
             withContext(Dispatchers.Main) {
                 _departDTOArray.value = result
             }
@@ -39,6 +40,6 @@ class AddDepartForNewCustomViewModel @Inject constructor(
     }
 
     fun createCustom(departmentId: Int): Flow<Result<Int>> {
-        return customerRepository.createCustom(customerId, departmentId);
+        return customerRepository.createCustom(token, customerId, departmentId);
     }
 }

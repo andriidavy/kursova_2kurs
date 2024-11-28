@@ -23,6 +23,7 @@ class EmployeeReportsAcceptedViewModel @Inject constructor(
     val reportAcceptedArray: LiveData<List<ReportDTO>>
         get() = _reportAcceptedArray
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getAcceptedReportsForEmployee()
@@ -30,7 +31,7 @@ class EmployeeReportsAcceptedViewModel @Inject constructor(
 
     private fun getAcceptedReportsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getAllAcceptedReportsForEmployee(employeeId)
+            val result = employeeRepository.getAllAcceptedReportsForEmployee(token, employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _reportAcceptedArray.value = it

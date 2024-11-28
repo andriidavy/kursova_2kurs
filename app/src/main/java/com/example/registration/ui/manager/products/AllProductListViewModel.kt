@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllProductListViewModel @Inject constructor(
-    private val managerRepository: ManagerRepository,
-    private val customerRepository: CustomerRepository, datastoreRepository: DatastoreRepo
+    private val managerRepository: ManagerRepository, datastoreRepository: DatastoreRepo
 ) : DataStoreViewModel(datastoreRepository) {
 
     private val token = "Bearer ${getUserToken()}"
@@ -94,9 +93,10 @@ class AllProductListViewModel @Inject constructor(
     fun getProductsBySearch(searchStr: String, chooseType: Int, page: Int) {
         lastSearchStr = searchStr
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.searchProduct(token, searchStr, chooseType, page, pageSize)
+            val result =
+                managerRepository.searchProduct(token, searchStr, chooseType, page, pageSize)
             withContext(Dispatchers.Main) {
-                result.collect {pageResult->
+                result.collect { pageResult ->
                     _productDTOArray.value = pageResult
                 }
             }

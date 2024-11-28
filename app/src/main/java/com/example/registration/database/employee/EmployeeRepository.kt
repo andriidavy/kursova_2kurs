@@ -21,38 +21,39 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         )
     }
 
-    fun getEmployeeProfile(employeeId: Int): Flow<EmployeeProfileDTO> = flow {
-        emit(employeeApi.getEmployeeProfile(employeeId))
+    fun getEmployeeProfile(token: String, employeeId: Int): Flow<EmployeeProfileDTO> = flow {
+        emit(employeeApi.getEmployeeProfile(token, employeeId))
     }
 
-    fun getProcessingCustomsForEmployee(employeeId: Int): Flow<List<CustomDTO>> = flow {
-        emit(employeeApi.getProcessingCustomsForEmployee(employeeId))
+    fun getProcessingCustomsForEmployee(token: String, employeeId: Int): Flow<List<CustomDTO>> = flow {
+        emit(employeeApi.getProcessingCustomsForEmployee(token, employeeId))
     }
 
-    fun getProcessedCustomsForEmployee(employeeId: Int): Flow<List<CustomDTO>> = flow {
-        emit(employeeApi.getProcessedCustomsForEmployee(employeeId))
+    fun getProcessedCustomsForEmployee(token: String, employeeId: Int): Flow<List<CustomDTO>> = flow {
+        emit(employeeApi.getProcessedCustomsForEmployee(token, employeeId))
     }
 
-    fun getAllAcceptedReportsForEmployee(employeeId: Int): Flow<List<ReportDTO>> = flow {
-        emit(employeeApi.getAllAcceptedReportsForEmployee(employeeId))
+    fun getAllAcceptedReportsForEmployee(token: String, employeeId: Int): Flow<List<ReportDTO>> = flow {
+        emit(employeeApi.getAllAcceptedReportsForEmployee(token, employeeId))
     }
 
-    fun getAllWaitingReportsForEmployee(employeeId: Int): Flow<List<ReportDTO>> = flow {
-        emit(employeeApi.getAllWaitingReportsForEmployee(employeeId))
+    fun getAllWaitingReportsForEmployee(token: String, employeeId: Int): Flow<List<ReportDTO>> = flow {
+        emit(employeeApi.getAllWaitingReportsForEmployee(token, employeeId))
     }
 
-    fun getAllRejectedReportsForEmployee(employeeId: Int): Flow<List<ReportDTO>> = flow {
-        emit(employeeApi.getAllRejectedReportsForEmployee(employeeId))
+    fun getAllRejectedReportsForEmployee(token: String, employeeId: Int): Flow<List<ReportDTO>> = flow {
+        emit(employeeApi.getAllRejectedReportsForEmployee(token, employeeId))
     }
 
     fun createReport(
+        token: String,
         employeeId: Int,
         customId: Int,
         reportText: String
     ): Flow<Result<Unit>> = flow {
         emit(
             try {
-                val result = employeeApi.createReport(employeeId, customId, reportText)
+                val result = employeeApi.createReport(token, employeeId, customId, reportText)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -60,7 +61,7 @@ class EmployeeRepository @Inject constructor(private val employeeApi: EmployeeAp
         )
     }
 
-    suspend fun setCustomSent(customId: Int) {
-        return employeeApi.setCustomSent(customId)
+    suspend fun setCustomSent(token: String, customId: Int) {
+        return employeeApi.setCustomSent(token, customId)
     }
 }

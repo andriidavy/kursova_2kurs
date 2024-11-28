@@ -1,6 +1,5 @@
 package com.example.registration.database.manager
 
-import com.example.registration.global.LoginResponse
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
 import com.example.registration.model.product.ProductDTO
@@ -44,16 +43,25 @@ interface ManagerApi {
         @Query("managerId") managerId: Int
     ): ManagerProfileDTO
 
-    @GET("/manager/get-customs-without-employee")
-    suspend fun getAllCustomsWithoutEmployee(@Query("managerId") managerId: Int): List<CustomDTO>
+    @GET("/order-processing/manager/get-customs-without-employee")
+    suspend fun getAllCustomsWithoutEmployee(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int
+    ): List<CustomDTO>
 
-    @GET("/manager/search-custom-by-id")
-    suspend fun searchCustomById(@Query("customId") customId: Int): CustomDTO
+    @GET("/order-processing/manager/search-custom-by-id")
+    suspend fun searchCustomById(
+        @Header("Authorization") token: String,
+        @Query("customId") customId: Int
+    ): CustomDTO
 
-    @GET("/manager/custom/report/get-waiting")
-    suspend fun getAllWaiting(@Query("managerId") managerId: Int): List<ReportDTO>
+    @GET("/order-processing/manager/custom/report/get-waiting")
+    suspend fun getAllWaiting(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int
+    ): List<ReportDTO>
 
-    @GET("/manager/custom/get-all")
+    @GET("/order-processing/manager/custom/get-all")
     suspend fun getAllCustoms(
         @Header("Authorization") token: String,
         @Query("page") page: Int,
@@ -105,17 +113,24 @@ interface ManagerApi {
         @Query("productName") productName: String
     ): List<ProductDTO>
 
-    @POST("/manager/custom/assign-employee")
+    @POST("/order-processing/manager/custom/assign-employee")
     suspend fun assignEmployeeToCustom(
+        @Header("Authorization") token: String,
         @Query("customId") customId: Int,
         @Query("employeeId") employeeId: Int
     )
 
-    @POST("/manager/custom/report/accept")
-    suspend fun setReportAccepted(@Query("reportId") reportId: Int)
+    @POST("/order-processing/manager/custom/report/accept")
+    suspend fun setReportAccepted(
+        @Header("Authorization") token: String,
+        @Query("reportId") reportId: Int
+    )
 
-    @POST("/manager/custom/report/reject")
-    suspend fun setReportRejected(@Query("reportId") reportId: Int)
+    @POST("/order-processing/manager/custom/report/reject")
+    suspend fun setReportRejected(
+        @Header("Authorization") token: String,
+        @Query("reportId") reportId: Int
+    )
 
     @POST("/warehouse/manager/provide-product")
     suspend fun provideProduct(

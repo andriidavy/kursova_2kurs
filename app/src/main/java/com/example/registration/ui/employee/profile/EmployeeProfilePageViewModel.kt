@@ -23,6 +23,7 @@ class EmployeeProfilePageViewModel @Inject constructor(
     val employeeProfileDTO: StateFlow<EmployeeProfileDTO>
         get() = _employeeProfileDTO
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getEmployeeProfileById()
@@ -30,7 +31,7 @@ class EmployeeProfilePageViewModel @Inject constructor(
 
     private fun getEmployeeProfileById() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getEmployeeProfile(employeeId)
+            val result = employeeRepository.getEmployeeProfile(token, employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _employeeProfileDTO.value = it

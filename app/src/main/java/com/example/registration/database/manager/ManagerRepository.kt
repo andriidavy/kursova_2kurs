@@ -74,14 +74,14 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.searchProduct(token, searchStr, chooseType, page, size))
     }
 
-    fun getAllCustomsWithoutEmployee(managerId: Int): Flow<List<CustomDTO>> = flow {
-        emit(managerApi.getAllCustomsWithoutEmployee(managerId))
+    fun getAllCustomsWithoutEmployee(token: String, managerId: Int): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCustomsWithoutEmployee(token, managerId))
     }
 
-    fun searchCustomById(customId: Int): Flow<Result<CustomDTO>> = flow {
+    fun searchCustomById(token: String, customId: Int): Flow<Result<CustomDTO>> = flow {
         emit(
             try {
-                val result = managerApi.searchCustomById(customId)
+                val result = managerApi.searchCustomById(token, customId)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -89,8 +89,8 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun getAllWaiting(managerId: Int): Flow<List<ReportDTO>> = flow {
-        emit(managerApi.getAllWaiting(managerId))
+    fun getAllWaiting(token: String, managerId: Int): Flow<List<ReportDTO>> = flow {
+        emit(managerApi.getAllWaiting(token, managerId))
     }
 
     fun getAllEmployeesProfile(token: String): Flow<List<EmployeeProfileDTO>> = flow {
@@ -120,20 +120,20 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         return managerApi.deleteEmployeeById(token, employeeId)
     }
 
-    suspend fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
-        managerApi.assignEmployeeToCustom(customId, employeeId)
+    suspend fun assignEmployeeToCustom(token: String, customId: Int, employeeId: Int) {
+        managerApi.assignEmployeeToCustom(token, customId, employeeId)
     }
 
     fun getStaff(token: String): Flow<List<StaffDTO>> = flow {
         emit(managerApi.getStaff(token))
     }
 
-    suspend fun setReportAccepted(reportId: Int) {
-        return managerApi.setReportAccepted(reportId)
+    suspend fun setReportAccepted(token: String, reportId: Int) {
+        return managerApi.setReportAccepted(token, reportId)
     }
 
-    suspend fun setReportRejected(reportId: Int) {
-        return managerApi.setReportRejected(reportId)
+    suspend fun setReportRejected(token: String, reportId: Int) {
+        return managerApi.setReportRejected(token, reportId)
     }
 
     fun provideProduct(

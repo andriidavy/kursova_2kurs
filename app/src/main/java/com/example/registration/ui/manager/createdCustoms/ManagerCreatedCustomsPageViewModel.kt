@@ -23,6 +23,7 @@ class ManagerCreatedCustomsPageViewModel @Inject constructor(
     val customCreatedArray: StateFlow<List<CustomDTO>>
         get() = _customCreatedArray
     private val managerId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getCreatedCustomsForManager()
@@ -30,7 +31,7 @@ class ManagerCreatedCustomsPageViewModel @Inject constructor(
 
     fun getCreatedCustomsForManager() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllCustomsWithoutEmployee(managerId)
+            val result = managerRepository.getAllCustomsWithoutEmployee(token, managerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customCreatedArray.value = it

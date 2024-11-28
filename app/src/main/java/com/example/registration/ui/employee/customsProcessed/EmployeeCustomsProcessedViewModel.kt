@@ -23,6 +23,7 @@ class EmployeeCustomsProcessedViewModel @Inject constructor(
     val customProcessedArray: StateFlow<List<CustomDTO>>
         get() = _customProcessedArray
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getProcessedCustomsForEmployee()
@@ -30,7 +31,7 @@ class EmployeeCustomsProcessedViewModel @Inject constructor(
 
     private fun getProcessedCustomsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getProcessedCustomsForEmployee(employeeId)
+            val result = employeeRepository.getProcessedCustomsForEmployee(token, employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customProcessedArray.value = it
@@ -41,7 +42,7 @@ class EmployeeCustomsProcessedViewModel @Inject constructor(
 
         fun setCustomSent(customId: Int) {
             viewModelScope.launch(Dispatchers.IO) {
-                employeeRepository.setCustomSent(customId)
+                employeeRepository.setCustomSent(token, customId)
                 getProcessedCustomsForEmployee()
             }
         }

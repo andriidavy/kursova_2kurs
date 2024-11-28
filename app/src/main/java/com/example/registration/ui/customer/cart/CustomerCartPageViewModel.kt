@@ -24,6 +24,7 @@ class CustomerCartPageViewModel @Inject constructor(
     val cartProductsArrayDTO: StateFlow<List<CartProductDTO>>
         get() = _cartProductsArrayDTO
     private val customerId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getAllCartProducts()
@@ -31,7 +32,7 @@ class CustomerCartPageViewModel @Inject constructor(
 
     private fun getAllCartProducts() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getCartProducts(customerId)
+            val result = customerRepository.getCartProducts(token, customerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _cartProductsArrayDTO.value = it
@@ -42,7 +43,7 @@ class CustomerCartPageViewModel @Inject constructor(
 
     fun removeProductFromCart(productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            customerRepository.removeProductFromCart(customerId, productId)
+            customerRepository.removeProductFromCart(token, customerId, productId)
             withContext(Dispatchers.Main) {
                 getAllCartProducts()
             }
@@ -51,7 +52,7 @@ class CustomerCartPageViewModel @Inject constructor(
 
     fun clearCart() {
         viewModelScope.launch(Dispatchers.IO) {
-            customerRepository.clearCart(customerId)
+            customerRepository.clearCart(token, customerId)
             withContext(Dispatchers.Main) {
                 getAllCartProducts()
             }

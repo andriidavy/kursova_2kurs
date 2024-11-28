@@ -48,19 +48,16 @@ class CustomerRepository @Inject constructor(
         return customerApi.getCustomerProfileById(token, customerId)
     }
 
-    fun getProducts(): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.getProductsAll())
+    fun getProductsPage(token: String, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.getProductsAllPage(token, page, size))
     }
 
-    fun getProductsPage(page: Int, size: Int): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.getProductsAllPage(page, size))
-    }
-
-    fun searchProduct(searchStr: String, chooseType: Int, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.searchProduct(searchStr, chooseType, page, size))
+    fun searchProduct(token: String, searchStr: String, chooseType: Int, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+        emit(customerApi.searchProduct(token, searchStr, chooseType, page, size))
     }
 
     fun searchProductWithPriceRange(
+        token: String,
         searchStr: String,
         chooseType: Int,
         minPrice: Double,
@@ -68,30 +65,30 @@ class CustomerRepository @Inject constructor(
         page: Int,
         size: Int
     ): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.searchProductWithPriceRange(searchStr, chooseType, minPrice, maxPrice, page, size))
+        emit(customerApi.searchProductWithPriceRange(token, searchStr, chooseType, minPrice, maxPrice, page, size))
     }
 
-    fun getMinProductPrice(): Flow<Double> = flow {
-        emit(customerApi.getMinProductPrice())
+    fun getMinProductPrice(token: String): Flow<Double> = flow {
+        emit(customerApi.getMinProductPrice(token))
     }
 
-    fun getMaxProductPrice(): Flow<Double> = flow {
-        emit(customerApi.getMaxProductPrice())
+    fun getMaxProductPrice(token: String): Flow<Double> = flow {
+        emit(customerApi.getMaxProductPrice(token))
     }
 
-    fun getCartProducts(customerId: Int): Flow<List<CartProductDTO>> = flow {
-        emit(customerApi.getCartProducts(customerId))
+    fun getCartProducts(token: String, customerId: Int): Flow<List<CartProductDTO>> = flow {
+        emit(customerApi.getCartProducts(token, customerId))
     }
 
-    fun getCustomsForCustomer(customerId: Int): Flow<List<CustomDTO>> = flow {
-        emit(customerApi.getCustomsForCustomer(customerId))
+    fun getCustomsForCustomer(token: String, customerId: Int): Flow<List<CustomDTO>> = flow {
+        emit(customerApi.getCustomsForCustomer(token, customerId))
     }
 
-    fun addProductToCart(customerId: Int, productId: Int, quantity: Int): Flow<Result<Unit>> =
+    fun addProductToCart(token: String, customerId: Int, productId: Int, quantity: Int): Flow<Result<Unit>> =
         flow {
             emit(
                 try {
-                    customerApi.addProductToCart(customerId, productId, quantity)
+                    customerApi.addProductToCart(token, customerId, productId, quantity)
                     Result.success(Unit)
                 } catch (e: Exception) {
                     Result.failure(e)
@@ -100,10 +97,10 @@ class CustomerRepository @Inject constructor(
         }
 
 
-    fun createCustom(customerId: Int, departmentId: Int): Flow<Result<Int>> = flow {
+    fun createCustom(token: String, customerId: Int, departmentId: Int): Flow<Result<Int>> = flow {
         emit(
             try {
-                val result: Int = customerApi.createCustom(customerId, departmentId)
+                val result: Int = customerApi.createCustom(token, customerId, departmentId)
                 Result.success(result)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -111,16 +108,16 @@ class CustomerRepository @Inject constructor(
         )
     }
 
-    suspend fun removeProductFromCart(customerId: Int, productId: Int) {
-        return customerApi.removeProductFromCart(customerId, productId)
+    suspend fun removeProductFromCart(token: String, customerId: Int, productId: Int) {
+        return customerApi.removeProductFromCart(token, customerId, productId)
     }
 
-    suspend fun clearCart(customerId: Int) {
-        return customerApi.clearCart(customerId)
+    suspend fun clearCart(token: String, customerId: Int) {
+        return customerApi.clearCart(token, customerId)
     }
 
-    suspend fun getAllDepartments(): List<DepartmentDTO> {
-        return customerApi.getAllDepartments()
+    suspend fun getAllDepartments(token: String): List<DepartmentDTO> {
+        return customerApi.getAllDepartments(token)
     }
 }
 

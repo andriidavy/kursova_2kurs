@@ -1,11 +1,10 @@
 package com.example.registration.ui.manager.createdCustoms
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.registration.model.users.EmployeeProfileDTO
 import com.example.registration.database.manager.ManagerRepository
 import com.example.registration.datastore.DataStoreViewModel
 import com.example.registration.datastore.DatastoreRepo
+import com.example.registration.model.users.EmployeeProfileDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +40,7 @@ class EmployeesListForAssigneeToCustomViewModel @Inject constructor(private val 
 
     fun assignEmployeeToCustom(customId: Int, employeeId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            managerRepository.assignEmployeeToCustom(customId, employeeId)
+            managerRepository.assignEmployeeToCustom(token, customId, employeeId)
         }
     }
 }

@@ -22,6 +22,7 @@ class EmployeeReportsInWaitingViewModel @Inject constructor(
     val reportInWaitingArray: LiveData<List<ReportDTO>>
         get() = _reportInWaitingArray
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getInWaitingReportsForEmployee()
@@ -29,7 +30,7 @@ class EmployeeReportsInWaitingViewModel @Inject constructor(
 
     private fun getInWaitingReportsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getAllWaitingReportsForEmployee(employeeId)
+            val result = employeeRepository.getAllWaitingReportsForEmployee(token, employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _reportInWaitingArray.value = it

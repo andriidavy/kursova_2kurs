@@ -23,6 +23,7 @@ class EmployeeCustomsInProgressViewModel @Inject constructor(
     val customInProgressArray: StateFlow<List<CustomDTO>>
         get() = _customInProgressArray
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getInProgressCustomsForEmployee()
@@ -30,7 +31,7 @@ class EmployeeCustomsInProgressViewModel @Inject constructor(
 
     fun getInProgressCustomsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getProcessingCustomsForEmployee(employeeId)
+            val result = employeeRepository.getProcessingCustomsForEmployee(token, employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customInProgressArray.value = it

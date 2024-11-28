@@ -44,6 +44,7 @@ class CustomerProductsListViewModel @Inject constructor(
     private var lastMaxPrice = 0.0
 
     private val customerId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         viewModelScope.launch {
@@ -62,7 +63,7 @@ class CustomerProductsListViewModel @Inject constructor(
 
     fun getCartCount() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getCartProducts(customerId)
+            val result = customerRepository.getCartProducts(token, customerId)
             withContext(Dispatchers.Main) {
                 result.collect { list ->
                     _cartCount.value = list.size
@@ -73,7 +74,7 @@ class CustomerProductsListViewModel @Inject constructor(
 
     fun getAllProductsPage(page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getProductsPage(page, pageSize)
+            val result = customerRepository.getProductsPage(token, page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect { pageResult ->
                     _productsArray.value = pageResult
@@ -105,7 +106,7 @@ class CustomerProductsListViewModel @Inject constructor(
         lastSearchStr = searchStr
         lastChooseType = chooseType
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.searchProduct(searchStr, chooseType, page, pageSize)
+            val result = customerRepository.searchProduct(token, searchStr, chooseType, page, pageSize)
             withContext(Dispatchers.Main) {
                 result.collect {pageResult->
                     _productsArray.value = pageResult
@@ -145,6 +146,7 @@ class CustomerProductsListViewModel @Inject constructor(
         lastMaxPrice = maxPrice
         viewModelScope.launch(Dispatchers.IO) {
             val result = customerRepository.searchProductWithPriceRange(
+                token,
                 searchStr,
                 chooseType,
                 minPrice,
@@ -189,7 +191,7 @@ class CustomerProductsListViewModel @Inject constructor(
 
     private fun getMinPrice() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getMinProductPrice()
+            val result = customerRepository.getMinProductPrice(token)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _minPrice.value = it
@@ -200,7 +202,7 @@ class CustomerProductsListViewModel @Inject constructor(
 
     private fun getMaxPrice() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getMaxProductPrice()
+            val result = customerRepository.getMaxProductPrice(token)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _maxPrice.value = it

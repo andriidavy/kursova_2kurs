@@ -71,7 +71,7 @@ class ManagerAllCustomsPageViewModel @Inject constructor(
 
     fun searchCustomById(customId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.searchCustomById(customId)
+            val result = managerRepository.searchCustomById(token, customId)
             withContext(Dispatchers.Main) {
                 result.collect { result ->
                     result.onSuccess { custom ->

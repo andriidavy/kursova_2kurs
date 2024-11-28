@@ -14,11 +14,12 @@ class CreatingReportForCustomViewModel @Inject constructor(
 ) : DataStoreViewModel(datastoreRepository) {
 
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     fun createReport(
         customId: Int,
         reportText: String
     ): Flow<Result<Unit>> {
-        return employeeRepository.createReport(employeeId, customId, reportText)
+        return employeeRepository.createReport(token, employeeId, customId, reportText)
     }
 }

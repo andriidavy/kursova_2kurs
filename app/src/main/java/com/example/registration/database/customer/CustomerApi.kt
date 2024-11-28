@@ -34,25 +34,26 @@ interface CustomerApi {
         @Query("repPassword") repPassword: String
     ): Int
 
-    @GET("/customer/product/get-all")
-    suspend fun getProductsAll(): List<ProductDTO>
 
-    @GET("/customer/product/get-page")
+    @GET("/store/customer/product/get-page")
     suspend fun getProductsAllPage(
+        @Header("Authorization") token: String,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): List<ProductDTO>
 
-    @GET("/customer/product/search")
+    @GET("/store/customer/product/search")
     suspend fun searchProduct(
+        @Header("Authorization") token: String,
         @Query("searchStr") searchStr: String,
         @Query("chooseType") chooseType: Int,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): List<ProductDTO>
 
-    @GET("/customer/product/search-with-price-range")
+    @GET("/store/customer/product/search-with-price-range")
     suspend fun searchProductWithPriceRange(
+        @Header("Authorization") token: String,
         @Query("searchStr") searchStr: String,
         @Query("chooseType") chooseType: Int,
         @Query("minPrice") minPrice: Double,
@@ -61,41 +62,53 @@ interface CustomerApi {
         @Query("size") size: Int
     ): List<ProductDTO>
 
-    @GET("/customer/product/get-min-price")
-    suspend fun getMinProductPrice(): Double
+    @GET("/store/customer/product/get-min-price")
+    suspend fun getMinProductPrice(@Header("Authorization") token: String): Double
 
-    @GET("/customer/product/get-max-price")
-    suspend fun getMaxProductPrice(): Double
+    @GET("/store/customer/product/get-max-price")
+    suspend fun getMaxProductPrice(@Header("Authorization") token: String): Double
 
-    @GET("/customer/get-cart")
-    suspend fun getCartProducts(@Query("customerId") customerId: Int): List<CartProductDTO>
+    @GET("/store/customer/get-cart")
+    suspend fun getCartProducts(
+        @Header("Authorization") token: String,
+        @Query("customerId") customerId: Int
+    ): List<CartProductDTO>
 
-    @GET("/customer/get-customs")
-    suspend fun getCustomsForCustomer(@Query("customerId") customerId: Int): List<CustomDTO>
+    @GET("/store/customer/get-customs")
+    suspend fun getCustomsForCustomer(
+        @Header("Authorization") token: String,
+        @Query("customerId") customerId: Int
+    ): List<CustomDTO>
 
-    @POST("/customer/cart/add-product-to-cart")
+    @POST("/store/customer/cart/add-product-to-cart")
     suspend fun addProductToCart(
+        @Header("Authorization") token: String,
         @Query("customerId") customerId: Int,
         @Query("productId") productId: Int,
         @Query("quantity") quantity: Int
     )
 
-    @POST("/customer/create-custom")
+    @POST("/order-processing/customer/create-custom")
     suspend fun createCustom(
+        @Header("Authorization") token: String,
         @Query("customerId") customerId: Int,
         @Query("departmentId") departmentId: Int
     ): Int
 
-    @DELETE("/customer/cart/remove-product-by-id")
+    @DELETE("/store/customer/cart/remove-product-by-id")
     suspend fun removeProductFromCart(
+        @Header("Authorization") token: String,
         @Query("customerId") customerId: Int,
         @Query("productId") productId: Int,
     )
 
-    @DELETE("/customer/cart/clear")
-    suspend fun clearCart(@Query("customerId") customerId: Int)
+    @DELETE("/store/customer/cart/clear")
+    suspend fun clearCart(
+        @Header("Authorization") token: String,
+        @Query("customerId") customerId: Int
+    )
 
 
-    @GET("/customer/department/get-all")
-    suspend fun getAllDepartments(): List<DepartmentDTO>
+    @GET("/store/customer/department/get-all")
+    suspend fun getAllDepartments(@Header("Authorization") token: String): List<DepartmentDTO>
 }

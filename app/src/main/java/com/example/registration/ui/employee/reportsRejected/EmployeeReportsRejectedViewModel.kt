@@ -22,6 +22,7 @@ class EmployeeReportsRejectedViewModel @Inject constructor(
     val reportRejectedArray: StateFlow<List<ReportDTO>>
         get() = _reportRejectedArray
     private val employeeId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getRejectedReportsForEmployee()
@@ -29,7 +30,7 @@ class EmployeeReportsRejectedViewModel @Inject constructor(
 
     private fun getRejectedReportsForEmployee() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = employeeRepository.getAllRejectedReportsForEmployee(employeeId)
+            val result = employeeRepository.getAllRejectedReportsForEmployee(token, employeeId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _reportRejectedArray.value = it

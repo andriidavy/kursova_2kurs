@@ -23,10 +23,11 @@ class CustomerCustomPageViewModel @Inject constructor(
         get() = _customDTOArray
 
     private val customerId: Int = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     fun getCustomsForCustomer() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = customerRepository.getCustomsForCustomer(customerId)
+            val result = customerRepository.getCustomsForCustomer(token, customerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     _customDTOArray.value = it

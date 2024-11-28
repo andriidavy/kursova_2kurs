@@ -33,6 +33,7 @@ class ManagerReportsInWaitingViewModel @Inject constructor(
         get() = _filteredReportIndexes
 
     private val managerId = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     init {
         getAllInWaitingReports()
@@ -40,7 +41,7 @@ class ManagerReportsInWaitingViewModel @Inject constructor(
 
     fun getAllInWaitingReports() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = managerRepository.getAllWaiting(managerId)
+            val result = managerRepository.getAllWaiting(token, managerId)
             withContext(Dispatchers.Main) {
                 result.collect {
                     delay(100)

@@ -12,8 +12,9 @@ class ProductItemViewModel @Inject constructor(
     private val customerRepository: CustomerRepository, datastoreRepository: DatastoreRepo,
 ) : DataStoreViewModel(datastoreRepository) {
     private val customerId: Int = getUserId()
+    private val token = "Bearer ${getUserToken()}"
 
     fun addProductToCart(productId: Int, quantity: Int): Flow<Result<Unit>> {
-        return customerRepository.addProductToCart(customerId, productId, quantity)
+        return customerRepository.addProductToCart(token, customerId, productId, quantity)
     }
 }

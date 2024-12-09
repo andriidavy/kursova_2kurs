@@ -74,8 +74,8 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.searchProduct(token, searchStr, chooseType, page, size))
     }
 
-    fun getAllCustomsWithoutEmployee(token: String, managerId: Int): Flow<List<CustomDTO>> = flow {
-        emit(managerApi.getAllCustomsWithoutEmployee(token, managerId))
+    fun getAllCustomsWithoutEmployee(token: String, managerId: Int, page: Int, size: Int): Flow<List<CustomDTO>> = flow {
+        emit(managerApi.getAllCustomsWithoutEmployee(token, managerId, page, size))
     }
 
     fun searchCustomById(token: String, customId: Int): Flow<Result<CustomDTO>> = flow {

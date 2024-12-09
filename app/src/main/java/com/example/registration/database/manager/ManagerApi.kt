@@ -46,7 +46,9 @@ interface ManagerApi {
     @GET("/order-processing/manager/get-customs-without-employee")
     suspend fun getAllCustomsWithoutEmployee(
         @Header("Authorization") token: String,
-        @Query("managerId") managerId: Int
+        @Query("managerId") managerId: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): List<CustomDTO>
 
     @GET("/order-processing/manager/search-custom-by-id")

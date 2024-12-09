@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.R
 import com.example.registration.adapter.custom.ManagerCreatedCustomAdapter
 import com.example.registration.databinding.FragmentManagerCreatedCustomsPageBinding
+import com.example.registration.global.ToastObj
 import com.example.registration.model.custom.CustomProductDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -39,15 +40,16 @@ class ManagerCreatedCustomsPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViews()
+        setListeners()
     }
 
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch {
-            delay(300)
-            viewModel.getCreatedCustomsForManager()
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        lifecycleScope.launch {
+//            delay(300)
+//            viewModel.getCreatedCustomsForManager(0)
+//        }
+//    }
 
     private fun setViews() {
         adapter = ManagerCreatedCustomAdapter(emptyList(), onAssignEmployeeClick(), onItemClick())
@@ -62,6 +64,32 @@ class ManagerCreatedCustomsPageFragment : Fragment() {
                     adapter.updateCustoms(customs)
                 }
             }
+        }
+        updatePageInfo(viewModel.currentPage)
+    }
+
+    private fun setListeners() = with(binding) {
+
+        btNext.setOnClickListener {
+            if (viewModel.isLastPage()) {
+                ToastObj.longToastMake("Остання сторінка", context)
+            } else {
+                viewModel.loadNextPage()
+                updatePageInfo(viewModel.currentPage)
+            }
+        }
+        btPrevious.setOnClickListener {
+            viewModel.loadPreviousPage()
+            updatePageInfo(viewModel.currentPage)
+        }
+    }
+
+    private fun updatePageInfo(page: Int) = with(binding) {
+        val from = page * 10 + 1
+        lifecycleScope.launch {
+            delay(1000)
+            val to = from + viewModel.customCreatedArray.value.size - 1
+            tvPageInfo.text = "з $from по $to"
         }
     }
 

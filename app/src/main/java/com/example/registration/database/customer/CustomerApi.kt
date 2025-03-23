@@ -4,6 +4,7 @@ import com.example.registration.global.LoginResponse
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
+import com.example.registration.model.message.MessageDTO
 import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.users.CustomerProfileDTO
 import retrofit2.http.DELETE
@@ -108,7 +109,14 @@ interface CustomerApi {
         @Query("customerId") customerId: Int
     )
 
-
     @GET("/store/customer/department/get-all")
     suspend fun getAllDepartments(@Header("Authorization") token: String): List<DepartmentDTO>
+
+    @GET("/order-processing/customer/custom/message/get-for-custom")
+    suspend fun getMessageForCustom(
+        @Header("Authorization") token: String,
+        @Query("customId") customId: Int
+    ): List<MessageDTO>
+
+
 }

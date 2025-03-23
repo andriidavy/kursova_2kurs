@@ -139,5 +139,7 @@
     <string name="next10">Наступні 10</string>
     <string name="invalid_email">Введений email не валідний!</string>
     <string name="passwords_do_not_match">Паролі не співпадають!</string>
+    <string name="chatting">Чат з підтримкою</string>
+    <string name="message_hint">Повідомлення</string>
 
 </resources>

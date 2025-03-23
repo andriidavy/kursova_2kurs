@@ -4,6 +4,7 @@ import com.example.registration.global.LoginResponse
 import com.example.registration.model.cart.CartProductDTO
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
+import com.example.registration.model.message.MessageDTO
 import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.users.CustomerProfileDTO
 import kotlinx.coroutines.flow.Flow
@@ -118,6 +119,10 @@ class CustomerRepository @Inject constructor(
 
     suspend fun getAllDepartments(token: String): List<DepartmentDTO> {
         return customerApi.getAllDepartments(token)
+    }
+
+    fun getMessageForCustom(token: String, customId: Int): Flow<List<MessageDTO>> = flow {
+        emit(customerApi.getMessageForCustom(token, customId))
     }
 }
 

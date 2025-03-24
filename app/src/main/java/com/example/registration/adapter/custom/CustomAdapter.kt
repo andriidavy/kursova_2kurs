@@ -9,7 +9,8 @@ import com.example.registration.model.custom.CustomDTO
 
 class CustomAdapter(
     private var customDTOList: List<CustomDTO>,
-    private val itemClick: (Int) -> Unit
+    private val itemClick: (Int) -> Unit,
+    private val itemOnMessageClick: (Int) -> Unit
 ) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(var view: ListCustomItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -23,6 +24,7 @@ class CustomAdapter(
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        val customId = customDTOList[position].customId
         viewHolder.view.apply {
             idForCustom.text = customDTOList[position].customId.toString()
             statusForCustom.text = customDTOList[position].status
@@ -31,6 +33,10 @@ class CustomAdapter(
 
             root.setOnClickListener {
                 itemClick.invoke(position)
+            }
+
+            btChatOpen.setOnClickListener {
+                itemOnMessageClick.invoke(customId)
             }
         }
     }

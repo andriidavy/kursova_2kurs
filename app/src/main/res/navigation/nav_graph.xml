@@ -132,6 +132,9 @@
         <action
             android:id="@+id/action_customerCustomPageFragment_to_customProductDetailFragment"
             app:destination="@id/customProductDetailFragment" />
+        <action
+            android:id="@+id/action_customerCustomPageFragment_to_customerCustomChattingFragment"
+            app:destination="@id/customerCustomChattingFragment" />
     </fragment>
     <fragment
         android:id="@+id/customProductDetailFragment"
@@ -406,4 +409,8 @@
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment" />
+    <fragment
+        android:id="@+id/customerCustomChattingFragment"
+        android:name="com.example.registration.ui.customer.custom.CustomerCustomChattingFragment"
+        android:label="CustomerCustomChattingFragment" />
 </navigation>

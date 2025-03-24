@@ -118,5 +118,13 @@ interface CustomerApi {
         @Query("customId") customId: Int
     ): List<MessageDTO>
 
+    @POST("/order-processing/customer/custom/send-message")
+    suspend fun sendMessageByCustomer(
+        @Header("Authorization") token: String,
+        @Query("customId") customId: Int,
+        @Query("senderId") senderId: Int,
+        @Query("text") text: String
+    )
+
 
 }

@@ -8,6 +8,7 @@ import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.message.MessageDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,13 +18,17 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomerCustomChattingViewModel @Inject constructor(
     private val customerRepository: CustomerRepository, datastoreRepository: DatastoreRepo
-) : DataStoreViewModel(datastoreRepository){
+) : DataStoreViewModel(datastoreRepository) {
 
     private val _messageDTOArray = MutableStateFlow<List<MessageDTO>>(emptyList())
     val messageDTOArray: StateFlow<List<MessageDTO>>
         get() = _messageDTOArray
 
+    private val customerId = getUserId()
+
     private val token = "Bearer ${getUserToken()}"
+
+
 
     fun getMessageForCustom(customId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -33,6 +38,12 @@ class CustomerCustomChattingViewModel @Inject constructor(
                     _messageDTOArray.value = it
                 }
             }
+        }
+    }
+
+    fun sendMessageByCustomer(customId: Int, text: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            customerRepository.sendMessageByCustomer(token, customId, customerId, text)
         }
     }
 }

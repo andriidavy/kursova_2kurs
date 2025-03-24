@@ -42,7 +42,7 @@ class CustomerCustomPageFragment : Fragment() {
     }
 
     private fun setupViews() = with(binding) {
-        adapter = CustomAdapter(emptyList(), itemClick())
+        adapter = CustomAdapter(emptyList(), itemClick(), onMessagingClick())
         customListRecyclerView.adapter = adapter
         customListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
@@ -71,6 +71,17 @@ class CustomerCustomPageFragment : Fragment() {
 
             navController.navigate(
                 R.id.action_customerCustomPageFragment_to_customProductDetailFragment,
+                bundle
+            )
+        }
+    }
+
+    private fun onMessagingClick(): (Int) -> Unit {
+        return { customId ->
+            val bundle = Bundle()
+            bundle.putInt("customId", customId)
+            navController.navigate(
+                R.id.action_customerCustomPageFragment_to_customerCustomChattingFragment,
                 bundle
             )
         }

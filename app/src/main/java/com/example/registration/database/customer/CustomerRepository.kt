@@ -53,7 +53,13 @@ class CustomerRepository @Inject constructor(
         emit(customerApi.getProductsAllPage(token, page, size))
     }
 
-    fun searchProduct(token: String, searchStr: String, chooseType: Int, page: Int, size: Int): Flow<List<ProductDTO>> = flow {
+    fun searchProduct(
+        token: String,
+        searchStr: String,
+        chooseType: Int,
+        page: Int,
+        size: Int
+    ): Flow<List<ProductDTO>> = flow {
         emit(customerApi.searchProduct(token, searchStr, chooseType, page, size))
     }
 
@@ -66,7 +72,17 @@ class CustomerRepository @Inject constructor(
         page: Int,
         size: Int
     ): Flow<List<ProductDTO>> = flow {
-        emit(customerApi.searchProductWithPriceRange(token, searchStr, chooseType, minPrice, maxPrice, page, size))
+        emit(
+            customerApi.searchProductWithPriceRange(
+                token,
+                searchStr,
+                chooseType,
+                minPrice,
+                maxPrice,
+                page,
+                size
+            )
+        )
     }
 
     fun getMinProductPrice(token: String): Flow<Double> = flow {
@@ -85,7 +101,12 @@ class CustomerRepository @Inject constructor(
         emit(customerApi.getCustomsForCustomer(token, customerId))
     }
 
-    fun addProductToCart(token: String, customerId: Int, productId: Int, quantity: Int): Flow<Result<Unit>> =
+    fun addProductToCart(
+        token: String,
+        customerId: Int,
+        productId: Int,
+        quantity: Int
+    ): Flow<Result<Unit>> =
         flow {
             emit(
                 try {
@@ -123,6 +144,10 @@ class CustomerRepository @Inject constructor(
 
     fun getMessageForCustom(token: String, customId: Int): Flow<List<MessageDTO>> = flow {
         emit(customerApi.getMessageForCustom(token, customId))
+    }
+
+    suspend fun sendMessageByCustomer(token: String, customId: Int, senderId: Int, text: String) {
+       customerApi.sendMessageByCustomer(token, customId, senderId, text)
     }
 }
 

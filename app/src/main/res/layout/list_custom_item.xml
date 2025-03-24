@@ -118,7 +118,7 @@
         android:text="@string/price_symb" />
 
     <Button
-        android:id="@+id/button_chat_open"
+        android:id="@+id/bt_chat_open"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"

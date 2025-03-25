@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registration.adapter.custom.MessagingAdapter
 import com.example.registration.databinding.FragmentCustomerCustomChattingBinding
+import com.example.registration.global.ToastObj
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -22,7 +23,7 @@ class CustomerCustomChattingFragment : Fragment() {
     private lateinit var adapter: MessagingAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<CustomerCustomChattingViewModel>()
-    val customId: Int? = arguments?.getInt("customId")
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +45,7 @@ class CustomerCustomChattingFragment : Fragment() {
         messageListRecyclerView.adapter = adapter
         messageListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
+        val customId: Int? = arguments?.getInt("customId")
         customId?.let { viewModel.getMessageForCustom(it) }
     }
 
@@ -59,9 +61,19 @@ class CustomerCustomChattingFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         btMessageSend.setOnClickListener {
+            ToastObj.longToastMake(
+                "Кнопка натиснута",
+                context
+            )
             val message = etMessageField.text.toString()
+            val customId: Int? = arguments?.getInt("customId")
             if (message.isNotBlank()) {
-                customId?.let { it1 -> viewModel.sendMessageByCustomer(it1, message) }
+                customId?.let { it1 -> viewModel.sendMessageByCustomer(it1, message)
+                    ToastObj.longToastMake(
+                        "Замовлення№ $it1 ; повідомлення: $message",
+                        context
+                    )
+                }
             }
         }
     }

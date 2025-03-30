@@ -2,6 +2,7 @@ package com.example.registration.database.manager
 
 import com.example.registration.model.custom.CustomDTO
 import com.example.registration.model.department.DepartmentDTO
+import com.example.registration.model.message.MessageDTO
 import com.example.registration.model.product.ProductDTO
 import com.example.registration.model.report.ReportDTO
 import com.example.registration.model.users.EmployeeProfileDTO
@@ -70,6 +71,21 @@ interface ManagerApi {
         @Query("size") size: Int
     ): List<CustomDTO>
 
+    @GET("/order-processing/manager/get-customs-with-message")
+    suspend fun getAllCustomsWithMessage(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): List<CustomDTO>
+
+    @GET("/order-processing/manager/get-customs-with-department")
+    suspend fun getAllCustomsWithDepartment(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): List<CustomDTO>
 
     @GET("/auth/manager/employee/profile/get-all")
     suspend fun getAllEmployeesProfile(@Header("Authorization") token: String): List<EmployeeProfileDTO>
@@ -127,6 +143,13 @@ interface ManagerApi {
         @Header("Authorization") token: String,
         @Query("reportId") reportId: Int
     )
+
+    @GET("/order-processing/manager/check-custom-department")
+    suspend fun existsCustomInDepartment(
+        @Header("Authorization") token: String,
+        @Query("managerId") managerId: Int,
+        @Query("customId") customId: Int
+    ): Int
 
     @POST("/order-processing/manager/custom/report/reject")
     suspend fun setReportRejected(
@@ -192,5 +215,25 @@ interface ManagerApi {
         @Header("Authorization") token: String,
         @Query("managerId") managerId: Int,
         @Query("departmentId") departmentId: Int
+    )
+
+    @GET("/order-processing/manager/custom/message/get-for-custom")
+    suspend fun getMessageForCustom(
+        @Header("Authorization") token: String,
+        @Query("customId") customId: Int
+    ): List<MessageDTO>
+
+    @POST("/order-processing/manager/custom/send-message")
+    suspend fun sendMessageByManager(
+        @Header("Authorization") token: String,
+        @Query("customId") customId: Int,
+        @Query("senderId") senderId: Int,
+        @Query("text") text: String
+    )
+
+    @POST("/order-processing/manager/custom/close-chat")
+    suspend fun closeChat(
+    @Header("Authorization") token: String,
+    @Query("customId") customId: Int
     )
 }

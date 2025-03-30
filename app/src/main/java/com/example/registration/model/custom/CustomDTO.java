@@ -16,6 +16,8 @@ public class CustomDTO {
     private String department;
     private String status;
     private double price;
+    private boolean isChatOpen;
+    private boolean isChatEnable;
     private List<CustomProductDTO> customProductDTOList;
 
     public int getCustomId() {
@@ -104,5 +106,39 @@ public class CustomDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isChatOpen() {
+        return isChatOpen;
+    }
+
+    public void setChatOpen(boolean chatOpen) {
+        isChatOpen = chatOpen;
+    }
+
+    public boolean isChatEnable() {
+        return isChatEnable;
+    }
+
+    public void setChatEnable(boolean chatEnable) {
+        isChatEnable = chatEnable;
+    }
+
+    public CustomDTO copyWithUpdatedChatStatus(boolean isChatEnable) {
+        CustomDTO copy = new CustomDTO();
+        copy.customId = this.customId;
+        copy.customerId = this.customerId;
+        copy.customerName = this.customerName;
+        copy.customerSurname = this.customerSurname;
+        copy.employeeId = this.employeeId;
+        copy.employeeName = this.employeeName;
+        copy.employeeSurname = this.employeeSurname;
+        copy.status = this.status;
+        copy.department = this.department;
+        copy.price = this.price;
+        copy.isChatOpen = this.isChatOpen;
+        copy.isChatEnable = isChatEnable;
+        copy.customProductDTOList = this.customProductDTOList;
+        return copy;
     }
 }

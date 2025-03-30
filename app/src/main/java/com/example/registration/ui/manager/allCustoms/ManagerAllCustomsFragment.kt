@@ -30,6 +30,7 @@ class ManagerAllCustomsFragment : Fragment() {
     private lateinit var navController: NavController
     private val viewModel by viewModels<ManagerAllCustomsPageViewModel>()
     private var searchStr = 0
+    private var arraySize = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +48,7 @@ class ManagerAllCustomsFragment : Fragment() {
     }
 
     private fun setViews() = with(binding) {
-        adapter = ManagerAllCustomAdapter(emptyList(), onItemClick())
+        adapter = ManagerAllCustomAdapter(emptyList(), onItemClick(), onMessagingClick())
         allCustomListRecyclerView.adapter = adapter
         allCustomListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
@@ -58,11 +59,34 @@ class ManagerAllCustomsFragment : Fragment() {
                 tvPageInfo.visibility = View.GONE
                 btNext.visibility = View.GONE
                 btPrevious.visibility = View.GONE
+                cbMyDepartmentOption.isEnabled = false
+                cbMyDepartmentOption.alpha = 0.5f
+                cbMessageOption.isEnabled = false
+                cbMessageOption.alpha = 0.5f
+
             } else {
                 searchStr = 0
                 tvPageInfo.visibility = View.VISIBLE
                 btNext.visibility = View.VISIBLE
                 btPrevious.visibility = View.VISIBLE
+                cbMessageOption.visibility = View.VISIBLE
+                cbMyDepartmentOption.isEnabled = true
+                cbMyDepartmentOption.alpha = 1f
+            }
+        }
+
+        cbMyDepartmentOption.setOnClickListener {
+            if (cbMyDepartmentOption.isChecked) {
+                cbMessageOption.isEnabled = true
+                cbMessageOption.alpha = 1f
+            } else {
+                cbMessageOption.isEnabled = false
+                cbMessageOption.alpha = 0.5f
+                cbMessageOption.isChecked = false
+            }
+
+            if(cbMyDepartmentOption.isChecked && cbMessageOption.isChecked){
+
             }
         }
         updatePageInfo(viewModel.currentPage)
@@ -73,6 +97,7 @@ class ManagerAllCustomsFragment : Fragment() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.customAllArray.collect { customs ->
                     adapter.updateCustoms(customs)
+                    arraySize = customs.size
                 }
             }
         }
@@ -81,7 +106,7 @@ class ManagerAllCustomsFragment : Fragment() {
     private fun setListeners() = with(binding) {
         buttonSearch.setOnClickListener {
             val searchId: Int = searchStr
-            if (searchId <= 0) viewModel.getAllCustomsPage(0) else viewModel.searchCustomById(
+            if (searchId <= 0) loadData() else viewModel.searchCustomById(
                 searchId
             )
             viewModel.currentPage = 0
@@ -108,10 +133,14 @@ class ManagerAllCustomsFragment : Fragment() {
 
     private fun updatePageInfo(page: Int) = with(binding) {
         val from = page * 10 + 1
+        var to = page * 10 + 10
+        tvPageInfo.text = "з $from по $to"
         lifecycleScope.launch {
-            delay(600)
-            val to = from + viewModel.customAllArray.value.size - 1
-            tvPageInfo.text = "з $from по $to"
+            delay(3000)
+            to = page * 10 + arraySize
+            if (to != 0) {
+                tvPageInfo.text = "з $from по $to"
+            }
         }
     }
 
@@ -125,5 +154,31 @@ class ManagerAllCustomsFragment : Fragment() {
                 R.id.action_managerAllCustomsFragment_to_allCustomsDetailFragment, bundle
             )
         }
+    }
+
+    private fun onMessagingClick(): (Int) -> Unit {
+        return { customId ->
+            val bundle = Bundle()
+            bundle.putInt("customId", customId)
+            navController.navigate(
+                R.id.action_managerAllCustomsFragment_to_managerCustomChattingFragment,
+                bundle
+            )
+        }
+    }
+
+    private fun loadData() = with(binding) {
+        if (cbMyDepartmentOption.isChecked && cbMessageOption.isChecked) {
+            viewModel.getAllCustomsWithMessagePage(0)
+            viewModel.chooseNum = 2
+        } else if (cbMyDepartmentOption.isChecked) {
+            viewModel.getAllCustomsWithDepartmentPage(0)
+            viewModel.chooseNum = 1
+        } else {
+            viewModel.getAllCustomsPage(0)
+            viewModel.chooseNum = 0
+        }
+        viewModel.currentPage = 0
+        updatePageInfo(viewModel.currentPage)
     }
 }

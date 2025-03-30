@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/close_chat"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="#74FF74"
+            android:gravity="center"
+            android:text="@string/chat_close"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messageList_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@id/et_message_field"
+            app:layout_constraintTop_toBottomOf="@id/close_chat"
+            />
+
+        <EditText
+            android:id="@+id/et_message_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="32dp"
+            android:hint="@string/message_hint"
+            android:ems="12"
+            android:autofillHints=""
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/bt_message_send"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="32dp"
+            android:background="@android:drawable/ic_menu_send"
+            app:layout_constraintStart_toEndOf="@id/et_message_field"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

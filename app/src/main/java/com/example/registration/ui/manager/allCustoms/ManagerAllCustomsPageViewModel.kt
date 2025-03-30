@@ -8,8 +8,10 @@ import com.example.registration.model.custom.CustomDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,10 +23,12 @@ class ManagerAllCustomsPageViewModel @Inject constructor(
 
     private val token = "Bearer ${getUserToken()}"
     private val _customAllArray = MutableStateFlow<List<CustomDTO>>(emptyList())
+    private val managerId = getUserId()
     val customAllArray: StateFlow<List<CustomDTO>>
         get() = _customAllArray
 
     var currentPage = 0
+    var chooseNum = 0
 
     private val pageSize = 10
 
@@ -43,8 +47,43 @@ class ManagerAllCustomsPageViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val result = managerRepository.getAllCustoms(token, page, pageSize)
             withContext(Dispatchers.Main) {
-                result.collect {
-                    _customAllArray.value = it
+                result.collect { list ->
+                    _customAllArray.value = list.map { custom ->
+                        custom.copyWithUpdatedChatStatus(false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getAllCustomsWithMessagePage(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result =
+                managerRepository.getAllCustomsWithMessage(token, managerId, page, pageSize)
+            withContext(Dispatchers.Main) {
+                result.collect { list ->
+                    _customAllArray.value = list.map { custom ->
+                        custom.copyWithUpdatedChatStatus(true)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getAllCustomsWithDepartmentPage(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result =
+                managerRepository.getAllCustomsWithDepartment(
+                    token,
+                    managerId,
+                    page,
+                    pageSize
+                )
+            withContext(Dispatchers.Main) {
+                result.collect { list ->
+                    _customAllArray.value = list.map { custom ->
+                        custom.copyWithUpdatedChatStatus(true)
+                    }
                 }
             }
         }
@@ -55,8 +94,19 @@ class ManagerAllCustomsPageViewModel @Inject constructor(
             currentPage += 1
             viewModelScope.launch {
                 delay(100)
-                getAllCustomsPage(currentPage)
+                when (chooseNum) {
+                    0 -> {
+                        getAllCustomsPage(currentPage)
+                    }
 
+                    1 -> {
+                        getAllCustomsWithDepartmentPage(currentPage)
+                    }
+
+                    2 -> {
+                        getAllCustomsWithMessagePage(currentPage)
+                    }
+                }
             }
         }
     }
@@ -65,7 +115,19 @@ class ManagerAllCustomsPageViewModel @Inject constructor(
         if (currentPage > 0) currentPage -= 1 else 0
         viewModelScope.launch {
             delay(100)
-            getAllCustomsPage(currentPage)
+            when (chooseNum) {
+                0 -> {
+                    getAllCustomsPage(currentPage)
+                }
+
+                1 -> {
+                    getAllCustomsWithDepartmentPage(currentPage)
+                }
+
+                2 -> {
+                    getAllCustomsWithMessagePage(currentPage)
+                }
+            }
         }
     }
 

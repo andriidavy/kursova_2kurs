@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.managerReportsInWaitingFragment -> supportActionBar?.title = "Нові звіти"
                 R.id.managerReportsInWaitingDetailFragment -> supportActionBar?.title = "Деталі звіту"
                 R.id.managerAllCustomsFragment -> supportActionBar?.title = "Історія всіх замовлень"
+                R.id.managerCustomChattingFragment -> supportActionBar?.title = "Чат"
                 R.id.allCustomsDetailFragment -> supportActionBar?.title = "Деталі замовлення"
                 R.id.allProductListFragment -> supportActionBar?.title = "Список товарів"
                 R.id.addProductFragment -> supportActionBar?.title = "Додати товар"

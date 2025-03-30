@@ -15,6 +15,13 @@ public class MessageDTO {
         this.role = role;
     }
 
+    public MessageDTO(int customId, int senderId, String role, String text) {
+        this.customId = customId;
+        this.senderId = senderId;
+        this.role = role;
+        this.text = text;
+    }
+
     public int getCustomId() {
         return customId;
     }

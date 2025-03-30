@@ -30,6 +30,32 @@
         app:layout_constraintStart_toEndOf="@id/et_search_custom_field"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <CheckBox
+        android:id="@+id/cb_my_department_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_departments"
+        app:layout_constraintTop_toBottomOf="@id/et_search_custom_field"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        />
+
+    <CheckBox
+        android:id="@+id/cb_message_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/actual_message"
+        app:layout_constraintTop_toBottomOf="@id/et_search_custom_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:enabled="false"
+        android:alpha="0.5"
+        />
+
     <LinearLayout
         android:id="@+id/pagination_container"
         android:layout_width="match_parent"
@@ -70,7 +96,8 @@
         android:id="@+id/allCustomList_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/pagination_container"
-        app:layout_constraintTop_toBottomOf="@+id/et_search_custom_field" />
+        app:layout_constraintTop_toBottomOf="@+id/cb_message_option" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,8 @@ import com.example.registration.model.custom.CustomDTO
 
 class ManagerAllCustomAdapter(
     private var customDTOList: List<CustomDTO>,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit,
+    private val itemOnMessageClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ManagerAllCustomAdapter.ViewHolder>() {
 
     class ViewHolder(var view: ListAllCustomItemBinding) : RecyclerView.ViewHolder(view.root)
@@ -31,6 +32,7 @@ class ManagerAllCustomAdapter(
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        val customId = customDTOList[position].customId
         viewHolder.view.apply {
             idForCustom.text = customDTOList[position].customId.toString()
             statusForCustom.text = customDTOList[position].status
@@ -57,8 +59,16 @@ class ManagerAllCustomAdapter(
                 employeeSurname.visibility = View.GONE
             }
 
+            if (customDTOList[position].isChatEnable) btChatOpen.visibility =
+                View.VISIBLE else btChatOpen.visibility = View.GONE
+
+
             root.setOnClickListener {
                 onItemClick.invoke(position)
+            }
+
+            btChatOpen.setOnClickListener {
+                itemOnMessageClick.invoke(customId)
             }
         }
     }

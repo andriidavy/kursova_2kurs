@@ -242,6 +242,20 @@
             tools:text="NULL"
             />
 
+        <Button
+            android:id="@+id/bt_chat_open"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_button"
+            android:contentDescription="@string/chatting"
+            android:drawableTop="@drawable/ic_phone_white"
+            android:drawableTint="@color/white"
+            android:text=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

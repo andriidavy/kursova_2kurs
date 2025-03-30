@@ -141,5 +141,9 @@
     <string name="passwords_do_not_match">Паролі не співпадають!</string>
     <string name="chatting">Чат з підтримкою</string>
     <string name="message_hint">Повідомлення</string>
+    <string name="actual_message">Нові повідомлення</string>
+    <string name="my_departments">Мої відділи</string>
+    <string name="chat_is_open">Відкритий чат!</string>
+    <string name="chat_close">Закрити чат</string>
 
 </resources>

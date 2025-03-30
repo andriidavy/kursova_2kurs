@@ -263,6 +263,9 @@
         <action
             android:id="@+id/action_managerAllCustomsFragment_to_allCustomsDetailFragment"
             app:destination="@id/allCustomsDetailFragment" />
+        <action
+            android:id="@+id/action_managerAllCustomsFragment_to_managerCustomChattingFragment"
+            app:destination="@id/managerCustomChattingFragment" />
     </fragment>
     <fragment
         android:id="@+id/allCustomsDetailFragment"
@@ -413,4 +416,12 @@
         android:id="@+id/customerCustomChattingFragment"
         android:name="com.example.registration.ui.customer.custom.CustomerCustomChattingFragment"
         android:label="CustomerCustomChattingFragment" />
+    <fragment
+        android:id="@+id/managerCustomChattingFragment"
+        android:name="com.example.registration.ui.manager.allCustoms.ManagerCustomChattingFragment"
+        android:label="ManagerCustomChattingFragment" >
+        <action
+            android:id="@+id/action_managerCustomChattingFragment_to_managerAllCustomsFragment"
+            app:destination="@id/managerAllCustomsFragment" />
+    </fragment>
 </navigation>

@@ -281,6 +281,9 @@
         <action
             android:id="@+id/action_allProductListFragment_to_updateProductFragment"
             app:destination="@id/updateProductFragment" />
+        <action
+            android:id="@+id/action_allProductListFragment_to_barcodeScannerFragment"
+            app:destination="@id/barcodeScannerFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -423,5 +426,14 @@
         <action
             android:id="@+id/action_managerCustomChattingFragment_to_managerAllCustomsFragment"
             app:destination="@id/managerAllCustomsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barcodeScannerFragment"
+        android:name="com.example.registration.ui.manager.products.scanning.BarcodeScannerFragment"
+        android:label="fragment_barcode_scanner"
+        tools:layout="@layout/fragment_barcode_scanner" >
+        <action
+            android:id="@+id/action_barcodeScannerFragment_to_allProductListFragment"
+            app:destination="@id/allProductListFragment" />
     </fragment>
 </navigation>

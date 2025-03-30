@@ -15,17 +15,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp" />
+            android:layout_margin="10dp" />
 
         <EditText
             android:id="@+id/et_search_product_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="10dp"
             android:autofillHints=""
             android:ems="13"
             android:hint="Введіть назву товару:"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_add_product" />
 
@@ -34,10 +34,22 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="10dp"
             android:background="@android:drawable/ic_menu_search"
             app:layout_constraintStart_toEndOf="@id/et_search_product_field"
             app:layout_constraintTop_toBottomOf="@id/button_add_product" />
+
+        <Button
+            android:id="@+id/button_scanning_product"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/baseline_qr_code_scanner_24"
+            app:layout_constraintStart_toEndOf="@id/button_search_product"
+            app:layout_constraintTop_toBottomOf="@id/button_add_product" />
+
+
 
         <LinearLayout
             android:id="@+id/pagination_container"

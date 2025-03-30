@@ -44,6 +44,11 @@ class AllProductListFragment : Fragment() {
         setViews()
         setObservers()
         setListeners()
+
+        arguments?.getString("barcode_result")?.let { scannedBarcode ->
+            binding.etSearchProductField.setText(scannedBarcode)
+            viewModel.getProductsBySearch(scannedBarcode, 0, 0)
+        }
     }
 
     override fun onResume() {
@@ -119,6 +124,10 @@ class AllProductListFragment : Fragment() {
                 viewModel.loadPreviousPageBySearch()
                 updatePageInfo(viewModel.currentPage)
             }
+        }
+
+        buttonScanningProduct.setOnClickListener {
+            navController.navigate(R.id.action_allProductListFragment_to_barcodeScannerFragment)
         }
     }
 

@@ -145,5 +145,6 @@
     <string name="my_departments">Мої відділи</string>
     <string name="chat_is_open">Відкритий чат!</string>
     <string name="chat_close">Закрити чат</string>
+    <string name="close_text">Закрити</string>
 
 </resources>

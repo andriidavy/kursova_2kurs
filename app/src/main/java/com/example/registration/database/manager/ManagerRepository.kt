@@ -113,6 +113,18 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.searchProduct(token, searchStr, chooseType, page, size))
     }
 
+    fun searchProductById(token: String, productId: Int): Flow<Result<ProductDTO>> = flow {
+        emit(
+            try {
+                val result = managerApi.searchProductById(token, productId)
+                Result.success(result)
+
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        )
+    }
+
     fun getAllCustomsWithoutEmployee(
         token: String,
         managerId: Int,

@@ -131,6 +131,12 @@ interface ManagerApi {
         @Query("productName") productName: String
     ): List<ProductDTO>
 
+    @GET("/warehouse/manager/search-product-by-id")
+    suspend fun searchProductById(
+        @Header("Authorization") token: String,
+        @Query("productId") productId: Int
+    ): ProductDTO
+
     @POST("/order-processing/manager/custom/assign-employee")
     suspend fun assignEmployeeToCustom(
         @Header("Authorization") token: String,

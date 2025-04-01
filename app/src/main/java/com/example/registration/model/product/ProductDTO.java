@@ -15,6 +15,14 @@ public class ProductDTO implements Parcelable {
     public ProductDTO() {
     }
 
+    public ProductDTO(int id, String name, String description, int quantity, double price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public ProductDTO(String name, String description, int quantity, double price) {
         this.name = name;
         this.description = description;

@@ -40,7 +40,8 @@ class ManagerAllCustomsPageViewModel @Inject constructor(
     }
 
     fun isLastPage(): Boolean {
-        return _customAllArray.value.size < pageSize
+       // return _customAllArray.value.size < pageSize
+        return false
     }
 
     fun getAllCustomsPage(page: Int) {

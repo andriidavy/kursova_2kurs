@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
+open class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) {
 
     fun loginManager(email: String, password: String): Flow<Result<String>> = flow {
         emit(
@@ -64,11 +64,11 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    fun getAllCustoms(token: String, page: Int, size: Int): Flow<List<CustomDTO>> = flow {
+    open fun getAllCustoms(token: String, page: Int, size: Int): Flow<List<CustomDTO>> = flow {
         emit(managerApi.getAllCustoms(token, page, size))
     }
 
-    fun getAllCustomsWithMessage(
+    open fun getAllCustomsWithMessage(
         token: String,
         managerId: Int,
         page: Int,
@@ -77,7 +77,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.getAllCustomsWithMessage(token, managerId, page, size))
     }
 
-    fun getAllCustomsWithDepartment(
+    open fun getAllCustomsWithDepartment(
         token: String,
         managerId: Int,
         page: Int,
@@ -122,7 +122,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         emit(managerApi.getAllCustomsWithoutEmployee(token, managerId, page, size))
     }
 
-    fun searchCustomById(token: String, customId: Int): Flow<Result<CustomDTO>> = flow {
+    open fun searchCustomById(token: String, customId: Int): Flow<Result<CustomDTO>> = flow {
         emit(
             try {
                 val result = managerApi.searchCustomById(token, customId)
@@ -160,7 +160,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         )
     }
 
-    suspend fun deleteEmployeeById(token: String, employeeId: Int) {
+    suspend fun deleteEmployeeById(token: String, employeeId: Int): Int {
         return managerApi.deleteEmployeeById(token, employeeId)
     }
 
@@ -205,7 +205,7 @@ class ManagerRepository @Inject constructor(private val managerApi: ManagerApi) 
         description: String,
         quantity: Int,
         price: Double
-    ): Flow<Result<Unit>> = flow {
+    ): Flow<Result<ProductDTO>> = flow {
         emit(
             try {
                 val result = managerApi.updateProduct(

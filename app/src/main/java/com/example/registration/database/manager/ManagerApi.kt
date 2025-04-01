@@ -104,7 +104,7 @@ interface ManagerApi {
     suspend fun deleteEmployeeById(
         @Header("Authorization") token: String,
         @Query("employeeId") employeeId: Int
-    )
+    ): Int
 
     @GET("/auth/manager/get-staff")
     suspend fun getStaff(@Header("Authorization") token: String): List<StaffDTO>
@@ -174,7 +174,7 @@ interface ManagerApi {
         @Query("description") description: String,
         @Query("quantity") quantity: Int,
         @Query("price") price: Double,
-    )
+    ) : ProductDTO //for tests
 
     @GET("/warehouse/manager/is-product-exist")
     suspend fun isProductExists(

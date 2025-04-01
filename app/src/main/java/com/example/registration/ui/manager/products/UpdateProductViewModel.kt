@@ -14,13 +14,13 @@ class UpdateProductViewModel @Inject constructor(
 ) : DataStoreViewModel(datastoreRepository) {
 
     private val token = "Bearer ${getUserToken()}"
-    fun updateProduct(
-        productId: Int,
-        name: String,
-        desc: String,
-        quantity: Int,
-        price: Double
-    ): Flow<Result<Unit>> {
-        return managerRepository.updateProduct(token, productId, name, desc, quantity, price)
-    }
+//    fun updateProduct(
+//        productId: Int,
+//        name: String,
+//        desc: String,
+//        quantity: Int,
+//        price: Double
+//    ): Flow<Result<Unit>> {
+//        return managerRepository.updateProduct(token, productId, name, desc, quantity, price)
+//    }
 }

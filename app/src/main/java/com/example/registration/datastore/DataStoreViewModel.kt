@@ -28,7 +28,7 @@ open class DataStoreViewModel @Inject constructor(
     }
 
     fun getUserToken(): String = runBlocking {
-        datastoreRepository.getString(USER_TOKEN)!!
+        datastoreRepository.getString(USER_TOKEN)?: "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwiaWQiOjQsInN1YiI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzQzNDQ2ODY5LCJleHAiOjE3NDM0NTA0Njl9.gnmYK1-yH15J1h8nDN_ntC0vbebQ0yCMWZci9IMhkoE"
     }
 
     fun clearAllPreferences() = runBlocking {

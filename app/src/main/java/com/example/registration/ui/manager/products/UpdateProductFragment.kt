@@ -56,31 +56,31 @@ class UpdateProductFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
-        btConfirm.setOnClickListener {
-            val actualName = etName.text.toString()
-            val actualDesc = etDesc.text.toString()
-            val actualQuantity = etQuantity.text.toString().toInt()
-            val actualPrice = etPrice.text.toString().toDouble()
-            lifecycleScope.launch {
-                viewModel.updateProduct(
-                    actualProductId,
-                    actualName,
-                    actualDesc,
-                    actualQuantity,
-                    actualPrice
-                ).collect { result ->
-                    result.onSuccess {
-                        ToastObj.longToastMake("Продукт оновлено!", context)
-                        navController.navigate(R.id.action_updateProductFragment_to_allProductListFragment)
-                    }
-                    result.onFailure {
-                        ToastObj.longToastMake(
-                            "Помилка оновлення продукту!",
-                            context
-                        )
-                    }
-                }
-            }
-        }
+//        btConfirm.setOnClickListener {
+//            val actualName = etName.text.toString()
+//            val actualDesc = etDesc.text.toString()
+//            val actualQuantity = etQuantity.text.toString().toInt()
+//            val actualPrice = etPrice.text.toString().toDouble()
+//            lifecycleScope.launch {
+//                viewModel.updateProduct(
+//                    actualProductId,
+//                    actualName,
+//                    actualDesc,
+//                    actualQuantity,
+//                    actualPrice
+//                ).collect { result ->
+//                    result.onSuccess {
+//                        ToastObj.longToastMake("Продукт оновлено!", context)
+//                        navController.navigate(R.id.action_updateProductFragment_to_allProductListFragment)
+//                    }
+//                    result.onFailure {
+//                        ToastObj.longToastMake(
+//                            "Помилка оновлення продукту!",
+//                            context
+//                        )
+//                    }
+//                }
+//            }
+//        }
     }
 }

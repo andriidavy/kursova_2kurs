@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
 
-class DataStoreRepoImpl @Inject constructor(
+open class DataStoreRepoImpl @Inject constructor(
     private val context: Context
 ) : DatastoreRepo {
 

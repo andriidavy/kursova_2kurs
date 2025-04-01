@@ -20,6 +20,28 @@ public class CustomDTO {
     private boolean isChatEnable;
     private List<CustomProductDTO> customProductDTOList;
 
+    public CustomDTO() {
+
+    }
+
+    public CustomDTO(int customId, int customerId, String customerName, String customerSurname,
+                     int employeeId, String employeeName, String employeeSurname,
+                     String department, String status, double price, boolean isChatOpen,
+                     boolean isChatEnable, List<CustomProductDTO> customProductDTOList) {
+        this.customId = customId;
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerSurname = customerSurname;
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+        this.employeeSurname = employeeSurname;
+        this.department = department;
+        this.status = status;
+        this.price = price;
+        this.isChatOpen = isChatOpen;
+        this.isChatEnable = isChatEnable;
+        this.customProductDTOList = customProductDTOList;
+    }
     public int getCustomId() {
         return customId;
     }

@@ -25,12 +25,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ManagerAllCustomsFragment : Fragment() {
 
-    private lateinit var binding: FragmentManagerAllCustomsBinding
+    lateinit var binding: FragmentManagerAllCustomsBinding
     private lateinit var adapter: ManagerAllCustomAdapter
     private lateinit var navController: NavController
     private val viewModel by viewModels<ManagerAllCustomsPageViewModel>()
     private var searchStr = 0
-    private var arraySize = 10
+    var arraySize = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -131,7 +131,7 @@ class ManagerAllCustomsFragment : Fragment() {
         }
     }
 
-    private fun updatePageInfo(page: Int) = with(binding) {
+    fun updatePageInfo(page: Int) = with(binding) {
         val from = page * 10 + 1
         var to = page * 10 + 10
         tvPageInfo.text = "з $from по $to"

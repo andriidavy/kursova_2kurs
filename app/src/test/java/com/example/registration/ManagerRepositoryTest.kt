@@ -239,18 +239,6 @@ class ManagerRepositoryTest {
         managerRepository = ManagerRepository(api)
     }
 
-//    @OptIn(ExperimentalCoroutinesApi::class)
-//    @Test
-//    fun `isProductExists returns true when product exists`() = runTest {
-//        val token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwiaWQiOjQsInN1YiI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzQzNDQ2ODY5LCJleHAiOjE3NDM0NTA0Njl9.gnmYK1-yH15J1h8nDN_ntC0vbebQ0yCMWZci9IMhkoE"
-//        val productName = "StellarGlow Skincare Set"
-//        val result =
-//            managerRepository.isProductExists(token, productName).first()
-//        println("Результат теста 1: $result")
-//        assertEquals(Result.success(true), result)
-//    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `provideProduct returns success when product is added`() = runTest {
         //тест операції типу CREATE

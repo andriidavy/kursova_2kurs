@@ -24,7 +24,7 @@
             android:layout_marginTop="10dp"
             android:autofillHints=""
             android:ems="13"
-            android:hint="Введіть назву товару:"
+            android:hint="Введіть назву або id товару:"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_add_product" />

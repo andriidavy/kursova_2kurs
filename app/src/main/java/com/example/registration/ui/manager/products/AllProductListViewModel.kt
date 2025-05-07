@@ -103,20 +103,19 @@ class AllProductListViewModel @Inject constructor(
         }
     }
 
-//    fun getProductsById(productId: Int) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val result = managerRepository.searchProductById(token, productId)
-//            withContext(Dispatchers.Main){
-//                result.collect{
-//                    result ->
-//                    result.onSuccess {
-//                        _productDTOArray.value = productResult
-//                    }
-//                    result.onFailure {
-//                        println("fail: $it")
-//                    }
-//                }
-//            }
-//        }
-//    }
+    fun getProductsById(productId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = managerRepository.searchProductById(token, productId)
+            withContext(Dispatchers.Main) {
+                result.collect { result ->
+                    result.onSuccess { productResult ->
+                        _productDTOArray.value = listOf(productResult)
+                    }
+                    result.onFailure {
+                        println("fail: $it")
+                    }
+                }
+            }
+        }
+    }
 }
